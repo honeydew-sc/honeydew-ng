@@ -12,6 +12,10 @@ angular.module('honeydewApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/feature', {
+        templateUrl: 'views/feature.html',
+        controller: 'FeatureCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

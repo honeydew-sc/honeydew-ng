@@ -6,17 +6,22 @@ describe('Controller: FeatureCtrl', function () {
   beforeEach(module('honeydewApp'));
 
   var FeatureCtrl,
-    scope;
+      scope,
+      httpMock;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    httpMock = $httpBackend;
     scope = $rootScope.$new();
     FeatureCtrl = $controller('FeatureCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should put the feature contents in the model', function() {
+    httpMock.expectGET("/features_crud.php/fake.feature").respond({contents: 'fake feature contents!'});
+    scope.display("fake.feature");
+    httpMock.flush();
+    expect(scope.contents).toBe('fake feature contents!');
   });
 });

@@ -1,23 +1,20 @@
 'use strict';
 
-angular.module('honeydewApp', [
+angular.module('honeydew', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'ui.codemirror'
+    'ui.codemirror',
+    'ui.router',
+    'ui.bootstrap'
 ])
-    .config(function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
-            })
-            .when('/feature/:feature*', {
-                templateUrl: 'views/feature.html',
-                controller: 'FeatureCtrl'
-            })
-            .otherwise({
-                redirectTo: '/'
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/");
+
+        $stateProvider
+            .state('feature', {
+                url: "/feature",
+                templateUrl: "views/feature.html"
             });
     });

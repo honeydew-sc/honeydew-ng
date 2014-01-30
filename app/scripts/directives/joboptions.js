@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('honeydewApp')
+angular.module('honeydew')
   .directive('jobOptions', function () {
     return {
       template: '<div></div>',

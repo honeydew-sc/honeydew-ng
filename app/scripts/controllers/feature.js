@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('honeydewApp')
+angular.module('honeydew')
     .controller('FeatureCtrl', [
         '$scope',
         '$routeParams',

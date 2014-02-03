@@ -4,17 +4,16 @@ angular.module('honeydew', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute',
     'ui.codemirror',
-    'ui.router',
-    'ui.bootstrap'
+    'ui.router'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise('/features/test/dan.feature');
 
         $stateProvider
-            .state('feature', {
-                url: "/feature",
-                templateUrl: "views/feature.html"
+            .state('editor', {
+                url: '/{path:.*\.(?:feature|phrase|set)}',
+                templateUrl: 'views/editor.html',
+                controller: 'EditorCtrl'
             });
     });

@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('honeydew')
-  .service('Files', function Files() {
-    // AngularJS will instantiate a singleton by calling "new" on this function
-  });
+  .factory('Files', ['$resource', function ($resource) {
+      return $resource('/rest.php/files/:file', {file: '@file'});
+  }]);

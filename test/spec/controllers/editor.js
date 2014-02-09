@@ -1,14 +1,15 @@
 'use strict';
 
 describe('Controller: EditorCtrl', function () {
-    var httpMock, scope, EditorCtrl, testFile, shortFile;
+    var httpMock, scope, EditorCtrl, testFile, shortFile, uiConfig;
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    beforeEach(inject(function($controller, $rootScope, $httpBackend, uiCodeMirrorConfig) {
         httpMock = $httpBackend;
         scope = $rootScope.$new();
         testFile = '/rest.php/files/features%252Ffake.feature';
         shortFile = 'features/fake.feature';
+        uiConfig = uiCodeMirrorConfig;
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope
         });

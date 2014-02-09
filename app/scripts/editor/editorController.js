@@ -1,20 +1,25 @@
 'use strict';
 
-var whee;
 angular.module('honeydew')
     .controller('EditorCtrl', [
         '$scope',
         '$stateParams',
         'Files',
-        function ($scope, $stateParams, Files) {
+        'debounce',
+        '$window',
+        function ($scope, $stateParams, Files, debounce, $window) {
             $scope.editorOptions = {
                 lineWrapping : true,
-                lineNumbers: true
+                lineNumbers: true,
+                onLoad: function (cm) {
+                    $scope.cm = cm;
+                }
             };
 
-            $scope.display = function (file) {
+            $scope.display = function ( file ) {
                 $scope.undo = false;
                 $scope.file = Files.get({file: $scope.resolveFilename(file)});
+                $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
             };
 
             $scope.save = function( file, savedContents ) {
@@ -27,6 +32,12 @@ angular.module('honeydew')
                     file: $scope.resolveFilename(file),
                     contents: savedContents
                 });
+            };
+
+            $scope.debouncedSave = function ( newContents, oldContents ) {
+                if (newContents !== oldContents && oldContents !== undefined) {
+                    $scope.save($scope.filename, newContents);
+                }
             };
 
             $scope.delete = function( file ) {
@@ -58,7 +69,11 @@ angular.module('honeydew')
                 if (typeof(file) === 'undefined') {
                     file = $scope.filename;
                 }
-
+                // ngResource encodes the slashes to %2F. Apache needs
+                // 'AllowEncodedSlashes' set to true, but we have no
+                // permissions for that. Double encoding the url gets
+                // past the Apache issue; Slim decodes one level, so
+                // we just have to decode once in the Slim app.
                 return encodeURIComponent(file);
             };
 
@@ -75,6 +90,4 @@ angular.module('honeydew')
                 $scope.filename = $stateParams.path;
                 $scope.display($scope.filename);
             }
-
-            whee = $scope;
         }]);

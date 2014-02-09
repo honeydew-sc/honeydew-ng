@@ -1,22 +1,23 @@
-<form class="form-inline" role="form">
-  <div class="form-group">
-    <div class="topbar">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">save</button>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a id="new" ng-click="new()">new</a></li>
-          <li><a id="copy" ng-click="promptCopy()">copy</a></li>
-          <li><a id="move" ng-click="promptMove()">move</a></li>
-          <li class="divider"></li>
-          <li><a id="delete" ng-click="confirmDelete()">delete</a></li>
-        </ul>
+<div ng-controller="FileActionCtrl">
+  <form class="form-inline" role="form">
+    <div class="form-group">
+      <div class="topbar">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">File
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a id="new" ng-click="open()">New</a></li>
+            <li><a id="copy" ng-click="open()">Copy</a></li>
+            <li><a id="move" ng-click="open()">Move</a></li>
+            <li class="divider"></li>
+            <li><a id="delete" ng-click="confirmDelete()">delete</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
 
 <ui-codemirror ng-model="file.contents" ui-codemirror-opts="editorOptions"></ui-codemirror>

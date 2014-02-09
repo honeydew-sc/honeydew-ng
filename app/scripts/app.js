@@ -5,6 +5,7 @@ angular.module('honeydew', [
     'ngResource',
     'ngSanitize',
     'ui.codemirror',
+    'ui.bootstrap',
     'ui.router'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {

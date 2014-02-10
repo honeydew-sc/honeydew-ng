@@ -5,7 +5,7 @@ angular.module('honeydew')
 
         $scope.open = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'views/fileActions.html',
+                templateUrl: 'scripts/editor/controllers/fileActions.html',
                 controller: 'ModalInstanceCtrl',
                 resolve: {
                     items: function () {

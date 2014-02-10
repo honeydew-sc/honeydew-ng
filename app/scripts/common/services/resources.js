@@ -6,6 +6,6 @@ angular.module('honeydew')
     }]);
 
 angular.module('honeydew')
-    .factory('jobs', ['$resource', function ($resource) {
+    .factory('Jobs', ['$resource', function ($resource) {
         return $resource('/rest.php/jobs');
     }]);

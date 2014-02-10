@@ -1,13 +1,15 @@
 'use strict';
 
-var whee;
-
 angular.module('honeydew')
     .directive('jobOptions', [
         'browserSelection',
         '$localStorage',
-        function (browserSelection, $localStorage) {
+        'Jobs',
+        function (browserSelection, $localStorage, Jobs) {
             return {
+                scope: {
+                    filename: '@'
+                },
                 templateUrl: 'scripts/common/directives/jobOptions.html',
                 restrict: 'E',
                 link: function postLink(scope, element, attrs) {
@@ -32,12 +34,14 @@ angular.module('honeydew')
                         scope.$storage.browser = scope.browserList[1];
                     }
 
-                    console.log(scope.browserList[1].name);
-                    whee = scope;
-
                     scope.executeJob = function () {
-                        console.log(scope.$storage.browser);
-                        console.log(scope.$storage.host);
+                        Jobs.save({
+                            filename: scope.filename,
+                            browser: scope.$storage.browser.name,
+                            host: scope.$storage.host
+                        }).then(function (res) {
+                            console.log(res);
+                        });
                     };
                 }
             };

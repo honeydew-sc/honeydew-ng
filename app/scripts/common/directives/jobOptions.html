@@ -1,17 +1,16 @@
-<form class="navbar-form navbar-left" role="form">
+<form class="navbar-form navbar-left" role="form" name="jobOptions">
     <div class="form-group col-xs-6">
       <label class="sr-only" for="host">Hostname</label>
-      <input type="text" class="form-control" ng-model="host" placeholder="http://www.sharecare.com">
+      <input type="url" class="form-control" ng-model="$storage.host" required placeholder="http://www.sharecare.com">
     </div>
 
     <div class="form-group col-xs-5">
       <label class="sr-only" for="browser">Browser</label>
-      <select class="form-control" ng-model="browser" ng-options="b.name group by b.group for b in browserList">
-        <option ng-repeat="browser in browserList">{{ browser }}</option>
+      <select class="form-control" ng-init="$storage.browser = browserList[0]" ng-model="$storage.browser" required ng-options="b.name group by b.group for b in browserList">
       </select>
     </div>
 
     <div class="form-group col-xs-1">
-      <button type="submit" class="btn btn-success"><i class="fa fa-play"></i> execute!</button>
+      <button type="submit" id="execute" class="btn btn-success" ng-click="executeJob()"><i class="fa fa-play"></i> execute!</button>
     </div>
 </form>

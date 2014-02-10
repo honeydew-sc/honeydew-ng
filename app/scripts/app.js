@@ -4,6 +4,7 @@ angular.module('honeydew', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
+    'ngStorage',
     'ui.codemirror',
     'ui.bootstrap',
     'ui.router'

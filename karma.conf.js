@@ -9,8 +9,19 @@ module.exports = function(config) {
         // testing framework to use (jasmine/mocha/qunit/...)
         frameworks: ['jasmine'],
 
+        preprocessors: {
+            'app/scripts/common/directives/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // setting this option will create only a single module that contains templates
+            // from all the files, so you can load them all with module('foo')
+            moduleName: 'templates'
+        },
+
         // list of files / patterns to load in the browser
         files: [
+            // angular packages
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/angular-resource/angular-resource.js',
@@ -18,10 +29,17 @@ module.exports = function(config) {
             'app/bower_components/angular-sanitize/angular-sanitize.js',
             'app/bower_components/angular-ui-codemirror/ui-codemirror.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
+            'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'app/bower_components/ngstorage/ngStorage.js',
+
+            // our scripts
             'app/scripts/*.js',
             'app/scripts/**/*.js',
             'test/mock/**/*.js',
-            'test/spec/**/*.js'
+            'test/spec/**/*.js',
+
+            // templates for directives
+            'app/scripts/common/directives/*.html'
         ],
 
         // list of files / patterns to exclude

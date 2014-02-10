@@ -35,12 +35,10 @@ angular.module('honeydew')
                     }
 
                     scope.executeJob = function () {
-                        Jobs.save({
+                        Jobs.execute({
                             filename: scope.filename,
                             browser: scope.$storage.browser.name,
                             host: scope.$storage.host
-                        }).then(function (res) {
-                            console.log(res);
                         });
                     };
                 }

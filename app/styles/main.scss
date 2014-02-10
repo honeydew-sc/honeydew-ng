@@ -12,8 +12,12 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     overflow-y: auto;
 }
 
-html, body, .full-height {
+html, body {
     height: 100%;
+}
+
+.full-height {
+    height: calc(100% - 62px) !important;
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

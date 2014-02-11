@@ -17,6 +17,7 @@ html, body {
 .editor-nav.navbar {
     padding: 0px;
     height: 41px;
+    border-radius: 0px;
 }
 
 .editor-nav .navbar-form {
@@ -41,8 +42,15 @@ html, body {
     bottom: 0px;
     position: fixed;
     height: 100%;
-    border-left: 1px solid aliceblue;
+    border-left: 1px solid #E7E7E7;
     padding: 10px 15px;
+}
+
+.center-panel pre {
+    padding: 0px;
+    margin: 0px;
+    background-color: inherit;
+    border: 0px;
 }
 
 .east-panel {
@@ -53,8 +61,10 @@ html, body {
     position: fixed;
     width: 40px;
     height: 100%;
-    border-left: 1px solid aliceblue;
-    padding: 10px 15px;
+    border-left: 1px solid #E7E7E7;
+    padding: 0px;
+    border-top: 0px;
+    border-radius: 0px;
 }
 
 .east-panel ul > li > a.pane-icon {
@@ -66,8 +76,6 @@ html, body {
     font-size: 20px;
     padding: 0;
     text-align: center;
-    position: relative;
-    left: -15px;
 }
 
 .east-panel ul > li > a:hover, .east-panel .active, .east-panel .active:hover {

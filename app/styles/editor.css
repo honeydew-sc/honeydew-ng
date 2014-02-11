@@ -1,4 +1,5 @@
 .CodeMirror {
+    z-index: 0;
     height: 100%;
 }
 
@@ -34,6 +35,7 @@ html, body {
 }
 
 .center-panel {
+    z-index: 1;
     right: 20px;
     top: 41px;
     bottom: 0px;
@@ -44,6 +46,7 @@ html, body {
 }
 
 .east-panel {
+    z-index: 100;
     right: 0px;
     top: 41px;
     bottom: 0px;

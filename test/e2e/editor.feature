@@ -22,7 +22,7 @@ $editor = 'http://localhost/editor/#/features/e2e/delete-me.feature'
      Then the css=[type='url']:contains('$input') element should be present
      Then IE 10 Local should be selected in the css=[ng-options] dropdown
 
- only Scenario: execute a job
+ skip Scenario: execute a job
  Given I am on the $editor page
    When I click on the link id=execute
-     Then the page should contain Executing...
+     Then the class=center-panel element should be visible

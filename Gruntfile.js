@@ -400,6 +400,10 @@ module.exports = function (grunt) {
         'htmlmin'
     ]);
 
+    grunt.registerTask('dist', function () {
+        grunt.task.run(['build']);
+    });
+
     grunt.registerTask('default', [
         'newer:jshint',
         'test',

@@ -1,0 +1,40 @@
+.CodeMirror {
+    height: 100%;
+}
+
+.CodeMirror-scroll {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* control height of navbar */
+.editor-nav.navbar {
+    padding: 0px;
+    height: 41px;
+}
+
+.editor-nav .navbar-form {
+    padding: 0px 0px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.editor-nav .nav > li > a {
+    padding-top: 10px;
+}
+
+/* compensate for navbar height */
+.remaining-height {
+    height: calc(100% - 45px) !important;
+}
+
+div.east-panel {
+    right: 0px !important;
+    top: 0px !important;
+    position: fixed !important;
+}

@@ -1,34 +1,17 @@
-$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+/* $icon-font-path: "/bower_components/sass-bootstrap/fonts/"; */
 
-@import 'sass-bootstrap/lib/bootstrap';
+/* @import 'sass-bootstrap/lib/bootstrap'; */
 
-.CodeMirror {
-    height: 100%;
+/* add because angular ui bootstrap is slightly different */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
 }
-
-.CodeMirror-scroll {
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
-}
-
-html, body {
-    height: 100%;
-}
-
-.full-height {
-    height: calc(100% - 62px) !important;
-}
-
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .navbar {
     min-height: 0px;
     margin: 0px;
     padding: 5px;
 }
-
-/* uhhhhhhhhhhh maybe we should delete all this stuff */
 
 .browsehappy {
     margin: 0.2em 0;

@@ -37,8 +37,7 @@
 <ui-codemirror ng-model="file.contents" ui-codemirror-opts="editorOptions"></ui-codemirror>
 
 <div class="col-md-6 center-panel" ng-show="activePane == 'report'">
-  This is the live report!
-  <ng-include src="'/reports.php?action=new'"></ng-include>
+  <ng-include src="'/reports.php?new=true'"></ng-include>
 </div>
 
 <div class="navbar nav-stacked east-panel navbar-default" role="navigation">

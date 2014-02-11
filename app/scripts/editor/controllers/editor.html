@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="editor-nav navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -35,3 +35,18 @@
 </nav>
 
 <ui-codemirror ng-model="file.contents" ui-codemirror-opts="editorOptions"></ui-codemirror>
+
+<div class="col-md-6 center-panel" ng-show="activePane == 'report'">
+  This is the live report!
+  <ng-include src="'/reports.php?action=new'"></ng-include>
+</div>
+
+<div class="navbar nav-stacked east-panel navbar-default" role="navigation">
+  <nav class="">
+    <ul class="navbar-nav nav">
+      <li class="sidebar-nav" ng-repeat="pane in panes">
+        <a class="pane-icon" ng-class="activePane == 'report' ? 'active' : ''" ng-click="togglePane(pane.name)"><i class="fa {{pane.icon}}"></i></a>
+      </li>
+    </ul>
+  </nav>
+</div>

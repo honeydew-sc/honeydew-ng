@@ -33,8 +33,42 @@ html, body {
     height: calc(100% - 45px) !important;
 }
 
-div.east-panel {
-    right: 0px !important;
-    top: 0px !important;
-    position: fixed !important;
+.center-panel {
+    right: 20px;
+    top: 41px;
+    bottom: 0px;
+    position: fixed;
+    height: 100%;
+    border-left: 1px solid aliceblue;
+    padding: 10px 15px;
+}
+
+.east-panel {
+    right: 0px;
+    top: 41px;
+    bottom: 0px;
+    position: fixed;
+    width: 40px;
+    height: 100%;
+    border-left: 1px solid aliceblue;
+    padding: 10px 15px;
+}
+
+.east-panel ul > li > a.pane-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    left: -15px;
+}
+
+.east-panel ul > li > a:hover, .east-panel .active, .east-panel .active:hover {
+    /* aqua */
+    color: #333 !important;
+    background-color: #7FDBFF !important;
 }

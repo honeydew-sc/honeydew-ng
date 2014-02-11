@@ -8,7 +8,8 @@ angular.module('honeydew')
         function (browserSelection, $localStorage, Jobs) {
             return {
                 scope: {
-                    filename: '@'
+                    filename: '@',
+                    "onExecute": '='
                 },
                 templateUrl: 'scripts/common/directives/jobOptions.html',
                 restrict: 'E',
@@ -35,6 +36,7 @@ angular.module('honeydew')
                     }
 
                     scope.executeJob = function () {
+                        scope.onExecute('report');
                         Jobs.execute({
                             filename: scope.filename,
                             browser: scope.$storage.browser.name,

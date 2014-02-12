@@ -6,8 +6,8 @@ angular.module('honeydew')
         '$stateParams',
         'Files',
         'debounce',
-        '$window',
-        function ($scope, $stateParams, Files, debounce, $window) {
+        '$location',
+        function ($scope, $stateParams, Files, debounce, $location) {
             $scope.editorOptions = {
                 lineWrapping : true,
                 lineNumbers: true,
@@ -40,46 +40,40 @@ angular.module('honeydew')
                 $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
             };
 
-            $scope.save = function( file, savedContents ) {
-                $scope.undo = false;
-                if (typeof(savedContents) === 'undefined') {
-                    savedContents = $scope.file.contents;
-                }
-
-                Files.save({
-                    file: $scope.resolveFilename(file),
-                    contents: savedContents
+            $scope.save = function() {
+                $scope.file.$save().then(function (res) {
+                    $scope.cm.markClean();
+                }).catch( function (res) {
                 });
             };
 
             $scope.debouncedSave = function ( newContents, oldContents ) {
                 if (newContents !== oldContents && oldContents !== undefined) {
-                    $scope.save($scope.filename, newContents);
+                    $scope.save();
                 }
             };
 
-            $scope.delete = function( file ) {
+            $scope.delete = function( ) {
                 $scope.undo = true;
-                $scope.deletedObject = {
-                    file: file,
-                    contents: $scope.file.contents
-                };
-
-                Files.delete( {file: $scope.encode(file)} );
+                $scope.undoFile = angular.copy($scope.file);
+                $scope.file.delete();
             };
 
             $scope.copy = function( destination ) {
-                $scope.undo = false;
-                $scope.save(destination);
+                $scope.copied = angular.copy($scope.file);
+                $scope.copied.file = $scope.encode(destination);
+                $scope.copied.$save().then( function (res) {
+                    $location.path(res.file);
+                });
             };
 
             $scope.move = function( destination, source ) {
-                $scope.undo = false;
-                Files.save( {
-                    file: $scope.encode(destination),
-                    contents: $scope.file.contents
-                }, function (res) {
-                    $scope.delete(source);
+                $scope.new = angular.copy($scope.file);
+                $scope.new.$save().then( function (res) {
+                    $scope.delete();
+                    $location.path(res.file);
+                }).catch( function (res) {
+
                 });
             };
 
@@ -100,7 +94,9 @@ angular.module('honeydew')
             };
 
             $scope.undoDelete = function () {
-                $scope.save( $scope.deletedObject.file, $scope.deletedObject.contents );
+                $scope.undoFile.$save().then( function (res) {
+                    $location.path(res.file);
+                });
             };
 
             if ($stateParams.path) {

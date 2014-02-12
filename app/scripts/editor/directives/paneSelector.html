@@ -2,7 +2,13 @@
   <nav class="">
     <ul class="navbar-nav nav">
       <li class="sidebar-nav" ng-repeat="pane in panes.panes">
-        <a class="pane-icon" ng-class="panes.activePane == pane.name ? 'active' : ''" ng-click="panes.togglePane(pane.name)"><i class="fa {{pane.icon}}"></i></a>
+        <a class="pane-icon"
+           ng-class="panes.activePane == pane.name ? 'active' : ''"
+           popover="{{pane.tooltip}}"
+           popover-placement="left"
+           popover-trigger="mouseenter"
+           ng-click="panes.togglePane(pane.name)"> <i class="fa {{pane.icon}}" > </i>
+        </a>
       </li>
     </ul>
   </nav>

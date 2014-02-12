@@ -7,7 +7,8 @@ angular.module('honeydew')
         'Files',
         'debounce',
         '$location',
-        function ($scope, $stateParams, Files, debounce, $location) {
+        'panes',
+        function ($scope, $stateParams, Files, debounce, $location, panes) {
             $scope.editorOptions = {
                 lineWrapping : true,
                 lineNumbers: true,
@@ -107,33 +108,4 @@ angular.module('honeydew')
                 $scope.filename = $stateParams.path;
                 $scope.display($scope.filename);
             }
-
-            $scope.panes = {
-                "current-report": {
-                    name: 'report',
-                    classes: 'col-md-6',
-                    src: '/reports.php?new=true',
-                    icon: 'fa-list-alt'
-                }
-            };
-
-            $scope.activePane = "";
-
-            $scope.openPane = function (pane) {
-                $scope.activePane = pane;
-            };
-
-            $scope.closePane = function () {
-                $scope.activePane = "";
-            };
-
-            $scope.togglePane = function (pane) {
-                if ($scope.activePane == pane) {
-                    $scope.closePane();
-                }
-                else {
-                    $scope.openPane(pane);
-                }
-                console.log($scope.activePane);
-            };
         }]);

@@ -1,8 +1,8 @@
 <div class="navbar nav-stacked east-panel navbar-default" role="navigation">
   <nav class="">
     <ul class="navbar-nav nav">
-      <li class="sidebar-nav" ng-repeat="pane in panes">
-        <a class="pane-icon" ng-class="activePane == 'report' ? 'active' : ''" ng-click="togglePane(pane.name)"><i class="fa {{pane.icon}}"></i></a>
+      <li class="sidebar-nav" ng-repeat="pane in panes.panes">
+        <a class="pane-icon" ng-class="panes.activePane == pane.name ? 'active' : ''" ng-click="panes.togglePane(pane.name)"><i class="fa {{pane.icon}}"></i></a>
       </li>
     </ul>
   </nav>

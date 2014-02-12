@@ -1,4 +1,4 @@
-<div ng-repeat="pane in panes">
-  <div class="{{pane.classes}} center-panel" ng-show="activePane == pane.name" ng-include="pane.src">
+<div ng-repeat="pane in panes.panes">
+  <div class="{{pane.classes}} center-panel" ng-show="panes.activePane == pane.name" ng-include="pane.src">
   </div>
 </div>

@@ -36,9 +36,7 @@
 
 <ui-codemirror ng-model="file.contents" ui-codemirror-opts="editorOptions"></ui-codemirror>
 
-<div class="col-md-6 center-panel" ng-show="activePane == 'report'">
-  <ng-include src="'/reports.php?new=true'"></ng-include>
-</div>
+<center-pane></center-pane>
 
 <div class="navbar nav-stacked east-panel navbar-default" role="navigation">
   <nav class="">

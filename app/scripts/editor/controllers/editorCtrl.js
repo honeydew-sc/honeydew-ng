@@ -110,8 +110,10 @@ angular.module('honeydew')
 
             $scope.panes = {
                 "current-report": {
-                    "name": "report",
-                    "icon": "fa-list-alt"
+                    name: 'report',
+                    classes: 'col-md-6',
+                    src: '/reports.php?new=true',
+                    icon: 'fa-list-alt'
                 }
             };
 

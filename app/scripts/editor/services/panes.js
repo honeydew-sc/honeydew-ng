@@ -12,26 +12,46 @@ angular.module('honeydew')
                     tooltip: 'Live Report'
                 },
                 {
-                    name: 'help',
+                    name: 'examples',
                     classes: 'col-md-6',
-                    src: '/rules.html',
-                    icon: 'fa-question-circle',
-                    tooltip: 'Help'
+                    src: '/docs/examples.html',
+                    icon: 'fa-clipboard',
+                    tooltip: 'Samples'
+                },
+                {
+                    name: 'rules',
+                    classes: 'col-md-6',
+                    src: '/docs/rules.html',
+                    icon: 'fa-file-text-o',
+                    tooltip: 'Perl POD'
                 }
+
             ],
 
             activePane: "",
 
             openPane:  function (pane) {
-                this.activePane = pane;
+                var panes = this;
+                if (typeof(pane) === 'object') {
+                    this.activePane = pane.name;
+                    this.url = pane.src;
+                }
+                else {
+                    this.panes.forEach( function (paneObject) {
+                        if (paneObject.name === pane) {
+                            panes.openPane(paneObject);
+                        }
+                    });
+                }
             },
 
             closePane:  function () {
                 this.activePane = "";
+                this.url = "";
             },
 
             togglePane:  function (pane) {
-                if (this.activePane === pane) {
+                if (this.activePane === pane.name) {
                     this.closePane();
                 }
                 else {

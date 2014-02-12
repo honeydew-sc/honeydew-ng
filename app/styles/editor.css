@@ -1,5 +1,5 @@
 /* honestly, no idea what's going on here. pre has left: -20px set
-somewhere :( */
+   somewhere :( */
 .remaining-height pre {
     left: inherit;
 }
@@ -41,6 +41,8 @@ html, body {
     height: calc(100% - 45px) !important;
 }
 
+/* center panel styles */
+
 .center-panel {
     z-index: 1;
     right: 20px;
@@ -59,6 +61,26 @@ html, body {
     background-color: inherit;
     border: 0px;
 }
+
+.center-panel accordion pre {
+    background-color: #FFFACD !important;
+    padding: 6px;
+    position: relative;
+    overflow: auto;
+    border-radius: 10px;
+    border: 1px solid #EEE;
+}
+
+.center-panel .panel-group {
+    width: 97%;
+}
+
+.center-panel accordion pre > code, samp {
+    font-size: 110% !important;
+    color: #35638A;
+}
+
+/* east nav */
 
 .east-panel {
     z-index: 100;
@@ -85,7 +107,12 @@ html, body {
     text-align: center;
 }
 
-.east-panel ul > li > a:hover, .east-panel .active, .east-panel .active:hover {
+.east-panel ul > li > a:hover {
+    color: #FFF;
+    background-color: #DDD !important;
+}
+
+.east-panel .active, .east-panel .active:hover {
     /* aqua */
     color: #333 !important;
     background-color: #7FDBFF !important;

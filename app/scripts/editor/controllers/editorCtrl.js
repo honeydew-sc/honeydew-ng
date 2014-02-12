@@ -25,10 +25,14 @@ angular.module('honeydew')
                 });
             };
 
-            $scope.create = function (file) {
+            $scope.create = function (file, contents) {
+                if (typeof(contents) === 'undefined') {
+                    contents = 'Feature: ';
+                }
+
                 $scope.file = new Files({
                     file: $scope.encode(file),
-                    contents: "Feature: "
+                    contents: contents
                 });
 
                 $scope.file.$save().then( function () {

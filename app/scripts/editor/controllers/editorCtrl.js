@@ -18,7 +18,25 @@ angular.module('honeydew')
 
             $scope.display = function ( file ) {
                 $scope.undo = false;
-                $scope.file = Files.get({file: $scope.resolveFilename(file)});
+                $scope.file = Files.get({file: $scope.encode(file)}, function (res) {
+                    $scope.watchCodeMirror();
+                }, function (res) {
+                    $scope.create(file);
+                });
+            };
+
+            $scope.create = function (file) {
+                $scope.file = new Files({
+                    file: $scope.encode(file),
+                    contents: "Feature: "
+                });
+
+                $scope.file.$save().then( function () {
+                    $scope.watchCodeMirror();
+                });
+            };
+
+            $scope.watchCodeMirror = function () {
                 $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
             };
 

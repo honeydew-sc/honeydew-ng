@@ -36,13 +36,15 @@ angular.module('honeydew')
                     }
 
                     scope.executeJob = function () {
-                        panes.openPane('report');
-                        var job = angular.extend({}, scope.$storage.browser, {
-                            file: scope.filename,
-                            host: scope.$storage.host
-                        });
-                        console.log(job);
-                        Jobs.execute(job);
+                        if (scope.jobOptions.$valid) {
+                            panes.openPane('report');
+                            var job = angular.extend({}, scope.$storage.browser, {
+                                file: scope.filename,
+                                host: scope.$storage.host
+                            });
+
+                            Jobs.execute(job);
+                        }
                     };
                 }
             };

@@ -1,78 +1,82 @@
 'use strict';
 
 describe('Controller: EditorCtrl', function () {
-    var httpMock, scope, EditorCtrl, testFile, shortFile;
+    var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile;
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    beforeEach(inject(function($controller, $rootScope, $httpBackend, _Files_) {
         httpMock = $httpBackend;
-        scope = $rootScope.$new();
-        testFile = '/rest.php/files/features%252Ffake.feature';
+
+        Files = _Files_;
+        testFileUrl = '/rest.php/files/features%252Ffake.feature';
         shortFile = 'features/fake.feature';
+        encodedFile = encodeURIComponent(shortFile);
+        fakeText = 'fake feature contents!';
+        fakedContents = {
+            file: encodedFile,
+            contents: fakeText
+        };
+        fakeFile = new Files(fakedContents);
+
+        scope = $rootScope.$new();
+        scope.cm = {
+            markClean: function () {}
+        };
+        scope.file = fakeFile;
+
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope
         });
     }));
 
     it('should put the feature contents in the model', function() {
-        httpMock.expectGET(testFile).respond({contents: 'fake feature contents!'});
+        httpMock.expectGET(testFileUrl).respond(fakedContents);
         scope.display(shortFile);
         httpMock.flush();
-        expect(scope.file.contents).toBe('fake feature contents!');
+        expect(scope.file.contents).toBe(fakeText);
     });
 
     it('should persist changes to the model', function() {
-        httpMock.expectPOST(testFile, {
-            file: 'features%2Ffake.feature',
-            contents: 'new contents'
-        }).respond({});
-        scope.file = { contents: 'new contents'};
-        scope.save(shortFile);
+        httpMock.expectPOST(testFileUrl, fakedContents).respond(fakedContents);
+        scope.save();
         httpMock.flush();
     });
 
     it('should delete a file', function() {
-        httpMock.expectDELETE(testFile).respond({ status: 'success' });
-        scope.file = { contents: 'new contents'};
-        scope.delete(shortFile);
+        httpMock.expectDELETE(testFileUrl).respond({ status: 'success' });
+        scope.delete();
         httpMock.flush();
     });
 
     it('should let me undo after a delete', function () {
-        httpMock.expectDELETE(testFile).respond({ status: 'success' });
-        scope.file = { contents: 'new contents'};
-        scope.delete(shortFile);
+        httpMock.expectDELETE(testFileUrl).respond({ status: 'success' });
+        scope.delete();
         httpMock.flush();
         expect(scope.canUndo()).toBeTruthy();
 
-
-        httpMock.expectPOST(testFile, {
-            file: 'features%2Ffake.feature',
-            contents: 'new contents'
-        }).respond({});
-
+        httpMock.expectPOST(testFileUrl, fakedContents).respond(fakedContents);
         scope.undoDelete();
         httpMock.flush();
     });
 
     it('should copy files around', function() {
-        httpMock.expectPOST(testFile.replace('fake', 'fake2'), {
+        httpMock.expectPOST(testFileUrl.replace('fake', 'fake2'), {
             file: 'features%2Ffake2.feature',
-            contents: 'copied contents'
+            contents: fakeText
         }).respond({ status: 'success' });
-        scope.file = {contents: 'copied contents'};
+
         scope.copy(shortFile.replace('fake', 'fake2'));
         httpMock.flush();
     });
 
     it('should move files from here to there', function () {
-        httpMock.expectPOST(testFile.replace('fake', 'fake2'), {
+        httpMock.expectPOST(testFileUrl.replace('fake', 'fake2'), {
             file: 'features%2Ffake2.feature',
-            contents: 'moved contents'
+            contents: fakeText
         }).respond({ status: 'success' });
-        httpMock.expectDELETE(testFile).respond({status: 'success'});
-        scope.file = {contents: 'moved contents'};
-        scope.move(shortFile.replace('fake', 'fake2'), shortFile);
+        httpMock.expectDELETE(testFileUrl).respond({status: 'success'});
+
+        scope.move(shortFile.replace('fake', 'fake2'));
         httpMock.flush();
     });
 });

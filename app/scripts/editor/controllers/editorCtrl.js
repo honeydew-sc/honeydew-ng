@@ -60,7 +60,7 @@ angular.module('honeydew')
             $scope.delete = function( ) {
                 $scope.undo = true;
                 $scope.undoFile = angular.copy($scope.file);
-                $scope.file.delete();
+                $scope.file.$delete();
             };
 
             $scope.copy = function( destination ) {
@@ -71,13 +71,12 @@ angular.module('honeydew')
                 });
             };
 
-            $scope.move = function( destination, source ) {
+            $scope.move = function( destination ) {
                 $scope.new = angular.copy($scope.file);
+                $scope.new.file = $scope.encode(destination);
                 $scope.new.$save().then( function (res) {
-                    $scope.delete();
+                    $scope.file.$delete();
                     $location.path(res.file);
-                }).catch( function (res) {
-
                 });
             };
 

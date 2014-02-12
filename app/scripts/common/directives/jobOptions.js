@@ -14,10 +14,10 @@ angular.module('honeydew')
                 templateUrl: 'scripts/common/directives/jobOptions.html',
                 restrict: 'E',
                 link: function postLink(scope, element, attrs) {
-                    scope.browserList = browserSelection.allBrowsers;
+                    scope.browserList = browserSelection.all;
 
                     scope.$storage = $localStorage.$default({
-                        host: 'http://www.sharecare.com'
+                        host: ''
                         // , browser: scope.browserList[1]
                     });
 
@@ -26,7 +26,7 @@ angular.module('honeydew')
                     // we have to do it manually.
                     if (scope.$storage.browser) {
                         scope.browserList.forEach( function (element, index, array) {
-                            if (scope.$storage.browser.name === element.name) {
+                            if (scope.$storage.browser.browser === element.browser) {
                                 scope.$storage.browser = element;
                             }
                         });
@@ -37,11 +37,12 @@ angular.module('honeydew')
 
                     scope.executeJob = function () {
                         panes.openPane('report');
-                        Jobs.execute({
-                            filename: scope.filename,
-                            browser: scope.$storage.browser.name,
+                        var job = angular.extend({}, scope.$storage.browser, {
+                            file: scope.filename,
                             host: scope.$storage.host
                         });
+                        console.log(job);
+                        Jobs.execute(job);
                     };
                 }
             };

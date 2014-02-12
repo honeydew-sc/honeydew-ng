@@ -1,25 +1,62 @@
 angular.module('honeydew')
     .service('browserSelection', function () {
 
-        var localBrowsers = [
-            { name: "IE 10 Local", group: "Current Local" },
-            { name: "Chrome Local", group: "Current Local" },
-            { name: "FF Local", group: "Current Local" }
+        var local = [
+            {
+                browser: 'IE 10 Local',
+                group: 'Current Local'
+            },
+            {
+                browser: 'Chrome Local',
+                group: 'Current Local'
+            },
+            {
+                browser: 'FF Local',
+                group: 'Current Local'
+            }
         ];
 
-        var grandPoobahBrowsers = [
-            { name: "GP IE 10 Local", group: "GP: 10.10.0.83" },
-            { name: "GP Chrome Local", group: "GP: 10.10.0.83" },
-            { name: "GP FF Local", group: "GP: 10.10.0.83" }
+        var grandPoobah = [
+            {
+                browser: 'GP IE 10 Local',
+                group: 'GP: 10.10.0.83',
+                local: '10.10.0.83'
+            },
+            {
+                browser: 'GP Chrome Local',
+                group: 'GP: 10.10.0.83',
+                local: '10.10.0.83'
+            },
+            {
+                browser: 'GP FF Local',
+                group: 'GP: 10.10.0.83',
+                local: '10.10.0.83'
+            }
         ];
 
-        var sauceBrowsers = [
-            { name: "Windows 2012 - IE 10", group: "SauceLabs OnDemand" },
-            { name: "Windows 2012 - IE 11", group: "SauceLabs OnDemand" },
-            { name: "Windows 2003 - FF", group: "SauceLabs OnDemand" },
-            { name: "Windows 2003 - Chrome", group: "SauceLabs OnDemand" }
+        var sauce = [
+            {
+                browser: 'Windows 2012 - IE 10',
+                group: 'SauceLabs OnDemand',
+                sauce: 'on'
+            },
+            {
+                browser: 'Windows 2012 - IE 11',
+                group: 'SauceLabs OnDemand',
+                sauce: 'on'
+            },
+            {
+                browser: 'Windows 2003 - FF',
+                group: 'SauceLabs OnDemand',
+                sauce: 'on'
+            },
+            {
+                browser: 'Windows 2003 - Chrome',
+                group: 'SauceLabs OnDemand',
+                sauce: 'on'
+            }
         ];
 
-        this.allBrowsers = localBrowsers.concat(grandPoobahBrowsers).concat(sauceBrowsers);
-        this.setBrowsers = grandPoobahBrowsers.concat(sauceBrowsers);
+        this.all = local.concat(grandPoobah).concat(sauce);
+        this.set = grandPoobah.concat(sauce);
     });

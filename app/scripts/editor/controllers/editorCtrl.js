@@ -47,7 +47,7 @@ angular.module('honeydew')
                     contents: $scope.file.contents
                 };
 
-                Files.delete( {file: $scope.resolveFilename(file)} );
+                Files.delete( {file: $scope.encode(file)} );
             };
 
             $scope.copy = function( destination ) {
@@ -58,14 +58,14 @@ angular.module('honeydew')
             $scope.move = function( destination, source ) {
                 $scope.undo = false;
                 Files.save( {
-                    file: $scope.resolveFilename(destination),
+                    file: $scope.encode(destination),
                     contents: $scope.file.contents
                 }, function (res) {
                     $scope.delete(source);
                 });
             };
 
-            $scope.resolveFilename = function ( file ) {
+            $scope.encode = function ( file ) {
                 if (typeof(file) === 'undefined') {
                     file = $scope.filename;
                 }

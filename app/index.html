@@ -19,6 +19,34 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/codemirror/addon/hint/show-hint.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-night.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/ambiance.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-light.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/blackboard.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/cobalt.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/eclipse.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/elegant.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/erlang-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/lesser-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/mbo.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/midnight.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/night.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-light.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/pastel-on-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/rubyblue.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/solarized.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/the-matrix.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/tomorrow-night-eighties.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/twilight.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/vibrant-ink.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-dark.css">
+    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-light.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/colors.css">
     <link rel="stylesheet" href="styles/editor.css">
@@ -26,16 +54,16 @@
   </head>
   <body ng-app="honeydew">
     <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
     <!-- Add your site or application content here -->
     <div class="remaining-height" ui-view=""></div>
 
     <!--[if lt IE 9]>
-        <script src="bower_components/es5-shim/es5-shim.js"></script>
-        <script src="bower_components/json3/lib/json3.min.js"></script>
-        <![endif]-->
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -56,12 +84,22 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+
+    <!-- editor page layout -->
     <script src="scripts/editor/controllers/editorCtrl.js"></script>
     <script src="scripts/editor/controllers/fileActionCtrl.js"></script>
     <script src="scripts/editor/controllers/modalInstanceCtrl.js"></script>
     <script src="scripts/editor/directives/paneSelector.js"></script>
     <script src="scripts/editor/directives/pane.js"></script>
     <script src="scripts/editor/services/panes.js"></script>
+
+    <!-- customize codemirror -->
+    <script src="scripts/editor/codemirror/honeydew-mode.js"></script>
+    <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
+    <script src="bower_components/codemirror/addon/selection/active-line.js"></script>
+    <script src="scripts/editor/services/cmAutocomplete.js"></script>
+    <!-- done -->
+
     <script src="scripts/common/directives/jobOptions.js"></script>
     <script src="scripts/common/directives/scrollTo.js"></script>
     <script src="scripts/common/services/browserSelection.js"></script>

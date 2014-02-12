@@ -8,12 +8,24 @@ angular.module('honeydew')
         'debounce',
         '$location',
         'panes',
-        function ($scope, $stateParams, Files, debounce, $location, panes) {
+        'cmAutocomplete',
+        function ($scope, $stateParams, Files, debounce, $location, panes, cmAutocomplete) {
             $scope.editorOptions = {
                 lineWrapping : true,
                 lineNumbers: true,
+                styleActiveLine: true,
+                theme: 'neat',
+                mode: "honeydew",
+                extraKeys: {
+                    'Ctrl-Space': 'autocomplete'
+                },
                 onLoad: function (cm) {
                     $scope.cm = cm;
+                    CodeMirror.commands.autocomplete = function (cm) {
+                        CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
+                    };
+
+                    CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
                 }
             };
 

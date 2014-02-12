@@ -55,6 +55,7 @@ html, body {
     border-left: 1px solid #E7E7E7;
     padding: 10px 15px;
     overflow: auto;
+    background-color: rgba(255,255,255,1);
 }
 
 .center-panel pre {
@@ -65,16 +66,12 @@ html, body {
 }
 
 .center-panel accordion pre {
-    background-color: #FFFACD !important;
+    background-color: honeydew !important;
     padding: 6px;
     position: relative;
     overflow: auto;
     border-radius: 10px;
     border: 1px solid #EEE;
-}
-
-.center-panel .panel-group {
-    width: 97%;
 }
 
 .center-panel accordion pre > code, samp {

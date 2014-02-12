@@ -1,3 +1,9 @@
+/* honestly, no idea what's going on here. pre has left: -20px set
+somewhere :( */
+.remaining-height pre {
+    left: inherit;
+}
+
 .CodeMirror {
     z-index: 0;
     height: 100%;
@@ -44,6 +50,7 @@ html, body {
     height: 100%;
     border-left: 1px solid #E7E7E7;
     padding: 10px 15px;
+    overflow: auto;
 }
 
 .center-panel pre {

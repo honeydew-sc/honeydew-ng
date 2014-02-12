@@ -3,12 +3,22 @@
 angular.module('honeydew')
     .service('panes', [ function () {
         return {
-            panes: [{
+            panes: [
+                {
                     name: 'report',
                     classes: 'col-md-6',
-                    src: '/features.php',
-                    icon: 'fa-list-alt'
-                }],
+                    src: '/reports.php?new=true',
+                    icon: 'fa-list-alt',
+                    tooltip: 'Live Report'
+                },
+                {
+                    name: 'help',
+                    classes: 'col-md-6',
+                    src: '/rules.html',
+                    icon: 'fa-question-circle',
+                    tooltip: 'Help'
+                }
+            ],
 
             activePane: "",
 

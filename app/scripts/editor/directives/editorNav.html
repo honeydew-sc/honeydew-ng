@@ -1,0 +1,36 @@
+<nav class="editor-nav navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- cput sc jira tickets in here ? maybe feature name? -->
+      <!-- <a class="navbar-brand" href="#">Brand</a> -->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a id="new" ng-click="open()"><i class="fa fa-plus-square"></i> New File</a></li>
+            <li><a id="copy" ng-click="open()"><i class="fa fa-floppy-o"></i> Save</a></li>
+            <li><a id="copy" ng-click="open()"><i class="fa fa-copy"></i> Make a Copy</a></li>
+            <li><a id="move" ng-click="open()"><i class="fa fa-cut"></i> Move/Rename</a></li>
+            <li class="divider"></li>
+            <li><a id="delete" ng-click="confirmDelete()"><i class="fa fa-trash-o"></i> Delete</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <job-options control="control" filename={{filename}}></job-options>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

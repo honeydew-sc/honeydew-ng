@@ -14,8 +14,8 @@ angular.module('honeydew')
                 lineWrapping : true,
                 lineNumbers: true,
                 styleActiveLine: true,
-                theme: 'neat',
-                mode: "honeydew",
+                theme: 'mdn-like',
+                mode: 'honeydew',
                 extraKeys: {
                     'Ctrl-Space': 'autocomplete',
                     'F5': 'execute'

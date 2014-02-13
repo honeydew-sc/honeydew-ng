@@ -31,15 +31,13 @@ module.exports = function(config) {
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
             'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             'app/bower_components/ngstorage/ngStorage.js',
+            'app/bower_components/codemirror/lib/codemirror.js',
 
             // our scripts
             'app/scripts/*.js',
             'app/scripts/**/*.js',
             'test/mock/**/*.js',
-            'test/spec/**/*.js',
-
-            // templates for directives
-            'app/scripts/common/directives/*.html'
+            'test/spec/**/*.js'
         ],
 
         // list of files / patterns to exclude

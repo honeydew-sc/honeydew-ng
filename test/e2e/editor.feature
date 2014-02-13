@@ -4,6 +4,7 @@ $editor = 'http://localhost/editor2/#/features/e2e/delete-me.feature'
 $hostname = 'css=[type="url"]'
 $executeButton = 'id=execute'
 $reportsPanel = 'class=center-panel element'
+$modal = 'class=modal'
 
  Scenario: nothing to see here
  Given I am on the $editor page
@@ -31,3 +32,9 @@ $reportsPanel = 'class=center-panel element'
    When I wait for the $executeButton to be visible
    When I click on the link $executeButton
      Then the $reportsPanel element should be visible
+
+ only Scenario: new file
+ Given I am on the $editor page
+   When I click on the link link_text=File
+   When I click on the link partial_link_text=New
+     Then the $modal element should be visible

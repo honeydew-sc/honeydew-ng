@@ -20,38 +20,40 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <!-- build:css({.tmp,app}) styles/main.css -->
 
-    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-night.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/ambiance.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-light.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/blackboard.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/cobalt.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/eclipse.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/elegant.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/erlang-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/lesser-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/mbo.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/midnight.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/neat.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/night.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-light.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/pastel-on-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/rubyblue.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/solarized.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/the-matrix.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/tomorrow-night-eighties.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/twilight.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/vibrant-ink.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-dark.css">
-    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-light.css">
-
+    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/3024-night.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/ambiance.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/base16-light.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/blackboard.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/cobalt.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/eclipse.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/elegant.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/erlang-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/lesser-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/mbo.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/midnight.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/neat.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/night.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/paraiso-light.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/pastel-on-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/rubyblue.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/solarized.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/the-matrix.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/tomorrow-night-eighties.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/twilight.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/vibrant-ink.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-dark.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/theme/xq-light.css" />
+    <link rel="stylesheet" href="styles/codemirror/theme/mdn-like.css" />
     <link rel="stylesheet" href="styles/show-hint.css" />
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/colors.css">
-    <link rel="stylesheet" href="styles/editor.css">
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/colors.css" />
+    <link rel="stylesheet" href="styles/editor.css" />
+    <link rel="stylesheet" href="styles/alert.css" />
+
     <!-- endbuild -->
   </head>
   <body ng-app="honeydew">
@@ -61,6 +63,7 @@
 
     <!-- Add your site or application content here -->
     <div class="remaining-height" ui-view=""></div>
+    <alert-display></alert-display>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -106,7 +109,9 @@
 
     <script src="scripts/common/directives/jobOptions.js"></script>
     <script src="scripts/common/directives/scrollTo.js"></script>
+    <script src="scripts/common/directives/alertDisplay.js"></script>
     <script src="scripts/common/services/browserSelection.js"></script>
+    <script src="scripts/common/services/alerts.js"></script>
     <script src="scripts/common/services/files.js"></script>
     <script src="scripts/common/services/jobs.js"></script>
     <script src="scripts/common/services/debounce.js"></script>

@@ -17,7 +17,8 @@ angular.module('honeydew')
                 theme: 'neat',
                 mode: "honeydew",
                 extraKeys: {
-                    'Ctrl-Space': 'autocomplete'
+                    'Ctrl-Space': 'autocomplete',
+                    'F5': 'execute'
                 },
                 onLoad: function (cm) {
                     $scope.cm = cm;
@@ -25,9 +26,15 @@ angular.module('honeydew')
                         CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
                     };
 
+                    CodeMirror.commands.execute = function (cm) {
+                        $scope.jobs.executeJob();
+                    };
+
                     CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
                 }
             };
+
+            $scope.jobs = {};
 
             $scope.display = function ( file ) {
                 $scope.undo = false;

@@ -9,7 +9,8 @@ angular.module('honeydew')
         function (browserSelection, $localStorage, Jobs, panes) {
             return {
                 scope: {
-                    filename: '@'
+                    filename: '@',
+                    control: '='
                 },
                 templateUrl: 'scripts/common/directives/jobOptions.html',
                 restrict: 'E',
@@ -35,14 +36,13 @@ angular.module('honeydew')
                         scope.$storage.browser = scope.browserList[1];
                     }
 
-                    scope.executeJob = function () {
+                    scope.control.executeJob = function () {
                         if (scope.jobOptions.$valid) {
                             panes.openPane('report');
                             var job = angular.extend({}, scope.$storage.browser, {
                                 file: scope.filename,
                                 host: scope.$storage.host
                             });
-
                             Jobs.execute(job);
                         }
                     };

@@ -65,11 +65,6 @@ CodeMirror.defineMode("honeydew", function () {
 
             }
 
-            if (stream.match(/<[^>]*>?/)) {
-                console.log(state);
-                console.log(stream);
-            }
-
             // LINE COMMENT
             if (stream.match(/#.*/)) {
                 return "comment";
@@ -116,10 +111,10 @@ CodeMirror.defineMode("honeydew", function () {
 
                 // PLACEHOLDER
             } else if (state.allowPlaceholders && stream.match(/<[^>]*>?/)) {
-                return "important";
+                return "variable";
 
             } else if (state.allowPlaceholders && stream.match(/\$[^\s]+/)) {
-                return "important";
+                return "variable";
 
                 // Fall through
             } else {

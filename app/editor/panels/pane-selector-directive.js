@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('centerPane', [
+    .directive('paneSelector', [
         'panes',
         function (panes) {
             return {
-                templateUrl: 'scripts/editor/directives/pane.html',
+                templateUrl: 'editor/panels/pane-selector.html',
                 replace: true,
                 restrict: 'E',
                 link: function (scope, el, attrs) {

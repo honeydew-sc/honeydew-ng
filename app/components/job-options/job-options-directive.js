@@ -12,7 +12,7 @@ angular.module('honeydew')
                     filename: '@',
                     control: '='
                 },
-                templateUrl: 'scripts/common/directives/jobOptions.html',
+                templateUrl: 'components/job-options/job-options.html',
                 restrict: 'E',
                 link: function postLink(scope, element, attrs) {
                     scope.browserList = browserSelection.all;

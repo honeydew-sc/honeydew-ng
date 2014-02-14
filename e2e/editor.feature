@@ -1,6 +1,7 @@
 Feature: editor
 
-$editor = 'http://localhost/editor2/#/features/e2e/delete-me.feature'
+$editor = '/editor/#/features/e2e/delete-me.feature'
+$noPermissions = '/editor/#/features/e2e/no-permissions.feature'
 $hostname = 'css=[type="url"]'
 $executeButton = 'id=execute'
 $reportsPanel = 'class=center-panel element'
@@ -32,8 +33,15 @@ $modal = 'class=modal'
    When I wait for the $executeButton to be visible
    When I click on the link $executeButton
      Then the $reportsPanel element should be visible
+     
+ Scenario: no permissions
+ Given I am on the $noPermissions page
+   When I input random text into the editor cm
+     Then the page should contain $input
+     Then I pause for 2 seconds
+     Then the page should contain Permission denied
 
- only Scenario: new file
+ Scenario: new file
  Given I am on the $editor page
    When I click on the link link_text=File
    When I click on the link partial_link_text=New

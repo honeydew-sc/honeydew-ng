@@ -34,10 +34,6 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
-            jsTest: {
-                files: ['test/spec/{,*/}*.js'],
-                tasks: ['newer:jshint:test', 'karma']
-            },
             gruntfile: {
                 files: ['Gruntfile.js']
             },
@@ -127,12 +123,6 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-            test: {
-                options: {
-                    jshintrc: 'test/.jshintrc'
-                },
-                src: ['test/spec/{,*/}*.js']
-            }
                 '<%= yeoman.app %>/{,*/}*.js',
                 '<%= yeoman.app %>/*.js',
                 '<%= yeoman.app %>/**/*.js'

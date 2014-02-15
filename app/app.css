@@ -1,0 +1,4 @@
+/* add because angular ui bootstrap is slightly different */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}

@@ -26,6 +26,8 @@ html, body {
     padding: 0px;
     height: 41px;
     border-radius: 0px;
+    min-height: 0px;
+    margin: 0px;
 }
 
 .editor-nav .navbar-form {

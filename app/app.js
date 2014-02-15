@@ -15,7 +15,7 @@ angular.module('honeydew', [
         $stateProvider
             .state('editor', {
                 url: '/{path:.*\.(?:feature|phrase|set)}',
-                templateUrl: 'scripts/editor/controllers/editor.html',
+                templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
             });
     });

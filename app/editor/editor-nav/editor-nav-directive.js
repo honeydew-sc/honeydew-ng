@@ -4,7 +4,7 @@ angular.module('honeydew')
     .directive('editorNav', [
         function () {
             return {
-                templateUrl: 'scripts/editor/directives/editorNav.html',
+                templateUrl: 'editor/editor-nav/editor-nav.html',
                 scope: {
                     filename: '@',
                     control: '='

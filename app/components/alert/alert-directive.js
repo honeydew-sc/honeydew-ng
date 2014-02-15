@@ -5,7 +5,7 @@ angular.module('honeydew')
         'alerts',
         function (alerts) {
             return {
-                templateUrl: 'components/alert.html',
+                templateUrl: 'components/alert/alert.html',
                 restrict: 'E',
                 link: function (scope, element, attrs) {
                     scope.alerts = alerts;

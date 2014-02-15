@@ -17,9 +17,19 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <!-- build:css({.tmp,app}) styles/main.css -->
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"> -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
 
+    <!-- build:css({.tmp,app}) styles/app.css -->
+    <link rel="stylesheet" href="components/alert/alert.css" />
+    <link rel="stylesheet" href="components/colors/colors.css" />
+    <link rel="stylesheet" href="editor/editor.css" />
+    <link rel="stylesheet" href="editor/codemirror/mdn-like.css" />
+    <link rel="stylesheet" href="editor/codemirror/show-hint.css" />
+    <link rel="stylesheet" href="app.css" />
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) styles/editor/themes.css -->
     <link rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/3024-night.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/ambiance.css" />
@@ -47,13 +57,6 @@
     <link rel="stylesheet" href="bower_components/codemirror/theme/vibrant-ink.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/xq-dark.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/xq-light.css" />
-    <link rel="stylesheet" href="styles/codemirror/theme/mdn-like.css" />
-    <link rel="stylesheet" href="styles/show-hint.css" />
-    <link rel="stylesheet" href="styles/main.css" />
-    <link rel="stylesheet" href="styles/colors.css" />
-    <link rel="stylesheet" href="styles/editor.css" />
-    <link rel="stylesheet" href="styles/alert.css" />
-
     <!-- endbuild -->
   </head>
   <body ng-app="honeydew">
@@ -88,33 +91,34 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
+    <script src="app.js"></script>
 
     <!-- editor page layout -->
-    <script src="scripts/editor/controllers/editorCtrl.js"></script>
-    <script src="scripts/editor/controllers/fileActionCtrl.js"></script>
-    <script src="scripts/editor/controllers/modalInstanceCtrl.js"></script>
-    <script src="scripts/editor/directives/editorNav.js"></script>
-    <script src="scripts/editor/directives/paneSelector.js"></script>
-    <script src="scripts/editor/directives/pane.js"></script>
-    <script src="scripts/editor/services/panes.js"></script>
-    <!-- done -->
+    <script src="editor/editor-controller.js"></script>
+    <script src="editor/file-actions/file-actions-controller.js"></script>
+    <script src="editor/editor-nav/editor-nav-directive.js"></script>
 
     <!-- customize codemirror -->
-    <script src="scripts/editor/codemirror/honeydew-mode.js"></script>
+    <script src="editor/codemirror/cm-honeydew-mode.js"></script>
+    <script src="editor/codemirror/cm-autocomplete-service.js"></script>
     <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
     <script src="bower_components/codemirror/addon/selection/active-line.js"></script>
-    <script src="scripts/editor/services/cmAutocomplete.js"></script>
-    <!-- done -->
 
-    <script src="scripts/common/directives/jobOptions.js"></script>
-    <script src="scripts/common/directives/scrollTo.js"></script>
-    <script src="scripts/common/directives/alertDisplay.js"></script>
-    <script src="scripts/common/services/browserSelection.js"></script>
-    <script src="scripts/common/services/alerts.js"></script>
-    <script src="scripts/common/services/files.js"></script>
-    <script src="scripts/common/services/jobs.js"></script>
-    <script src="scripts/common/services/debounce.js"></script>
+    <!-- editor panes -->
+    <script src="editor/panes/pane-selector-directive.js"></script>
+    <script src="editor/panes/pane-directive.js"></script>
+    <script src="editor/panes/panes-service.js"></script>
+    <script src="editor/panes/scroll-to-directive.js"></script>
+
+    <!-- components -->
+    <script src="components/alert/alert-directive.js"></script>
+    <script src="components/alert/alert-service.js"></script>
+    <script src="components/debounce/debounce-factory.js"></script>
+    <script src="components/files/files-factory.js"></script>
+    <script src="components/job-options/job-options-directive.js"></script>
+    <script src="components/job-options/browser-selection-service.js"></script>
+    <script src="components/jobs/jobs-factory.js"></script>
+    <script src="components/modal/modal-instance-controller.js"></script>
     <!-- endbuild -->
   </body>
 </html>

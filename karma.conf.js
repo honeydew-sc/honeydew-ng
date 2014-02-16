@@ -34,10 +34,9 @@ module.exports = function(config) {
             'app/bower_components/codemirror/lib/codemirror.js',
 
             // our scripts
-            'app/scripts/*.js',
-            'app/scripts/**/*.js',
-            'test/mock/**/*.js',
-            'test/spec/**/*.js'
+            'app/app.js',
+            'app/editor/**/*.js',
+            'app/components/**/*.js'
         ],
 
         // list of files / patterns to exclude

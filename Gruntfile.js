@@ -324,11 +324,42 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 singleRun: true
             }
+        },
+
+        // e2e test settings
+        shell: {
+            honeydew: {
+                options: {
+                    stdout: true
+                },
+                command: function () {
+                    var glob = require("glob");
+                    var command = [
+                        'perl',
+                        '-w /opt/honeydew/bin/honeydew.pl',
+                        '-isMine',
+                        '-browser=Chrome',
+                        '-feature=' + process.cwd() + "/"
+                    ].join(' ');
+                    var commands = [];
+
+                    glob("e2e/*_test.feature", {sync: true}, function (er, files) {
+                        files.forEach( function (feature) {
+                            commands.push(command + feature);
+                        });
+
+                        commands.push('wait');
+                    });
+
+                    return commands.join(' & ');
+                }
+            }
         }
     });
 
-    grunt.loadNpmTasks('grunt-connect-proxy');
-
+    grunt.registerTask('e2e', [
+        'shell:honeydew'
+    ]);
 
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
@@ -354,7 +385,8 @@ module.exports = function (grunt) {
         'clean:server',
         'autoprefixer',
         'connect:test',
-        'karma'
+        'karma',
+        'shell:honeydew'
     ]);
 
     grunt.registerTask('build', [

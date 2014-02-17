@@ -15,6 +15,7 @@
 
 CodeMirror.defineMode("honeydew", function () {
     return {
+        lineComment: '#',
         startState: function () {
             return {
                 lineNumber: 0,

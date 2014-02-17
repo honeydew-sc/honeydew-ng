@@ -19,9 +19,7 @@ describe('Controller: EditorCtrl', function () {
         fakeFile = new Files(fakedContents);
 
         scope = $rootScope.$new();
-        scope.cm = {
-            markClean: function () {}
-        };
+        scope.markClean = function () {};
         scope.file = fakeFile;
 
         EditorCtrl = $controller('EditorCtrl', {

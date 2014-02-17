@@ -8,14 +8,18 @@ angular.module('honeydew')
                 lineWrapping : true,
                 lineNumbers: true,
                 styleActiveLine: true,
-                theme: 'mdn-like',
+                theme: 'xq-light',
                 mode: 'honeydew',
                 extraKeys: {
                     'Ctrl-Space': 'autocomplete',
-                    'F5': 'execute'
+                    'F5': 'execute',
+                    'Ctrl-/': 'toggleComment'
                 },
                 onLoad: function (cm) {
-                    $scope.cm = cm;
+                    $scope.markClean = function () {
+                        cm.markClean();
+                    };
+
                     CodeMirror.commands.autocomplete = function (cm) {
                         CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
                     };
@@ -59,7 +63,7 @@ angular.module('honeydew')
 
             $scope.save = function() {
                 $scope.file.$save().then(function (res) {
-                    $scope.cm.markClean();
+                    $scope.markClean();
                 }).catch( function (res) {
                     alerts.addAlert(res);
                 });

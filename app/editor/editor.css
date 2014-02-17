@@ -67,7 +67,7 @@ html, body {
     border: 0px;
 }
 
-.center-panel accordion pre {
+.center-panel accordion pre, .center-panel pre.docs {
     background-color: honeydew !important;
     padding: 6px;
     position: relative;

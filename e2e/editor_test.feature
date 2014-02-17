@@ -31,6 +31,7 @@ $alert = 'css=.alert div element'
 
  Scenario: execute a job
  Given I am on the $editor page
+   When I reset the input field $hostname
    When I input $url into the input field $hostname
    When I click on the link $executeButton
      Then the $reportsPanel element should be visible

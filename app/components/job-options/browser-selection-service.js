@@ -2,6 +2,7 @@
 
 angular.module('honeydew')
     .service('browserSelection', function () {
+        var gpAddress = "10.10.0.83";
 
         var local = [
             {
@@ -21,18 +22,18 @@ angular.module('honeydew')
         var grandPoobah = [
             {
                 browser: 'GP IE 10 Local',
-                group: 'GP: 10.10.0.83',
-                local: '10.10.0.83'
+                group: 'GP: ' + gpAddress,
+                local: gpAddress
             },
             {
                 browser: 'GP Chrome Local',
-                group: 'GP: 10.10.0.83',
-                local: '10.10.0.83'
+                group: 'GP: ' + gpAddress,
+                local: gpAddress
             },
             {
                 browser: 'GP FF Local',
-                group: 'GP: 10.10.0.83',
-                local: '10.10.0.83'
+                group: 'GP: ' + gpAddress,
+                local: gpAddress
             }
         ];
 

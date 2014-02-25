@@ -39,6 +39,16 @@ angular.module('honeydew')
                         $scope.jobs.executeJob();
                     };
 
+                    // sorry. for whatever reason, the dropdown
+                    // retains the open class when clicking into the
+                    // codemirror. Seems like CM swallows the click or
+                    // something; clicking on not CM parts of the page
+                    // hide the dropdown just fine.
+                    cm.on('focus', function (cm) {
+                        document.querySelectorAll('.file-nav-dropdown')
+                            .classList.remove('open');
+                    });
+
                     CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
                 }
             };

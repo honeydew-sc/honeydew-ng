@@ -20,6 +20,17 @@ angular.module('honeydew')
                         cm.markClean();
                     };
 
+                    $scope.doc = {
+                        redo: function () {
+                            console.log('please');
+                            cm.getDoc().redo();
+                        },
+                        undo: function () {
+                            console.log('fine');
+                            cm.getDoc().undo();
+                        }
+                    };
+
                     CodeMirror.commands.autocomplete = function (cm) {
                         CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
                     };

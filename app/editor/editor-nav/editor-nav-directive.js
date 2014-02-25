@@ -7,7 +7,8 @@ angular.module('honeydew')
                 templateUrl: 'editor/editor-nav/editor-nav.html',
                 scope: {
                     filename: '@',
-                    control: '='
+                    control: '=',
+                    doc: '='
                 },
                 replace: true,
                 restrict: 'E'

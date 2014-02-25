@@ -20,8 +20,11 @@ angular.module('honeydew')
                             filename: function () {
                                 return scope.filename;
                             },
-                            action: function () {
+                            title: function () {
                                 return action;
+                            },
+                            action: function () {
+                                return scope.fileActions[action];
                             }
                         }
                     });
@@ -33,53 +36,56 @@ angular.module('honeydew')
                     });
                 };
 
-                scope.create = function (file, contents) {
-                    if (typeof(contents) === 'undefined') {
-                        contents = 'Feature: ';
+                scope.fileActions = {
+                    'Create New': function (destination) {
+                        var newFile = new Files({
+                            file: Files.encode(destination.file),
+                            contents: [
+                                'Feature:',
+                                '',
+                                'JIRA: ' + destination.jira,
+                                '# Email: ' + destination.author + '@sharecare.com',
+                                '',
+                                ' Scenario: ' + destination.jira
+                            ].join("\n")
+                        });
+
+                        return newFile.$save();
                     }
-
-                    scope.file = new Files({
-                        file: Files.encode(file),
-                        contents: contents
-                    });
-
-                    scope.file.$save().then( function () {
-                        scope.watchCodeMirror();
-                    });
                 };
 
-                scope.delete = function( ) {
-                    scope.undo = true;
-                    scope.undoFile = angular.copy(scope.file);
-                    scope.file.$delete();
-                };
+                // scope.delete = function( ) {
+                //     scope.undo = true;
+                //     scope.undoFile = angular.copy(scope.file);
+                //     scope.file.$delete();
+                // };
 
-                scope.copy = function( destination ) {
-                    scope.copied = angular.copy(scope.file);
-                    scope.copied.file = Files.encode(destination);
-                    scope.copied.$save().then( function (res) {
-                        $location.path(res.file);
-                    });
-                };
+                // scope.copy = function( destination ) {
+                //     scope.copied = angular.copy(scope.file);
+                //     scope.copied.file = Files.encode(destination);
+                //     scope.copied.$save().then( function (res) {
+                //         $location.path(res.file);
+                //     });
+                // };
 
-                scope.move = function( destination ) {
-                    scope.new = angular.copy(scope.file);
-                    scope.new.file = Files.encode(destination);
-                    scope.new.$save().then( function (res) {
-                        scope.file.$delete();
-                        $location.path(res.file);
-                    });
-                };
+                // scope.move = function( destination ) {
+                //     scope.new = angular.copy(scope.file);
+                //     scope.new.file = Files.encode(destination);
+                //     scope.new.$save().then( function (res) {
+                //         scope.file.$delete();
+                //         $location.path(res.file);
+                //     });
+                // };
 
-                scope.canUndo = function () {
-                    return scope.undo;
-                };
+                // scope.canUndo = function () {
+                //     return scope.undo;
+                // };
 
-                scope.undoDelete = function () {
-                    scope.undoFile.$save().then( function (res) {
-                        $location.path(res.file);
-                    });
-                };
+                // scope.undoDelete = function () {
+                //     scope.undoFile.$save().then( function (res) {
+                //         $location.path(res.file);
+                //     });
+                // };
             }
         };
     }]);

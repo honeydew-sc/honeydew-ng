@@ -39,42 +39,4 @@ describe('Controller: EditorCtrl', function () {
         scope.save();
         httpMock.flush();
     });
-
-    it('should delete a file', function() {
-        httpMock.expectDELETE(testFileUrl).respond({ status: 'success' });
-        scope.delete();
-        httpMock.flush();
-    });
-
-    it('should let me undo after a delete', function () {
-        httpMock.expectDELETE(testFileUrl).respond({ status: 'success' });
-        scope.delete();
-        httpMock.flush();
-        expect(scope.canUndo()).toBeTruthy();
-
-        httpMock.expectPOST(testFileUrl, fakedContents).respond(fakedContents);
-        scope.undoDelete();
-        httpMock.flush();
-    });
-
-    it('should copy files around', function() {
-        httpMock.expectPOST(testFileUrl.replace('fake', 'fake2'), {
-            file: 'features%2Ffake2.feature',
-            contents: fakeText
-        }).respond({ status: 'success' });
-
-        scope.copy(shortFile.replace('fake', 'fake2'));
-        httpMock.flush();
-    });
-
-    it('should move files from here to there', function () {
-        httpMock.expectPOST(testFileUrl.replace('fake', 'fake2'), {
-            file: 'features%2Ffake2.feature',
-            contents: fakeText
-        }).respond({ status: 'success' });
-        httpMock.expectDELETE(testFileUrl).respond({status: 'success'});
-
-        scope.move(shortFile.replace('fake', 'fake2'));
-        httpMock.flush();
-    });
 });

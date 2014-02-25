@@ -38,6 +38,7 @@ angular.module('honeydew')
 
                 scope.fileActions = {
                     'Create New': function (destination) {
+                        destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
                         var newFile = new Files({
                             file: Files.encode(destination.file),
                             contents: [

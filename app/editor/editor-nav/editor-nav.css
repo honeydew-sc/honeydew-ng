@@ -1,0 +1,28 @@
+/* control height of navbar */
+.editor-nav.navbar {
+    padding: 0px;
+    height: 41px;
+    border-radius: 0px;
+    min-height: 0px;
+    margin: 0px;
+}
+
+.editor-nav .navbar-form {
+    padding: 0px 0px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.editor-nav .nav > li > a {
+    padding-top: 10px;
+}
+
+.btn.btn-hdew {
+    background-color: honeydew;
+    color: #444;
+    border: 1px solid #DDD;
+}
+
+.btn.btn-hdew:hover {
+    background-color: #e0eee0;
+}

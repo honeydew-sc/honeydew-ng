@@ -30,6 +30,11 @@
         </li>
       </ul>
 
+      <form class="navbar-form navbar-left" name="document-options">
+        <button class="btn btn-hdew" ng-click="undo()"><i class="fa fa-undo"></i></button>
+        <button class="btn btn-hdew" ng-click="redo()"><i class="fa fa-repeat"></i></button>
+      </form>
+
       <job-options control="control" filename={{filename}}></job-options>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

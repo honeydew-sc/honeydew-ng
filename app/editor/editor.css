@@ -21,25 +21,6 @@ html, body {
     width: 100%;
 }
 
-/* control height of navbar */
-.editor-nav.navbar {
-    padding: 0px;
-    height: 41px;
-    border-radius: 0px;
-    min-height: 0px;
-    margin: 0px;
-}
-
-.editor-nav .navbar-form {
-    padding: 0px 0px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-.editor-nav .nav > li > a {
-    padding-top: 10px;
-}
-
 /* compensate for navbar height */
 .remaining-height {
     height: calc(100% - 45px) !important;

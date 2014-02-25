@@ -24,9 +24,9 @@
 // from https://github.com/iameugenejo/ngScrollTo/blob/master/ng-scrollto.js
 
 angular.module('honeydew')
-    .directive("scrollTo", ["$window", function($window) {
+    .directive('scrollTo', ['$window', function($window) {
         return {
-            restrict : "AC",
+            restrict : 'AC',
             compile : function(){
                 var document = $window.document;
 
@@ -38,7 +38,7 @@ angular.module('honeydew')
                 }
 
                 return function(scope, element, attr) {
-                    element.bind("click", function(event){
+                    element.bind('click', function(){
                         scrollInto(attr.scrollTo);
                     });
                 };

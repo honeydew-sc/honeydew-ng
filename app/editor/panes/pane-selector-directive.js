@@ -8,8 +8,9 @@ angular.module('honeydew')
                 templateUrl: 'editor/panes/pane-selector.html',
                 replace: true,
                 restrict: 'E',
-                link: function (scope, el, attrs) {
+                link: function (scope) {
                     scope.panes = panes;
                 }
             };
-        }]);
+        }
+    ]);

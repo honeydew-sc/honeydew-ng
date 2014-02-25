@@ -122,11 +122,12 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: [
+            all: grunt.file.expand([
                 '<%= yeoman.app %>/app.js',
                 '<%= yeoman.app %>/{components,editor}/**/*.js',
+                '!<%= yeoman.app %>/{components,editor}/**/*_test.js',
                 'Gruntfile.js'
-            ]
+            ])
         },
 
         // Empties folders to start fresh
@@ -333,17 +334,17 @@ module.exports = function (grunt) {
                     stdout: true
                 },
                 command: function () {
-                    var glob = require("glob");
+                    var glob = require('glob');
                     var command = [
                         'perl',
                         '-w /opt/honeydew/bin/honeydew.pl',
                         '-isMine',
                         '-browser=Chrome',
-                        '-feature=' + process.cwd() + "/"
+                        '-feature=' + process.cwd() + '/'
                     ].join(' ');
                     var commands = [];
 
-                    glob("e2e/*_test.feature", {sync: true}, function (er, files) {
+                    glob('e2e/*_test.feature', {sync: true}, function (er, files) {
                         files.forEach( function (feature) {
                             commands.push(command + feature);
                         });

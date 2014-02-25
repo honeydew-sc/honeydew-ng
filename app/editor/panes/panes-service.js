@@ -28,7 +28,7 @@ angular.module('honeydew')
 
             ],
 
-            activePane: "",
+            activePane: '',
 
             openPane:  function (pane) {
                 var panes = this;
@@ -46,8 +46,8 @@ angular.module('honeydew')
             },
 
             closePane:  function () {
-                this.activePane = "";
-                this.url = "";
+                this.activePane = '';
+                this.url = '';
             },
 
             togglePane:  function (pane) {

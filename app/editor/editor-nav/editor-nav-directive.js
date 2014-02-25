@@ -13,4 +13,5 @@ angular.module('honeydew')
                 replace: true,
                 restrict: 'E'
             };
-        }]);
+        }
+    ]);

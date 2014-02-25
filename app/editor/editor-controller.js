@@ -62,7 +62,12 @@ angular.module('honeydew')
             };
 
             $scope.save = function() {
-                $scope.file.$save().then(function (res) {
+                // the response to $save includes the file contents;
+                // on response, it (sometimes?) updates file.contents
+                // in the codemirror and messes up the undo history
+                // and cursor position.
+                var preserveCodeMirror = angular.copy($scope.file);
+                preserveCodeMirror.$save().then(function (res) {
                     $scope.markClean();
                 }).catch( function (res) {
                     alerts.addAlert(res);

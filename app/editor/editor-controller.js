@@ -13,7 +13,9 @@ angular.module('honeydew')
                 extraKeys: {
                     'Ctrl-Space': 'autocomplete',
                     'F5': 'execute',
-                    'Ctrl-/': 'toggleComment'
+                    'Ctrl-/': 'toggleComment',
+                    'Ctrl-Z': 'undo',
+                    'Ctrl-Y': 'redo'
                 },
                 onLoad: function (cm) {
                     $scope.markClean = function () {
@@ -22,10 +24,10 @@ angular.module('honeydew')
 
                     $scope.doc = {
                         redo: function () {
-                            cm.getDoc().redo();
+                            cm.redo();
                         },
                         undo: function () {
-                            cm.getDoc().undo();
+                            cm.undo();
                         }
                     };
 

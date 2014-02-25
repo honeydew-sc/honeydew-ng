@@ -28,7 +28,10 @@ module.exports = function (grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             js: {
-                files: ['<%= yeoman.app %>/**/*.js'],
+                files: [
+                    '<%= yeoman.app %>/app.js',
+                    '<%= yeoman.app %>/{components,editor}/**/*.js'
+                ],
                 tasks: ['newer:jshint:all'],
                 options: {
                     livereload: true
@@ -42,10 +45,8 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{,*/}*.html',
-                    '<%= yeoman.app %>/scripts/**/*.html',
-                    '<%= yeoman.app %>/styles/*.{js}',
-                    '<%= yeoman.app %>/styles/**/*.{js}',
+                    '<%= yeoman.app %>/{components,editor}/**/*.{js,html,css}',
+                    '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
                     '.tmp/styles/**/*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -122,10 +123,9 @@ module.exports = function (grunt) {
                 reporter: require('jshint-stylish')
             },
             all: [
-                'Gruntfile.js',
-                '<%= yeoman.app %>/{,*/}*.js',
-                '<%= yeoman.app %>/*.js',
-                '<%= yeoman.app %>/**/*.js'
+                '<%= yeoman.app %>/app.js',
+                '<%= yeoman.app %>/{components,editor}/**/*.js',
+                'Gruntfile.js'
             ]
         },
 

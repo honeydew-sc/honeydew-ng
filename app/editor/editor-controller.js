@@ -43,7 +43,7 @@ angular.module('honeydew')
                 // something; clicking on not CM parts of the page
                 // hide the dropdown just fine.
                 cm.on('focus', function (cm) {
-                    document.querySelectorAll('.file-nav-dropdown')
+                    document.querySelectorAll('.file-nav-dropdown')[0]
                         .classList.remove('open');
                 });
 

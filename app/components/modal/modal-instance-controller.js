@@ -12,8 +12,12 @@ angular.module('honeydew')
                 file: filename.split('/').slice(0, -1).join('/') + '/'
             };
 
+            $scope.isFormValid = function () {
+                return $scope.isValidFilename() && $scope.dest.author;
+            };
+
             $scope.isValidFilename = function () {
-                return $scope.dest.file.match(/\.(feature|phrase|set)$/);
+                return $scope.dest.file.match(/^(feature|phrase|set)s\/.*\.\1$/);
             };
 
             Author.get().$promise.then( function (res) {

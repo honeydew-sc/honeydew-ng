@@ -1,15 +1,36 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ModalInstanceCtrl', ['$scope', function ($scope, $modalInstance, items) {
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'filename', 'Author', 'Files', 'alerts', 'action', function ($scope, $modalInstance, filename, Author, Files, alerts, action) {
+        $scope.filename = filename;
+        $scope.action = action;
 
-        $scope.items = items;
-        $scope.selected = {
-            item: $scope.items[0]
+        $scope.dest = {
+            file: filename.split('/').slice(0, -1).join('/') + '/'
         };
 
+        Author.get().$promise.then( function (res) {
+            $scope.dest.author = res.user;
+        });
+
         $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
+            var newFile = new Files({
+                file: Files.encode($scope.dest.file),
+                contents: [
+                    'Feature:',
+                    '',
+                    'JIRA: ' + $scope.dest.jira,
+                    '# Email: ' + $scope.dest.author + '@sharecare.com',
+                    '',
+                    ' Scenario: ' + $scope.dest.jira
+                ].join("\n")
+            });
+
+            newFile.$save().then( function (res) {
+                $modalInstance.close($scope.dest);
+            }).catch( function (res) {
+                alerts.addAlert(res);
+            });
         };
 
         $scope.cancel = function () {

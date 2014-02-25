@@ -1,13 +1,13 @@
 Feature: editor
 
 $url = 'http://www.google.com'
-$editor = 'http://localhost/editor/#/features/e2e/delete-me.feature'
-$noPermissions = 'http://localhost/editor/#/features/e2e/no-permissions.feature'
+$editor = 'http://localhost/editor2/#/features/e2e/delete-me.feature'
+$noPermissions = 'http://localhost/editor2/#/features/e2e/no-permissions.feature'
 
 $hostname = 'css=[type="url"]'
 $executeButton = 'id=execute'
 $reportsPanel = 'class=center-panel element'
-$modal = 'class=modal'
+$modal = 'class=hdew-modal'
 $alert = 'css=.alert div element'
 
  Scenario: set up
@@ -41,8 +41,13 @@ $alert = 'css=.alert div element'
    When I input random text into the editor cm
      Then I wait for the text permission denied to be present
 
- skip Scenario: new file
+ Scenario: new file
  Given I am on the $editor page
    When I click on the link link_text=File
    When I click on the link partial_link_text=New
-     Then the $modal element should be visible
+   When I wait for the $modal element to be visible
+   When I input new.feature into the input field id=input-file
+   When I input random text into the input field id=input-jira
+   When I click on the link class=btn-submit
+     Then the url should match \/new.feature
+     Then the page should contain $input

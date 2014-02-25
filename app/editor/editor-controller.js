@@ -58,16 +58,22 @@ angular.module('honeydew')
             };
 
             $scope.save = function() {
-                // the response to $save includes the file contents;
-                // on response, it (sometimes?) updates file.contents
-                // in the codemirror and messes up the undo history
-                // and cursor position.
-                var preserveCodeMirror = angular.copy($scope.file);
-                preserveCodeMirror.$save().then(function (res) {
-                    $scope.markClean();
-                }).catch( function (res) {
-                    alerts.addAlert(res);
-                });
+                if ($scope.file.contents === "") {
+                    alerts.addAlert({data: {reason: "Cowardly refusing to save an empty file. Sorry!"}});
+                }
+                else {
+
+                    // the response to $save includes the file contents;
+                    // on response, it (sometimes?) updates file.contents
+                    // in the codemirror and messes up the undo history
+                    // and cursor position.
+                    var preserveCodeMirror = angular.copy($scope.file);
+                    preserveCodeMirror.$save().then(function (res) {
+                        $scope.markClean();
+                    }).catch( function (res) {
+                        alerts.addAlert(res);
+                    });
+                }
             };
 
             $scope.debouncedSave = function ( newContents, oldContents ) {

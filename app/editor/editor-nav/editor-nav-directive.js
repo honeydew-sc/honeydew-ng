@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorNav', ['$modal', '$log', '$location', 'Files', 'alerts', function ($modal, $log, $location, Files, alerts) {
+    .directive('editorNav', function ($modal, $log, $location, Files, alerts) {
         return {
             templateUrl: 'editor/editor-nav/editor-nav.html',
             scope: {
@@ -89,4 +89,4 @@ angular.module('honeydew')
                 // };
             }
         };
-    }]);
+    });

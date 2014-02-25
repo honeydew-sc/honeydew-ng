@@ -24,7 +24,7 @@
 // from https://github.com/iameugenejo/ngScrollTo/blob/master/ng-scrollto.js
 
 angular.module('honeydew')
-    .directive('scrollTo', ['$window', function($window) {
+    .directive('scrollTo', function ($window) {
         return {
             restrict : 'AC',
             compile : function(){
@@ -44,4 +44,4 @@ angular.module('honeydew')
                 };
             }
         };
-    }]);
+    });

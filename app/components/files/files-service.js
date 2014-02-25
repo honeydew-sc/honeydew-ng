@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('Files', ['$resource', function ($resource) {
+    .factory('Files', function ($resource) {
         var res = $resource('/rest.php/files/:file', {file: '@file'});
 
         res.encode = function ( file ) {
@@ -17,4 +17,4 @@ angular.module('honeydew')
         };
 
         return res;
-    }]);
+    });

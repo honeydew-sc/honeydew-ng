@@ -33,6 +33,10 @@ angular.module('honeydew')
                     CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
                 };
 
+                // 'jobs' gets passed through two directives in
+                // attributes down to the jobOptions directive, where
+                // executeJob is defined.
+                $scope.jobs = {};
                 CodeMirror.commands.execute = function (cm) {
                     $scope.jobs.executeJob();
                 };
@@ -51,7 +55,7 @@ angular.module('honeydew')
             }
         };
 
-        $scope.jobs = {};
+
         $scope.display = function ( file ) {
             $scope.undo = false;
             $scope.file = Files.get({file: Files.encode(file)}, function (res) {

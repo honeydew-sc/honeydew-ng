@@ -20,6 +20,7 @@ CodeMirror.defineMode("honeydew", function () {
             return {
                 lineNumber: 0,
                 tableHeaderLine: false,
+                inCommentLine: false,
                 allowFeature: true,
                 allowPreamble: false,
                 allowScenario: false,
@@ -27,13 +28,15 @@ CodeMirror.defineMode("honeydew", function () {
                 allowPlaceholders: false,
                 allowMultilineArgument: false,
                 inMultilineTable: false,
-                inKeywordLine: false
+                inKeywordLine: false,
             };
         },
         token: function (stream, state) {
             if (stream.sol()) {
                 state.lineNumber++;
                 state.inKeywordLine = false;
+                state.inCommentLine = stream.match(/^\s*#.*/);
+
                 if (state.inMultilineTable) {
                     state.tableHeaderLine = false;
                     if (!stream.match(/\s*\|/, false)) {
@@ -67,58 +70,57 @@ CodeMirror.defineMode("honeydew", function () {
             }
 
             // LINE COMMENT
-            if (stream.match(/#.*/)) {
+            if (state.inCommentLine) {
                 return "comment";
-
-                // FEATURE
-            } else if (!state.inKeywordLine && state.allowFeature && stream.match(/Feature:/)) {
+            }
+            // FEATURE
+            else if (!state.inKeywordLine && state.allowFeature && stream.match(/Feature:/)) {
                 state.allowFeature = false;
                 state.allowScenario = true;
                 state.allowPreamble = true;
-                state.allowPlaceholders = false;
+                state.allowPlaceholders = true;
                 state.allowSteps = false;
                 state.allowMultilineArgument = false;
                 state.inKeywordLine = true;
                 return "keyword";
-
-                // EXAMPLES
-            } else if (state.allowScenario && stream.match(/Examples:/)) {
+            }
+            // EXAMPLES
+            else if (state.allowScenario && stream.match(/Examples:/)) {
                 state.allowPlaceholders = false;
                 state.allowSteps = true;
                 state.allowPreamble = false;
                 state.allowMultilineArgument = true;
                 return "keyword";
-
-                // SCENARIO
-            } else if (!state.inKeywordLine && state.allowScenario && stream.match(/Scenario:/)) {
+            }
+            // SCENARIO
+            else if (!state.inKeywordLine && state.allowScenario && stream.match(/(only|skip)? ?Scenario:/i)) {
                 state.allowPlaceholders = false;
                 state.allowSteps = true;
                 state.allowPreamble = false;
                 state.allowMultilineArgument = false;
                 state.inKeywordLine = true;
                 return "keyword";
-
-                // STEPS
-            } else if (!state.inKeywordLine && state.allowSteps && stream.match(/Given|When|Then/)) {
+            }
+            // STEPS
+            else if (!state.inKeywordLine && state.allowSteps && stream.match(/Given|When|Then/)) {
                 state.inStep = true;
                 state.allowPlaceholders = true;
                 state.allowMultilineArgument = true;
                 state.inKeywordLine = true;
                 return "keyword";
-
-                // INLINE STRING
-            } else if (stream.match(/"[^"]*"?/)) {
+            }
+            // INLINE STRING
+            else if (stream.match(/(['"])[^\1]*\1?/)) {
                 return "string";
-
-                // PLACEHOLDER
-            } else if (state.allowPlaceholders && stream.match(/<[^>]*>?/)) {
+            }
+            // PLACEHOLDER
+            else if (state.allowPlaceholders && stream.match(/<[^>]*>?/)) {
                 return "variable";
-
-            } else if (state.allowPlaceholders && stream.match(/\$[^\s]+/)) {
+            }
+            else if (state.allowPlaceholders && stream.match(/\$[^\s]+/)) {
                 return "variable";
-
-                // Fall through
             } else {
+             // Fall through
                 stream.next();
                 stream.eatWhile(/[^$"<#]/);
                 return null;

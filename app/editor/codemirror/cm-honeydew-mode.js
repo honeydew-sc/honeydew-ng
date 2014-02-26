@@ -99,7 +99,7 @@ CodeMirror.defineMode("honeydew", function () {
                 return "keyword";
             }
             // INLINE STRING
-            else if (stream.match(/(['"])[^\1]*\1?/)) {
+            else if (stream.match(/(")[^\1]*\1/)) {
                 return "string";
             }
             // PLACEHOLDER
@@ -121,7 +121,7 @@ CodeMirror.defineMode("honeydew", function () {
                 // we want to highlight new things in the middle of
                 // the line, we need to put their starting characters
                 // in here
-                stream.eatWhile(/[^$"'<#h]/);
+                stream.eatWhile(/[^$"<#h]/);
                 return null;
             }
         }

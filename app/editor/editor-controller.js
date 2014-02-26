@@ -6,8 +6,7 @@ angular.module('honeydew')
             lineWrapping : true,
             lineNumbers: true,
             styleActiveLine: true,
-            // theme: 'xq-light',
-            theme: 'mdn-like',
+            theme: 'xq-light',
             mode: 'honeydew',
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',

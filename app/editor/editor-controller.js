@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, $timeout) {
         $scope.editorOptions = {
             lineWrapping : true,
             lineNumbers: true,
@@ -76,7 +76,7 @@ angular.module('honeydew')
         $scope.display = function ( file ) {
             $scope.file = Files.get({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
-                $scope.markClean();
+                $timeout( $scope.markClean, 1);
             }, function (res) {
                 alerts.addAlert(res);
             });

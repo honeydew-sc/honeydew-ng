@@ -2,17 +2,6 @@
  Gherkin mode - http://www.cukes.info/
  Report bugs/issues here: https://github.com/marijnh/CodeMirror/issues
  */
-
-// Following Objs from Brackets implementation: https://github.com/tregusti/brackets-gherkin/blob/master/main.js
-//var Quotes = {
-//  SINGLE: 1,
-//  DOUBLE: 2
-//};
-
-//var regex = {
-//  keywords: /(Feature| {2}(Scenario|In order to|As|I)| {4}(Given|When|Then|And))/
-//};
-
 CodeMirror.defineMode("honeydew", function () {
     return {
         lineComment: '#',
@@ -28,7 +17,7 @@ CodeMirror.defineMode("honeydew", function () {
                 allowPlaceholders: false,
                 allowMultilineArgument: false,
                 inMultilineTable: false,
-                inKeywordLine: false,
+                inKeywordLine: false
             };
         },
         token: function (stream, state) {
@@ -119,10 +108,20 @@ CodeMirror.defineMode("honeydew", function () {
             }
             else if (state.allowPlaceholders && stream.match(/\$[^\s]+/)) {
                 return "variable";
-            } else {
-             // Fall through
+            }
+            // CLICKABLE LINKS
+            else if (stream.match(/^https?:\/\/[^\s]*/)) {
+                return "clickable-link";
+            }
+            // FALL THROUGH
+            else {
                 stream.next();
-                stream.eatWhile(/[^$"<#]/);
+                // this eatWhile will consume everything in the rest
+                // of the line except for the characters here, so if
+                // we want to highlight new things in the middle of
+                // the line, we need to put their starting characters
+                // in here
+                stream.eatWhile(/[^$"'<#h]/);
                 return null;
             }
         }

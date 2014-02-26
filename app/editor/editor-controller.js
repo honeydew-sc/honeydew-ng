@@ -6,7 +6,8 @@ angular.module('honeydew')
             lineWrapping : true,
             lineNumbers: true,
             styleActiveLine: true,
-            theme: 'xq-light',
+            // theme: 'xq-light',
+            theme: 'mdn-like',
             mode: 'honeydew',
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',
@@ -49,6 +50,20 @@ angular.module('honeydew')
                 cm.on('focus', function (cm) {
                     document.querySelectorAll('.file-nav-dropdown')[0]
                         .classList.remove('open');
+                });
+
+                // :( I don't know why, but a directive
+                // with restrict: 'C' wasn't picking up on these spans
+                // when added by the mode highlighter. Manually
+                // $apply()ing and $digest()ing didn't seem to make a
+                // difference
+                $('.CodeMirror').on("click", ".cm-clickable-link", function(event) {
+                    var url;
+                    url = $(event.target).text();
+                    if (url.indexOf('http') !== 0) {
+                        url = 'http://' + url;
+                    }
+                    return window.open(url, '_blank');
                 });
 
                 CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);

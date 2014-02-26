@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
 /* honestly, no idea what's going on here. pre has left: -20px set
    somewhere :( */
 .remaining-height pre {
@@ -16,14 +21,15 @@
     overflow-y: auto;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-}
-
 /* compensate for navbar height */
 .remaining-height {
     height: calc(100% - 45px) !important;
+}
+
+.cm-clickable-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* center panel styles */

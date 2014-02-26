@@ -26,3 +26,8 @@
 .btn.btn-hdew:hover {
     background-color: #e0eee0;
 }
+
+.editor-nav .dirty {
+    position: absolute;
+    left: 2px;
+}

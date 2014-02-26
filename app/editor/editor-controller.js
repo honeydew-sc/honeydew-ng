@@ -26,6 +26,9 @@ angular.module('honeydew')
                     },
                     undo: function () {
                         cm.undo();
+                    },
+                    isDirty: function () {
+                        return !cm.isClean();
                     }
                 };
 
@@ -71,9 +74,9 @@ angular.module('honeydew')
 
 
         $scope.display = function ( file ) {
-            $scope.undo = false;
             $scope.file = Files.get({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
+                $scope.markClean();
             }, function (res) {
                 alerts.addAlert(res);
             });

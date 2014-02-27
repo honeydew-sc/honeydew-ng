@@ -5,9 +5,10 @@ angular.module('honeydew')
         this.globalAlerts =  [];
 
         this.addAlert = function(res) {
-            var type = res.success === 'true' ? 'success' : 'danger';
-            var msg = res.data.reason;
-            this.globalAlerts.push({type: type, msg: msg});
+            this.globalAlerts.push({
+                type: res.success === 'true' ? 'success' : 'danger',
+                msg: typeof(res.data) === 'undefined' ? res.notes : res.data.reason
+            });
         };
 
         this.closeAlert = function(index) {

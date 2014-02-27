@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (browserSelection, $localStorage, Jobs, panes) {
+    .directive('jobOptions', function (browserSelection, $localStorage, Jobs, Files, panes, alerts) {
         return {
             scope: {
                 filename: '@',
@@ -34,10 +34,23 @@ angular.module('honeydew')
                 scope.control.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         panes.openPane('report');
+
+                        // TODO: use transformRequest to refactor the
+                        // encode out
+                        var file = new Files({
+                            file: Files.encode(scope.filename)
+                        });
+
+                        file.$commit().then(function (res) {
+                            alerts.addAlert(res);
+                        });
+
+                        // TODO: refactor this into the Jobs resource
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: scope.filename,
                             host: scope.$storage.host
                         });
+
                         Jobs.execute(job);
                     }
                 };

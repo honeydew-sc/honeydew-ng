@@ -32,6 +32,9 @@ module.exports = function(config) {
             'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             'app/bower_components/ngstorage/ngStorage.js',
             'app/bower_components/codemirror/lib/codemirror.js',
+            'app/bower_components/ng-grid/build/ng-grid.min.js',
+            'app/bower_components/angular-markdown-directive/markdown.js',
+            'app/bower_components/showdown/compressed/showdown.js',
 
             // our scripts
             'app/app.js',

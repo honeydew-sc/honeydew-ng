@@ -25,7 +25,7 @@ angular.module('honeydew')
                     classes: 'col-md-6',
                     src: '/docs/rules.html',
                     icon: 'fa-file-text-o',
-                    tooltip: 'Perl POD',
+                    tooltip: 'All Rules',
                     init: function () {}
                 },
                 {

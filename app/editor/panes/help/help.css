@@ -1,0 +1,16 @@
+.help .gridStyle {
+    border: 1px solid #D4D4D4;
+    width: auto;
+    /* height: auto !important; */
+    /* overflow-y: hidden; */
+    /* overflow-x: hidden; */
+}
+
+.help .ngViewport.ng-scope{
+    height: auto !important;
+    overflow-y: hidden;
+}
+
+.help .ngTopPanel.ng-scope, .help .ngHeaderContainer{
+    width: auto !important;
+}

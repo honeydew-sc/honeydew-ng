@@ -24,8 +24,15 @@ angular.module('honeydew')
                     src: '/docs/rules.html',
                     icon: 'fa-file-text-o',
                     tooltip: 'Perl POD'
+                , {
+                },
+                {
+                    name: 'help',
+                    classes: 'col-md-4',
+                    src: '/editor/editor/panes/help/help.html',
+                    icon: 'fa-question-circle',
+                    tooltip: 'Help'
                 }
-
             ],
 
             activePane: '',

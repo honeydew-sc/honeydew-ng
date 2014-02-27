@@ -5,6 +5,7 @@ angular.module('honeydew', [
     'ngResource',
     'ngSanitize',
     'ngStorage',
+    'ngGrid',
     'ui.codemirror',
     'ui.bootstrap',
     'ui.router'

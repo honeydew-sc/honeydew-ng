@@ -2,7 +2,7 @@
   <nav class="">
     <ul class="navbar-nav nav">
       <li class="sidebar-nav" ng-repeat="pane in panes.panes">
-        <a class="pane-icon"
+        <a class="pane-icon {{pane.name}}-pane"
            ng-class="panes.activePane == pane.name ? 'active' : ''"
            popover="{{pane.tooltip}}"
            popover-placement="left"

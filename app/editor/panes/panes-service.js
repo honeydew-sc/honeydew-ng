@@ -13,7 +13,7 @@ angular.module('honeydew')
                     init: function () {}
                 },
                 {
-                    name: 'examples',
+                    name: 'samples',
                     classes: 'col-md-6',
                     src: '/docs/examples.html',
                     icon: 'fa-clipboard',
@@ -67,10 +67,15 @@ angular.module('honeydew')
             activePane: '',
 
             openPane:  function (pane, scope) {
+                if (typeof(scope) === 'undefined') {
+                    scope = {};
+                }
+
                 var panes = this;
                 if (typeof(pane) === 'object') {
                     this.activePane = pane.name;
                     this.url = pane.src;
+
                     scope[pane.name] = pane.init(scope);
                 }
                 else {

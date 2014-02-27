@@ -2,8 +2,9 @@
 
 angular.module('honeydew')
     .factory('Jobs', function ($resource) {
-        return $resource('/rest.php/jobs', null,
-                         {
-                             'execute': { method: 'POST' }
-                         });
+        return $resource('/rest.php/jobs', null, {
+            'execute': {
+                method: 'POST'
+            }
+        });
     });

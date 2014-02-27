@@ -1,8 +1,8 @@
 Feature: editor
 
 $url = 'http://www.google.com'
-$editor = 'http://localhost/editor2/#/features/e2e/delete-me2.feature'
-$noPermissions = 'http://localhost/editor2/#/features/e2e/no-permissions.feature'
+$editor = '/editor/#/features/e2e/delete-me2.feature'
+$noPermissions = '/editor/#/features/e2e/no-permissions.feature'
 
 $hostname = 'css=[type="url"]'
 $executeButton = 'id=execute'

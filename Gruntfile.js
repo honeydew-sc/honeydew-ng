@@ -107,7 +107,12 @@ module.exports = function (grunt) {
             },
             proxies: [
                 {
-                    context: ['/rest.php', '/reports.php', '/docs'],
+                    context: [
+                        '/rest.php',
+                        '/reports.php',
+                        '/docs',
+                        '/editor/editor/panes'
+                    ],
                     host: 'localhost',
                     port: 80,
                     https: false,

@@ -8,7 +8,8 @@ angular.module('honeydew', [
     'ngGrid',
     'ui.codemirror',
     'ui.bootstrap',
-    'ui.router'
+    'ui.router',
+    'btford.markdown'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/features/test/dan.feature');

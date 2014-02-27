@@ -8,6 +8,10 @@ angular.module('honeydew')
             restrict: 'E',
             link: function (scope) {
                 scope.panes = panes;
+
+                scope.togglePaneWithScope = function (pane) {
+                    scope.panes.togglePane(pane, scope);
+                };
             }
         };
     });

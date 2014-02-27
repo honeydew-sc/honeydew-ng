@@ -8,20 +8,6 @@ angular.module('honeydew')
             restrict: 'E',
             link: function (scope) {
                 scope.panes = panes;
-
-                scope.shortcuts = [];
-                for (var key in scope.editorOptions.extraKeys) {
-                    scope.shortcuts.push({
-                        key: key,
-                        command: scope.editorOptions.extraKeys[key]
-                    });
-                };
-
-                scope.gridOptions = {
-                    data: 'shortcuts'
-                };
-
-                scope.panes.openPane('help');
             }
         };
     });

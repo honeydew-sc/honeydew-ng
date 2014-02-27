@@ -2,6 +2,8 @@
 
 angular.module('honeydew')
     .service('panes', [ function () {
+        var base = '/editor/editor/panes/';
+
         return {
             panes: [
                 {
@@ -15,7 +17,7 @@ angular.module('honeydew')
                 {
                     name: 'samples',
                     classes: 'col-md-6',
-                    src: '/docs/examples.html',
+                    src: base + '/examples/examples.html',
                     icon: 'fa-clipboard',
                     tooltip: 'Samples',
                     init: function () {}
@@ -23,7 +25,7 @@ angular.module('honeydew')
                 {
                     name: 'rules',
                     classes: 'col-md-6',
-                    src: '/docs/rules.html',
+                    src: base + '/rules/rules.html',
                     icon: 'fa-file-text-o',
                     tooltip: 'All Rules',
                     init: function () {}
@@ -31,7 +33,7 @@ angular.module('honeydew')
                 {
                     name: 'settings',
                     classes: 'col-md-3',
-                    src: '/editor/editor/panes/settings/settings.html',
+                    src: base + '/settings/settings.html',
                     icon: 'fa-gear',
                     tooltip: 'Settings',
                     init: function () {}
@@ -39,7 +41,7 @@ angular.module('honeydew')
                 {
                     name: 'help',
                     classes: 'col-md-4',
-                    src: '/editor/editor/panes/help/help.html',
+                    src: base + '/help/help.html',
                     icon: 'fa-question-circle',
                     tooltip: 'Help',
                     init: function (scope) {

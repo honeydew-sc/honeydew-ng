@@ -99,7 +99,7 @@ CodeMirror.defineMode("honeydew", function () {
                 return "keyword";
             }
             // INLINE STRING
-            else if (stream.match(/"[^"]*"/) || stream.match(/'[^']*'/)) {
+            else if (stream.match(/"[^"]*"?/) || stream.match(/ '[^']*' /)) {
                 return "string";
             }
             // PLACEHOLDER

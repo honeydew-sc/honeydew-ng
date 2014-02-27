@@ -58,8 +58,30 @@ CodeMirror.defineMode("honeydew", function () {
 
             }
 
+            stream.proceed = function () {
+                stream.next();
+                // this eatWhile will consume everything in the rest
+                // of the line except for the characters here, so if
+                // we want to highlight new things in the middle of
+                // the line, we need to put their starting characters
+                // in here
+                stream.eatWhile(/[^$"'<#h]/);
+            };
+
+            stream.isComment = function () {
+                return this.indentation() === 0;
+            };
+
+
             // LINE COMMENT
             if (state.inCommentLine) {
+                return "comment";
+            }
+            else if (state.allowSteps && stream.isComment()) {
+                // since we're not consuming anything with a call to
+                // .match, we need to push the stream along manually,
+                // or else it'll check the same line forever
+                stream.proceed();
                 return "comment";
             }
             // FEATURE
@@ -88,7 +110,11 @@ CodeMirror.defineMode("honeydew", function () {
                 state.allowPreamble = false;
                 state.allowMultilineArgument = false;
                 state.inKeywordLine = true;
-                return "keyword";
+                var type = "keyword";
+                if (stream.isComment()) {
+                    type += " comment";
+                }
+                return type;
             }
             // STEPS
             else if (!state.inKeywordLine && state.allowSteps && stream.match(/Given|When|Then/)) {
@@ -115,13 +141,7 @@ CodeMirror.defineMode("honeydew", function () {
             }
             // FALL THROUGH
             else {
-                stream.next();
-                // this eatWhile will consume everything in the rest
-                // of the line except for the characters here, so if
-                // we want to highlight new things in the middle of
-                // the line, we need to put their starting characters
-                // in here
-                stream.eatWhile(/[^$"'<#h]/);
+                stream.proceed();
                 return null;
             }
         }

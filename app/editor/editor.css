@@ -32,41 +32,7 @@ html, body {
     cursor: pointer;
 }
 
-/* center panel styles */
 
-.center-panel {
-    z-index: 1;
-    right: 20px;
-    top: 41px;
-    bottom: 0px;
-    position: fixed;
-    height: 100%;
-    border-left: 1px solid #E7E7E7;
-    padding: 10px 15px;
-    overflow: auto;
-    background-color: rgba(255,255,255,1);
-}
-
-.center-panel pre {
-    padding: 0px;
-    margin: 0px;
-    background-color: inherit;
-    border: 0px;
-}
-
-.center-panel accordion pre, .center-panel pre.docs {
-    background-color: honeydew !important;
-    padding: 6px;
-    position: relative;
-    overflow: auto;
-    border-radius: 10px;
-    border: 1px solid #EEE;
-}
-
-.center-panel accordion pre > code, samp {
-    font-size: 110% !important;
-    color: #35638A;
-}
 
 /* east nav */
 

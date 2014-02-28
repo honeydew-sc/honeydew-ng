@@ -3,7 +3,6 @@
 angular.module('honeydew')
     .service('panes', [ function () {
         var base = '/editor/editor/panes/';
-
         return {
             panes: [
                 {
@@ -12,80 +11,55 @@ angular.module('honeydew')
                     src: '/reports.php?new=true',
                     icon: 'fa-list-alt',
                     tooltip: 'Live Report',
-                    init: function () {}
+                    include: true
                 },
                 {
                     name: 'samples',
                     classes: 'col-md-6',
-                    src: base + '/examples/examples.html',
+                    src: base + 'examples/examples.html',
                     icon: 'fa-clipboard',
                     tooltip: 'Samples',
-                    init: function () {}
+                    include: true
                 },
                 {
                     name: 'rules',
                     classes: 'col-md-6',
-                    src: base + '/rules/rules.html',
+                    src: base + 'rules/rules.html',
                     icon: 'fa-file-text-o',
                     tooltip: 'All Rules',
-                    init: function () {}
+                    include: true
                 },
                 {
                     name: 'settings',
                     classes: 'col-md-3',
-                    src: base + '/settings/settings.html',
+                    html: '<editor-settings></editor-settings',
                     icon: 'fa-gear',
                     tooltip: 'Settings',
-                    init: function () {}
+                    include: false
                 },
                 {
                     name: 'help',
                     classes: 'col-md-4',
-                    src: base + '/help/help.html',
+                    html: '<editor-help options="editorOptions"></editor-help>',
                     icon: 'fa-question-circle',
                     tooltip: 'Help',
-                    init: function (scope) {
-                        return {
-                            shortcuts: (function (keys) {
-                                var shortcuts = [];
-                                for (var key in keys) {
-                                    shortcuts.push({
-                                        key: key,
-                                        command: keys[key]
-                                    });
-                                };
-
-                                return shortcuts;
-                            })(scope.editorOptions.extraKeys),
-
-                            gridOptions: {
-                                data: 'help.shortcuts'
-                            }
-                        };
-                    }
+                    include: false
                 }
             ],
 
             activePane: '',
 
-            openPane:  function (pane, scope) {
-                if (typeof(scope) === 'undefined') {
-                    scope = {};
-                }
-
+            openPane:  function (pane, contents) {
                 var panes = this;
                 if (typeof(pane) === 'object') {
                     this.activePane = pane.name;
-                    this.url = pane.src;
 
-                    scope[pane.name] = pane.init(scope);
-                }
-                else {
-                    this.panes.forEach( function (paneObject) {
-                        if (paneObject.name === pane) {
-                            panes.openPane(paneObject);
-                        }
-                    });
+                    if (pane.include) {
+                        this.url = pane.src;
+                    }
+                    else {
+                        $('.center-panel.' + pane.name).html(contents);
+                    }
                 }
             },
 
@@ -94,12 +68,12 @@ angular.module('honeydew')
                 this.url = '';
             },
 
-            togglePane:  function (pane, scope) {
+            togglePane:  function (pane, contents) {
                 if (this.activePane === pane.name) {
                     this.closePane();
                 }
                 else {
-                    this.openPane(pane, scope);
+                    this.openPane(pane, contents);
                 }
             }
         };

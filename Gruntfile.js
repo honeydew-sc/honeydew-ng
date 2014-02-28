@@ -397,7 +397,7 @@ module.exports = function (grunt) {
         'clean:server',
         'autoprefixer',
         'connect:test',
-        'karma',
+        'karma:unit',
         'shell:honeydew'
     ]);
 

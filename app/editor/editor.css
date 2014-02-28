@@ -1,8 +1,3 @@
-html, body {
-    height: 100%;
-    width: 100%;
-}
-
 /* honestly, no idea what's going on here. pre has left: -20px set
    somewhere :( */
 .remaining-height pre {
@@ -30,4 +25,10 @@ html, body {
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+}
+
+
+.settings-wrapper {
+    height: 100%;
+    width: 100%;
 }

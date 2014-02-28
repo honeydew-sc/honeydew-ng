@@ -1,0 +1,9 @@
+.Carl .CodeMirror pre {
+    font-family: Courier New;
+    line-height: 1.25em;
+    font-size: 15px;
+}
+
+.Carl .cm-keyword, .Carl .cm-header, .Carl .cm-string {
+    letter-spacing: 0.05em;
+}

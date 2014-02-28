@@ -61,6 +61,13 @@ angular.module('honeydew')
                         $('.center-panel.' + pane.name).html(contents);
                     }
                 }
+                else {
+                    this.panes.forEach( function (paneObject) {
+                        if (paneObject.name === pane) {
+                            panes.openPane(paneObject);
+                        }
+                    });
+                }
             },
 
             closePane:  function () {

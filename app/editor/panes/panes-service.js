@@ -32,7 +32,7 @@ angular.module('honeydew')
                 {
                     name: 'settings',
                     classes: 'col-md-3',
-                    html: '<editor-settings></editor-settings',
+                    html: '<editor-settings options="editorOptions"></editor-settings>',
                     icon: 'fa-gear',
                     tooltip: 'Settings',
                     include: false

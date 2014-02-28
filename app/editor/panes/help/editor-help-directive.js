@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorHelp', function ($compile) {
+    .directive('editorHelp', function () {
         return {
             templateUrl: 'editor/panes/help/editor-help.html',
             scope: {
                 options: '='
             },
+            replace: true,
             restrict: 'E',
             controller: function ($scope) {
                 $scope.shortcuts = [];

@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editor-settings', function (panes) {
+    .directive('editorSettings', function () {
         return {
-            templateUrl: '',
+            templateUrl: 'editor/panes/settings/editor-settings.html',
+            scope: {
+                options: '='
+            },
             replace: true,
             restrict: 'E',
-            link: function (scope, element, attrs) {
-                console.log('settings', scope.panes);
+            controller: function ($scope) {
+                console.log('settings', $scope);
             }
         };
     });

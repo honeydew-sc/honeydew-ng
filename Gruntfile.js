@@ -330,11 +330,15 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 singleRun: true
             },
-
             ci: {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
                 reporters: 'dots'
+            },
+            travis: {
+                configFile: 'karma.conf.js',
+                singleRun: true,
+                browsers: ['PhantomJS']
             }
         },
 

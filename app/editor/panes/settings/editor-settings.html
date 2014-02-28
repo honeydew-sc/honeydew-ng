@@ -1,4 +1,31 @@
-<btf-markdown class="settings"># Settings
+<div class="settings">
+  <btf-markdown># Settings
 
-  Coming soon...
-</btf-markdown>
+### Styles
+  </btf-markdown>
+  <form>
+    <div class="form-group">
+      <label class="control-label" for="font">Font:  </label>
+      <select id="font" class="form-control"
+              ng-model="$storage.settings.font"
+              ng-options="font for font in settingsOptions.fonts"
+              >
+      </select>
+    </div>
+
+
+  </form>
+  <div class="form-group">
+    <label class="control-label" for="theme">Theme:  </label>
+    <select id="theme"
+            class="form-control"
+            ng-model="$storage.settings.theme"
+            ng-options="theme for theme in settingsOptions.themes"
+            ng-change="options.refresh()"
+            >
+    </select>
+  </div>
+
+  </select>
+
+</div>

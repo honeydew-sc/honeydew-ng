@@ -1,6 +1,12 @@
 <editor-nav control="jobs" doc="doc" filename={{filename}}></editor-nav>
 
-<ui-codemirror ng-model="file.contents" ui-codemirror-opts="editorOptions"></ui-codemirror>
+<div ng-class="$storage.settings.font" class="settings-wrapper">
+  <ui-codemirror ng-model="file.contents"
+                 ui-codemirror-opts="editorOptions"
+                 ng-class="'cm-s-' + $storage.settings.theme"
+                 >
+  </ui-codemirror>
+</div>
 
 <center-pane></center-pane>
 

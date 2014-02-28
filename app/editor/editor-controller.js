@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, $timeout) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, $timeout, $localStorage) {
+        $scope.$storage = $localStorage;
         $scope.editorOptions = {
             lineWrapping : true,
             lineNumbers: true,
             styleActiveLine: true,
-            theme: 'xq-light',
             mode: 'honeydew',
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',
@@ -16,6 +16,12 @@ angular.module('honeydew')
                 'Ctrl-Y': 'redo'
             },
             onLoad: function (cm) {
+                $scope.editorOptions.refresh = function () {
+                    $timeout(function () {
+                        cm.refresh();
+                    }, 1);
+                };
+
                 $scope.markClean = function () {
                     cm.markClean();
                 };

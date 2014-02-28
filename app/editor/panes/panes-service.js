@@ -8,7 +8,7 @@ angular.module('honeydew')
                 {
                     name: 'report',
                     classes: 'col-md-6',
-                    src: '/reports.php?new=true',
+                    templateUrl: '/reports.php?new=true',
                     icon: 'fa-list-alt',
                     tooltip: 'Live Report',
                     include: true
@@ -16,7 +16,7 @@ angular.module('honeydew')
                 {
                     name: 'samples',
                     classes: 'col-md-6',
-                    src: base + 'examples/examples.html',
+                    templateUrl: base + 'examples/examples.html',
                     icon: 'fa-clipboard',
                     tooltip: 'Samples',
                     include: true
@@ -24,7 +24,7 @@ angular.module('honeydew')
                 {
                     name: 'rules',
                     classes: 'col-md-6',
-                    src: base + 'rules/rules.html',
+                    templateUrl: base + 'rules/rules.html',
                     icon: 'fa-file-text-o',
                     tooltip: 'All Rules',
                     include: true
@@ -32,7 +32,7 @@ angular.module('honeydew')
                 {
                     name: 'settings',
                     classes: 'col-md-3',
-                    html: '<editor-settings options="editorOptions"></editor-settings>',
+                    template: '<editor-settings options="editorOptions"></editor-settings>',
                     icon: 'fa-gear',
                     tooltip: 'Settings',
                     include: false
@@ -40,7 +40,7 @@ angular.module('honeydew')
                 {
                     name: 'help',
                     classes: 'col-md-4',
-                    html: '<editor-help options="editorOptions"></editor-help>',
+                    template: '<editor-help options="editorOptions"></editor-help>',
                     icon: 'fa-question-circle',
                     tooltip: 'Help',
                     include: false
@@ -55,7 +55,7 @@ angular.module('honeydew')
                     this.activePane = pane.name;
 
                     if (pane.include) {
-                        this.url = pane.src;
+                        this.url = pane.templateUrl;
                     }
                     else {
                         $('.center-panel.' + pane.name).html(contents);

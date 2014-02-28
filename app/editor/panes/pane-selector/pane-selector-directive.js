@@ -14,7 +14,7 @@ angular.module('honeydew')
                         scope.panes.togglePane(pane);
                     }
                     else {
-                        var contents = $compile(pane.html)( scope );
+                        var contents = $compile( pane.template )( scope );
                         scope.panes.togglePane(pane, contents);
                     };
                 };

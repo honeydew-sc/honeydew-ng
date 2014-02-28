@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('browserSelection', function () {
+    .service('availableBrowsers', function () {
         var gpAddress = "10.10.0.83";
 
         var local = [

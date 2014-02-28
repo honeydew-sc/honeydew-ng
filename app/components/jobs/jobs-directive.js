@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (browserSelection, $localStorage, Jobs, Files, panes, alerts) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts) {
         return {
             scope: {
                 filename: '@',
                 control: '='
             },
-            templateUrl: 'components/job-options/job-options.html',
+            templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
-                scope.browserList = browserSelection.all;
+                scope.browserList = availableBrowsers.all;
 
                 scope.$storage = $localStorage.$default({
                     host: ''

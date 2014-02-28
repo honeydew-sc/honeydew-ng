@@ -329,6 +329,12 @@ module.exports = function (grunt) {
             unit: {
                 configFile: 'karma.conf.js',
                 singleRun: true
+            },
+
+            ci: {
+                configFile: 'karma.conf.js',
+                autoWatch: true,
+                reporters: 'dots'
             }
         },
 

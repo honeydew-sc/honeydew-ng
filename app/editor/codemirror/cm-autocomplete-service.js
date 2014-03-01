@@ -118,7 +118,7 @@ angular.module('honeydew')
                 }
 
                 var result = source.filter( function (it) {
-                    return it.toLowerCase().search(word.trim()) !== -1;
+                    return it.toLowerCase().search(word.toLowerCase().trim()) !== -1;
                 });
 
                 return {

@@ -110,18 +110,20 @@ angular.module('honeydew')
 
                 if (token.state.allowPreamble) {
                     source = autocompleteService.getPreamble();
+                    start = 0;
                 }
                 else {
                     source = autocompleteService.getSteps();
+                    start = 1;
                 }
 
                 var result = source.filter( function (it) {
-                    return it.search(word.trim()) !== -1;
+                    return it.toLowerCase().search(word.trim()) !== -1;
                 });
 
                 return {
                     list: result && result.length ? result : [],
-                    from: CodeMirror.Pos(cur.line, 1),
+                    from: CodeMirror.Pos(cur.line, start),
                     to: CodeMirror.Pos(cur.line, end)
                 };
             },

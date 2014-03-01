@@ -42,7 +42,7 @@ angular.module('honeydew')
                         });
 
                         file.$commit().then(function (res) {
-                            alerts.addAlert(res);
+                            alerts.addAlert(res, 1000);
                         });
 
                         // TODO: refactor this into the Jobs resource

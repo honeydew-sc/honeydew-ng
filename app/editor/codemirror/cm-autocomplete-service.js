@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('cmAutocomplete', [ function () {
+    .service('cmAutocomplete', function ($resource, $http) {
         var rules = [
             'Given I am on the (.*) page',
             'Given I am logged in on the (.*) page',
@@ -97,35 +97,53 @@ angular.module('honeydew')
             'Then all the images should be loaded successfully'
         ];
 
-        return {
+        var autocompleteService = {
             getHints:  function (cm) {
                 var cur = cm.getCursor();
                 var token = cm.getTokenAt(cur);
-                var start = token.start, end = token.end;
-                var found = token.string.match(/(\s*)(.*)/);
-                var word = found[2], indent = found[1];
+                var line = cm.getLine(cur.line);
+                var start = token.start;
+                var end = token.end;
+                var word = line;
 
-                var result = rules.filter( function (it) {
+                var source;
+
+                if (token.state.allowPreamble) {
+                    source = autocompleteService.getPreamble();
+                }
+                else {
+                    source = autocompleteService.getSteps();
+                }
+
+                var result = source.filter( function (it) {
                     return it.search(word.trim()) !== -1;
                 });
 
-                var hints = {
-                    list: result,
-                    from: CodeMirror.Pos(cur.line, start),
+                return {
+                    list: result && result.length ? result : [],
+                    from: CodeMirror.Pos(cur.line, 1),
                     to: CodeMirror.Pos(cur.line, end)
                 };
-
-                if (result.length) {
-                    return hints;
-                }
-                else {
-                    console.log("sorry");
-                    return [];
-                }
             },
 
-            getRules: function () {
-                return rules;
+            getPreamble: function () {
+                return autocompleteService.preamble;
+            },
+
+            getSteps: function () {
+                return autocompleteService.validSteps;
+            },
+
+            populateAutocompleteSources: function () {
+                return $http.get('/rest.php/autocomplete').success(function (res) {
+                    autocompleteService.validSteps = res.phrases.concat(rules);
+                    autocompleteService.preamble = res.preamble;
+                    autocompleteService.keywords = res.keywords;
+                });
             }
         };
-    }]);
+
+        autocompleteService.populateAutocompleteSources();
+
+        return autocompleteService;
+    });

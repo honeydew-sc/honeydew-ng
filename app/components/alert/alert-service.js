@@ -5,6 +5,7 @@ angular.module('honeydew')
         this.globalAlerts =  [];
 
         this.addAlert = function(res, timeout) {
+            var alerts = this;
             var alert = {
                 type: res.success === 'true' ? 'success' : 'danger',
                 msg: typeof(res.data) === 'undefined' ? res.notes : res.data.reason
@@ -13,7 +14,7 @@ angular.module('honeydew')
 
             if (timeout) {
                 $timeout(function () {
-                    this.closeAlert(this.closeAlert(this.globalAlerts.indexOf(alert)));
+                    alerts.closeAlert(alerts.globalAlerts.indexOf(alert));
                 }, timeout);
             }
         };

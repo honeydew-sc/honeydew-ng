@@ -1,6 +1,11 @@
 .alerts {
     position: absolute;
     bottom: 0px;
-    right: 50px;
+    right: calc(50px + 25px);
     z-index: 1;
+    max-width: 50%;
+}
+
+.alerts div.alert  {
+    width: calc(100% + 25px);
 }

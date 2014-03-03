@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('cmAutocompleteService', function () {
+describe('cmAutocompleteService', function () {
     var cmAutocomplete, httpMock;
     var httpResponse = {
         phrases: [

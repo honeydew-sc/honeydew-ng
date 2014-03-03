@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Controller: EditorCtrl', function () {
-    var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile;
+    var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile, fakeAutocomplete;
     beforeEach(module('honeydew'));
 
     beforeEach(inject(function($controller, $rootScope, $httpBackend, _Files_) {
@@ -19,11 +19,14 @@ describe('Controller: EditorCtrl', function () {
         fakeFile = new Files(fakedContents);
 
         scope = $rootScope.$new();
-        scope.markClean = function () {};
+        scope.doc = {
+            markClean: function () {}
+        };
         scope.file = fakeFile;
 
         EditorCtrl = $controller('EditorCtrl', {
-            $scope: scope
+            $scope: scope,
+            cmAutocomplete: fakeAutocomplete
         });
     }));
 

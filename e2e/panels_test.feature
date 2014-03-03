@@ -1,6 +1,6 @@
 Feature: test behavior of right panels
 
-$editor = "/editor2/#/features/e2e/delete-me.feature"
+$editor = "/editor/#/features/e2e/delete-me.feature"
 $font = "Carl"
 $theme = "xq-dark"
 
@@ -26,7 +26,7 @@ $theme = "xq-dark"
  Given I am on the $editor page
    When I click and wait on the link class=help-pane
      Then I wait for the text Ctrl-/ to be present
-     
+
  only Scenario: Settings changes classes
  Given I am on the $editor page
    When I click and wait on the link class=settings-pane
@@ -38,4 +38,3 @@ $theme = "xq-dark"
    When I refresh the page
      Then the class=$font element should be visible
      Then the class=cm-s-$theme element should be visible
-

@@ -4,7 +4,7 @@ angular.module('honeydew')
     .factory('Files', function ($resource) {
         var res = $resource('/rest.php/files/:file', {file: '@file'
         }, {
-            'commit': {method: 'COMMIT'}
+            'commit': {method: 'PUT'}
         });
 
         res.encode = function ( file ) {

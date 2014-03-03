@@ -5,6 +5,7 @@ angular.module('honeydew')
         return {
             scope: {
                 filename: '@',
+                jira: '=',
                 control: '='
             },
             templateUrl: 'components/jobs/jobs.html',
@@ -33,25 +34,27 @@ angular.module('honeydew')
 
                 scope.control.executeJob = function () {
                     if (scope.jobOptions.$valid) {
-                        panes.openPane('report');
-
-                        // TODO: use transformRequest to refactor the
-                        // encode out
-                        var file = new Files({
-                            file: Files.encode(scope.filename)
-                        });
-
-                        file.$commit().then(function (res) {
-                            alerts.addAlert(res, 1000);
-                        });
-
                         // TODO: refactor this into the Jobs resource
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: scope.filename,
                             host: scope.$storage.host
                         });
 
+                        panes.openPane('report');
                         Jobs.execute(job);
+
+                        var file = new Files({
+                            file: Files.encode(scope.filename),
+                            msg: scope.jira()
+                        });
+
+                        file.$commit()
+                            .then(function (res) {
+                                alerts.addAlert(res, 1000);
+                            })
+                            .catch(function (res) {
+                                alerts.addAlert(res);
+                            });
                     }
                 };
             }

@@ -39,7 +39,12 @@ angular.module('honeydew')
                         return !cm.isClean();
                     },
 
-                    keyMap: CodeMirror.keyMap.default
+                    keyMap: CodeMirror.keyMap.default,
+
+                    jira: function () {
+                        var matches = $scope.file.contents.match(/JIRA: (.*)/);
+                        return matches[1];
+                    }
                 };
 
                 CodeMirror.commands.autocomplete = function (cm) {

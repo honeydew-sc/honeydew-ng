@@ -37,6 +37,7 @@ angular.module('honeydew')
                         'erlang-dark',
                         'lesser-dark',
                         'mbo',
+                        'mdn-like',
                         'midnight',
                         'monokai',
                         'neat',

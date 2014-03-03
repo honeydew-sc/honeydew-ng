@@ -79,7 +79,7 @@ angular.module('honeydew')
             'Then the element (.*) should have a background image with URL (.*)',
             'Then the (.*) element should have the attribute (.*)=(.*)',
             'Then the (.*) element should match the attribute pattern (.*) =~ (.*)',
-            'Then the (.*) contains the text (.*)',
+            'Then the (.*) element should contain the text (.*)',
             'Then the (.*) attribute of the (.*) element should be the same as $(.*)',
             'Then the (.*) attribute of the (.*) element should be different from $(.*)',
             'Then the inner text of the (.*) element should be the same as $(.*)',

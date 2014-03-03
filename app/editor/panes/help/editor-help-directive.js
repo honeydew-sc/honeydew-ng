@@ -11,9 +11,13 @@ angular.module('honeydew')
             replace: true,
             restrict: 'E',
             controller: function ($scope) {
-                $scope.shortcuts = [];
+                $scope.shortcuts = {
+                    extra: [],
+                    search: []
+                };
+
                 for (var key in $scope.options.extraKeys) {
-                    $scope.shortcuts.push({
+                    $scope.shortcuts.extra.push({
                         key: key,
                         command: $scope.options.extraKeys[key]
                     });
@@ -31,7 +35,7 @@ angular.module('honeydew')
                     if ($scope.map.hasOwnProperty(searchKey)) {
                         var command = $scope.map[searchKey];
                         if ( $scope.searchAndReplaceCommands.indexOf(command) !== -1) {
-                            $scope.shortcuts.push({
+                            $scope.shortcuts.search.push({
                                 key: searchKey,
                                 command: command
                             });
@@ -40,7 +44,12 @@ angular.module('honeydew')
                 };
 
                 $scope.gridOptions = {
-                    data: 'shortcuts'
+                    search: {
+                        data: 'shortcuts.search'
+                    },
+                    extra: {
+                        data: 'shortcuts.extra'
+                    }
                 };
             }
         };

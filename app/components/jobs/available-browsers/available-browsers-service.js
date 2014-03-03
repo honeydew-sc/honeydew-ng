@@ -39,27 +39,27 @@ angular.module('honeydew')
 
         var sauce = [
             {
-                browser: 'Windows 2012 - IE 9',
+                browser: 'Windows 7 - IE 9',
                 group: 'SauceLabs OnDemand',
                 sauce: 'on'
             },
             {
-                browser: 'Windows 2012 - IE 10',
+                browser: 'Windows 8 - IE 10',
                 group: 'SauceLabs OnDemand',
                 sauce: 'on'
             },
             {
-                browser: 'Windows 2012 - IE 11',
+                browser: 'Windows 8.1 - IE 11',
                 group: 'SauceLabs OnDemand',
                 sauce: 'on'
             },
             {
-                browser: 'Windows 2003 - FF',
+                browser: 'Windows 7 - FF',
                 group: 'SauceLabs OnDemand',
                 sauce: 'on'
             },
             {
-                browser: 'Windows 2003 - Chrome',
+                browser: 'Windows 7 - Chrome',
                 group: 'SauceLabs OnDemand',
                 sauce: 'on'
             }

@@ -17,8 +17,9 @@ $alert = 'css=.alert div element'
  Given I am on the $editor page
    When I input random text into the editor cm
      Then the page should contain $input
-   When I pause for 3 seconds
+   When I pause for 2 seconds
    When I refresh the page
+   When I pause for 1 second
    Then the page should contain $input
 
  Scenario: preserve choices

@@ -43,7 +43,7 @@ angular.module('honeydew')
 
                     jira: function () {
                         var matches = $scope.file.contents.match(/JIRA: (.*)/);
-                        return matches[1];
+                        return matches !== null ? matches[1] : "";
                     }
                 };
 

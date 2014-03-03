@@ -27,7 +27,7 @@ $theme = "xq-dark"
    When I click and wait on the link class=help-pane
      Then I wait for the text Ctrl-/ to be present
 
- only Scenario: Settings changes classes
+ Scenario: Settings changes classes
  Given I am on the $editor page
    When I click and wait on the link class=settings-pane
    When I select $font from the id=font dropdown

@@ -40,7 +40,7 @@ angular.module('honeydew')
                 {
                     name: 'help',
                     classes: 'col-md-4',
-                    template: '<editor-help options="editorOptions"></editor-help>',
+                    template: '<editor-help options="editorOptions" map="doc.keyMap"></editor-help>',
                     icon: 'fa-question-circle',
                     tooltip: 'Help',
                     include: false

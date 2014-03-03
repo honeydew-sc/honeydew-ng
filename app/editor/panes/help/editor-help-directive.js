@@ -5,7 +5,8 @@ angular.module('honeydew')
         return {
             templateUrl: 'editor/panes/help/editor-help.html',
             scope: {
-                options: '='
+                options: '=',
+                map: '='
             },
             replace: true,
             restrict: 'E',
@@ -16,6 +17,26 @@ angular.module('honeydew')
                         key: key,
                         command: $scope.options.extraKeys[key]
                     });
+                };
+
+                $scope.searchAndReplaceCommands = [
+                    "find",
+                    "findNext",
+                    "findPrev",
+                    "replace",
+                    "replaceAll"
+                ];
+
+                for (var searchKey in $scope.map) {
+                    if ($scope.map.hasOwnProperty(searchKey)) {
+                        var command = $scope.map[searchKey];
+                        if ( $scope.searchAndReplaceCommands.indexOf(command) !== -1) {
+                            $scope.shortcuts.push({
+                                key: searchKey,
+                                command: command
+                            });
+                        }
+                    }
                 };
 
                 $scope.gridOptions = {

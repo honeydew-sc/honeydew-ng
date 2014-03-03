@@ -18,7 +18,7 @@
 
 /* compensate for navbar height */
 .remaining-height {
-    height: calc(100% - 45px) !important;
+    height: calc(100% - 41px) !important;
 }
 
 .cm-clickable-link {
@@ -27,8 +27,7 @@
     cursor: pointer;
 }
 
-
-.settings-wrapper {
-    height: 100%;
+.settings.wrapper {
     width: 100%;
+    position: absolute;
 }

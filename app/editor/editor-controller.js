@@ -22,20 +22,24 @@ angular.module('honeydew')
                     }, 1);
                 };
 
-                $scope.markClean = function () {
-                    cm.markClean();
-                };
-
                 $scope.doc = {
                     redo: function () {
                         cm.redo();
                     },
+
                     undo: function () {
                         cm.undo();
                     },
+
+                    markClean: function () {
+                        cm.markClean();
+                    },
+
                     isDirty: function () {
                         return !cm.isClean();
-                    }
+                    },
+
+                    keyMap: CodeMirror.keyMap.default
                 };
 
                 CodeMirror.commands.autocomplete = function (cm) {
@@ -82,7 +86,7 @@ angular.module('honeydew')
         $scope.display = function ( file ) {
             $scope.file = Files.get({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
-                $timeout( $scope.markClean, 1);
+                $timeout( $scope.doc.markClean, 1);
             }, function (res) {
                 alerts.addAlert(res);
             });
@@ -97,14 +101,13 @@ angular.module('honeydew')
                 alerts.addAlert({data: {reason: "Cowardly refusing to save an empty file. Sorry!"}});
             }
             else {
-
                 // the response to $save includes the file contents;
                 // on response, it (sometimes?) updates file.contents
                 // in the codemirror and messes up the undo history
                 // and cursor position.
                 var preserveCodeMirror = angular.copy($scope.file);
                 preserveCodeMirror.$save().then(function (res) {
-                    $scope.markClean();
+                    $scope.doc.markClean();
                 }).catch( function (res) {
                     alerts.addAlert(res);
                 });

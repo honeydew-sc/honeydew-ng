@@ -2,12 +2,12 @@
   <div ng-show="panes.activePane === pane.name">
     <div
       ng-include="panes.url"
-      class="{{pane.classes}} center-panel {{pane.name}}"
+      class="{{pane.classes}} center-panel {{pane.name}} remaining-height"
       ng-if="pane.include">
     </div>
 
     <div
-      class="{{pane.classes}} center-panel {{pane.name}}"
+      class="{{pane.classes}} center-panel {{pane.name}} remaining-height"
       ng-if="!pane.include">
   </div>
 </div>

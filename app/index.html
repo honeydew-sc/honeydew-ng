@@ -35,8 +35,9 @@
     <!-- endbuild -->
 
     <!-- build:css({.tmp,app}) styles/editor/codemirror-addons.css -->
-    <link rel="stylesheet" href="bower_components/codemirror/addon/dialog/dialog.css" />
     <link rel="stylesheet" href="editor/codemirror/themes/mdn-like.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/addon/dialog/dialog.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/addon/lint/lint.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/3024-night.css" />
     <link rel="stylesheet" href="bower_components/codemirror/theme/ambiance.css" />
@@ -109,8 +110,10 @@
 
     <!-- customize codemirror -->
     <script src="editor/codemirror/honeydew-mode/honeydew-mode.js"></script>
+    <script src="editor/codemirror/honeydew-mode/honeydew-lint.js"></script>
     <script src="editor/codemirror/autocomplete-service/autocomplete-service.js"></script>
     <script src="bower_components/codemirror/addon/comment/comment.js"></script>
+    <script src="bower_components/codemirror/addon/lint/lint.js"></script>
     <script src="bower_components/codemirror/addon/search/search.js"></script>
     <script src="bower_components/codemirror/addon/search/searchcursor.js"></script>
     <script src="bower_components/codemirror/addon/search/match-highlighter.js"></script>

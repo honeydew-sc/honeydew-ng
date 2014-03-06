@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, $timeout, $localStorage) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage) {
         $scope.$storage = $localStorage;
+        CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
         $scope.editorOptions = {
             lineWrapping : true,
             lineNumbers: true,
             styleActiveLine: true,
             mode: 'honeydew',
+            lint: true,
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',
                 'F5': 'execute',

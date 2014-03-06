@@ -98,7 +98,7 @@ angular.module('honeydew')
         };
 
         $scope.watchCodeMirror = function () {
-            $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
+            $scope.stopWatching = $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
         };
 
         $scope.save = function() {

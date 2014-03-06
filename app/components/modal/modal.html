@@ -1,33 +1,62 @@
 <form class="form-horizontal hdew-modal" role="form">
+
+  <div ng-show="title == 'Create New'">
+    <div class="form-group has-feedback" ng-class="isValidFilename() ? '' : 'has-error'">
+      <label for="input-file" class="col-sm-2 control-label" >Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" required id="input-file" ng-model="dest.file">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="input-jira" class="col-sm-2 control-label">JIRA:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="input-jira" ng-model="dest.jira" placeholder="SC-12345">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="input-author" class="col-sm-2 control-label">Author:</label>
+      <div class="col-sm-10">
+        <input type="text" required class="form-control" id="input-author" ng-model="dest.author">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button ng-click="ok()" ng-disabled="!isFormValid()" class="btn btn-success btn-submit">{{title}}</button>
+        <a class="btn btn-hdew" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div ng-show="title == 'Move'">
   <div class="form-group has-feedback" ng-class="isValidFilename() ? '' : 'has-error'">
-    <label for="input-file" class="col-sm-2 control-label" >Name:</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" required id="input-file" ng-model="dest.file">
-    </div>
+  <label for="input-file" class="col-sm-2 control-label" >Name:</label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" required id="input-file" ng-model="dest.file">
   </div>
 
-  <div class="form-group" ng-show="title == 'Create New'">
-    <label for="input-jira" class="col-sm-2 control-label">JIRA:</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="input-jira" ng-model="dest.jira" placeholder="SC-12345">
-    </div>
-  </div>
-
-  <div class="form-group" ng-show="title == 'Create New'">
-    <label for="input-author" class="col-sm-2 control-label">Author:</label>
-    <div class="col-sm-10">
-      <input type="text" required class="form-control" id="input-author" ng-model="dest.author">
-    </div>
-  </div>
-
-  <div ng-show="title == 'Move'">
-    <div class="col-sm-offset-2 alert alert-danger">This will delete '{{filename}}'.</div>
-  </div>
+  <div class="col-sm-offset-2 alert alert-danger">This will delete '{{filename}}'.</div>
 
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="ok()" ng-disabled="!isFormValid()" class="btn btn-success btn-submit">{{title}}</button>
-      <a class="btn btn-hdew" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+  <div class="col-sm-offset-2 col-sm-10">
+  <button ng-click="ok()" ng-disabled="!isFormValid()" class="btn btn-success btn-submit">{{title}}</button>
+  <a class="btn btn-hdew" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+  </div>
+  </div>
+  </div> -->
+
+  <div ng-show="title == 'Delete'">
+    <div class="col-sm-offset-2 alert alert-danger">This will delete: {{filename}}</div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button ng-click="ok()" class="btn btn-danger btn-submit"><i class="fa fa-trash-o"></i> {{title}}</button>
+        <a class="btn btn-hdew" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+      </div>
+    </div>
+  </div>
 
   <div ng-show="title == 'Permalink'">
     <div class="form-group">

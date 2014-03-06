@@ -1,17 +1,20 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorNav', function ($modal, $log, $location, Files, alerts) {
+    .directive('editorNav', function ($modal, $log, $location, $localStorage, Files, alerts) {
         return {
             templateUrl: 'editor/editor-nav/editor-nav.html',
             scope: {
                 filename: '@',
                 control: '=',
-                doc: '='
+                doc: '=',
+                file: '=',
+                stopWatching: '='
             },
             replace: true,
             restrict: 'E',
             link: function (scope, element, attrs) {
+                scope.$storage = $localStorage;
                 scope.open = function (action) {
                     var modalInstance = $modal.open({
                         templateUrl: 'components/modal/modal.html',
@@ -36,6 +39,7 @@ angular.module('honeydew')
                     });
                 };
 
+                scope.default = 'features/test/FAQ.feature';
                 scope.fileActions = {
                     'Create New': function (destination) {
                         destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
@@ -52,14 +56,18 @@ angular.module('honeydew')
                         });
 
                         return newFile.$save();
+                    },
+
+                    'Delete': function () {
+                        scope.$storage.undoFile = angular.copy(scope.file);
+                        scope.stopWatching();
+                        scope.file.$delete().then(function (res) {
+                            res.notes = scope.filename + " has been deleted";
+                            alerts.addAlert(res, 3000);
+                        });
+                        $location.path(scope.default);
                     }
                 };
-
-                // scope.delete = function( ) {
-                //     scope.undo = true;
-                //     scope.undoFile = angular.copy(scope.file);
-                //     scope.file.$delete();
-                // };
 
                 // scope.copy = function( destination ) {
                 //     scope.copied = angular.copy(scope.file);
@@ -78,15 +86,13 @@ angular.module('honeydew')
                 //     });
                 // };
 
-                // scope.canUndo = function () {
-                //     return scope.undo;
-                // };
-
-                // scope.undoDelete = function () {
-                //     scope.undoFile.$save().then( function (res) {
-                //         $location.path(res.file);
-                //     });
-                // };
+                scope.undoDelete = function () {
+                    var restore = new Files(scope.$storage.undoFile);
+                    restore.$save().then( function (res) {
+                        scope.$storage.undoFile = '';
+                        $location.path('//' + decodeURIComponent(decodeURIComponent(res.file)) );
+                    });
+                };
             }
         };
     });

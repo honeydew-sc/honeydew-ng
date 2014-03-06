@@ -1,27 +1,33 @@
 'use strict';
 
-var whee;
 angular.module('honeydew')
     .service('honeydewLint', function (cmAutocomplete) {
-        whee = cmAutocomplete;
         var honeydewLintService = {
+            found: [],
+
             linter: function(text) {
-                var found = [];
-                var str = 'hello';
+                honeydewLintService.found = [];
                 text.split("\n").map( function ( line, index ) {
                     if (/^ +(?:Given|When|Then)/.test(line)) {
-                        if (!honeydewLintService.isAPhrase(line) && !honeydewLintService.isARule(line)) {
-                            var indentation = line.match(/(^\s+)/);
-                            found.push({
-                                from: CodeMirror.Pos(index, indentation[0].length),
-                                to: CodeMirror.Pos(index, line.length),
-                                message: '[' + line.trim() + '] doesn\'t seem to be a valid rule...'
-                            });
+                        if (/\(\.\*\)/.test(line)) {
+                            honeydewLintService.addSyntaxError(line, index, 'The (.*) is just a placeholder; fill it in :)');
+                        }
+                        else if (!honeydewLintService.isAPhrase(line) && !honeydewLintService.isARule(line)) {
+                            honeydewLintService.addSyntaxError(line, index, '[' + line.trim() + '] doesn\'t seem to be a valid rule...');
                         }
                     }
                 });
 
-                return found;
+                return honeydewLintService.found;
+            },
+
+            addSyntaxError: function (line, index, msg) {
+                var indentation = line.match(/(^\s+)/);
+                honeydewLintService.found.push({
+                    from: CodeMirror.Pos(index, indentation[0].length),
+                    to: CodeMirror.Pos(index, line.length),
+                    message: msg
+                });
             },
 
             isAPhrase: function (line) {

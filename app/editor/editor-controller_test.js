@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Controller: EditorCtrl', function () {
-    var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile, fakeAutocomplete;
+    var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile;
     beforeEach(module('honeydew'));
 
     beforeEach(inject(function($controller, $rootScope, $httpBackend, _Files_) {
@@ -26,7 +26,8 @@ describe('Controller: EditorCtrl', function () {
 
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope,
-            cmAutocomplete: fakeAutocomplete
+            cmAutocomplete: {},
+            honeydewLint: {}
         });
     }));
 

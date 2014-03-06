@@ -3,6 +3,12 @@
 describe('cmAutocompleteService', function () {
     var cmAutocomplete, httpMock;
     var httpResponse = {
+        suggest_rules: [
+            'what a rule'
+        ],
+        regex_rules: [
+            'oh boy'
+        ],
         phrases: [
             'this is a test phrase',
             'and so is this!'
@@ -17,6 +23,12 @@ describe('cmAutocompleteService', function () {
     };
 
     var newResponse = {
+        suggest_rules: [
+            'what a rule'
+        ],
+        regex_rules: [
+            'oh boy'
+        ],
         phrases: [
             'this is new'
         ],

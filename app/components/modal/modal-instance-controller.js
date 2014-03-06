@@ -5,6 +5,7 @@ angular.module('honeydew')
         $scope.filename = filename;
         $scope.title = title;
         $scope.action = action;
+        $scope.permalink = 'https://honeydew.be.jamconsultg.com/?/' + filename.split('/').splice(1).join('/');
 
         $scope.dest = {
             file: filename.split('/').slice(0, -1).join('/') + '/'

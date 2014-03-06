@@ -28,6 +28,15 @@
     <div class="col-sm-offset-2 col-sm-10">
       <button ng-click="ok()" ng-disabled="!isFormValid()" class="btn btn-success btn-submit">{{title}}</button>
       <a class="btn btn-hdew" href="javascript:void(0)" ng-click="cancel()">Cancel</a>
+
+  <div ng-show="title == 'Permalink'">
+    <div class="form-group">
+      <label for="input-permalink" class="col-sm-3 control-label">Share URL: </label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="input-permalink" ng-model="permalink" readonly autofocus>
+      </div>
     </div>
   </div>
+
+
 </form>

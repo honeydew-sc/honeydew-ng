@@ -3,6 +3,7 @@ Feature: editor
 $url = 'http://www.google.com'
 $editor = '/editor/#/features/e2e/delete-me2.feature'
 $noPermissions = '/editor/#/features/e2e/no-permissions.feature'
+$new = '/editor/#/features/e2e/new.feature'
 
 $hostname = 'css=[type="url"]'
 $executeButton = 'id=execute'
@@ -46,9 +47,26 @@ $alert = 'css=.alert div element'
  Given I am on the $editor page
    When I click on the link link_text=File
    When I click on the link partial_link_text=New
-   When I wait for the $modal element to be visible
    When I input new.feature into the input field id=input-file
    When I input random text into the input field id=input-jira
    When I click on the link class=btn-submit
      Then the url should match \/new.feature
      Then the page should contain $input
+
+ Scenario: delete file
+ Given I am on the $new page
+   When I click on the link link_text=File
+   When I click on the link partial_link_text=Delete
+     Then the url should match FAQ.feature
+     Then the page should not contain $input
+
+   When I click on the link link_text=File
+   When I click on the link partial_link_text=Undo
+     Then the url should match new
+
+ Scenario: permalink
+ Given I am on the $editor page
+   When I click on the link link_text=File
+   When I click on the link partial_link_text=Copy URL
+   When I wait for the $modal element to be visible
+     Then the id=input-permalink element should be visible

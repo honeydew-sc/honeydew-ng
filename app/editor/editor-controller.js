@@ -3,7 +3,10 @@
 angular.module('honeydew')
     .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage) {
         $scope.$storage = $localStorage;
+
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
+        CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
+
         $scope.editorOptions = {
             lineWrapping : true,
             lineNumbers: true,
@@ -18,6 +21,11 @@ angular.module('honeydew')
                 'Ctrl-Y': 'redo'
             },
             onLoad: function (cm) {
+                // no need to hint the startup FAQ page
+                if (/test\/FAQ\.feature/.test($location.path())) {
+                    cm.setOption('lint', false);
+                }
+
                 $scope.editorOptions.refresh = function () {
                     $timeout(function () {
                         cm.refresh();
@@ -84,8 +92,6 @@ angular.module('honeydew')
                     }
                     return window.open(url, '_blank');
                 });
-
-                CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
             }
         };
 

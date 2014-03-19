@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts, randomString) {
         return {
             scope: {
                 filename: '@',
@@ -32,12 +32,16 @@ angular.module('honeydew')
                     scope.$storage.browser = scope.browserList[1];
                 }
 
+
+
                 scope.control.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         // TODO: refactor this into the Jobs resource
+                        scope.$storage.channel = randomString.string();
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: scope.filename,
-                            host: scope.$storage.host
+                            host: scope.$storage.host,
+                            channel: scope.$storage.channel
                         });
 
                         panes.openPane('report');

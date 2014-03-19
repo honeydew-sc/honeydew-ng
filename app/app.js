@@ -20,6 +20,11 @@ angular.module('honeydew', [
                 url: '/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
+            })
+            .state('report', {
+                url: '/report/{channel}',
+                templateUrl: 'report/report.html',
+                controller: 'ReportCtrl'
             });
     })
     .config(['PusherServiceProvider', function(PusherServiceProvider) {

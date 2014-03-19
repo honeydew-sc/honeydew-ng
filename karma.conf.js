@@ -31,6 +31,7 @@ module.exports = function(config) {
             'app/bower_components/angular-ui-codemirror/ui-codemirror.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
             'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'app/bower_components/angular-pusher/angular-pusher.js',
             'app/bower_components/ngstorage/ngStorage.js',
             'app/bower_components/codemirror/lib/codemirror.js',
             'app/bower_components/ng-grid/build/ng-grid.min.js',
@@ -40,6 +41,7 @@ module.exports = function(config) {
             // our scripts
             'app/app.js',
             'app/editor/**/*.js',
+            'app/report/**/*.js',
             'app/components/**/*.js'
         ],
 

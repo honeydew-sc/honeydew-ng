@@ -30,7 +30,7 @@ module.exports = function (grunt) {
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',
-                    '<%= yeoman.app %>/{components,editor}/**/*.js'
+                    '<%= yeoman.app %>/{components,editor,report}/**/*.js'
                 ],
                 tasks: ['newer:jshint:all'],
                 options: {
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{components,editor}/**/*.{js,html,css}',
+                    '<%= yeoman.app %>/{components,editor,report}/**/*.{js,html,css}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
                     '.tmp/styles/**/*.css',
@@ -129,8 +129,8 @@ module.exports = function (grunt) {
             },
             all: grunt.file.expand([
                 '<%= yeoman.app %>/app.js',
-                '<%= yeoman.app %>/{components,editor}/**/*.js',
-                '!<%= yeoman.app %>/{components,editor}/**/*_test.js',
+                '<%= yeoman.app %>/{components,editor,report}/**/*.js',
+                '!<%= yeoman.app %>/{components,editor,report}/**/*_test.js',
                 'Gruntfile.js'
             ])
         },

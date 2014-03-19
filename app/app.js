@@ -9,7 +9,8 @@ angular.module('honeydew', [
     'ui.codemirror',
     'ui.bootstrap',
     'ui.router',
-    'btford.markdown'
+    'btford.markdown',
+    'doowb.angular-pusher'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/features/test/dan.feature');
@@ -20,4 +21,7 @@ angular.module('honeydew', [
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
             });
-    });
+    })
+    .config(['PusherServiceProvider', function(PusherServiceProvider) {
+        PusherServiceProvider.setToken('68985');
+    }]);

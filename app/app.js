@@ -13,7 +13,7 @@ angular.module('honeydew', [
     'doowb.angular-pusher'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/features/test/dan.feature');
+        $urlRouterProvider.otherwise('/report/live/qwerqwer');
 
         $stateProvider
             .state('editor', {
@@ -22,9 +22,9 @@ angular.module('honeydew', [
                 controller: 'EditorCtrl'
             })
             .state('report', {
-                url: '/report/{channel}',
+                url: '/report/live/:channel',
                 templateUrl: 'report/report.html',
-                controller: 'ReportCtrl'
+                controller: 'ReportLiveCtrl'
             });
     })
     .config(['PusherServiceProvider', function(PusherServiceProvider) {

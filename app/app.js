@@ -26,7 +26,4 @@ angular.module('honeydew', [
                 templateUrl: 'report/report.html',
                 controller: 'ReportLiveCtrl'
             });
-    })
-    .config(['PusherServiceProvider', function(PusherServiceProvider) {
-        PusherServiceProvider.setToken('68985');
-    }]);
+    });

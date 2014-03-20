@@ -1,11 +1,10 @@
 'use strict';
 
 ddescribe('Controller: ReportLiveCtrl', function () {
-    var httpMock, scope, ReportLiveCtrl, channel, Pusher;
+    var scope, ctrl, channel, Pusher;
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
-        httpMock = $httpBackend;
+    beforeEach(inject(function($controller, $rootScope, $httpBackend, $compile) {
         scope = $rootScope.$new();
         channel = 'testChannel';
         Pusher = {
@@ -13,7 +12,7 @@ ddescribe('Controller: ReportLiveCtrl', function () {
         };
         spyOn(Pusher, 'subscribe');
 
-        ReportLiveCtrl = $controller('ReportLiveCtrl', {
+        ctrl = $controller(LiveReportCtrl, {
             $scope: scope,
             $stateParams: {
                 channel: channel

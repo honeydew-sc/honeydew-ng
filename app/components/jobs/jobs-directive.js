@@ -32,8 +32,6 @@ angular.module('honeydew')
                     scope.$storage.browser = scope.browserList[1];
                 }
 
-
-
                 scope.control.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         // TODO: refactor this into the Jobs resource

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('paneSelector', function (panes, $compile) {
+    .directive('paneSelector', function (panes, $compile, $localStorage) {
         return {
             templateUrl: 'editor/panes/pane-selector/pane-selector.html',
             replace: true,
@@ -10,7 +10,7 @@ angular.module('honeydew')
                 scope.panes = panes;
 
                 scope.togglePaneWithScope = function (pane) {
-                    if (pane.name.match(/report|samples|rules/)) {
+                    if (pane.include) {
                         scope.panes.togglePane(pane);
                     }
                     else {

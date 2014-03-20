@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('panes', [ function () {
+    .service('panes', function () {
         var base = '/editor/editor/panes/';
         return {
             panes: [
                 {
                     name: 'report',
                     classes: 'col-md-6',
-                    templateUrl: '/reports.php?new=true',
+                    template: '<live-report></live-report>',
                     icon: 'fa-list-alt',
                     tooltip: 'Live Report',
-                    include: true
+                    include: false
                 },
                 {
                     name: 'samples',
@@ -84,4 +84,4 @@ angular.module('honeydew')
                 }
             }
         };
-    }]);
+    });

@@ -26,7 +26,6 @@ angular.module('honeydew')
 
 var LiveReportCtrl = function ($scope, $localStorage, Pusher) {
     $scope.$storage = $localStorage;
-
     $scope.$watch('$storage.channel', function () {
         $scope.tail($scope.$storage.channel);
     });
@@ -42,4 +41,6 @@ var LiveReportCtrl = function ($scope, $localStorage, Pusher) {
             $scope.report.output += item;
         });
     };
+
+    $scope.tail($scope.$storage.channel);
 };

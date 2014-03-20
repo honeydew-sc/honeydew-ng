@@ -24,13 +24,17 @@ angular.module('honeydew')
         };
     });
 
-var LiveReportCtrl = function ($scope, $localStorage, Pusher) {
+var LiveReportCtrl = function ($scope, $localStorage, Pusher, debounce) {
     $scope.$storage = $localStorage;
-    $scope.$watch('$storage.channel', function () {
+    $scope.$watch('$storage.channel', debounce(function () {
         $scope.tail($scope.$storage.channel);
-    });
+    }), 500);
 
     $scope.tail = function (channel) {
+        if (typeof($scope.report) !== 'undefined') {
+            Pusher.unsubscribe($scope.report.channel);
+        }
+
         $scope.report = {
             channel: channel,
             output: 'Loading...' + "\n"

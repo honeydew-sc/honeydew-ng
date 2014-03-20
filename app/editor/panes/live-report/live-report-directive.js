@@ -14,13 +14,13 @@ angular.module('honeydew')
         getPusherToken.send();
     })
 
-    .directive('liveReport', function ($localStorage, Pusher) {
+    .directive('liveReport', function () {
         return {
             templateUrl: 'editor/panes/live-report/live-report.html',
             replace: true,
             scope: {},
             restrict: 'E',
-            controller: 'LiveReportCtrl'
+            controller: LiveReportCtrl
         };
     });
 
@@ -71,3 +71,7 @@ var LiveReportCtrl = function ($scope, liveReport, Pusher) {
         });
     }
 };
+
+// ng-min doesn't uglify controller this correctly, I guess as it
+// isn't defined in the usual fashion
+LiveReportCtrl.$inject = ['$scope', 'liveReport', 'Pusher'];

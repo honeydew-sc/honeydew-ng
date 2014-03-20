@@ -63,7 +63,7 @@ angular.module('honeydew')
                         }
                         else {
                             if (typeof(contents) === 'undefined' && pane.name === 'report') {
-                                contents = $compile( pane.template )( $rootScope.$new() );
+                                contents = $compile( pane.template )( $rootScope );
                             }
                             $('.center-panel.' + pane.name).html(contents);
                         }

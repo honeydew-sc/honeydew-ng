@@ -354,7 +354,6 @@ module.exports = function (grunt) {
                         'perl',
                         '-w /opt/honeydew/bin/honeydew.pl',
                         '-isMine',
-                        '-browser=Chrome',
                         '-feature=' + process.cwd() + '/'
                     ].join(' ');
                     var commands = [];

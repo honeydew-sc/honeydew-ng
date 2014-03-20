@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('panes', function () {
+    .service('panes', function ($compile, $rootScope) {
         var base = '/editor/editor/panes/';
         return {
             panes: [
@@ -51,22 +51,30 @@ angular.module('honeydew')
 
             openPane:  function (pane, contents) {
                 var panes = this;
-                if (typeof(pane) === 'object') {
-                    this.activePane = pane.name;
-
-                    if (pane.include) {
-                        this.url = pane.templateUrl;
-                    }
-                    else {
-                        $('.center-panel.' + pane.name).html(contents);
-                    }
+                if (this.activePane === pane || this.activePane === pane.name) {
+                    console.log('already open');
                 }
                 else {
-                    this.panes.forEach( function (paneObject) {
-                        if (paneObject.name === pane) {
-                            panes.openPane(paneObject);
+                    if (typeof(pane) === 'object') {
+                        this.activePane = pane.name;
+
+                        if (pane.include) {
+                            this.url = pane.templateUrl;
                         }
-                    });
+                        else {
+                            if (typeof(contents) === 'undefined' && pane.name === 'report') {
+                                contents = $compile( pane.template )( $rootScope.$new() );
+                            }
+                            $('.center-panel.' + pane.name).html(contents);
+                        }
+                    }
+                    else {
+                        this.panes.forEach( function (paneObject) {
+                            if (paneObject.name === pane) {
+                                panes.openPane(paneObject);
+                            }
+                        });
+                    }
                 }
             },
 

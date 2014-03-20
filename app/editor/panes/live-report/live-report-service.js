@@ -12,7 +12,6 @@ angular.module('honeydew')
 
         service.switchChannel = function (channel) {
             service.channel = channel;
-            console.log('broadcasting');
             $rootScope.$broadcast('pusher:channel', channel);
         };
 

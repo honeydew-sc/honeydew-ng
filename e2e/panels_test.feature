@@ -16,7 +16,7 @@ $theme = "xq-dark"
 
  Examples:
  | sidebar-panel-button     | panel-text              |
- | class=report-pane        | Loading...              |
+ | class=report-pane        | try executing           |
  | class=samples-pane       | Logging in to Sharecare |
  | class=rules-pane         | Pages                   |
  | class=settings-pane      | Styles                  |

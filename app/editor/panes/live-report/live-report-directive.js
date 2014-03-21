@@ -20,11 +20,11 @@ angular.module('honeydew')
             replace: true,
             scope: {},
             restrict: 'E',
-            controller: LiveReportCtrl
+            controller: LiveReportDirectiveCtrl
         };
     });
 
-var LiveReportCtrl = function ($scope, liveReport, Pusher) {
+var LiveReportDirectiveCtrl = function ($scope, liveReport, Pusher) {
     $scope.report = liveReport;
 
     $scope.tail = function (channel) {
@@ -74,4 +74,4 @@ var LiveReportCtrl = function ($scope, liveReport, Pusher) {
 
 // ng-min doesn't uglify controller this correctly, I guess as it
 // isn't defined in the usual fashion
-LiveReportCtrl.$inject = ['$scope', 'liveReport', 'Pusher'];
+LiveReportDirectiveCtrl.$inject = ['$scope', 'liveReport', 'Pusher'];

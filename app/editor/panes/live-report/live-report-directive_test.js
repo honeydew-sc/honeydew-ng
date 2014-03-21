@@ -15,7 +15,7 @@ describe('Controller: ReportLiveCtrl', function () {
         spyOn(pusherMock, 'subscribe');
         spyOn(pusherMock, 'unsubscribe');
 
-        ctrl = $controller(LiveReportCtrl, {
+        ctrl = $controller('LiveReportDirectiveCtrl', {
             $scope: scope,
             liveReport: liveReport,
             Pusher: pusherMock

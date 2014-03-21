@@ -16,7 +16,7 @@ angular.module('honeydew')
 
     .directive('liveReport', function () {
         return {
-            templateUrl: 'editor/panes/live-report/live-report.html',
+            templateUrl: 'components/live-report/live-report.html',
             replace: true,
             scope: {},
             restrict: 'E',

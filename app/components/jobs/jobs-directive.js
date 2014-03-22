@@ -35,8 +35,7 @@ angular.module('honeydew')
                 scope.control.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         panes.openPane('report');
-                        var channel = randomString.string();
-                        liveReport.switchChannel(channel);
+                        var channel = liveReport.switchChannel();
 
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: scope.filename,

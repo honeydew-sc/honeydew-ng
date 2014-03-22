@@ -13,17 +13,12 @@ angular.module('honeydew', [
     'doowb.angular-pusher'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/report/live/qwerqwer');
+        $urlRouterProvider.otherwise('/features/e2e/highlight.feature');
 
         $stateProvider
             .state('editor', {
                 url: '/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
-            })
-            .state('report', {
-                url: '/report/live/:channel',
-                templateUrl: 'report/report.html',
-                controller: 'ReportLiveCtrl'
             });
     });

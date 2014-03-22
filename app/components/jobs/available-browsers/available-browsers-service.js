@@ -65,6 +65,14 @@ angular.module('honeydew')
             }
         ];
 
-        this.all = local.concat(grandPoobah).concat(sauce);
+        var mobile = [
+            {
+                browser: 'iPhone Simulator',
+                group: 'Mobile',
+                sauce: 'on'
+            }
+        ];
+
+        this.all = local.concat(grandPoobah).concat(sauce).concat(mobile);
         this.set = grandPoobah.concat(sauce);
     });

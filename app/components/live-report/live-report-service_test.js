@@ -47,6 +47,6 @@ describe('LiveReportService', function () {
         spyOn(pusherMock.channel, 'trigger');
 
         liveReportService.evalRule(rule);
-        expect(pusherMock.channel.trigger).toHaveBeenCalledWith('client-evalRule', rule);
+        expect(pusherMock.channel.trigger).toHaveBeenCalledWith(liveReportService.events.evalRule, rule);
     });
 });

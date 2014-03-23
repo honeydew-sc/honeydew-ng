@@ -23,7 +23,11 @@ angular.module('honeydew')
             pusherChannel: null,
             output: 'There\'s nothing to see here yet; try executing a feature! :)',
             placeHolder: true,
-            registered: false
+            registered: false,
+            events: {
+                evalRule: 'client-eval-rule',
+                finish: 'client-finish'
+            }
         };
 
         service.switchChannel = function (channel) {
@@ -68,7 +72,7 @@ angular.module('honeydew')
 
         service.evalRule = function (rule) {
             if (typeof(Pusher.channel) !== 'undefined') {
-                Pusher.channel.trigger('client-eval-rule', rule.trim());
+                Pusher.channel.trigger(service.events.evalRule, rule.trim());
             }
         };
 

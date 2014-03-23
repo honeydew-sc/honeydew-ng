@@ -67,8 +67,8 @@ angular.module('honeydew')
         };
 
         service.evalRule = function (rule) {
-            if (Pusher.channel !== null) {
-                Pusher.channel.trigger('client-evalRule', rule);
+            if (typeof(Pusher.channel) !== 'undefined') {
+                Pusher.channel.trigger('client-eval-rule', rule.trim());
             }
         };
 

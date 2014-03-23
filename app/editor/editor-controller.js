@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport) {
         $scope.$storage = $localStorage;
 
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
@@ -15,8 +15,11 @@ angular.module('honeydew')
             lint: true,
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',
+                'Cmd-Ctrl-X': 'repl',
+                'Ctrl-Alt-X': 'repl',
                 'F5': 'execute',
                 'Ctrl-/': 'toggleComment',
+                'Cmd-/': 'toggleComment',
                 'Ctrl-Z': 'undo',
                 'Ctrl-Y': 'redo'
             },
@@ -59,6 +62,11 @@ angular.module('honeydew')
 
                 CodeMirror.commands.autocomplete = function (cm) {
                     CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
+                };
+
+                CodeMirror.commands.repl = function (cm) {
+                    var rule = cm.getLine(cm.getCursor().line);
+                    liveReport.evalRule(rule);
                 };
 
                 // 'jobs' gets passed through two directives in

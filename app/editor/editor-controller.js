@@ -15,8 +15,8 @@ angular.module('honeydew')
             lint: true,
             extraKeys: {
                 'Ctrl-Space': 'autocomplete',
-                'Cmd-Ctrl-X': 'repl',
-                'Ctrl-Alt-X': 'repl',
+                'Cmd-Enter': 'repl',
+                'Alt-Enter': 'repl',
                 'F5': 'execute',
                 'Ctrl-/': 'toggleComment',
                 'Cmd-/': 'toggleComment',

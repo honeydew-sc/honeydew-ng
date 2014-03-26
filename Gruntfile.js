@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         yeoman: {
             // configurable paths
             app: 'app',
-            dist: '/opt/honeydew-ui/htdocs/editor'
+            dist: 'dist'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -48,8 +48,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/{components,editor,report}/**/*.{js,html,css}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
-                    '.tmp/styles/**/*.css',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+                    '.tmp/styles/**/*.css'
                 ]
             }
         },

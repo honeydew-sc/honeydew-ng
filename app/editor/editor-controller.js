@@ -17,6 +17,8 @@ angular.module('honeydew')
                 'Ctrl-Space': 'autocomplete',
                 'Cmd-Enter': 'repl',
                 'Alt-Enter': 'repl',
+                'Cmd-Escape': 'quitRepl',
+                'Alt-Escape': 'quitRepl',
                 'F5': 'execute',
                 'Ctrl-/': 'toggleComment',
                 'Cmd-/': 'toggleComment',
@@ -68,6 +70,8 @@ angular.module('honeydew')
                     var rule = cm.getLine(cm.getCursor().line);
                     liveReport.evalRule(rule);
                 };
+
+                CodeMirror.commands.quitRepl = liveReport.close;
 
                 // 'jobs' gets passed through two directives in
                 // attributes down to the jobOptions directive, where

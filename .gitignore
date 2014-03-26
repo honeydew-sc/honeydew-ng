@@ -4,3 +4,4 @@ dist
 .sass-cache
 /app/styles/main.css
 /e2e/*.feature
+/backend/rest-routes/sources/*

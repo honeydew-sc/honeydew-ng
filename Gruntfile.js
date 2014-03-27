@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         yeoman: {
             // configurable paths
             app: 'app',
-            dist: '/opt/honeydew-ui/htdocs/editor'
+            dist: 'dist'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -48,8 +48,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/{components,editor,report}/**/*.{js,html,css}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
-                    '.tmp/styles/**/*.css',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+                    '.tmp/styles/**/*.css'
                 ]
             }
         },
@@ -368,6 +367,20 @@ module.exports = function (grunt) {
 
                     return commands.join(' & ');
                 }
+            },
+
+            deployFront: {
+                options: {
+                    stdout: true
+                },
+                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
+            },
+
+            deployBack: {
+                options: {
+                    stdout: true
+                },
+                command: 'ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
         }
     });
@@ -423,6 +436,12 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', function () {
         grunt.task.run(['build']);
     });
+
+    grunt.registerTask('deploy', [
+        'karma:unit',
+        'shell:deployFront',
+        'shell:deployBack'
+    ]);
 
     grunt.registerTask('default', [
         'newer:jshint',

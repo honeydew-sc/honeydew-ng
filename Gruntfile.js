@@ -367,6 +367,20 @@ module.exports = function (grunt) {
 
                     return commands.join(' & ');
                 }
+            },
+
+            deployFront: {
+                options: {
+                    stdout: true
+                },
+                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
+            },
+
+            deployBack: {
+                options: {
+                    stdout: true
+                },
+                command: 'ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
         }
     });
@@ -422,6 +436,12 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', function () {
         grunt.task.run(['build']);
     });
+
+    grunt.registerTask('deploy', [
+        'karma:unit',
+        'shell:deployFront',
+        'shell:deployBack'
+    ]);
 
     grunt.registerTask('default', [
         'newer:jshint',

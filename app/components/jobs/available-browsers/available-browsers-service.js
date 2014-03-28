@@ -2,7 +2,6 @@
 
 angular.module('honeydew')
     .service('availableBrowsers', function () {
-        var gpAddress = "10.10.0.83";
 
         var local = [
             {
@@ -19,6 +18,7 @@ angular.module('honeydew')
             }
         ];
 
+        var gpAddress = "10.10.0.83";
         var grandPoobah = [
             {
                 browser: 'GP IE 10 Local',
@@ -67,7 +67,11 @@ angular.module('honeydew')
 
         var mobile = [
             {
-                browser: 'iPhone Simulator',
+                browser: 'iPhone Simulator Local',
+                group: 'Mobile'
+            },
+            {
+                browser: 'iPhone Simulator Sauce',
                 group: 'Mobile',
                 sauce: 'on'
             }

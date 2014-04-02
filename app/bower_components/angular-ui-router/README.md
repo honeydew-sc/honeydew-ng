@@ -2,7 +2,7 @@
 
 #### The de-facto solution to flexible routing with nested views
 ---
-**[Download 0.2.8](http://angular-ui.github.io/ui-router/release/angular-ui-router.js)** (or **[Minified](http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js)**) **|**
+**[Download 0.2.10](http://angular-ui.github.io/ui-router/release/angular-ui-router.js)** (or **[Minified](http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js)**) **|**
 **[Learn](#resources) |**
 **[API](http://angular-ui.github.io/ui-router/site) |**
 **[Discuss](https://groups.google.com/forum/#!categories/angular-ui/router) |**
@@ -15,10 +15,12 @@
 AngularUI Router is a routing framework for [AngularJS](http://angularjs.org), which allows you to organize the
 parts of your interface into a [*state machine*](https://en.wikipedia.org/wiki/Finite-state_machine). Unlike the
 [`$route` service](http://docs.angularjs.org/api/ngRoute.$route) in Angular core, which is organized around URL
-routes, UI-Router is organized around [*states*](https://github.com/angular-ui/ui-router/blob/master/sample/states.js#L28-L269),
+routes, UI-Router is organized around [*states*](https://github.com/angular-ui/ui-router/wiki),
 which may optionally have routes, as well as other behavior, attached.
 
 States are bound to *named*, *nested* and *parallel views*, allowing you to powerfully manage your application's interface.
+
+Check out the sample app: http://angular-ui.github.io/ui-router/sample/
 
 -
 **Note:** *UI-Router is under active development. As such, while this library is well-tested, the API may change. Consider using it in production applications only if you're comfortable following a changelog and updating your usage accordingly.*

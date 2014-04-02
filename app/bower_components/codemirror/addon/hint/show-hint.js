@@ -48,13 +48,10 @@
     showHints: function(data) {
       if (!data || !data.list.length || !this.active()) return this.close();
 
-      if (this.options.completeSingle != false && data.list.length == 1) {
-        console.log(data);
+      if (this.options.completeSingle != false && data.list.length == 1)
         this.pick(data, 0);
-      }
-      else {
+      else
         this.showWidget(data);
-      }
     },
 
     showWidget: function(data) {

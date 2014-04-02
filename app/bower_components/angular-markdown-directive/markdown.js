@@ -13,9 +13,6 @@ angular.module('btford.markdown', []).
       restrict: 'AE',
       link: function (scope, element, attrs) {
         if (attrs.btfMarkdown) {
-          console.log(Showdown);
-            console.log(converter);
-            console.log('hi');
           scope.$watch(attrs.btfMarkdown, function (newVal) {
             var html = converter.makeHtml(newVal);
             element.html(html);

@@ -53,7 +53,7 @@ function getUser() {
 
 function isProduction() {
     $hostname = gethostname();
-    return ($hostname != "dgempesaw.local" && $hostname != "dgempesaw.sharecare.local");
+    return !preg_match('/local/', $hostname);
 }
 
 ?>

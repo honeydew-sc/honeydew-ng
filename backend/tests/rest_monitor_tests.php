@@ -9,6 +9,7 @@ class monitorTests extends UnitTestCase {
 
     public function __construct() {
         $this->monitorUri = $this->base . "/monitor";
+        $seed = \Httpful\Request::get($this->monitorUri . "/reload?security=obscurity")->send();
     }
 
     function testListOfSets() {

@@ -28,10 +28,18 @@ $app->group('/monitor', function () use ($app) {
         echo json_encode($monitors);
     });
 
-    /* $app->get('/reload', function () { */
-    /*     createMonitorTable(true); */
-    /*     convertJsonToSQL(); */
-    /* }); */
+    $app->get('/reload', function () use ($app) {
+        $params = $app->request->get();
+
+        if ($params['security'] == 'obscurity') {
+            createMonitorTable(true);
+            convertJsonToSQL();
+            echo successMessage();
+        }
+        else {
+            echo errorMessage();
+        }
+    });
 
     $app->get('/:id', function ($id) use ($monitorGetQuery) {
         $pdo = hdewdb_connect();

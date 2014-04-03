@@ -345,7 +345,9 @@ module.exports = function (grunt) {
         shell: {
             honeydew: {
                 options: {
-                    stdout: true
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
                 },
                 command: function () {
                     var glob = require('glob');
@@ -369,16 +371,30 @@ module.exports = function (grunt) {
                 }
             },
 
+            phpTests: {
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                },
+                command: 'find backend/tests -name "*_tests.php" | xargs -I{} php {}'
+            },
+
+
             deployFront: {
                 options: {
-                    stdout: true
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
                 },
                 command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
             },
 
             deployBack: {
                 options: {
-                    stdout: true
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
                 },
                 command: 'ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
@@ -409,6 +425,7 @@ module.exports = function (grunt) {
         'autoprefixer',
         'connect:test',
         'karma:unit',
+        'backend',
         'shell:honeydew'
     ]);
 
@@ -431,6 +448,8 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', function () {
         grunt.task.run(['build']);
     });
+
+    grunt.registerTask('backend', ['shell:phpTests']);
 
     grunt.registerTask('deploy', [
         'build',

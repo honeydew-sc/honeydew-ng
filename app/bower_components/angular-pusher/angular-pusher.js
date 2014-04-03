@@ -20,7 +20,7 @@ angular.module('doowb.angular-pusher', [])
 
 // create a provider that loads the pusher script from a cdn
 .provider('PusherService', function () {
-  var scriptUrl = '//js.pusher.com/2.1/pusher.min.js';
+  var scriptUrl = '//d3dy5gmtp8yhk7.cloudfront.net/2.2.0-rc3/pusher.min.js';
   var scriptId = 'pusher-sdk';
   var apiKey = '';
   var initOptions = {};
@@ -84,16 +84,19 @@ angular.module('doowb.angular-pusher', [])
 
 .factory('Pusher', ['$rootScope', 'PusherService',
   function ($rootScope, PusherService) {
-    return {
+    var factory = {
 
       subscribe: function (channelName, eventName, callback) {
-        PusherService.then(function (pusher) {
-          var channel = pusher.channel(channelName) || pusher.subscribe(channelName);
-          channel.bind(eventName, function (data) {
-            if (callback) callback(data);
-            $rootScope.$broadcast(channelName + ':' + eventName, data);
-            $rootScope.$digest();
-          });
+        return PusherService.then(function (pusher) {
+            var channel = pusher.channel(channelName) || pusher.subscribe(channelName);
+
+            channel.bind(eventName, function (data) {
+                if (callback) callback(data);
+                $rootScope.$broadcast(channelName + ':' + eventName, data);
+                $rootScope.$digest();
+            });
+
+            return channel;
         });
       },
 
@@ -103,5 +106,7 @@ angular.module('doowb.angular-pusher', [])
         });
       }
     };
+
+    return factory;
   }
 ]);

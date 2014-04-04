@@ -3,40 +3,27 @@
 describe('cmAutocompleteService', function () {
     var cmAutocomplete, httpMock;
     var httpResponse = {
-        suggest_rules: [
+        suggestRules: [
             'what a rule'
         ],
-        regex_rules: [
+        regexRules: [
             'oh boy'
         ],
         phrases: [
             'this is a test phrase',
             'and so is this!'
-        ],
-        keywords: {
-            testKeyword: 'test-value'
-        },
-        preamble: [
-            'preamble 1 is a test',
-            'preamble 2'
         ]
     };
 
     var newResponse = {
-        suggest_rules: [
+        suggestRules: [
             'what a rule'
         ],
-        regex_rules: [
+        regexRules: [
             'oh boy'
         ],
         phrases: [
             'this is new'
-        ],
-        keywords: {
-            andSo: 'is this'
-        },
-        preamble: [
-            'preamble 3'
         ]
     };
 
@@ -59,7 +46,12 @@ describe('cmAutocompleteService', function () {
             },
 
             getLine: function () {
-                return "is a test";
+                if (preamble) {
+                    return "Existing";
+                }
+                else {
+                    return "is a test";
+                }
             }
         };
     };
@@ -81,7 +73,6 @@ describe('cmAutocompleteService', function () {
     it('comes populated with steps out of the box!', function () {
         expect(cmAutocomplete.getSteps()).toContain(httpResponse.phrases[0]);
         expect(cmAutocomplete.getSteps()).toContain(httpResponse.phrases[1]);
-        expect(cmAutocomplete.keywords).toEqual(httpResponse.keywords);
     });
 
     it('can get updates from the server', function () {
@@ -91,8 +82,6 @@ describe('cmAutocompleteService', function () {
 
         expect(cmAutocomplete.getSteps()).not.toContain(httpResponse.phrases[0]);
         expect(cmAutocomplete.getSteps()).toContain(newResponse.phrases[0]);
-        expect(cmAutocomplete.keywords).not.toEqual(httpResponse.keywords);
-        expect(cmAutocomplete.keywords).toEqual(newResponse.keywords);
     });
 
     it('can return a filtered list of rules', function () {
@@ -114,6 +103,6 @@ describe('cmAutocompleteService', function () {
     it('can suggest preamble options when appropriate', function () {
         var hints = cmAutocomplete.getHints(mockCodeMirror(true));
         expect(hints.list.length).toBe(1);
-        expect(hints.list[0]).toContain('preamble');
+        expect(hints.list[0]).toContain('Existing');
     });
 });

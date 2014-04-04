@@ -8,22 +8,11 @@ $app->group('/autocomplete', function () use ($app) {
         exec('/usr/bin/perl -w /opt/honeydew/bin/parseRules.pl > /dev/null 2>&1 &');
         exec('/usr/bin/perl -w /opt/honeydew/bin/parsePhrases.pl > /dev/null 2>&1 &');
         echo json_encode(array(
-            'suggest_rules' => $rules[0],
-            'regex_rules' => $rules[1],
-            'phrases' => $phrases,
-            'preamble' => getPreambleHints()
+            'suggestRules' => $rules[0],
+            'regexRules' => $rules[1],
+            'phrases' => $phrases
         ));
     });
-
-    function getPreambleHints () {
-        return array(
-            'Existing Bug: ',
-            'Email: ',
-            'Subtitles: ',
-            'Keep Open',
-            'JIRA: '
-        );
-    }
 });
 
 ?>

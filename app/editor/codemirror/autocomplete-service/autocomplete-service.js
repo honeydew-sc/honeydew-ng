@@ -2,6 +2,14 @@
 
 angular.module('honeydew')
     .service('cmAutocomplete', function ($resource, $http) {
+        var preambleHints = [
+            'Existing Bug: ',
+            'Email: ',
+            'Subtitles: ',
+            'Keep Open',
+            'JIRA: '
+        ];
+
         var autocompleteService = {
             getHints:  function (cm) {
                 var cur = cm.getCursor();

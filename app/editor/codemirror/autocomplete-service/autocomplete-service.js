@@ -44,11 +44,10 @@ angular.module('honeydew')
             populateAutocompleteSources: function () {
                 return $http.get('/rest.php/autocomplete').success(function (res) {
                     autocompleteService.phrases = res.phrases;
-                    autocompleteService.suggestRules = res.suggest_rules;
-                    autocompleteService.regexRules = res.regex_rules;
-                    autocompleteService.preamble = res.preamble;
-                    autocompleteService.keywords = res.keywords;
-                    autocompleteService.validSteps = res.suggest_rules.concat(res.phrases);
+                    autocompleteService.suggestRules = res.suggestRules;
+                    autocompleteService.regexRules = res.regexRules;
+                    autocompleteService.preamble = res.preambleHints;
+                    autocompleteService.validSteps = res.suggestRules.concat(res.phrases);
                 });
             }
         };

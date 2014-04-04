@@ -11,7 +11,6 @@ $app->group('/autocomplete', function () use ($app) {
             'suggest_rules' => $rules[0],
             'regex_rules' => $rules[1],
             'phrases' => $phrases,
-            'keywords' => getKeyWords(1),
             'preamble' => getPreambleHints()
         ));
     });

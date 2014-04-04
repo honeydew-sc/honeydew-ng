@@ -22,6 +22,13 @@ class pusherTests extends UnitTestCase {
 
         $this->assertEqual($response->body->auth, $key . ':58df8b0c36d6982b82c3ecf6b4662e34fe8c25bba48f5369f135bf843651c3a4', "auth is right!");
     }
+
+    function testAuthsInTheRightForm() {
+        $response = \Httpful\Request::post($this->baseUrl . "/auth?channel_name=private-foobar&socket_id=1234.1234")
+                                                ->send();
+
+        $this->assertPattern('/.+?:.+?/', $response->body->auth, 'auth looks to be structured correctly... it has two parts at least');
+    }
 }
 
 ?>

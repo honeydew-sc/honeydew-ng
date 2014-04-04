@@ -13,12 +13,20 @@ angular.module('honeydew', [
     'doowb.angular-pusher'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/features/e2e/highlight.feature');
+        $urlRouterProvider.otherwise('/features/test/FAQ.feature');
 
         $stateProvider
             .state('editor', {
                 url: '/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
+            });
+    })
+    .config(function(PusherServiceProvider) {
+        // pusherToken is globally defined in app/config.js
+        PusherServiceProvider
+            .setToken(pusherToken)
+            .setOptions({
+                authEndpoint: '/rest.php/pusher/auth'
             });
     });

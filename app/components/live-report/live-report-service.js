@@ -1,21 +1,6 @@
 'use strict';
 
 angular.module('honeydew')
-    .config(function(PusherServiceProvider) {
-        // as this is during the config phase, we can't use services
-        // like $http :( I just don't want to commit the token to the
-        // public repo.
-        var getPusherToken = new XMLHttpRequest();
-        getPusherToken.onload = function (res) {
-            PusherServiceProvider.setToken(getPusherToken.response);
-            PusherServiceProvider.setOptions({
-                authEndpoint: '/rest.php/pusher/auth'
-            });
-        };
-        getPusherToken.open("get", "/rest.php/pusher/token", true);
-        getPusherToken.send();
-    })
-
     .service('liveReport', function ($rootScope, Pusher, randomString, $timeout) {
         var timeout;
         var service =  {

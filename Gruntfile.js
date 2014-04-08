@@ -383,11 +383,9 @@ module.exports = function (grunt) {
 
             deployFront: {
                 options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: true
+                    stdout: true
                 },
-                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
+                command: 'rsync -avzh --delete <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
             },
 
             deployBack: {
@@ -449,12 +447,15 @@ module.exports = function (grunt) {
         grunt.task.run(['build']);
     });
 
-    grunt.registerTask('backend', ['shell:phpTests']);
+    grunt.registerTask('deployBackend', [
+        'shell:phpTests',
+        'shell:deployBack'
+    ]);
 
     grunt.registerTask('deploy', [
         'build',
+        'deployBackend',
         'karma:unit',
-        'shell:deployFront',
-        'shell:deployBack'
+        'shell:deployFront'
     ]);
 };

@@ -5,7 +5,7 @@ angular.module('honeydew')
         $scope.$storage = $localStorage;
 
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
-        CodeMirror.registerHelper("hint", "honeydew", cmAutocomplete.getHints);
+        CodeMirror.registerHelper('hint', 'honeydew', cmAutocomplete.getHints);
 
         $scope.editorOptions = {
             lineWrapping : true,
@@ -58,7 +58,7 @@ angular.module('honeydew')
 
                     jira: function () {
                         var matches = $scope.file.contents.match(/JIRA: (.*)/);
-                        return matches !== null ? matches[1] : "";
+                        return matches !== null ? matches[1] : '';
                     }
                 };
 
@@ -96,7 +96,7 @@ angular.module('honeydew')
                 // when added by the mode highlighter. Manually
                 // $apply()ing and $digest()ing didn't seem to make a
                 // difference
-                $('.CodeMirror').on("click", ".cm-clickable-link", function(event) {
+                $('.CodeMirror').on('click', '.cm-clickable-link', function(event) {
                     var url;
                     url = $(event.target).text();
                     if (url.indexOf('http') !== 0) {

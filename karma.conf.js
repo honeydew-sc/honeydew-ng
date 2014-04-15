@@ -9,16 +9,6 @@ module.exports = function(config) {
         // testing framework to use (jasmine/mocha/qunit/...)
         frameworks: ['jasmine'],
 
-        preprocessors: {
-            'app/scripts/common/directives/*.html': ['ng-html2js']
-        },
-
-        ngHtml2JsPreprocessor: {
-            // setting this option will create only a single module that contains templates
-            // from all the files, so you can load them all with module('foo')
-            moduleName: 'templates'
-        },
-
         // list of files / patterns to load in the browser
         files: [
             // angular packages
@@ -48,7 +38,7 @@ module.exports = function(config) {
         exclude: [],
 
         // web server port
-        port: 8080,
+        port: 7979,
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG

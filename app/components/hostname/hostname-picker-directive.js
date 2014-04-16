@@ -11,6 +11,10 @@ angular.module('honeydew')
                 '      <span class="sr-only">Toggle Dropdown</span>' +
                 '    </button>' +
                 '    <ul class="dropdown-menu" role="menu">' +
+                '      <button type="button" class="close" ng-click="open = false">' +
+                '        <span aria-hidden="true">&times;</span>' +
+                '        <span class="sr-only">Close</span>' +
+                '      </button>' +
                 '      <li>' +
                 '        <div class="btn-group">' +
                 '          <button ng-repeat="app in hostname.appOptions" type="button" class="btn btn-hdew app" ng-model="hostname.app" btn-radio="app">{{ app }}</button>' +

@@ -7,3 +7,13 @@
 .hostname-group input.hostname {
     width: 300px;
 }
+
+.hostname-group .dropdown-menu {
+    width: 270px;
+}
+
+.hostname-group .close {
+    position: relative;
+    left: -20px;
+    top: 5px;
+}

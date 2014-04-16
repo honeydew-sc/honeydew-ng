@@ -13,7 +13,6 @@ describe('hostnameService', function () {
     });
 
     it('should compute a hostname by default', function () {
-        expect(hostname.host).toBe('https://www.sharecare.com');
         hostname.resolve();
         expect(hostname.host).toBe('https://www.stage.sharecare.com');
     });

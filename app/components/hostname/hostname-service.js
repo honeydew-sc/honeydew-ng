@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('hostname', function ($rootScope) {
+    .service('hostname', function ($rootScope, $localStorage) {
+        var store = $localStorage;
         var hostnameService = {
-            host: 'https://www.sharecare.com',
             env: 'stage',
             app: 'SC',
 
@@ -45,6 +45,14 @@ angular.module('honeydew')
 
         hostnameService.appOptions = Object.keys(hostnameService.apps);
         hostnameService.envOptions = ['qa', 'stage', 'prod'];
+
+        if (store.host) {
+            hostnameService.env = undefined;
+            hostnameService.host = store.host;
+        }
+        else {
+            hostnameService.host = 'https://www.stage.sharecare.com';
+        }
 
         return hostnameService;
     });

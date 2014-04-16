@@ -1,4 +1,4 @@
-ddescribe('HostnamePickerDirective', function () {
+describe('HostnamePickerDirective', function () {
     var scope, $compile, hostname, element, hostValue;
 
     beforeEach(module('honeydew'));
@@ -7,6 +7,7 @@ ddescribe('HostnamePickerDirective', function () {
         scope = $rootScope.$new();
         $compile = _$compile_;
         hostname = _hostname_;
+        scope.hostname = hostname;
 
         var tpl = '<hostname-picker></hostname-picker>';
         element = angular.element(tpl);
@@ -25,7 +26,20 @@ ddescribe('HostnamePickerDirective', function () {
     });
 
     it('should list the environments', function () {
+        expect(element.find('.env').length).toBe(3);
+        hostname.app = 'SC';
+        scope.$apply();
         expect(element.find('.env').length).toBe(5);
-        console.log(element);
+    });
+
+    it('should list the apps', function () {
+        expect(element.find('.app').length).toBe(3);
+    });
+
+    it('should change the hostname', function () {
+        scope.hostname.app = 'SC';
+        scope.hostname.env = 'qa';
+        scope.$apply();
+        expect(scope.hostname.host).toMatch(/qa.*sharecare/);
     });
 });

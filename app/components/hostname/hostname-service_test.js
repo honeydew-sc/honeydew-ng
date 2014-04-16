@@ -1,10 +1,11 @@
 describe('hostnameService', function () {
-    var hostname;
+    var hostname, scope;
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_hostname_) {
+    beforeEach(inject(function (_hostname_, _$rootScope_) {
         hostname = _hostname_;
+        scope = _$rootScope_;
     }));
 
     it('should get an instance of the hostname service', function () {
@@ -18,20 +19,27 @@ describe('hostnameService', function () {
     });
 
     it('should resolve the host from the env', function () {
-        hostname.setEnv('qa');
+        hostname.env = 'qa';
+        scope.$apply();
         expect(hostname.host).toMatch(/qa.*\.com/);
+
+        hostname.env = 'stage';
+        scope.$apply();
+        expect(hostname.host).toMatch(/stage.*\.com/);
     });
 
     it('should resolve the host from the app', function () {
-        hostname.setApp('SC');
+        hostname.app = 'SC';
         expect(hostname.host).toMatch(/sharecare\.com/);
     });
 
     it('should switch the envs according to host', function () {
         expect(hostname.envOptions.length).toBe(3);
-        hostname.setApp('SC');
+        hostname.app = 'SC';
+        scope.$apply();
         expect(hostname.envOptions.length).toBe(5);
-        hostname.setApp('DROZ');
+        hostname.app = 'DROZ';
+        scope.$apply();
         expect(hostname.envOptions.length).toBe(3);
     });
 
@@ -39,5 +47,11 @@ describe('hostnameService', function () {
         expect(Object.keys(hostname.apps).length).toBe(3);
         expect(Object.keys(hostname.envs.DROZ).length).toBe(3);
         expect(Object.keys(hostname.envs.SC).length).toBe(5);
+    });
+
+    it('should replace "prod" with an empty string', function () {
+        hostname.env = 'prod';
+        scope.$apply();
+        expect(hostname.host).not.toMatch(/prod/);
     });
 });

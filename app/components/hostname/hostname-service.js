@@ -1,18 +1,17 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('hostname', function () {
-        return {
+    .service('hostname', function ($rootScope) {
+        var hostnameService = {
             host: 'https://www.sharecare.com',
             env: 'stage',
             app: 'SC',
 
             envs: {
+                SC: ['al', 'cm', 'dw', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
-                SC: ['al', 'cm', 'dw', 'stage', 'prod']
+                DS: ['qa', 'stage', 'prod']
             },
-
-            envOptions: ['qa', 'stage', 'prod'],
 
             apps: {
                 SC: 'sharecare.com',
@@ -20,20 +19,32 @@ angular.module('honeydew')
                 DS: 'dailystrength.org'
             },
 
-            setEnv: function (env) {
-                this.env = env;
-                this.resolve();
-            },
-
-            setApp: function (app) {
-                this.app = app;
-                this.envOptions = this.envs[app];
-                this.resolve();
-            },
+            envOptions: [],
+            appOptions: [],
 
             resolve: function () {
                 var q = this.env === 'prod' ? '' : '.';
-                this.host = 'https://www.' + this.env + q + this.apps[this.app];
+                var literalEnv = this.env === 'prod' ? '' : this.env;
+                this.host = 'https://www.' + literalEnv + q + this.apps[this.app];
             }
         };
+
+        $rootScope.$watch(function() {
+            return hostnameService.env;
+        }, function (newValue, oldValue) {
+            hostnameService.resolve();
+        });
+
+        $rootScope.$watch(function() {
+            return hostnameService.app;
+        }, function () {
+            var app = hostnameService.app;
+            hostnameService.envOptions = hostnameService.envs[app];
+            hostnameService.resolve();
+        });
+
+        hostnameService.appOptions = Object.keys(hostnameService.apps);
+        hostnameService.envOptions = ['qa', 'stage', 'prod'];
+
+        return hostnameService;
     });

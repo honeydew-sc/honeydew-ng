@@ -10,22 +10,39 @@ angular.module('honeydew')
             envs: {
                 SC: ['al', 'cm', 'dw', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
-                DS: ['qa', 'stage', 'prod']
+                DS: ['qa', 'stage', 'prod'],
+                iOS: ['AskMD', 'SCPrototype']
             },
 
             apps: {
                 SC: 'sharecare.com',
                 DROZ: 'doctoroz.com',
-                DS: 'dailystrength.org'
+                DS: 'dailystrength.org',
+                iOS: ''
             },
 
             envOptions: [],
             appOptions: [],
 
             resolve: function () {
-                var q = this.env === 'prod' ? '' : '.';
-                var literalEnv = this.env === 'prod' ? '' : this.env;
-                this.host = 'https://www.' + literalEnv + q + this.apps[this.app];
+                // when restoring from localStorage, we undefine the
+                // env to prevent from overwriting the stored value.
+                if (this.env) {
+
+                    // the mobile hostnames look different
+                    if (this.app === 'iOS') {
+                        var base = 'http://s.qa.origin.sharecare.com/honeydew/';
+                        var app = this.env === 'AskMD' ? 'askmd.zip' : 'app.zip';
+                        store.host = base + app;
+                    }
+                    else {
+                        var q = this.env === 'prod' ? '' : '.';
+                        var literalEnv = this.env === 'prod' ? '' : this.env;
+                        store.host = 'https://www.' + literalEnv + q + this.apps[this.app];
+                    }
+
+                    this.host = store.host;
+                }
             }
         };
 

@@ -43,7 +43,7 @@ describe('hostnameService', function () {
     });
 
     it('should have env and app options', function () {
-        expect(Object.keys(hostname.apps).length).toBe(3);
+        expect(Object.keys(hostname.apps).length).toBe(4);
         expect(Object.keys(hostname.envs.DROZ).length).toBe(3);
         expect(Object.keys(hostname.envs.SC).length).toBe(5);
     });
@@ -52,5 +52,12 @@ describe('hostnameService', function () {
         hostname.env = 'prod';
         scope.$apply();
         expect(hostname.host).not.toMatch(/prod/);
+    });
+
+    it('should resolve iOS differently', function () {
+        hostname.app = 'iOS';
+        hostname.env = 'SCPrototype';
+        scope.$apply();
+        expect(hostname.host).toMatch(/origin.*app\.zip/);
     });
 });

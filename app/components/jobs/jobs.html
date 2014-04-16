@@ -1,16 +1,15 @@
-<form class="navbar-form navbar-left" role="form" name="jobOptions">
-  <div class="form-group col-xs-6">
-    <label class="sr-only" for="host">Hostname</label>
-    <input class="form-control" ng-model="$storage.host" required placeholder="http://www.sharecare.com">
+<form class="navbar-form navbar-left jobs" role="form" name="jobOptions">
+  <div class="form-group">
+    <hostname-picker></hostname-picker>
   </div>
 
-  <div class="form-group col-xs-5">
+  <div class="form-group">
     <label class="sr-only" for="browser">Browser</label>
     <select class="form-control" ng-init="$storage.browser = browserList[0]" ng-model="$storage.browser" required ng-options="b.browser group by b.group for b in browserList">
     </select>
   </div>
 
-  <div class="form-group col-xs-1">
+  <div class="form-group">
     <button
       type="submit"
       id="execute"

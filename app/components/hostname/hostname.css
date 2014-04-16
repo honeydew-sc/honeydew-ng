@@ -1,0 +1,9 @@
+.hostname-group button {
+    border-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.hostname-group input.hostname {
+    width: 300px;
+}

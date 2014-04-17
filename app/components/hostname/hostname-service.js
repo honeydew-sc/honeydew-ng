@@ -11,14 +11,18 @@ angular.module('honeydew')
                 SC: ['al', 'cm', 'dw', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
                 DS: ['qa', 'stage', 'prod'],
-                iOS: ['AskMD', 'SCPrototype']
+                iOS: ['AskMD', 'SCPrototype'],
+                Army: ['dev', 'stage', 'test', 'prod'],
+                TMA: ['dev', 'stage', 'test', 'prod']
             },
 
             apps: {
                 SC: 'sharecare.com',
                 DROZ: 'doctoroz.com',
                 DS: 'dailystrength.org',
-                iOS: ''
+                iOS: '',
+                Army: '',
+                TMA: ''
             },
 
             envOptions: [],
@@ -34,6 +38,9 @@ angular.module('honeydew')
                         var base = 'http://s.qa.origin.sharecare.com/honeydew/';
                         var app = this.env === 'AskMD' ? 'askmd.zip' : 'app.zip';
                         store.host = base + app;
+                    }
+                    else if (this.app === 'Army' || this.app === 'TMA') {
+                        store.host = domains[this.app.toLowerCase()][this.env];
                     }
                     else {
                         var q = this.env === 'prod' ? '' : '.';

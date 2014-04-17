@@ -43,7 +43,7 @@ describe('hostnameService', function () {
     });
 
     it('should have env and app options', function () {
-        expect(Object.keys(hostname.apps).length).toBe(4);
+        expect(Object.keys(hostname.apps).length).toBe(6);
         expect(Object.keys(hostname.envs.DROZ).length).toBe(3);
         expect(Object.keys(hostname.envs.SC).length).toBe(5);
     });

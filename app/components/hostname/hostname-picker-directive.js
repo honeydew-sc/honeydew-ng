@@ -18,7 +18,8 @@ angular.module('honeydew')
                 '      <li>' +
                 '        <div class="btn-group">' +
                 '          <button ng-repeat="app in hostname.appOptions" type="button" class="btn btn-hdew app" ng-model="hostname.app" btn-radio="app">{{ app }}</button>' +
-                '        </div></li>' +
+                '        </div>' +
+                '      </li>' +
                 '      <li class="divider"></li>' +
                 '      <li>' +
                 '        <div class="btn-group">' +

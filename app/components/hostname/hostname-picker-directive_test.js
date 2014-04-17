@@ -33,7 +33,7 @@ describe('HostnamePickerDirective', function () {
     });
 
     it('should list the apps', function () {
-        expect(element.find('.app').length).toBe(4);
+        expect(element.find('.app').length).toBe(6);
     });
 
     it('should change the hostname', function () {

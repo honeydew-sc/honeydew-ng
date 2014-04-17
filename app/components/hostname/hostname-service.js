@@ -45,7 +45,8 @@ angular.module('honeydew')
                     else {
                         var q = this.env === 'prod' ? '' : '.';
                         var literalEnv = this.env === 'prod' ? '' : this.env;
-                        store.host = 'https://www.' + literalEnv + q + this.apps[this.app];
+                        var protocol = this.app === 'SC' ? 'https://' : 'http://';
+                        store.host = protocol + 'www.' + literalEnv + q + this.apps[this.app];
                     }
 
                     this.host = store.host;

@@ -49,13 +49,21 @@ my $myProfileUrl might be</p>
  Given I am logged in to .mil on the / page
 
  Examples:
- | id              | password |
- | your.id         | 123123123 |
+# for test users:
+ | id        | password  |
+ | test.user | 123123123 |
+
+# for ako accounts:
+ | akoId       | password  |
+ | your.ako.id | 123123123 |
 </code></pre>
 
-<p>Use the above snippet to log in to any of our .mil environments. Like
-above, you get $myProfileUrl in the scope of your test for free. It
-decides what to do based on using a specific hostname:</p>
+<p>Use the above snippet to log in to any of our .mil environments. Using
+your own AKO account to log into Test/Prod depends directly on the
+Example saying <code>akoId</code> so make sure to include it!</p>
+
+<p>Like above, you get $myProfileUrl in the scope of your test for
+free. It decides what to do based on using a specific hostname:</p>
 
 <ul>
 <li>https://armyfit.dev.sharecare.com</li>

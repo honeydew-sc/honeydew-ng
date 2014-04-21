@@ -38,6 +38,14 @@ angular.module('honeydew')
                 service.placeHolder = false;
             }
             else {
+                // only remove in-progress rules if the new line is a
+                // completed rule
+                if (item.indexOf('# (') === 0) {
+                    service.output = service.output.split("\n").filter(function (line) {
+                        return line.indexOf('####') !== 0;
+                    }).join("\n");
+                }
+
                 service.output += item;
             }
         };

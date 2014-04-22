@@ -54,12 +54,14 @@ angular.module('honeydew')
             }
         };
 
+        // update localStorage when we change the env
         $rootScope.$watch(function() {
             return hostnameService.env;
         }, function (newValue, oldValue) {
             hostnameService.resolve();
         });
 
+        // and the app value
         $rootScope.$watch(function() {
             return hostnameService.app;
         }, function () {
@@ -78,6 +80,13 @@ angular.module('honeydew')
         else {
             hostnameService.host = 'https://www.stage.sharecare.com';
         }
+
+        // we want to update localStorage when there are manual changes to the hostname
+        $rootScope.$watch(function() {
+            return hostnameService.host;
+        }, function () {
+            store.host = hostnameService.host;
+        });
 
         return hostnameService;
     });

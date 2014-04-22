@@ -394,7 +394,7 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command: 'ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
+                command: 'git push && ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
         }
     });
@@ -447,15 +447,14 @@ module.exports = function (grunt) {
         grunt.task.run(['build']);
     });
 
-    grunt.registerTask('deployBackend', [
-        'shell:phpTests',
-        'shell:deployBack'
-    ]);
-
-    grunt.registerTask('deploy', [
+    grunt.registerTask('deployFront', [
         'build',
-        'deployBackend',
         'karma:unit',
         'shell:deployFront'
+    ]);
+
+    grunt.registerTask('deployBack', [
+        'shell:phpTests',
+        'shell:deployBack'
     ]);
 };

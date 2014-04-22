@@ -39,8 +39,6 @@ angular.module('honeydew')
             }
         };
 
-        alerts.addAlert(service.breakpoint.alert, 30000);
-
         service.pusherListener = function (item) {
             if (item.match('####.*' + service.breakpoint.rule))  {
                 alerts.addAlert(service.breakpoint.alert, 30000);

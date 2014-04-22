@@ -102,6 +102,36 @@ and Honeydew can only clear cookies for the current domain. There is
 no guarantee that the browser would be on the right domain when we
 tried clearing cookies.</p>
 
+</accordion-group><accordion-group heading="Using the Interactive REPL">
+
+<p>Put the following rule anywhere in your test:</p>
+
+<pre><code> When I set a breakpoint
+</code></pre>
+
+<p>When the test reaches this point, it will stop and wait for your
+input. While in REPL mode, you can use the following keyboard
+shortcuts while your cursor is in the editor</p>
+
+<ul>
+<li><code>Alt-Enter</code> or <code>Cmd-Enter</code>: try out the current rule at point</li>
+<li><code>Alt-Escape</code> or <code>Cmd-Escape</code>: exit the REPL and resume normal tests.</li>
+</ul>
+
+<p>You can also test out your selectors after using a breakpoint. Simply
+put them right on the line, no <code>Givens</code>, <code>Whens</code>, or <code>Thens</code> needed:</p>
+
+<pre><code> css=div.testing-selector
+</code></pre>
+
+<p>Honeydew will quickly search for your element and if it finds it, it
+will pulse red for a second.</p>
+
+<p>N.B.: If you're using Chrome and your DevTools console is open, it
+will not work! The DevTools console conflicts with Honeydew, so you
+may want to open up two browsers to the same page, or just use
+Firefox, where it does work with an open console.</p>
+
 </accordion-group><accordion-group heading="Copying and pasting? Try using examples instead">
 
 <p>Any time you find yourself copying and pasting rules, you can probably

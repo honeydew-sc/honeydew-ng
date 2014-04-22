@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('liveReport', function ($rootScope, Pusher, randomString, $timeout) {
+    .service('liveReport', function ($rootScope, Pusher, randomString, $timeout, alerts) {
         var timeout;
         var service =  {
             oldChannel: null,
@@ -14,7 +14,14 @@ angular.module('honeydew')
                 evalRule: 'client-eval-rule',
                 finish: 'client-finish'
             },
-            autoVacateDelay: 5 * 60 * 1000
+            autoVacateDelay: 5 * 60 * 1000,
+            breakpoint: {
+                rule: 'When I set a breakpoint',
+                alert: {
+                    type: 'info',
+                    msg: 'Your test has reached a breakpoint :D Use "Alt+Enter" to send new rules to the browser, and "Alt+Esc" to resume the test. You can also try out bare CSS selectors to highlight them!'
+                }
+            }
         };
 
 
@@ -32,14 +39,22 @@ angular.module('honeydew')
             }
         };
 
+        alerts.addAlert(service.breakpoint.alert, 30000);
+
         service.pusherListener = function (item) {
+            if (item.match('####.*' + service.breakpoint.rule))  {
+                alerts.addAlert(service.breakpoint.alert, 30000);
+            }
+
             if (service.placeHolder) {
                 service.output = item;
                 service.placeHolder = false;
             }
             else {
                 // only remove in-progress rules if the new line is a
-                // completed rule
+                // completed rule. some lines generate multiple lines
+                // of output that are not new rules, like the 'url
+                // should match' rule
                 if (item.indexOf('# (') === 0) {
                     service.output = service.output.split("\n").filter(function (line) {
                         return line.indexOf('####') !== 0;

@@ -23,7 +23,7 @@ angular.module('honeydew')
                 '      <li class="divider"></li>' +
                 '      <li>' +
                 '        <div class="btn-group">' +
-                '          <button ng-repeat="env in hostname.envOptions" type="button" class="btn btn-hdew env" ng-model="hostname.env" btn-radio="env">{{ env }}</button>' +
+                '          <button ng-repeat="env in hostname.envOptions" type="button" class="btn btn-hdew env" ng-model="hostname.env" btn-radio="env" ng-click="$parent.open = false">{{ env }}</button>' +
                 '        </div>' +
                 '      </li>' +
                 '    </ul>' +

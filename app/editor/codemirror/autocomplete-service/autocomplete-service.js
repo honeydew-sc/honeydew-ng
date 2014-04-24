@@ -11,35 +11,55 @@ angular.module('honeydew')
             'Scenario: '
         ];
 
+        String.prototype.repeat = function( num ) {
+            return new Array( num + 1 ).join( this );
+        };
+
         var autocompleteService = {
             getHints:  function (cm) {
                 var cur = cm.getCursor();
                 var token = cm.getTokenAt(cur);
-                var line = cm.getLine(cur.line);
-                var start = token.start;
-                var end = token.end;
-                var word = line;
+                var needle = cm.getLine(cur.line);
+                var end = needle.length;
 
-                var source;
-
+                var completionBackend, indent;
                 if (token.state.allowPreamble) {
-                    source = autocompleteService.getPreamble();
-                    start = 0;
+                    completionBackend = autocompleteService.getPreamble();
+                    indent = 0;
                 }
                 else {
-                    source = autocompleteService.getSteps();
-                    start = 1;
+                    completionBackend = autocompleteService.getSteps();
+                    indent = 1;
                 }
 
-                var result = source.filter( function (it) {
-                    return it.toLowerCase().search(word.toLowerCase().trim()) !== -1;
+                var result = completionBackend.filter( function (it) {
+                    return it.toLowerCase().search(needle.toLowerCase().trim()) !== -1;
+                }).map( function (it) {
+                    if (it.indexOf('Scenario') === 0) {
+                        indent = 1;
+                    }
+                    else if (it.indexOf('When') === 0) {
+                        indent = 3;
+                    }
+                    else if (it.indexOf('Then') === 0) {
+                        indent = 5;
+                    }
+
+                    var completion = {
+                        text: ' '.repeat(indent) + it,
+                        displayText: it
+                    };
+
+                    return completion;
                 });
 
-                return {
+                var completionObject = {
                     list: result && result.length ? result : [],
-                    from: CodeMirror.Pos(cur.line, start),
+                    from: CodeMirror.Pos(cur.line, 0),
                     to: CodeMirror.Pos(cur.line, end)
                 };
+
+                return completionObject;
             },
 
             getPreamble: function () {

@@ -423,7 +423,7 @@ module.exports = function (grunt) {
         'autoprefixer',
         'connect:test',
         'karma:unit',
-        'backend',
+        'shell:phpTests',
         'shell:honeydew'
     ]);
 

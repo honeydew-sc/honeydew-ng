@@ -6,7 +6,7 @@ $noPermissions = '/editor/#/features/e2e/no-permissions.feature'
 $new = '/editor/#/features/e2e/new.feature'
 $fileMenu = 'partial_link_text=File'
 
-$hostname = 'css=[type="url"]'
+$hostname = 'class=hostname'
 $executeButton = 'id=execute'
 $reportsPanel = 'class=center-panel element'
 $modal = 'class=hdew-modal'
@@ -29,7 +29,7 @@ $alert = 'css=.alert div element'
    When I select IE 10 Local from the css=[ng-options] dropdown
    When I input $url into the input field $hostname
  Given I am on the $noPermissions page
-     Then the css=[type='url']:contains('$url') element should be present
+     Then the $hostname:contains('$url') element should be present
      Then IE 10 Local should be selected in the css=[ng-options] dropdown
 
  Scenario: execute a job

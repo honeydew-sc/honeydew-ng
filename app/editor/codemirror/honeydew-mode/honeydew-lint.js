@@ -10,7 +10,7 @@ angular.module('honeydew')
                 text.split("\n").map( function ( line, index ) {
                     if (/^ +(?:Given|When|Then)/.test(line)) {
                         if (/\(\.\*\)/.test(line)) {
-                            honeydewLintService.addSyntaxError(line, index, 'The (.*) is just a placeholder; fill it in :)');
+                            honeydewLintService.addSyntaxError(line, index, 'The (.*) is just a placeholder; you should probably fill it in! Move your cursor to this line and press Ctrl-Space to jump to it automatically! :)');
                         }
                         else if (!honeydewLintService.isAPhrase(line) && !honeydewLintService.isARule(line)) {
                             honeydewLintService.addSyntaxError(line, index, '[' + line.trim() + '] doesn\'t seem to be a valid rule...');

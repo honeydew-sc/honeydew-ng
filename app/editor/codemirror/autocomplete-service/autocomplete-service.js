@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('cmAutocomplete', function ($resource, $http) {
+    .service('cmAutocomplete', function ($resource, $http, alerts) {
+        CodeMirror.commands.jumpOrAutocomplete = function (cm) {
+            if (!CodeMirror.commands.jumpCursor(cm)) {
+                CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
+            }
+        };
+
         var preambleHints = [
             'Existing Bug: ',
             'Email: ',
@@ -58,6 +64,16 @@ angular.module('honeydew')
                     from: CodeMirror.Pos(cur.line, 0),
                     to: CodeMirror.Pos(cur.line, end)
                 };
+
+                CodeMirror.on(completionObject, "close", function () {
+                    var found = cm.getLine(cur.line);
+                    if (found.indexOf('(.*)') !== -1) {
+                        alerts.addAlert({
+                            type: 'info',
+                            msg: 'Nice work on the auto complete :D Try pressing Ctrl-Space again to select the (.*), and then fill it in!'
+                        }, 7500);
+                    }
+                });
 
                 return completionObject;
             },

@@ -14,7 +14,7 @@ angular.module('honeydew')
             mode: 'honeydew',
             lint: true,
             extraKeys: {
-                'Ctrl-Space': 'autocomplete',
+                'Ctrl-Space': 'jumpOrAutocomplete', // defined in autocomplete-service.js
                 'Cmd-Enter': 'repl',
                 'Alt-Enter': 'repl',
                 'Cmd-Esc': 'quitRepl',
@@ -60,10 +60,6 @@ angular.module('honeydew')
                         var matches = $scope.file.contents.match(/JIRA: (.*)/);
                         return matches !== null ? matches[1] : '';
                     }
-                };
-
-                CodeMirror.commands.autocomplete = function (cm) {
-                    CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
                 };
 
                 CodeMirror.commands.repl = function (cm) {

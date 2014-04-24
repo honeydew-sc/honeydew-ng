@@ -40,7 +40,14 @@
 //   load. Or, if you minified those into a single script and included
 //   them in the workerScript, simply leave this undefined.
 
-(function() {
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
+    mod(require("../../lib/codemirror"));
+  else if (typeof define == "function" && define.amd) // AMD
+    define(["../../lib/codemirror"], mod);
+  else // Plain browser env
+    mod(CodeMirror);
+})(function(CodeMirror) {
   "use strict";
   // declare global: tern
 
@@ -96,7 +103,7 @@
 
     getHint: function(cm, c) { return hint(this, cm, c); },
 
-    showType: function(cm) { showType(this, cm); },
+    showType: function(cm, pos) { showType(this, cm, pos); },
 
     updateArgHints: function(cm) { updateArgHints(this, cm); },
 
@@ -106,10 +113,12 @@
 
     rename: function(cm) { rename(this, cm); },
 
-    request: function (cm, query, c) {
+    selectName: function(cm) { selectName(this, cm); },
+
+    request: function (cm, query, c, pos) {
       var self = this;
       var doc = findDoc(this, cm.getDoc());
-      var request = buildRequest(this, doc, query);
+      var request = buildRequest(this, doc, query, pos);
 
       this.server.request(request, function (error, data) {
         if (!error && self.options.responseFilter)
@@ -167,7 +176,7 @@
 
   function sendDoc(ts, doc) {
     ts.server.request({files: [{type: "full", name: doc.name, text: docValue(ts, doc)}]}, function(error) {
-      if (error) console.error(error);
+      if (error) window.console.error(error);
       else doc.changed = null;
     });
   }
@@ -221,7 +230,7 @@
 
   // Type queries
 
-  function showType(ts, cm) {
+  function showType(ts, cm, pos) {
     ts.request(cm, "type", function(error, data) {
       if (error) return showError(ts, cm, error);
       if (ts.options.typeTip) {
@@ -236,7 +245,7 @@
         }
       }
       tempTooltip(cm, tip);
-    });
+    }, pos);
   }
 
   // Maintaining argument hints
@@ -251,7 +260,7 @@
     var lex = inner.state.lexical;
     if (lex.info != "call") return;
 
-    var ch, pos = lex.pos || 0, tabSize = cm.getOption("tabSize");
+    var ch, argPos = lex.pos || 0, tabSize = cm.getOption("tabSize");
     for (var line = cm.getCursor().line, e = Math.max(0, line - 9), found = false; line >= e; --line) {
       var str = cm.getLine(line), extra = 0;
       for (var pos = 0;;) {
@@ -268,7 +277,7 @@
     var start = Pos(line, ch);
     var cache = ts.cachedArgHints;
     if (cache && cache.doc == cm.getDoc() && cmpPos(start, cache.start) == 0)
-      return showArgHints(ts, cm, pos);
+      return showArgHints(ts, cm, argPos);
 
     ts.request(cm, {type: "type", preferFunction: true, end: start}, function(error, data) {
       if (error || !data.type || !(/^fn\(/).test(data.type)) return;
@@ -279,7 +288,7 @@
         guess: data.guess,
         doc: cm.getDoc()
       };
-      showArgHints(ts, cm, pos);
+      showArgHints(ts, cm, argPos);
     });
   }
 
@@ -429,6 +438,25 @@
     });
   }
 
+  function selectName(ts, cm) {
+    var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+    if (!/\w/.test(token.string)) showError(ts, cm, "Not at a variable");
+    var name = findDoc(ts, cm.doc).name;
+    ts.request(cm, {type: "refs"}, function(error, data) {
+      if (error) return showError(ts, cm, error);
+      var ranges = [], cur = 0;
+      for (var i = 0; i < data.refs.length; i++) {
+        var ref = data.refs[i];
+        if (ref.file == name) {
+          ranges.push({anchor: ref.start, head: ref.end});
+          if (cmpPos(cur, ref.start) >= 0 && cmpPos(cur, ref.end) <= 0)
+            cur = ranges.length - 1;
+        }
+      }
+      cm.setSelections(ranges, cur);
+    });
+  }
+
   var nextChangeOrig = 0;
   function applyChanges(ts, changes) {
     var perFile = Object.create(null);
@@ -450,13 +478,13 @@
 
   // Generic request-building helper
 
-  function buildRequest(ts, doc, query) {
+  function buildRequest(ts, doc, query, pos) {
     var files = [], offsetLines = 0, allowFragments = !query.fullDocs;
     if (!allowFragments) delete query.fullDocs;
     if (typeof query == "string") query = {type: query};
     query.lineCharPositions = true;
     if (query.end == null) {
-      query.end = doc.doc.getCursor("end");
+      query.end = pos || doc.doc.getCursor("end");
       if (doc.doc.somethingSelected())
         query.start = doc.doc.getCursor("start");
     }
@@ -521,7 +549,7 @@
 
   // Generic utilities
 
-  function cmpPos(a, b) { return a.line - b.line || a.ch - b.ch; }
+  var cmpPos = CodeMirror.cmpPos;
 
   function elt(tagname, cls /*, ... elts*/) {
     var e = document.createElement(tagname);
@@ -614,7 +642,7 @@
           send({type: "getFile", err: String(err), text: text, id: data.id});
         });
       } else if (data.type == "debug") {
-        console.log(data.message);
+        window.console.log(data.message);
       } else if (data.id && pending[data.id]) {
         pending[data.id](data.err, data.body);
         delete pending[data.id];
@@ -629,4 +657,4 @@
     this.delFile = function(name) { send({type: "del", name: name}); };
     this.request = function(body, c) { send({type: "req", body: body}, c); };
   }
-})();
+});

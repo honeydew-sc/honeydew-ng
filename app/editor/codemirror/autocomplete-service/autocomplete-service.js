@@ -7,7 +7,8 @@ angular.module('honeydew')
             'Email: ',
             'Subtitles: ',
             'Keep Open',
-            'JIRA: '
+            'JIRA: ',
+            'Scenario: '
         ];
 
         var autocompleteService = {

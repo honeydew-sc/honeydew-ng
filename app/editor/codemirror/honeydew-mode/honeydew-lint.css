@@ -1,0 +1,5 @@
+.CodeMirror-lint-tooltip:after {
+    content: url('/editor/codemirror/honeydew-mode/flan-small.png');
+    width: 30px;
+    height: 30px;
+}

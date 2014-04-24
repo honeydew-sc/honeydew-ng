@@ -87,8 +87,8 @@ describe('cmAutocompleteService', function () {
     it('can return a filtered list of rules', function () {
         var hints = cmAutocomplete.getHints(mockCodeMirror());
         expect(hints.list.length).toBe(1);
-        expect(httpResponse.phrases).toContain(hints.list[0]);
-        expect(hints.list).not.toContain(httpResponse.phrases[1]);
+        expect(httpResponse.phrases[0]).toMatch(hints.list[0].displayText);
+        expect(hints.list).not.toContain(httpResponse.phrases[1].displayText);
     });
 
     it('can fail gracefully when nothing matches', function () {
@@ -103,6 +103,6 @@ describe('cmAutocompleteService', function () {
     it('can suggest preamble options when appropriate', function () {
         var hints = cmAutocomplete.getHints(mockCodeMirror(true));
         expect(hints.list.length).toBe(1);
-        expect(hints.list[0]).toContain('Existing');
+        expect(hints.list[0].displayText).toContain('Existing');
     });
 });

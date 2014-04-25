@@ -6,6 +6,8 @@ angular.module('honeydew')
             template:
             '    <div class="hostname-group">' +
                 '  <div class="input-group" ng-class="{ open: open}">' +
+                '    <input class="form-control hostname" name="host" ng-model="hostname.host" required placeholder="http://www.sharecare.com" ng-click="open = false">' +
+                '    <label class="sr-only" for="host">Hostname</label>' +
                 '    <button type="button" class="btn btn-default" ng-click="open = !open">' +
                 '      <span class="caret"></span>' +
                 '      <span class="sr-only">Toggle Dropdown</span>' +
@@ -27,8 +29,6 @@ angular.module('honeydew')
                 '        </div>' +
                 '      </li>' +
                 '    </ul>' +
-                '    <label class="sr-only" for="host">Hostname</label>' +
-                '    <input class="form-control hostname" name="host" ng-model="hostname.host" required placeholder="http://www.sharecare.com" ng-click="open = false">' +
                 '  </div>' +
                 '</div>',
             replace: true,

@@ -1,13 +1,25 @@
-<editor-nav control="jobs" doc="doc" file="file" filename={{filename}} stop-watching="stopWatching"></editor-nav>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand"><a href="#">Home</a></li>
+      <li><a href="#">Another link</a></li>
+      <li><a href="#">Next link</a></li>
+      <li><a href="#">Last link</a></li>
+    </ul>
+  </div>
+  <div id="page-content-wrapper">
+    <editor-nav control="jobs" doc="doc" file="file" filename={{filename}} stop-watching="stopWatching"></editor-nav>
 
-<div ng-class="$storage.settings.font" class="settings wrapper remaining-height">
-  <ui-codemirror ng-model="file.contents"
-                 ui-codemirror-opts="editorOptions"
-                 ng-class="'cm-s-' + $storage.settings.theme"
-                 >
-  </ui-codemirror>
+    <div ng-class="$storage.settings.font" class="settings wrapper remaining-height">
+      <ui-codemirror ng-model="file.contents"
+                     ui-codemirror-opts="editorOptions"
+                     ng-class="'cm-s-' + $storage.settings.theme"
+                     >
+      </ui-codemirror>
+    </div>
+
+    <center-pane></center-pane>
+
+    <pane-selector></pane-selector>
+  </div>
 </div>
-
-<center-pane></center-pane>
-
-<pane-selector></pane-selector>

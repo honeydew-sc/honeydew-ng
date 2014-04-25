@@ -7,10 +7,11 @@ $app->contentType('application/json');
 
 require 'rest-routes/autocomplete-sources.php';
 require 'rest-routes/files.php';
-require 'rest-routes/monitor.php';
 require 'rest-routes/jobs.php';
-require 'rest-routes/user.php';
+require 'rest-routes/monitor.php';
 require 'rest-routes/pusher.php';
+require 'rest-routes/tree.php';
+require 'rest-routes/user.php';
 
 $app->run();
 
@@ -54,6 +55,13 @@ function getUser() {
 function isProduction() {
     $hostname = gethostname();
     return !preg_match('/local/', $hostname);
+}
+
+function endswith( $string, $test ) {
+    $strlen = strlen($string);
+    $testlen = strlen($test);
+    if ($testlen > $strlen) return false;
+    return substr_compare($string, $test, -$testlen) === 0;
 }
 
 ?>

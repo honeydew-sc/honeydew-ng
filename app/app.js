@@ -10,7 +10,8 @@ angular.module('honeydew', [
     'ui.bootstrap',
     'ui.router',
     'btford.markdown',
-    'doowb.angular-pusher'
+    'doowb.angular-pusher',
+    'treeControl'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/features/test/FAQ.feature');

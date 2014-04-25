@@ -48,18 +48,14 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
     // Build a URLMatcher if necessary, either via a relative or absolute URL
     url: function(state) {
-      var url = state.url;
+      var url = state.url, config = { params: state.params || {} };
 
       if (isString(url)) {
-        if (url.charAt(0) == '^') {
-          return $urlMatcherFactory.compile(url.substring(1));
-        }
-        return (state.parent.navigable || root).url.concat(url);
+        if (url.charAt(0) == '^') return $urlMatcherFactory.compile(url.substring(1), config);
+        return (state.parent.navigable || root).url.concat(url, config);
       }
 
-      if ($urlMatcherFactory.isMatcher(url) || url == null) {
-        return url;
-      }
+      if (!url || $urlMatcherFactory.isMatcher(url)) return url;
       throw new Error("Invalid url '" + url + "' in state '" + state + "'");
     },
 
@@ -71,10 +67,8 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     // Derive parameters for this state and ensure they're a super-set of parent's parameters
     params: function(state) {
       if (!state.params) {
-        return state.url ? state.url.parameters() : state.parent.params;
+        return state.url ? state.url.params : state.parent.params;
       }
-      if (!isArray(state.params)) throw new Error("Invalid params in state '" + state + "'");
-      if (state.url) throw new Error("Both params and url specicified in state '" + state + "'");
       return state.params;
     },
 
@@ -94,16 +88,18 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     },
 
     ownParams: function(state) {
-      if (!state.parent) {
-        return state.params;
-      }
-      var paramNames = {}; forEach(state.params, function (p) { paramNames[p] = true; });
+      state.params = state.params || {};
 
-      forEach(state.parent.params, function (p) {
-        if (!paramNames[p]) {
-          throw new Error("Missing required parameter '" + p + "' in state '" + state.name + "'");
+      if (!state.parent) {
+          return objectKeys(state.params);
+      }
+      var paramNames = {}; forEach(state.params, function (v, k) { paramNames[k] = true; });
+
+      forEach(state.parent.params, function (v, k) {
+        if (!paramNames[k]) {
+          throw new Error("Missing required parameter '" + k + "' in state '" + state.name + "'");
         }
-        paramNames[p] = false;
+        paramNames[k] = false;
       });
       var ownParams = [];
 
@@ -298,7 +294,8 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * - **parent** `{object}` - returns the parent state object.
    * - **data** `{object}` - returns state data, including any inherited data that is not
    *   overridden by own values (if any).
-   * - **url** `{object}` - returns a {link ui.router.util.type:UrlMatcher} or null.
+   * - **url** `{object}` - returns a {@link ui.router.util.type:UrlMatcher UrlMatcher}
+   *   or `null`.
    * - **navigable** `{object}` - returns closest ancestor state that has a URL (aka is 
    *   navigable).
    * - **params** `{object}` - returns an array of state params that are ensured to 
@@ -314,7 +311,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * - **path** `{string}` - returns the full path from the root down to this state. 
    *   Needed for state activation.
    * - **includes** `{object}` - returns an object that includes every state that 
-   *   would pass a '$state.includes()' test.
+   *   would pass a `$state.includes()` test.
    *
    * @example
    * <pre>
@@ -611,6 +608,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     }
 
     root.locals = { resolve: null, globals: { $stateParams: {} } };
+
     $state = {
       params: {},
       current: root.self,
@@ -782,8 +780,8 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         toState = findState(to, options.relative);
 
         if (!isDefined(toState)) {
-          if (options.relative) throw new Error("Could not resolve '" + to + "' from state '" + options.relative + "'");
-          throw new Error("No such state '" + to + "'");
+          if (!options.relative) throw new Error("No such state '" + to + "'");
+          throw new Error("Could not resolve '" + to + "' from state '" + options.relative + "'");
         }
       }
       if (toState[abstractKey]) throw new Error("Cannot transition to abstract state '" + to + "'");
@@ -808,14 +806,14 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       // TODO: We may not want to bump 'transition' if we're called from a location change
       // that we've initiated ourselves, because we might accidentally abort a legitimate
       // transition initiated from code?
-      if (shouldTriggerReload(to, from, locals, options) ) {
+      if (shouldTriggerReload(to, from, locals, options)) {
         if (to.self.reloadOnSearch !== false) $urlRouter.update();
         $state.transition = null;
         return $q.when($state.current);
       }
 
-      // Normalize/filter parameters before we pass them to event handlers etc.
-      toParams = normalize(to.params, toParams || {});
+      // Filter parameters before we pass them to event handlers etc.
+      toParams = filterByKeys(objectKeys(to.params), toParams || {});
 
       // Broadcast start event and cancel the transition if requested
       if (options.notify) {
@@ -860,6 +858,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       // empty and gets filled asynchronously. We need to keep track of the promise for the
       // (fully resolved) current locals, and pass this down the chain.
       var resolved = $q.when(locals);
+
       for (var l = keep; l < toPath.length; l++, state = toPath[l]) {
         locals = toLocals[l] = inherit(locals);
         resolved = resolveState(state, toParams, state === to, resolved, locals);
@@ -975,13 +974,18 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      *
      * @example
      * <pre>
+     * $state.$current.name = 'contacts.details.item';
+     *
+     * // absolute name
      * $state.is('contact.details.item'); // returns true
      * $state.is(contactDetailItemStateObject); // returns true
      *
-     * // everything else would return false
+     * // relative name (. and ^), typically from a template
+     * // E.g. from the 'contacts.details' template
+     * <div ng-class="{highlighted: $state.is('.item')}">Item</div>
      * </pre>
      *
-     * @param {string|object} stateName The state name or state object you'd like to check.
+     * @param {string|object} stateName The state name (absolute or relative) or state object you'd like to check.
      * @param {object=} params A param object, e.g. `{sectionId: section.id}`, that you'd like 
      * to test against the current active state.
      * @returns {boolean} Returns true if it is the state.
@@ -1006,25 +1010,28 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * @methodOf ui.router.state.$state
      *
      * @description
-     * A method to determine if the current active state is equal to or is the child of the 
+     * A method to determine if the current active state is equal to or is the child of the
      * state stateName. If any params are passed then they will be tested for a match as well.
      * Not all the parameters need to be passed, just the ones you'd like to test for equality.
      *
      * @example
+     * Partial and relative names
      * <pre>
      * $state.$current.name = 'contacts.details.item';
      *
+     * // Using partial names
      * $state.includes("contacts"); // returns true
      * $state.includes("contacts.details"); // returns true
      * $state.includes("contacts.details.item"); // returns true
      * $state.includes("contacts.list"); // returns false
      * $state.includes("about"); // returns false
+     *
+     * // Using relative names (. and ^), typically from a template
+     * // E.g. from the 'contacts.details' template
+     * <div ng-class="{highlighted: $state.includes('.item')}">Item</div>
      * </pre>
      *
-     * @description
-     * Basic globing patterns will also work.
-     *
-     * @example
+     * Basic globbing patterns
      * <pre>
      * $state.$current.name = 'contacts.details.item.url';
      *
@@ -1037,12 +1044,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * $state.includes("item.**"); // returns false
      * </pre>
      *
-     * @param {string} stateOrName A partial name to be searched for within the current state name.
-     * @param {object} params A param object, e.g. `{sectionId: section.id}`, 
+     * @param {string} stateOrName A partial name, relative name, or glob pattern
+     * to be searched for within the current state name.
+     * @param {object} params A param object, e.g. `{sectionId: section.id}`,
      * that you'd like to test against the current active state.
      * @returns {boolean} Returns true if it does include the state
      */
-
     $state.includes = function includes(stateOrName, params) {
       if (isString(stateOrName) && isGlob(stateOrName)) {
         if (!doesStateMatchGlob(stateOrName)) {
@@ -1090,7 +1097,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * @returns {string} compiled state url
      */
     $state.href = function href(stateOrName, params, options) {
-      options = extend({ lossy: true, inherit: false, absolute: false, relative: $state.$current }, options || {});
+      options = extend({
+        lossy:    true,
+        inherit:  false,
+        absolute: false,
+        relative: $state.$current
+      }, options || {});
 
       var state = findState(stateOrName, options.relative);
 
@@ -1102,7 +1114,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       if (!nav || !nav.url) {
         return null;
       }
-      return $urlRouter.href(nav.url, normalize(state.params, params || {}), { absolute: options.absolute });
+      return $urlRouter.href(nav.url, filterByKeys(objectKeys(state.params), params || {}), {
+        absolute: options.absolute
+      });
     };
 
     /**
@@ -1113,7 +1127,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * @description
      * Returns the state configuration object for any specific state or all states.
      *
-     * @param {string|object=} stateOrName If provided, will only get the config for
+     * @param {string|object=} stateOrName (absolute or relative) If provided, will only get the config for
      * the requested state. If not provided, returns an array of ALL state configs.
      * @returns {object|array} State configuration object or array of all objects.
      */
@@ -1132,7 +1146,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       // necessary. In addition to being available to the controller and onEnter/onExit callbacks,
       // we also need $stateParams to be available for any $injector calls we make during the
       // dependency resolution process.
-      var $stateParams = (paramsAreFiltered) ? params : filterByKeys(state.params, params);
+      var $stateParams = (paramsAreFiltered) ? params : filterByKeys(objectKeys(state.params), params);
       var locals = { $stateParams: $stateParams };
 
       // Resolve 'global' dependencies for the state, i.e. those not specific to a view.
@@ -1140,9 +1154,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       // to the set that should be visible to the state, and are independent of when we update
       // the global $state and $stateParams values.
       dst.resolve = $resolve.resolve(state.resolve, locals, dst.resolve, state);
-      var promises = [ dst.resolve.then(function (globals) {
+      var promises = [dst.resolve.then(function (globals) {
         dst.globals = globals;
-      }) ];
+      })];
       if (inherited) promises.push(inherited);
 
       // Resolve template and dependencies for all views.

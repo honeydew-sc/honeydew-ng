@@ -7,3 +7,9 @@ html, body {
 .nav, .pagination, .carousel, .panel-title a {
     cursor: pointer;
 }
+
+*:after, *:before, * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}

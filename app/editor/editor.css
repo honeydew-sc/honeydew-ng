@@ -31,33 +31,3 @@
     width: calc(100% - 200px);
     position: absolute;
 }
-
-#wrapper {
-  padding-left: 200px;
-  transition: all 0.4s ease 0s;
-}
-
-#sidebar-wrapper {
-  margin-left: -200px;
-  left: 200px;
-  width: 200px;
-  background: #e7e7e7;
-  position: fixed;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 1000;
-  transition: all 0.4s ease 0s;
-}
-
-#page-content-wrapper {
-  width: 100%;
-}
-
-.sidebar-nav {
-  position: absolute;
-  top: 0;
-  width: 200px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}

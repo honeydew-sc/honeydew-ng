@@ -14,10 +14,15 @@ angular.module('honeydew', [
     'treeControl'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/features/test/FAQ.feature');
+        // $urlRouterProvider.otherwise('/editor/features/test/FAQ.feature');
 
         $stateProvider
             .state('editor', {
+                url: '/editor',
+                templateUrl: 'components/filetree/filetree.html',
+                controller: 'FileTreeCtrl'
+            })
+            .state('editor.features', {
                 url: '/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'

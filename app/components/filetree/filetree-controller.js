@@ -3,8 +3,8 @@
 angular.module('honeydew')
     .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout) {
         $scope.treeOptions = {
-            dirSelectable: false,
-            defaultExpanded: filetree.defaultExpanded
+            dirSelectable: false
+            // defaultExpanded: filetree.defaultExpanded
         };
 
         filetree.get().then(function (res) {
@@ -12,9 +12,6 @@ angular.module('honeydew')
         });
 
         $scope.showSelected = function (node) {
-            filetree.persistState($scope.expandedNodes);
-            $timeout(function () {
-                $location.path(node.folder + '/' + node.label);
-            }, 100);
+            $location.path('editor' + node.folder + '/' + node.label);
         };
     });

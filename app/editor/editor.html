@@ -1,30 +1,13 @@
-<div id="wrapper">
-  <div id="sidebar-wrapper" ng-controller='FileTreeCtrl'>
-    <treecontrol class="tree-classic"
-                 tree-model="data"
-                 options="treeOptions"
-                 order-by="order"
-                 selected-node="node1"
-                 on-selection="showSelected(node)">
-      <!-- this is the label of each branch/leaf. "node" refers to the
-      block of data returned by tree.php -->
-      {{ node.label }}
-    </treecontrol>
-  </div>
+<editor-nav control="jobs" doc="doc" file="file" filename={{filename}} stop-watching="stopWatching"></editor-nav>
 
-  <div id="page-content-wrapper">
-    <editor-nav control="jobs" doc="doc" file="file" filename={{filename}} stop-watching="stopWatching"></editor-nav>
-
-    <div ng-class="$storage.settings.font" class="settings wrapper remaining-height">
-      <ui-codemirror ng-model="file.contents"
-                     ui-codemirror-opts="editorOptions"
-                     ng-class="'cm-s-' + $storage.settings.theme"
-                     >
-      </ui-codemirror>
-    </div>
-
-    <center-pane></center-pane>
-
-    <pane-selector></pane-selector>
-  </div>
+<div ng-class="$storage.settings.font" class="settings wrapper remaining-height">
+  <ui-codemirror ng-model="file.contents"
+                 ui-codemirror-opts="editorOptions"
+                 ng-class="'cm-s-' + $storage.settings.theme"
+                 >
+  </ui-codemirror>
 </div>
+
+<center-pane></center-pane>
+
+<pane-selector></pane-selector>

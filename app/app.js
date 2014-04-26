@@ -14,7 +14,19 @@ angular.module('honeydew', [
     'treeControl'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        // $urlRouterProvider.otherwise('/editor/features/test/FAQ.feature');
+        function setLocationFromURL() {
+            var url = window.location.search;
+
+            if (url.search(/\?\/.*\.feature$/) != -1) {
+                var featureName = url.slice(2);
+                window.location.href = '/#/editor/features/' + featureName;
+            }
+        };
+
+        setLocationFromURL();
+        var defaultPath = '/editor/features/test/FAQ.feature';
+
+        $urlRouterProvider.otherwise(defaultPath);
 
         $stateProvider
             .state('editor', {

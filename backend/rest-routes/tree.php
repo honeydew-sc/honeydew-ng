@@ -18,6 +18,7 @@ $app->group('/tree', function () use ($app) {
 
 function listFeaturesDir( $start_dir='.', $basedir ) {
     $files = array();
+    $basedir_length = strlen($basedir);
 
     if ($fh = opendir( $start_dir )) {
         while(($file = readdir( $fh )) !== false){
@@ -28,22 +29,32 @@ function listFeaturesDir( $start_dir='.', $basedir ) {
 
             $filepath = $start_dir . '/' . $file;
 
+            $candidate = array(
+                'label' => $file,
+                'order' => ord($file)
+            );
+
             if (is_dir( $filepath )) {
-                $files[] = array(
-                    'label' => $file,
-                    'children' => listFeaturesDir($filepath, $basedir)
-                );
+                /* exclude empty folders */
+                $children = listFeaturesDir($filepath, $basedir);
+                if (!empty($children)) {
+                    $candidate['children'] = $children;
+                    $files[] = $candidate;
+                }
             }
             else {
                 if (endswith($file, "feature")
                     || endswith($file, "phrase")
                     || endswith($file, "set")) {
-                    $files[] = array(
-                        'label' => $file,
-                        'children' => array()
-                    );
+                    $candidate['children'] = array();
+
+                    /* pop off basedir from the folder */
+                    $candidate['folder'] = substr($start_dir, $basedir_length - 1);
+                    $files[] = $candidate;
                 }
             }
+
+
         }
         closedir($fh);
     }else{

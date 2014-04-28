@@ -1,15 +1,50 @@
+'use strict';
+
 describe('filetreeService', function () {
-    var filetree, scope;
+    var httpMock, filetree, scope, location;
+    var base = '/rest.php/tree/';
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_filetree_, _$rootScope_) {
+    beforeEach(inject(function (_filetree_, _$rootScope_, $httpBackend, $location) {
+        location = $location;
         filetree = _filetree_;
         scope = _$rootScope_;
+        httpMock = $httpBackend;
     }));
 
-    it('should get an instance of the filetree service and its child tree', function () {
-        expect(filetree.tree).toBeDefined();
+    it('should get an instance of the filetree service', function () {
+        expect(filetree).toBeDefined();
     });
 
+    it('should have get that returns a promise', function () {
+        var folder = 'features';
+        httpMock.expectGET( base + folder).respond({});
+        var promise = filetree.get(folder);
+        httpMock.flush();
+        expect(promise.then).toBeDefined();
+    });
+
+    it('should be able to toggle its own collapse property', function () {
+        expect(filetree.collapse).toBe(false);
+
+        var singletonInstance = filetree;
+        singletonInstance.toggleTree();
+        expect(filetree.collapse).toBe(true);
+
+        filetree.toggleTree();
+        expect(filetree.collapse).toBe(false);
+    });
+
+    it('should be able to set the location', function () {
+        var fakeNode = {
+            folder: '/folder',
+            label: 'label'
+        };
+
+        filetree.show(fakeNode);
+        scope.$apply();
+        expect(location.path()).toMatch('folder.*label');
+
+    });
 });

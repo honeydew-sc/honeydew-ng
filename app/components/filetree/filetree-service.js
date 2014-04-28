@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('filetree', function ($resource, $sessionStorage, $rootScope) {
-        this.backend = $resource('/rest.php/tree/:folder', {
+    .service('filetree', function ($resource, $sessionStorage, $location) {
+        this._backend = $resource('/rest.php/tree/:folder', {
             folder: '@folder'
         });
 
         this.get = function ( folder ) {
-            return this.backend.get({ folder: folder }).$promise;
+            return this._backend.get({ folder: folder }).$promise;
         };
 
         this.persistState = function ( expandedNodes ) {
@@ -25,5 +25,9 @@ angular.module('honeydew')
 
         this.toggleTree = function () {
             this.collapse = !this.collapse;
+        };
+
+        this.show = function (node) {
+            $location.path('editor' + node.folder + '/' + node.label);
         };
     });

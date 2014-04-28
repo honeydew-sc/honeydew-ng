@@ -15,10 +15,6 @@ treecontrol > ul > li {
     line-height: inherit;
 }
 
-#wrapper {
-    padding-left: 200px;
-    transition: all 0.4s ease 0s;
-}
 
 #sidebar-wrapper {
     margin-left: -200px;

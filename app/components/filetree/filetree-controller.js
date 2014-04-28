@@ -7,13 +7,9 @@ angular.module('honeydew')
             // defaultExpanded: filetree.defaultExpanded
         };
 
-        filetree.get("features").then(function (res) {
+        $scope.tree = filetree;
+
+        $scope.tree.get("features").then(function (res) {
             $scope.data = res.tree;
         });
-
-        $scope.showSelected = function (node) {
-            $location.path('editor' + node.folder + '/' + node.label);
-        };
-
-        $scope.tree = filetree;
     });

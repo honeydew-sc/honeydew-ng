@@ -1,4 +1,4 @@
-<div id="sidebar-wrapper">
+<div id="filetree" class="sidebar-wrapper" ng-class="{'slide-left':!tree.collapse}">
   <treecontrol class="tree-classic"
                tree-model="data"
                options="treeOptions"
@@ -11,4 +11,4 @@
   </treecontrol>
 </div>
 
-<div id="page-content-wrapper" ui-view></div>
+<div ui-view id="editor" ng-class="tree.collapse ? 'page-content-wrapper-collapsed' : 'page-content-wrapper-expanded'"></div>

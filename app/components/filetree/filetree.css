@@ -1,9 +1,12 @@
 treecontrol {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.428571429;
     color: #333333;
     background-color: white;
+    min-width: 250px;
+    overflow-x: scroll;
+    height: 100%;
 }
 
 treecontrol > ul {
@@ -15,29 +18,50 @@ treecontrol > ul > li {
     line-height: inherit;
 }
 
-
-#sidebar-wrapper {
-    margin-left: -200px;
-    left: 200px;
-    min-width: 200px;
+div.sidebar-wrapper {
     padding-right: 5px;
-    background: #ededed;
+    background: rgb(247, 247, 247);
     position: fixed;
-    height: 100%;
-    overflow-x: hidden;
+    overflow-x: scroll;
     overflow-y: auto;
-    transition: all 0.4s ease 0s;
+
+    left: 0px;
+    min-width: 250px;
+    height: 100%;
+    /* top: 0px; */
+    /* bottom: 0px; */
 }
 
-#page-content-wrapper {
+.slide-left {
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+    transition: left 1s;
+    left: -250px;
+}
+
+.page-content-wrapper-collapsed {
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+    transition: left 1s;
+    left: -250px;
+}
+
+.page-content-wrapper-expanded {
+    padding-left: 250px;
+}
+
+.filetree-expanded {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.filetree-collapsed {
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+    transition: left 1s;
+    left: 0px;
     width: 100%;
-}
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 200px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
 }

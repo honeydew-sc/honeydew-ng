@@ -7,7 +7,7 @@ angular.module('honeydew')
             // defaultExpanded: filetree.defaultExpanded
         };
 
-        filetree.get().then(function (res) {
+        filetree.get("features").then(function (res) {
             $scope.data = res.tree;
         });
 

@@ -8,11 +8,11 @@ angular.module('honeydew')
 
         var service = {
 
-            get: function () {
-                return backend.get({ folder: 'features' }).$promise;
+            get: function ( folder ) {
+                return backend.get({ folder: folder }).$promise;
             },
 
-            persistState: function (expandedNodes) {
+            persistState: function ( expandedNodes ) {
                 service.defaultExpanded = [];
                 angular.forEach(expandedNodes, function (value) {
                     if (!!value) {

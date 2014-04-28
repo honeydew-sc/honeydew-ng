@@ -28,6 +28,6 @@ angular.module('honeydew')
         };
 
         this.show = function (node) {
-            $location.path('editor' + node.folder + '/' + node.label);
+            $location.path(node.folder + '/' + node.label);
         };
     });

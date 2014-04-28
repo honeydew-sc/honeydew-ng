@@ -24,7 +24,7 @@ angular.module('honeydew', [
         };
 
         setLocationFromURL();
-        var defaultPath = '/editor/features/test/FAQ.feature';
+        var defaultPath = '/features/test/FAQ.feature';
 
         $urlRouterProvider.otherwise(defaultPath);
 
@@ -35,7 +35,7 @@ angular.module('honeydew', [
                 controller: 'FileTreeCtrl'
             })
             .state('editor.features', {
-                url: '/{path:.*\.(?:feature|phrase|set)}',
+                url: '^/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
             });

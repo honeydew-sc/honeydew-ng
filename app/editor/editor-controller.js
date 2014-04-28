@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree) {
         $scope.$storage = $localStorage;
+        $scope.tree = filetree;
 
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
         CodeMirror.registerHelper('hint', 'honeydew', cmAutocomplete.getHints);

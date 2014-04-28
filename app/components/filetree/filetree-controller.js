@@ -14,4 +14,6 @@ angular.module('honeydew')
         $scope.showSelected = function (node) {
             $location.path('editor' + node.folder + '/' + node.label);
         };
+
+        $scope.tree = filetree;
     });

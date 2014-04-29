@@ -33,4 +33,21 @@ ddescribe('FileTreeCtrl', function () {
             expect(it.data[0].label).toBe(it.label.toLowerCase());
         });
     });
+
+    it('should set the active tab based on the url', function () {
+        location.path('/sets/blah-blah/');
+        scope.$apply();
+
+        // re-instantiate the controller so that it does its path
+        // checks again. this should probably be in a function.
+        FileTreeCtrl = controller('FileTreeCtrl', {
+            $scope: scope
+        });
+
+        scope.tabs.forEach(function (tab) {
+            if (tab.label.toLowerCase() === 'sets') {
+                expect(tab.active).toBe(true);
+            }
+        });
+    });;
 });

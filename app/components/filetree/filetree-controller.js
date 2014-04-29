@@ -15,6 +15,7 @@ angular.module('honeydew')
             { label: "Sets"}
         ];
 
+        var path = $location.path();
         $scope.tabs.forEach( function (it) {
             var folder = it.label.toLowerCase();
             // TODO: maybe optomize this so it doesn't block pageload?
@@ -22,5 +23,12 @@ angular.module('honeydew')
                 it.data = res.tree;
             });
 
+            // base active tab off of type of item
+            if (path.match('^.' + folder)) {
+                it.active = true;
+            }
+            else {
+                it.active = false;
+            }
         });
     });

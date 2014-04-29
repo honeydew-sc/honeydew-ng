@@ -15,7 +15,9 @@
       </treecontrol>
     </tab>
   </tabset>
-
 </div>
 
-<div ui-view id="editor" ng-class="tree.collapse ? 'page-content-wrapper-collapsed' : 'page-content-wrapper-expanded'"></div>
+<div ui-view
+     id="editor"
+     ng-class="{ 'wrapper-collapsed': tree.collapse, 'wrapper-expanded': !tree.collapse, 'animate': animate && tree.collapse}">
+</div>

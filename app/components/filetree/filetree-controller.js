@@ -24,4 +24,8 @@ angular.module('honeydew')
 
             tab.active = !!path.match('^.' + folder);
         });
+
+        $timeout(function () {
+            $scope.animate = 1;
+        });
     });

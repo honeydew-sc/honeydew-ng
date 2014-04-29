@@ -1,14 +1,21 @@
 <div id="filetree" class="sidebar-wrapper" ng-class="{'slide-left':!tree.collapse}">
-  <treecontrol class="tree-classic"
-               tree-model="data"
-               options="treeOptions"
-               order-by="order"
-               selected-node="node1"
-               on-selection="tree.show(node)">
-    <!-- this is the label of each branch/leaf. "node" refers to the
-    block of data returned by tree.php -->
-    {{ node.label }}
-  </treecontrol>
+  <tabset>
+    <tab ng-repeat="tab in tabs"
+         heading="{{tab.label}}"
+         active="tab.active">
+      <treecontrol class="tree-classic"
+                   tree-model="tab.data"
+                   options="treeOptions"
+                   order-by="order"
+                   selected-node="node1"
+                   on-selection="tree.show(node)">
+        <!-- this is the label of each branch/leaf. "node" refers to the
+        block of data returned by tree.php -->
+        {{ node.label }}
+      </treecontrol>
+    </tab>
+  </tabset>
+
 </div>
 
 <div ui-view id="editor" ng-class="tree.collapse ? 'page-content-wrapper-collapsed' : 'page-content-wrapper-expanded'"></div>

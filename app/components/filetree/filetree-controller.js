@@ -17,7 +17,7 @@ angular.module('honeydew')
         var path = $location.path();
         $scope.tabs.forEach(function (tab) {
             var folder = tab.label.toLowerCase();
-            // TODO: maybe optomize this so tab doesn't block pageload?
+            // TODO: maybe optimize this so tab doesn't block pageload?
             $scope.tree.get(folder).then(function (res) {
                 tab.data = res.tree;
             });

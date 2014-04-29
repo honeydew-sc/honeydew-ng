@@ -4,8 +4,6 @@ treecontrol {
     line-height: 1.428571429;
     color: #333333;
     background-color: white;
-    min-width: 250px;
-    overflow-x: scroll;
     height: 100%;
 }
 
@@ -22,8 +20,8 @@ div.sidebar-wrapper {
     padding-right: 5px;
     background: rgb(247, 247, 247);
     position: fixed;
-    overflow-x: scroll;
-    overflow-y: auto;
+    overflow-x: visible;
+    overflow-y: overlay;
 
     left: 0px;
     min-width: 250px;

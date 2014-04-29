@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('FileTreeCtrl', function () {
+describe('FileTreeCtrl', function () {
     var httpMock, scope, FileTreeCtrl, location, controller;
 
     beforeEach(module('honeydew'));
@@ -49,5 +49,5 @@ ddescribe('FileTreeCtrl', function () {
                 expect(tab.active).toBe(true);
             }
         });
-    });;
+    });
 });

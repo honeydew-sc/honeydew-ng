@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('filetreeService', function () {
+describe('filetreeService', function () {
     var httpMock, filetree, scope, location;
     var base = '/rest.php/tree/';
     var folder = 'features';

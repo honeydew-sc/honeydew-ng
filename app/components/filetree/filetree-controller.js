@@ -16,19 +16,13 @@ angular.module('honeydew')
         ];
 
         var path = $location.path();
-        $scope.tabs.forEach( function (it) {
-            var folder = it.label.toLowerCase();
-            // TODO: maybe optomize this so it doesn't block pageload?
+        $scope.tabs.forEach(function (tab) {
+            var folder = tab.label.toLowerCase();
+            // TODO: maybe optomize this so tab doesn't block pageload?
             $scope.tree.get(folder).then(function (res) {
-                it.data = res.tree;
+                tab.data = res.tree;
             });
 
-            // base active tab off of type of item
-            if (path.match('^.' + folder)) {
-                it.active = true;
-            }
-            else {
-                it.active = false;
-            }
+            tab.active = !!path.match('^.' + folder);
         });
     });

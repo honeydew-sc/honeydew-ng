@@ -12,11 +12,6 @@ describe('hostnameService', function () {
         expect(hostname).toBeDefined();
     });
 
-    it('should compute a hostname by default', function () {
-        hostname.resolve();
-        expect(hostname.host).toBe('https://www.stage.sharecare.com');
-    });
-
     it('should resolve the host from the env', function () {
         hostname.env = 'qa';
         scope.$apply();

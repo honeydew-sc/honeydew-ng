@@ -7,7 +7,14 @@ angular.module('honeydew')
         });
 
         this.get = function ( folder ) {
-            return this._backend.get({ folder: folder }).$promise;
+            var service = this;
+            var promise = this._backend.get({ folder: folder }).$promise;
+
+            promise.then(function (res) {
+                service[folder + 'tree'] = res.tree;
+            });
+
+            return promise;
         };
 
         this.persistState = function ( expandedNodes ) {

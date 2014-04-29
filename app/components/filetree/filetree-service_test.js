@@ -1,8 +1,9 @@
 'use strict';
 
-describe('filetreeService', function () {
+ddescribe('filetreeService', function () {
     var httpMock, filetree, scope, location;
     var base = '/rest.php/tree/';
+    var folder = 'features';
 
     beforeEach(module('honeydew'));
 
@@ -18,11 +19,28 @@ describe('filetreeService', function () {
     });
 
     it('should have get that returns a promise', function () {
-        var folder = 'features';
         httpMock.expectGET( base + folder).respond({});
         var promise = filetree.get(folder);
         httpMock.flush();
         expect(promise.then).toBeDefined();
+    });
+
+    it('should put the folder tree on itself', function () {
+        httpMock.expectGET( base + folder ).respond({
+            success: true,
+            tree: [
+                {
+                    label: 'test',
+                    children: []
+                }
+            ]
+        });
+
+        filetree.get(folder);
+        httpMock.flush();
+        expect(filetree.featurestree).toBeDefined();
+        expect(filetree.featurestree[0].label).toBe('test');
+
     });
 
     it('should be able to toggle its own collapse property', function () {

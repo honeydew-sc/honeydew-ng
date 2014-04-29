@@ -6,7 +6,6 @@ angular.module('honeydew')
 
         $scope.treeOptions = {
             dirSelectable: false
-            // defaultExpanded: filetree.defaultExpanded
         };
 
         $scope.tabs = [

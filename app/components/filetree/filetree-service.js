@@ -17,17 +17,6 @@ angular.module('honeydew')
             return promise;
         };
 
-        this.persistState = function ( expandedNodes ) {
-            this.defaultExpanded = [];
-            angular.forEach(expandedNodes, function (value) {
-                if (!!value) {
-                    this.defaultExpanded.push(value);
-                }
-            });
-
-            $sessionStorage.defaultExpanded = this.defaultExpanded;
-        };
-
         this.collapse = false;
 
         this.toggleTree = function () {

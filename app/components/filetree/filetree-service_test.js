@@ -1,17 +1,17 @@
 'use strict';
 
-ddescribe('filetreeService', function () {
+describe('filetreeService', function () {
     var httpMock, filetree, scope, location;
     var base = '/rest.php/tree/';
     var folder = 'features';
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_filetree_, _$rootScope_, $httpBackend, $location) {
-        location = $location;
+    beforeEach(inject(function (_filetree_, _$rootScope_, _$httpBackend_, _$location_) {
+        location = _$location_;
         filetree = _filetree_;
         scope = _$rootScope_;
-        httpMock = $httpBackend;
+        httpMock = _$httpBackend_;
     }));
 
     it('should get an instance of the filetree service', function () {

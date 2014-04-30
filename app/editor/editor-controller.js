@@ -104,42 +104,24 @@ angular.module('honeydew')
             }
         };
 
-
         $scope.display = function ( file ) {
             $scope.file = Files.get({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
-                $timeout( $scope.doc.markClean, 1);
+
+                // this is pretty messy - the file itself should know
+                // about 'markClean', but it depends on `cm`, which
+                // isn't easy to get to when defining the File
+                // model. so we crucially put it back on the file here
+                // and just avert our eyes...
+                $scope.file.markClean = $scope.doc.markClean;
+                $timeout( $scope.file.markClean, 1);
             }, function (res) {
                 alerts.addAlert(res);
             });
         };
 
         $scope.watchCodeMirror = function () {
-            $scope.stopWatching = $scope.$watch('file.contents', debounce($scope.debouncedSave, 1234));
-        };
-
-        $scope.save = function() {
-            if ($scope.file.contents === "") {
-                alerts.addAlert({data: {reason: "Cowardly refusing to save an empty file. Sorry!"}});
-            }
-            else {
-                // the response to $save includes the file contents;
-                // on response, it (sometimes?) updates file.contents
-                // in the codemirror and messes up the undo history
-                // and cursor position.
-                var preserveCodeMirror = angular.copy($scope.file);
-                preserveCodeMirror.$save().then(function (res) {
-                    $scope.doc.markClean();
-                }).catch( function (res) {
-                    alerts.addAlert(res);
-                });
-            }
-        };
-
-        $scope.debouncedSave = function ( newContents, oldContents ) {
-            if (newContents !== oldContents && oldContents !== undefined) {
-                $scope.save();
-            }
+            $scope.stopWatching = $scope.$watch('file.contents', debounce($scope.file.debouncedSave.bind($scope.file), 1234));
         };
 
         if ($stateParams.path) {

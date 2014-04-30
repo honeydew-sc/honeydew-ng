@@ -37,10 +37,4 @@ describe('Controller: EditorCtrl', function () {
         httpMock.flush();
         expect(scope.file.contents).toBe(fakeText);
     });
-
-    it('should persist changes to the model', function() {
-        httpMock.expectPOST(testFileUrl, fakedContents).respond(fakedContents);
-        scope.save();
-        httpMock.flush();
-    });
 });

@@ -18,10 +18,12 @@
     <!-- endbower -->
     <!-- endbuild -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css">
 
     <!-- build:css({.tmp,app}) styles/app.css -->
     <link rel="stylesheet" href="components/alert/alert.css" />
     <link rel="stylesheet" href="components/colors/colors.css" />
+    <link rel="stylesheet" href="components/filetree/filetree.css" />
     <link rel="stylesheet" href="components/hostname/hostname.css" />
     <link rel="stylesheet" href="components/live-report/live-report.css" />
     <link rel="stylesheet" href="components/modal/modal.css" />
@@ -75,7 +77,8 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div ui-view></div>
+
     <alert-display></alert-display>
 
     <!--[if lt IE 9]>
@@ -100,6 +103,7 @@
     <script src="bower_components/ng-grid/build/ng-grid.js"></script>
     <script src="bower_components/angular-markdown-directive/markdown.js"></script>
     <script src="bower_components/angular-pusher/angular-pusher.js"></script>
+    <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
     <!-- endbower -->
     <script src="bower_components/showdown/compressed/showdown.js"></script>
     <!-- endbuild -->
@@ -143,6 +147,8 @@
     <script src="components/author/author-service.js"></script>
     <script src="components/debounce/debounce-service.js"></script>
     <script src="components/files/files-service.js"></script>
+    <script src="components/filetree/filetree-controller.js"></script>
+    <script src="components/filetree/filetree-service.js"></script>
     <script src="components/hostname/hostname-picker-directive.js"></script>
     <script src="components/hostname/hostname-service.js"></script>
     <script src="components/jobs/jobs-directive.js"></script>

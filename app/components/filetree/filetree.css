@@ -1,0 +1,72 @@
+treecontrol {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.428571429;
+    color: #333333;
+    background-color: white;
+    height: 100%;
+}
+
+treecontrol > ul {
+    padding-top: 5px;
+}
+
+treecontrol > ul > li {
+    padding: 0 0 0 5px;
+    line-height: inherit;
+}
+
+div.sidebar-wrapper {
+    padding-right: 5px;
+    background: rgb(247, 247, 247);
+    position: fixed;
+    overflow-x: visible;
+    overflow-y: overlay;
+
+    left: 0px;
+    min-width: 250px;
+    height: 100%;
+    /* top: 0px; */
+    /* bottom: 0px; */
+}
+
+.slide-left {
+    -moz-transition: left 0.5s;
+    -webkit-transition: left 0.5s;
+    -o-transition: left 0.5s;
+    transition: left 0.5s;
+    left: -250px;
+}
+
+#editor.wrapper-collapsed {
+    -moz-transition: left 0.5s;
+    -webkit-transition: left 0.5s;
+    -o-transition: left 0.5s;
+    transition: left 0.5s;
+    left: -250px;
+}
+
+#editor.wrapper-expanded {
+    padding-left: 250px;
+}
+
+#editor.animate {
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.filetree-expanded {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.filetree-collapsed {
+    -moz-transition: left 0.5s;
+    -webkit-transition: left 0.5s;
+    -o-transition: left 0.5s;
+    transition: left 0.5s;
+    left: 0px;
+    width: 100%;
+}

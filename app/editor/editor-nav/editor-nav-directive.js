@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorNav', function ($modal, $log, $location, $localStorage, Files, alerts) {
+    .directive('editorNav', function ($modal, $log, $location, $localStorage, Files, alerts, filetree) {
         return {
             templateUrl: 'editor/editor-nav/editor-nav.html',
             scope: {
@@ -15,6 +15,9 @@ angular.module('honeydew')
             restrict: 'E',
             link: function (scope, element, attrs) {
                 scope.$storage = $localStorage;
+
+                scope.tree = filetree;
+
                 scope.open = function (action) {
                     var modalInstance = $modal.open({
                         templateUrl: 'components/modal/modal.html',

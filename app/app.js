@@ -10,14 +10,32 @@ angular.module('honeydew', [
     'ui.bootstrap',
     'ui.router',
     'btford.markdown',
-    'doowb.angular-pusher'
+    'doowb.angular-pusher',
+    'treeControl'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/features/test/FAQ.feature');
+        function setLocationFromURL() {
+            var url = window.location.search;
+
+            if (url.search(/\?\/.*\.feature$/) != -1) {
+                var featureName = url.slice(2);
+                window.location.href = '/#/editor/features/' + featureName;
+            }
+        };
+
+        setLocationFromURL();
+        var defaultPath = '/features/test/FAQ.feature';
+
+        $urlRouterProvider.otherwise(defaultPath);
 
         $stateProvider
             .state('editor', {
-                url: '/{path:.*\.(?:feature|phrase|set)}',
+                url: '/editor',
+                templateUrl: 'components/filetree/filetree.html',
+                controller: 'FileTreeCtrl'
+            })
+            .state('editor.features', {
+                url: '^/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl'
             });

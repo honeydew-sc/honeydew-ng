@@ -19,7 +19,7 @@ angular.module('honeydew', [
 
             if (url.search(/\?\/.*\.feature$/) != -1) {
                 var featureName = url.slice(2);
-                window.location.href = '/#/editor/features/' + featureName;
+                window.location.href = '/#/features/' + featureName;
             }
         };
 
@@ -30,7 +30,7 @@ angular.module('honeydew', [
 
         $stateProvider
             .state('editor', {
-                url: '/editor',
+                abstract: true,
                 templateUrl: 'components/filetree/filetree.html',
                 controller: 'FileTreeCtrl'
             })

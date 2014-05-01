@@ -1,6 +1,6 @@
 Feature: test behavior of right panels
 
-$editor = "/editor/#/features/e2e/delete-me.feature"
+$editor = "/#/features/e2e/.feature"
 $font = "Carl"
 $theme = "xq-dark"
 

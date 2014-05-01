@@ -1,9 +1,9 @@
 Feature: editor
 
 $url = 'http://www.google.com'
-$editor = '/editor/#/features/e2e/delete-me2.feature'
-$noPermissions = '/editor/#/features/e2e/no-permissions.feature'
-$new = '/editor/#/features/e2e/new.feature'
+$editor = '/#/features/e2e/delete-me2.feature'
+$noPermissions = '/#/features/e2e/no-permissions.feature'
+$new = '/#/features/e2e/new.feature'
 $fileMenu = 'partial_link_text=File'
 
 $hostname = 'class=hostname'

@@ -7,7 +7,7 @@ $app->group('/tree', function () use ($app) {
             $basedir = "/opt/honeydew/";
             $folder = implode("/", $folder);
             $tree = listFeaturesDir($basedir . $folder, $basedir);
-            echo successMessage(array(tree => $tree));
+            echo successMessage(array("tree" => $tree));
         }
         catch (Exception $e) {
             $app->halt(404, errorMessage($e->getMessage()));

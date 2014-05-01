@@ -14,18 +14,18 @@ angular.module('honeydew', [
     'treeControl'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        function setLocationFromURL() {
+        (function setLocationFromURL() {
             var url = window.location.search;
 
             if (url.search(/\?\/.*\.feature$/) != -1) {
                 var featureName = url.slice(2);
                 window.location.href = '/#/features/' + featureName;
             }
-        };
+        })();
 
-        setLocationFromURL();
+        document.cookie = 'setsAsJSON=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+
         var defaultPath = '/features/test/FAQ.feature';
-
         $urlRouterProvider.otherwise(defaultPath);
 
         $stateProvider

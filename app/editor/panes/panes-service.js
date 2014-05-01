@@ -2,7 +2,7 @@
 
 angular.module('honeydew')
     .service('panes', function ($compile, $rootScope) {
-        var base = '/editor/editor/panes/';
+        var base = '/editor/panes/';
         return {
             panes: [
                 {

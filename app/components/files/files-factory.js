@@ -35,7 +35,6 @@ angular.module('honeydew')
         };
 
         res.prototype.debouncedSave = function ( newContents, oldContents ) {
-            console.log(newContents, oldContents);
             var self = this;
 
             if (newContents !== oldContents && oldContents !== undefined) {

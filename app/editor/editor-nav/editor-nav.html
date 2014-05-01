@@ -42,18 +42,21 @@
           popover="Undo: Ctrl-Z"
           popover-placement="bottom"
           popover-trigger="mouseenter"
-          ng-click="doc.undo()"
-          ><i class="fa fa-undo"></i></button>
+          ng-click="doc.undo()">
+          <i class="fa fa-undo"></i>
+        </button>
         <button
           class="btn btn-hdew"
           popover="Redo: Ctrl-Y"
           popover-placement="bottom"
           popover-trigger="mouseenter"
-          ng-click="doc.redo()"
-          ><i class="fa fa-repeat"></i></button>
+          ng-click="doc.redo()">
+          <i class="fa fa-repeat"></i>
+        </button>
       </form>
 
       <job-options jira="doc.jira" control="control" filename={{filename}}></job-options>
-    </div><!-- /.navbar-collapse -->
+      <a class="btn btn-bland pull-right" href="/old.php">old</a>
+    </div>
   </div><!-- /.container-fluid -->
 </nav>

@@ -277,7 +277,8 @@ module.exports = function (grunt) {
                         '.htaccess',
                         '*.html',
                         '**/*.html',
-                        'components/**/*.html',
+                        'editor/**/*.{html,png}',
+                        'components/**/*.{html,png}',
                         'bower_components/**/*',
                         'images/{,*/}*.{webp}',
                         'fonts/*'
@@ -343,6 +344,15 @@ module.exports = function (grunt) {
 
         // e2e test settings
         shell: {
+            copyDev: {
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                },
+                command: 'cp -R <%= yeoman.dist %>/* /opt/honeydew-ui/htdocs/'
+            },
+
             honeydew: {
                 options: {
                     stdout: true,
@@ -385,7 +395,7 @@ module.exports = function (grunt) {
                 options: {
                     stdout: true
                 },
-                command: 'rsync -avzh --delete <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/editor/'
+                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/'
             },
 
             deployBack: {
@@ -440,7 +450,8 @@ module.exports = function (grunt) {
         'uglify',
         'rev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'shell:copyDev'
     ]);
 
     grunt.registerTask('dist', function () {

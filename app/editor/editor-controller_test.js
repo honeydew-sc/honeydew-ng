@@ -23,6 +23,7 @@ describe('Controller: EditorCtrl', function () {
             markClean: function () {}
         };
         scope.file = fakeFile;
+        scope.file.debouncedSave = function () {};
 
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope,

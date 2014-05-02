@@ -37,7 +37,10 @@ angular.module('honeydew', [
             .state('editor.features', {
                 url: '^/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
-                controller: 'EditorCtrl'
+                controller: 'EditorCtrl',
+                onEnter: function ($rootScope, $location) {
+                    $rootScope.title = $location.path().split('/').pop();
+                }
             });
     })
     .config(function(PusherServiceProvider) {
@@ -48,7 +51,4 @@ angular.module('honeydew', [
             .setOptions({
                 authEndpoint: '/rest.php/pusher/auth'
             });
-    })
-    .run(function ($rootScope, $location, $stateParams) {
-        $rootScope.title = $location.path().split('/').pop();
     });

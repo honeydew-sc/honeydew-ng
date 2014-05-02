@@ -38,9 +38,9 @@ angular.module('honeydew', [
                 url: '^/{path:.*\.(?:feature|phrase|set)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl',
-                onEnter: function ($rootScope, $location) {
+                onEnter: ['$rootScope', '$location', function ($rootScope, $location) {
                     $rootScope.title = $location.path().split('/').pop();
-                }
+                }]
             });
     })
     .config(function(PusherServiceProvider) {

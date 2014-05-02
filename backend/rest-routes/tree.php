@@ -31,13 +31,12 @@ function listFeaturesDir( $start_dir='.', $basedir ) {
 
             $candidate = array(
                 'label' => $file,
-                /* we want to preserve the previous ordering behavior:
-                alphabetically, with capitalization first A-Za-z */
             );
 
             if (is_dir( $filepath )) {
-                /* exclude empty folders */
                 $children = listFeaturesDir($filepath, $basedir);
+
+                /* exclude empty folders */
                 if (!empty($children)) {
                     $candidate['children'] = $children;
                     $files[] = $candidate;
@@ -54,14 +53,19 @@ function listFeaturesDir( $start_dir='.', $basedir ) {
                     $files[] = $candidate;
                 }
             }
-
-
         }
         closedir($fh);
-    }else{
+    }
+    else {
         $files = false;
     }
-    return($files);
+
+
+    usort($files, function ($a, $b) {
+        return strcmp($a['label'], $b['label']);
+    });
+
+    return $files;
 }
 
 ?>

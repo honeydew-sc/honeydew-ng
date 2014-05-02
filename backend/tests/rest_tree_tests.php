@@ -20,6 +20,12 @@ class treeTests extends UnitTestCase {
         $this->testUrl = $this->baseUrl . $this->folder;
     }
 
+    function touchInTmp( $files ) {
+        foreach ($files as $file) {
+            touch($this->testPath . '/' . $file);
+        }
+    }
+
     function testListTree() {
         $response = \Httpful\Request::get($this->testUrl)->send();
         $tree = $response->body->tree;
@@ -30,9 +36,28 @@ class treeTests extends UnitTestCase {
         $this->assertEqual($leaf->children, array(), "files have no children");
     }
 
+    function testOrder() {
+        $this->touchInTmp( array( 'okay.feature', 'Okay_Okay.feature', 'OK' ));
+        $response = \Httpful\Request::get($this->testUrl)->send();
+        $tree = $response->body->tree;
+        print_r($tree);
+
+        $this->assertEqual($tree[0]->label, 'Okay_Okay.feature');
+
+    }
+
+    function rrmdir($dir) {
+        foreach(glob($dir . '/*') as $file) {
+            if(is_dir($file))
+                rrmdir($file);
+            else
+                unlink($file);
+        }
+        rmdir($dir);
+    }
+
     function testCleanUp() {
-        unlink($this->featurePath);
-        rmdir($this->testPath);
+        $this->rrmdir($this->testPath);
     }
 }
 

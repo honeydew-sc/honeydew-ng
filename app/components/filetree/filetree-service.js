@@ -26,4 +26,28 @@ angular.module('honeydew')
         this.show = function (node) {
             $location.path(node.folder + '/' + node.label);
         };
+
+        var self = this;
+        this.filter = function (haystack, needle) {
+            var needles = [];
+
+            angular.copy(haystack).forEach(function (item) {
+                if (item.label === needle) {
+                    needles.push(item);
+                }
+                else {
+                    if (item.children.length > 0) {
+                        item.children = self.filter(item.children, needle);
+                    }
+
+                    if (( item.label.match(needle)
+                          && item.label.match(/\.(?:feature|phrase|set)$/) )
+                        || item.children.length > 0) {
+                        needles.push(item);
+                    }
+                }
+            });
+
+            return needles;
+        };
     });

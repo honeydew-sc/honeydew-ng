@@ -4,20 +4,25 @@
          heading="{{tab.label}}"
          active="tab.active">
 
-      <div ng-show="tab.label === 'Sets'" class="set-search input-group">
-        <input placeholder="Filter sets" type="text" ng-model="tab.needle" class="form-control">
+      <div class="set-search input-group">
+        <input type="text"
+               placeholder="Regex for {{ tab.label | lowercase | limitTo: tab.label.length - 1 }} filenames"
+               ng-model="tab.needle"
+               class="{{ tab.label }}-search form-control">
         <span class="input-group-addon">
           <span class="fa fa-search"></span>
         </span>
       </div>
+
+      <!-- the is the label of each branch/leaf is the text inside of
+        the tree control element. "node" refers to the block of data
+        returned by tree.php -->
       <treecontrol class="tree-classic"
-                   tree-model="tab.data | filter:tab.needle"
+                   tree-model="tab.data"
                    options="treeOptions"
                    order-by="order"
                    selected-node="node1"
                    on-selection="tree.show(node)">
-        <!-- this is the label of each branch/leaf. "node" refers to the
-        block of data returned by tree.php -->
         {{ node.label }}
       </treecontrol>
     </tab>

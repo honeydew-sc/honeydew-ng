@@ -63,6 +63,49 @@ describe('filetreeService', function () {
         filetree.show(fakeNode);
         scope.$apply();
         expect(location.path()).toMatch('folder.*label');
+    });
+
+    var features = [
+        {
+            label: 'head',
+            children: [
+                { label: 'head child 1', children: [] },
+                { label: 'head child 2.feature', children: [] },
+                { label: 'filterChildless.feature', children: [] }
+            ]
+        },
+
+        {
+            label: 'tail filterChildless',
+            children: [
+                { label: 'tail child 1.feature', children: [] },
+                { label: 'tail child 2.feature', children: [] }
+            ]
+        }
+    ];
+
+    it('should filter a recursive structure', function () {
+        // preserve both top level folders if they each have children
+        var res = filetree.filter(features, '2');
+        expect(res.length).toBe(2);
+        expect(res[0].children[0].label).toBe('head child 2.feature');
+
+        // drop a folder entirely if it has no children
+        res = filetree.filter(features, 'filterChildless');
+        expect(res.length).toBe(1);
+        expect(res[0].label).toBe('head');
+        expect(res[0].children[0].label).toMatch('filterChildless');
+
+        // drop things that match but don't end in feature, set, or phrsae
+        res = filetree.filter(features, 'child 1');
+        expect(res.length).toBe(1);
+        expect(res[0].label).toBe('tail filterChildless');
+
+        // include a folder if it's a perfect match
+        res = filetree.filter(features, 'tail filterChildless');
+        expect(res.length).toBe(1);
+        expect(res[0].label).toBe('tail filterChildless');
+        expect(res[0].children[0].label).toMatch('tail child 1.feature');
 
     });
 });

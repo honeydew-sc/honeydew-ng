@@ -23,3 +23,10 @@ $leaf = 'css=.tree-label span:contains("feature")'
    When I click on the link $branch
    When I click on the link $leaf
      Then the url should not match filetree_test
+     
+ Scenario: can search the trees
+ Given I am on the $test page
+   When I input filetree_test into the input field class=Features-search
+   When I pause for 1 second
+   When I click on the link css=.tree-label span:visible
+     Then the css=.tree-label span:contains('filetree') element should be visible

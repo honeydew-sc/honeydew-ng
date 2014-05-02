@@ -20,8 +20,8 @@ div.sidebar-wrapper {
     padding-right: 5px;
     background: rgb(247, 247, 247);
     position: fixed;
-    overflow-x: visible;
-    overflow-y: overlay;
+    overflow-x: overlay;
+    overflow-y: scroll;
 
     left: 0px;
     min-width: 250px;
@@ -69,4 +69,9 @@ div.sidebar-wrapper {
     transition: left 0.5s;
     left: 0px;
     width: 100%;
+}
+
+.set-search {
+    padding: 5px;
+    width: 250px;
 }

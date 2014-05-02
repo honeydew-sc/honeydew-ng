@@ -26,6 +26,7 @@ angular.module('honeydew')
         });
 
         $timeout(function () {
+            // prevent animations during pageload
             $scope.animate = 1;
         });
     });

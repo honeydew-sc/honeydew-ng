@@ -3,8 +3,15 @@
     <tab ng-repeat="tab in tabs"
          heading="{{tab.label}}"
          active="tab.active">
+
+      <div ng-show="tab.label === 'Sets'" class="set-search input-group">
+        <input placeholder="Filter sets" type="text" ng-model="tab.needle" class="form-control">
+        <span class="input-group-addon">
+          <span class="fa fa-search"></span>
+        </span>
+      </div>
       <treecontrol class="tree-classic"
-                   tree-model="tab.data"
+                   tree-model="tab.data | filter:tab.needle"
                    options="treeOptions"
                    order-by="order"
                    selected-node="node1"

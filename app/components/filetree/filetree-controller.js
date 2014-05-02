@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce) {
+    .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce, $localStorage) {
         $scope.tree = filetree;
 
         $scope.treeOptions = {
@@ -17,14 +17,11 @@ angular.module('honeydew')
         var path = $location.path();
         $scope.tabs.forEach(function (tab) {
             var folder = tab.label.toLowerCase();
+            tab.data = $localStorage.topLevelTree[folder];
             var tree;
             // TODO: maybe optimize this so tab doesn't block pageload?
             $scope.tree.get(folder).then(function (res) {
-                tree = tab.data = res.tree.sort(function (a, b) {
-                    if (a.label > b.label) { return 1; }
-                    if (a.label < b.label) { return -1; }
-                    return 0;
-                });
+                tree = tab.data = res.tree;
             });
 
             tab.active = !!path.match('^.' + folder);

@@ -22,7 +22,7 @@ function listFeaturesDir( $start_dir='.', $basedir ) {
 
     if ($fh = opendir( $start_dir )) {
         while(($file = readdir( $fh )) !== false){
-            # loop through the files, skipping . and ..
+            /* loop through the files, skipping . and .. */
             if (strcmp($file, '.')==0 || strcmp($file, '..')==0) {
                 continue;
             }

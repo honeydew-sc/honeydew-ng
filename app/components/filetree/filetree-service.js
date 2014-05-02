@@ -1,17 +1,21 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('filetree', function ($resource, $sessionStorage, $location) {
+    .service('filetree', function ($resource, $localStorage, $location) {
         this._backend = $resource('/rest.php/tree/:folder', {
             folder: '@folder'
         });
+
+        if (typeof($localStorage.topLevelTree) === 'undefined') {
+            $localStorage.topLevelTree = {};
+        }
 
         this.get = function ( folder ) {
             var service = this;
             var promise = this._backend.get({ folder: folder }).$promise;
 
             promise.then(function (res) {
-                service[folder + 'tree'] = res.tree;
+                $localStorage.topLevelTree[folder] = service[folder + 'tree'] = res.tree;
             });
 
             return promise;

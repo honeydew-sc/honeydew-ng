@@ -40,7 +40,6 @@ class treeTests extends UnitTestCase {
         $this->touchInTmp( array( 'okay.feature', 'Okay_Okay.feature', 'OK' ));
         $response = \Httpful\Request::get($this->testUrl)->send();
         $tree = $response->body->tree;
-        print_r($tree);
 
         $this->assertEqual($tree[0]->label, 'Okay_Okay.feature');
 

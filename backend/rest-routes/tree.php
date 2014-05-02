@@ -33,7 +33,6 @@ function listFeaturesDir( $start_dir='.', $basedir ) {
                 'label' => $file,
                 /* we want to preserve the previous ordering behavior:
                 alphabetically, with capitalization first A-Za-z */
-                'order' => ord($file)
             );
 
             if (is_dir( $filepath )) {

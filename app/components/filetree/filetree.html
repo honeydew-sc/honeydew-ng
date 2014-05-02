@@ -15,12 +15,11 @@
       </div>
 
       <!-- the is the label of each branch/leaf is the text inside of
-        the tree control element. "node" refers to the block of data
+        the tree control element. "node" refers to an instance of data
         returned by tree.php -->
       <treecontrol class="tree-classic"
                    tree-model="tab.data"
                    options="treeOptions"
-                   order-by="order"
                    selected-node="node1"
                    on-selection="tree.show(node)">
         {{ node.label }}

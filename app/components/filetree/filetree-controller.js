@@ -20,7 +20,11 @@ angular.module('honeydew')
             var tree;
             // TODO: maybe optimize this so tab doesn't block pageload?
             $scope.tree.get(folder).then(function (res) {
-                tree = tab.data = res.tree;
+                tree = tab.data = res.tree.sort(function (a, b) {
+                    if (a.label > b.label) { return 1; }
+                    if (a.label < b.label) { return -1; }
+                    return 0;
+                });
             });
 
             tab.active = !!path.match('^.' + folder);

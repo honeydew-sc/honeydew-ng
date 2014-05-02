@@ -84,28 +84,41 @@ describe('filetreeService', function () {
         }
     ];
 
-    it('should filter a recursive structure', function () {
-        // preserve both top level folders if they each have children
+
+    it('should preserve both top level folders if they each have children', function () {
         var res = filetree.filter(features, '2');
         expect(res.length).toBe(2);
         expect(res[0].children[0].label).toBe('head child 2.feature');
 
-        // drop a folder entirely if it has no children
-        res = filetree.filter(features, 'filterChildless');
+    });
+
+    it('should drop a folder entirely if it has no children', function () {
+        var res = filetree.filter(features, 'filterChildless');
         expect(res.length).toBe(1);
         expect(res[0].label).toBe('head');
         expect(res[0].children[0].label).toMatch('filterChildless');
+    });
 
-        // drop things that match but don't end in feature, set, or phrsae
-        res = filetree.filter(features, 'child 1');
+    it('should be case insensitive', function () {
+        var res = filetree.filter(features, 'filterchildless');
+        expect(res.length).toBe(1);
+        expect(res[0].label).toBe('head');
+        expect(res[0].children[0].label).toMatch('filterChildless');
+    });
+
+    it('should drop things that match but do not end in feature, set, or phrase', function () {
+        var res = filetree.filter(features, 'child 1');
         expect(res.length).toBe(1);
         expect(res[0].label).toBe('tail filterChildless');
 
-        // include a folder if it's a perfect match
-        res = filetree.filter(features, 'tail filterChildless');
+    });
+
+    it('should include a folder if it is a perfect match', function () {
+        var res = filetree.filter(features, 'tail filterChildless');
         expect(res.length).toBe(1);
         expect(res[0].label).toBe('tail filterChildless');
         expect(res[0].children[0].label).toMatch('tail child 1.feature');
-
     });
+
+
 });

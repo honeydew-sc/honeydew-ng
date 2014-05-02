@@ -30,6 +30,7 @@ angular.module('honeydew')
         var self = this;
         this.filter = function (haystack, needle) {
             var needles = [];
+            var needleRegex = new RegExp(needle, 'i');
 
             angular.copy(haystack).forEach(function (item) {
                 if (item.label === needle) {
@@ -40,7 +41,7 @@ angular.module('honeydew')
                         item.children = self.filter(item.children, needle);
                     }
 
-                    if (( item.label.match(needle)
+                    if (( needleRegex.test(item.label)
                           && item.label.match(/\.(?:feature|phrase|set)$/) )
                         || item.children.length > 0) {
                         needles.push(item);

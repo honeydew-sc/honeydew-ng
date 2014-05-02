@@ -429,6 +429,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
+        'build',
         'clean:server',
         'autoprefixer',
         'connect:test',

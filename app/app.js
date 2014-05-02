@@ -48,4 +48,7 @@ angular.module('honeydew', [
             .setOptions({
                 authEndpoint: '/rest.php/pusher/auth'
             });
+    })
+    .run(function ($rootScope, $location, $stateParams) {
+        $rootScope.title = $location.path().split('/').pop();
     });

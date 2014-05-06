@@ -113,7 +113,7 @@ angular.module('honeydew')
                 // isn't easy to get to when defining the File
                 // model. so we crucially put it back on the file here
                 // and just avert our eyes...
-                $scope.file.markClean = $scope.doc.markClean;
+                Files.markClean = $scope.file.markClean = $scope.doc.markClean;
                 $timeout( $scope.file.markClean, 1);
             }, function (res) {
                 alerts.addAlert(res);

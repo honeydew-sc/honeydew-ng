@@ -27,7 +27,7 @@
 
 .east-panel ul > li > a:hover {
     color: #FFF;
-    background-color: #DDD !important;
+    background-color: #e7e7e7 !important;
 }
 
 .east-panel .active, .east-panel .active:hover {

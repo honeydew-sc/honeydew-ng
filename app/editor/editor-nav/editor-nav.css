@@ -43,9 +43,17 @@
 }
 
 .btn.btn-bland {
-    background-color: rgb(248, 248, 248);
+    background: transparent;
 }
 
 .btn.btn-bland:hover {
-    background-color: rgb(192, 192, 192);
+    background-color: #e7e7e7;
+}
+
+.editor-nav .elsewhere {
+    padding: 2px;
+}
+
+.editor-nav .elsewhere button {
+    border: 1px solid #DDD;
 }

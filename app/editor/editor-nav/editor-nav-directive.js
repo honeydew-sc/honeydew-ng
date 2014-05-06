@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorNav', function ($modal, $log, $location, $localStorage, Files, alerts, filetree) {
+    .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree) {
         return {
             templateUrl: 'editor/editor-nav/editor-nav.html',
             scope: {
@@ -15,8 +15,21 @@ angular.module('honeydew')
             restrict: 'E',
             link: function (scope, element, attrs) {
                 scope.$storage = $localStorage;
-
                 scope.tree = filetree;
+
+                // for the 'Other Locations' dropdown in the top
+                // right, we need to take care of properly setting the
+                // protocol
+                if ($location.host().match('honeydew.be')) {
+                    scope.base = 'https://honeydew.be.jamconsultg.com';
+                }
+                else {
+                    scope.base = 'http://localhost';
+                }
+
+                scope.go = function ( destination ) {
+                    $window.open(scope.base + destination);
+                };
 
                 scope.open = function (action) {
                     var modalInstance = $modal.open({

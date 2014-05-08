@@ -2,6 +2,7 @@
 
 describe('filetreeService', function () {
     var httpMock, filetree, scope, location;
+    var root, oldLength;
     var base = '/rest.php/tree/';
     var folder = 'features';
 
@@ -12,6 +13,13 @@ describe('filetreeService', function () {
         filetree = _filetree_;
         scope = _$rootScope_;
         httpMock = _$httpBackend_;
+
+        httpMock.expectGET( base + folder ).respond({ tree: features });
+        filetree.get(folder);
+        httpMock.flush();
+
+        root = filetree.featurestree;
+        oldLength = root.length;
     }));
 
     it('should get an instance of the filetree service', function () {
@@ -84,7 +92,6 @@ describe('filetreeService', function () {
         }
     ];
 
-
     it('should preserve both top level folders if they each have children', function () {
         var res = filetree.filter(features, '2');
         expect(res.length).toBe(2);
@@ -120,5 +127,56 @@ describe('filetreeService', function () {
         expect(res[0].children[0].label).toMatch('tail child 1.feature');
     });
 
+    it('should add a top level leaf', function () {
+        var leafName = 'zTopLevelLeaf.feature';
+        filetree.addLeaf('features/' + leafName);
+        expect(root.length).toBe(oldLength + 1);
+        expect(root[oldLength].label).toBe(leafName);
+    });
 
+    it('should add a nested leaf to an existing folder, sorted', function () {
+        var leafName = 'zChildLeaf.feature';
+        var folderName = 'features/head';
+        var children = filetree.featurestree[0].children;
+        var oldLength = children.length;
+        filetree.addLeaf(folderName + '/' + leafName);
+        expect(children.length).toBe(oldLength + 1);
+        expect(children[oldLength].label).toBe(leafName);
+        expect(children[oldLength].folder).toBe(folderName);
+
+        // check for sorting
+        filetree.addLeaf('features/head/A' + leafName);
+        expect(children[0].label).toBe('A' + leafName);
+    });
+
+    it('should add a nested leaf to a new folder', function () {
+        var leafName = 'zNewLeaf.feature';
+
+        filetree.addLeaf('features/zCar/' + leafName);
+        expect(root.length).toBe(oldLength + 1);
+        expect(root[oldLength].label).toBe('zCar');
+        expect(root[oldLength].children[0].label).toBe('' + leafName);
+
+        filetree.addLeaf('features/head/Acdr/newLeaf.feature');
+        expect(filetree.featurestree[0].children[0].label).toBe('Acdr');
+    });
+
+    it('should delete a top level leaf', function () {
+        filetree.addLeaf('features/Acar.feature');
+        expect(root[0].label).toBe('Acar.feature');
+
+        filetree.deleteLeaf('features/Acar.feature');
+        expect(root[0].label).not.toBe('Acar.feature');
+        expect(root.length).toBe(2);
+    });
+
+    it('should delete a nested leaf', function () {
+        var pruned = 'features/head/filterChildless.feature';
+
+        var children = root[0].children;
+        var oldLength = children.length;
+        filetree.deleteLeaf(pruned);
+        expect(children.length).toBe(oldLength - 1);
+        expect(children.reverse()[0].label).not.toBe('filterChildless.feature');
+    });
 });

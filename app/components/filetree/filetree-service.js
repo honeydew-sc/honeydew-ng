@@ -67,7 +67,7 @@ angular.module('honeydew')
             else {
                 var needle = nodeParts.shift();
 
-                var branch = tree.find(grepTree(needle));
+                var branch = tree.find(findLeaf(needle));
 
                 // if it doesn't go in an existing folder, let's
                 // create a folder and go again
@@ -114,7 +114,7 @@ angular.module('honeydew')
                 // otherwise consume a part of the filename and search
                 // the matching branch's children
                 var needle = nodeParts.shift();
-                var branch = tree.find(grepTree(needle));
+                var branch = tree.find(findLeaf(needle));
 
                 if (typeof(branch) !== 'undefined') {
                     deleteLeafRecursively(branch.children, nodeParts);
@@ -124,7 +124,7 @@ angular.module('honeydew')
             }
         };
 
-        function grepTree (needle) {
+        function findLeaf (needle) {
             return function (node) {
                 return node.label === needle;
             };
@@ -158,6 +158,13 @@ angular.module('honeydew')
 
         this.toggleTree = function () {
             this.collapse = !this.collapse;
+        };
+
+        this.grep = function (folder, needle) {
+            return backend.get({
+                folder: folder,
+                needle: needle
+            }).$promise;
         };
     });
 

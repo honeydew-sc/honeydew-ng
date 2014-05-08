@@ -26,22 +26,24 @@ angular.module('honeydew')
 
             tab.active = !!path.match('^.' + folder);
 
-            function swapTrees(newNeedle, oldNeedle) {
+            function search(newNeedle, oldNeedle) {
                 if (newNeedle === oldNeedle) {
                     return;
                 }
                 else {
                     if (tab.needle.length === 0) {
-                        $scope.treeOptions.defaultExpanded = [];
                         tab.data = tree;
                     }
                     else {
                         tab.data = filetree.filter(tree, tab.needle);
+                        filetree.grep(folder, newNeedle).then(function (res) {
+                            tab.grepResults = res.tree;
+                        });
                     }
                 }
             };
 
-            $scope.$watch(function () {return tab.needle;}, debounce(swapTrees, 350));
+            $scope.$watch(function () {return tab.needle;}, debounce(search, 350));
         });
 
         $scope.$on('tree', function (event, data) {

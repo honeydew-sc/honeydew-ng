@@ -15,8 +15,8 @@
       </div>
 
       <!-- the is the label of each branch/leaf is the text inside of
-        the tree control element. "node" refers to an instance of data
-        returned by tree.php -->
+      the tree control element. "node" refers to an instance of data
+      returned by tree.php -->
       <treecontrol class="tree-classic"
                    tree-model="tab.data"
                    options="treeOptions"
@@ -24,6 +24,18 @@
                    on-selection="tree.show(node)">
         {{ node.label }}
       </treecontrol>
+
+      <div ng-show="tab.needle">
+        <hr />
+        Within {{ tab.label || lowercase }}:
+        <treecontrol class="tree-classic search-results-tree"
+                     tree-model="tab.grepResults"
+                     options="treeOptions"
+                     selected-node="node1"
+                     on-selection="tree.show(node)">
+          {{ node.label }}
+        </treecontrol>
+      </div>
     </tab>
   </tabset>
 </div>

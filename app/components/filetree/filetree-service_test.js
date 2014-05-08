@@ -129,7 +129,7 @@ describe('filetreeService', function () {
         });
     });
 
-    describe('FiletreeLiveEditing', function () {
+    describe('AddDeleteTreeNodes', function () {
 
         it('should add a top level leaf', function () {
             var leafName = 'zTopLevelLeaf.feature';
@@ -183,5 +183,18 @@ describe('filetreeService', function () {
             expect(children.length).toBe(oldLength - 1);
             expect(children.reverse()[0].label).not.toBe('filterChildless.feature');
         });
+    });
+
+    ddescribe('grepSearch', function () {
+
+        it('should ping the backend for a grep and put it on the service', function () {
+            var needle = 'needle';
+
+            httpMock.expectGET(base + folder + '?needle=' + needle).respond({tree: features});
+            filetree.grep(folder, needle);
+            httpMock.flush();
+
+        });
+
     });
 });

@@ -3,7 +3,7 @@ Feature: editor
 $url = 'http://www.google.com'
 $editor = '/#/features/e2e/delete-me2.feature'
 $noPermissions = '/#/features/e2e/no-permissions.feature'
-$new = '/#/features/e2e/new.feature'
+$new = '/#/features/Anew.feature'
 $fileMenu = 'partial_link_text=File'
 
 $hostname = 'class=hostname'
@@ -13,7 +13,6 @@ $modal = 'class=hdew-modal'
 $alert = 'css=.alert div element'
 
  Scenario: set up
- When I set the browser size to 1600x1200
 
  Scenario: auto-save changes
  Given I am on the $editor page
@@ -50,11 +49,14 @@ $alert = 'css=.alert div element'
  Given I am on the $editor page
    When I click on the link $fileMenu
    When I click on the link partial_link_text=New
-   When I input new.feature into the input field id=input-file
+   When I reset the input field id=input-file
+   When I input features/Anew.feature into the input field id=input-file
    When I input random text into the input field id=input-jira
+   When I store the inner text of the css=.tree-label span element as $firstLeaf
    When I click on the link class=btn-submit
-     Then the url should match \/new.feature
+     Then the url should match \/Anew.feature
      Then the page should contain $input
+     Then the css=.tree-label span element should contain the text Anew.feature
 
  Scenario: delete file
  Given I am on the $new page
@@ -62,10 +64,18 @@ $alert = 'css=.alert div element'
    When I click on the link partial_link_text=Delete
      Then the url should match FAQ.feature
      Then the page should not contain $input
+     Then the inner text of the css=.tree-label span element should be the same as $firstLeaf
 
+ # undo delete
+ Given I am on the $editor page
    When I click on the link $fileMenu
    When I click on the link partial_link_text=Undo
-     Then the url should match new
+     Then the url should match new.feature
+     Then the css=.tree-label span element should contain the text Anew.feature
+
+ # cleanup
+   When I click on the link $fileMenu
+   When I click on the link partial_link_text=Delete
 
  Scenario: permalink
  Given I am on the $editor page

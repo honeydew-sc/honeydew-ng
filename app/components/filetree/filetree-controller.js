@@ -44,6 +44,10 @@ angular.module('honeydew')
             $scope.$watch(function () {return tab.needle;}, debounce(swapTrees, 350));
         });
 
+        $scope.$on('tree', function (event, data) {
+            $scope.tree = filetree;
+        });
+
         $timeout(function () {
             // prevent animations during pageload
             $scope.animate = 1;

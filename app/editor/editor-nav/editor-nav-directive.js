@@ -55,7 +55,6 @@ angular.module('honeydew')
                     });
                 };
 
-                scope.default = 'features/test/FAQ.feature';
                 scope.fileActions = {
                     'Create New': function (destination) {
                         destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
@@ -71,6 +70,7 @@ angular.module('honeydew')
                             ].join("\n")
                         });
 
+                        filetree.addLeaf(destination.file);
                         return newFile.$save();
                     },
 
@@ -80,8 +80,9 @@ angular.module('honeydew')
                         scope.file.$delete().then(function (res) {
                             res.notes = scope.filename + " has been deleted";
                             alerts.addAlert(res, 3000);
+                            filetree.deleteLeaf(scope.filename);
                         });
-                        $location.path(scope.default);
+                        $location.path('/');
                     }
                 };
 
@@ -106,7 +107,9 @@ angular.module('honeydew')
                     var restore = new Files(scope.$storage.undoFile);
                     restore.$save().then( function (res) {
                         scope.$storage.undoFile = '';
-                        $location.path('//' + decodeURIComponent(decodeURIComponent(res.file)) );
+                        var path = decodeURIComponent(decodeURIComponent(res.file));
+                        filetree.addLeaf(path);
+                        $location.path(path);
                     });
                 };
             }

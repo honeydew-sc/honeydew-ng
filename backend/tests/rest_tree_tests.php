@@ -5,7 +5,7 @@ require(dirname(__FILE__) . './../vendor/autoload.php');
 require_once(dirname(__FILE__) . './../vendor/simpletest/simpletest/autorun.php');
 
 class treeTests extends UnitTestCase {
-    protected $baseUrl = "http://localhost/rest.php/tree";
+    protected $baseUrl = "http://127.0.0.1/rest.php/tree";
     protected $basePath = "/opt/honeydew";
 
     public function __construct() {
@@ -42,7 +42,14 @@ class treeTests extends UnitTestCase {
         $tree = $response->body->tree;
 
         $this->assertEqual($tree[0]->label, 'Okay_Okay.feature');
+    }
 
+    function testGrep() {
+        file_put_contents($this->testPath . '/found.feature', 'needle');
+        file_put_contents($this->testPath . '/missing.feature', 'haystack');
+
+        $response = \Httpful\Request::get($this->testUrl . '?needle=needle')->send();
+        $this->assertPattern('/^tmp\/found.feature/', $response->body->list[0], "grep found the needle");
     }
 
     function rrmdir($dir) {

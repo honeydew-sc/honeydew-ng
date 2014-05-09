@@ -34,13 +34,17 @@ angular.module('honeydew')
             $location.path(node.folder + '/' + node.label);
         };
 
-        this.addLeaf = function (filename) {
+        this.addLeaf = function (filename, tree) {
             var parts = filename.split('/');
             var folder = parts.shift();
-            var tree = self[folder + 'tree'];
+
+            // if no tree is specified, we're adding to one of our
+            // canonical trees. otherwise, we're trying to build
+            // a new tree.
+            tree = typeof(tree) === 'undefined' ? self[folder + 'tree'] : tree;
             var containingDir = filename.split('/').slice(0, -1).join('/');
 
-            addLeafRecursively(tree, parts, containingDir);
+            var thing = addLeafRecursively(tree, parts, containingDir);
             persistTree(folder, tree, "broadcast");
         };
 
@@ -70,13 +74,14 @@ angular.module('honeydew')
                 var branch = tree.find(findLeaf(needle));
 
                 // if it doesn't go in an existing folder, let's
-                // create a folder and go again
+                // create a folder and try again at the current level
                 if (typeof(branch) === 'undefined') {
                     addLeafRecursively(tree, [needle]);
                     nodeParts.unshift(needle);
-                    return addLeafRecursively(tree, nodeParts);
+                    return addLeafRecursively(tree, nodeParts, directory);
                 }
                 else {
+                    // we can descend to the found branch's children
                     return addLeafRecursively(branch.children, nodeParts, directory);
                 }
             }
@@ -164,8 +169,16 @@ angular.module('honeydew')
             return backend.get({
                 folder: folder,
                 needle: needle
-            }).$promise;
+            }).$promise.then(function (res) {
+                var tree = [];
+                res.list.forEach(function (file) {
+                    self.addLeaf(file, tree);
+                });
+
+                return { tree: tree };
+            });
         };
+
     });
 
 // polyfill for array.find() from

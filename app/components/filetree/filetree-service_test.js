@@ -185,13 +185,19 @@ describe('filetreeService', function () {
         });
     });
 
-    ddescribe('grepSearch', function () {
+    describe('grepSearch', function () {
 
-        it('should ping the backend for a grep and put it on the service', function () {
+        it('should transform a grep list to a filetree', function () {
             var needle = 'needle';
 
-            httpMock.expectGET(base + folder + '?needle=' + needle).respond({tree: features});
-            filetree.grep(folder, needle);
+            httpMock.expectGET(base + folder + '?needle=' + needle).respond({
+                list: ['features/e2e/filetree_test.js']
+            });
+            filetree.grep(folder, needle).then(function (res) {
+                expect(res.tree).toBeDefined();
+                expect(res.tree[0].label).toBe('e2e');
+                expect(res.tree[0].children[0].label).toBe('filetree_test.js');
+            });
             httpMock.flush();
 
         });

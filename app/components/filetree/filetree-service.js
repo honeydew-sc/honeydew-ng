@@ -137,7 +137,7 @@ angular.module('honeydew')
 
         this.filter = function (haystack, needle) {
             var needles = [];
-            var needleRegex = new RegExp(needle, 'i');
+            var needleRegex = new RegExp(needle.replace(' ', '.'), 'i');
 
             angular.copy(haystack).forEach(function (item) {
                 if (item.label === needle) {

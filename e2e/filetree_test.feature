@@ -31,7 +31,7 @@ $leaf = 'css=.tree-label span:contains("feature")'
    When I click on the link css=.tree-label span:visible
      Then the css=.tree-label span:contains('filetree') element should be visible
 
- only Scenario: should display another tree for grep searches
+ Scenario: should display another tree for grep searches
  Given I am on the $test page
    When I input $branch into the input field $search
      Then the class=search-results-tree element should be present

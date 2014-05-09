@@ -81,8 +81,9 @@ $app->group('/tree', function () use ($app) {
 
     function grepDirectory($dir, $filter = "") {
         $basedir = "/opt/honeydew/";
-        $grep = "cd $basedir && grep -iRl ";
-        $query = "$grep \"$filter\" $dir";
+        $grep = "cd $basedir && grep -iRl";
+        $filter = '"' . escapeshellcmd($filter) . '" ';
+        $query = $grep . ' ' . $filter . ' ' . $dir;
 
         exec($query, $result);
 

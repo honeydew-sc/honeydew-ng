@@ -20,8 +20,8 @@ angular.module('honeydew')
             tab.data = $localStorage.topLevelTree[folder];
             var tree;
             // TODO: maybe optimize this so tab doesn't block pageload?
-            $scope.tree.get(folder).then(function (res) {
-                tree = tab.data = res.tree;
+            $scope.tree.get(folder).then(function () {
+                tree = tab.data = $scope.tree[folder + 'tree'];
             });
 
             tab.active = !!path.match('^.' + folder);

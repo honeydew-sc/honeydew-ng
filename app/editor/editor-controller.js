@@ -58,7 +58,7 @@ angular.module('honeydew')
                     keyMap: CodeMirror.keyMap.default,
 
                     jira: function () {
-                        var matches = $scope.file.contents.match(/JIRA: (.*)/);
+                        var matches = $scope.file.contents.match(/JIRA: (.*)/i);
                         return matches !== null ? matches[1] : '';
                     }
                 };

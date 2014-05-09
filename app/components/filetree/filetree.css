@@ -71,9 +71,13 @@ div.sidebar-wrapper {
     width: 100%;
 }
 
-.set-search {
+#filetree .search {
     padding: 5px;
     width: 250px;
+}
+
+#filetree hr {
+    color: #DDD;
 }
 
 /* <tabset> gets transcluded into div.tabbable ul.nav-tabs */

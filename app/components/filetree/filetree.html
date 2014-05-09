@@ -4,7 +4,7 @@
          heading="{{tab.label}}"
          active="tab.active">
 
-      <div class="set-search input-group">
+      <div class="search input-group">
         <input type="text"
                placeholder="Regex for {{ tab.label | lowercase | limitTo: tab.label.length - 1 }} filenames"
                ng-model="tab.needle"
@@ -14,6 +14,9 @@
         </span>
       </div>
 
+      <div ng-show="tab.needle">
+        <span class="search">Filename:</span>
+      </div>
       <!-- the is the label of each branch/leaf is the text inside of
       the tree control element. "node" refers to an instance of data
       returned by tree.php -->
@@ -26,8 +29,8 @@
       </treecontrol>
 
       <div ng-show="tab.needle">
-        <hr />
-        Within {{ tab.label || lowercase }}:
+        <hr>
+        <span class="search">Within:</span>
         <treecontrol class="tree-classic search-results-tree"
                      tree-model="tab.grepResults"
                      options="treeOptions"

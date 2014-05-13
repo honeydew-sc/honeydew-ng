@@ -60,7 +60,7 @@ $alert = 'css=.alert div element'
  Scenario: permalink
  Given I am on the $new page
    When I click on the link $fileMenu
-   When I click on the link partial_link_text=Copy URL
+   When I click on the link partial_link_text=Permalink
    When I wait for the $modal element to be visible
      Then the id=input-permalink element should be visible
 

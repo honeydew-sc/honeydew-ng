@@ -2,6 +2,7 @@
 
 angular.module('honeydew')
     .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce, $localStorage) {
+        // put filetree.show() on the scope as the display fn
         $scope.tree = filetree;
 
         $scope.treeOptions = {

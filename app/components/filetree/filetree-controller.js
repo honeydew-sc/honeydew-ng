@@ -16,12 +16,11 @@ angular.module('honeydew')
 
         var path = $location.path();
         $scope.tabs.forEach(function (tab) {
-            var folder = tab.label.toLowerCase();
+            var tree, folder = tab.label.toLowerCase();
             tab.data = $localStorage.topLevelTree[folder];
-            var tree;
             // TODO: maybe optimize this so tab doesn't block pageload?
-            $scope.tree.get(folder).then(function () {
-                tree = tab.data = $scope.tree[folder + 'tree'];
+            filetree.get(folder).then(function () {
+                tree = tab.data = filetree[folder + 'tree'];
             });
 
             tab.active = !!path.match('^.' + folder);
@@ -47,7 +46,10 @@ angular.module('honeydew')
         });
 
         $scope.$on('tree', function (event, data) {
-            $scope.tree = filetree;
+            var tab = $scope.tabs.find(function (tab) {
+                return tab.label.toLowerCase() === data.folder;
+            });
+            tab.data = filetree[data.folder + 'tree'];
         });
 
         $timeout(function () {

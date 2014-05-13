@@ -26,7 +26,7 @@ angular.module('honeydew')
             $localStorage.topLevelTree[folder] = self[folder + 'tree'] = tree;
 
             if (broadcast) {
-                $rootScope.$broadcast('tree');
+                $rootScope.$broadcast('tree', { folder: folder });
             }
         }
 
@@ -102,7 +102,7 @@ angular.module('honeydew')
             var tree = self[folder + 'tree'];
 
             deleteLeafRecursively(tree, parts);
-            persistTree(folder, tree);
+            persistTree(folder, tree, "broadcast");
         };
 
         function deleteLeafRecursively(tree, nodeParts) {

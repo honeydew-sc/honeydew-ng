@@ -19,13 +19,13 @@ $app->post('/jobs', function () use ($app) {
             $cmds[] = $job->syncShellCommand();
         }
 
-        if ($jobData['serial']) {
+        if (array_key_exists('serial', $jobData) && $jobData['serial']) {
             $cmd = implode(' && ', $cmds) . ' > /dev/null 2>&1 &';
             system($cmd);
         }
         else {
             foreach ($jobs as $job) {
-                $cmd[] = $job->addToQueue("test");
+                $cmd[] = $job->addToQueue();
             }
         }
 

@@ -17,7 +17,7 @@ class jobsTests extends UnitTestCase {
         touch($this->basePath . $this->tempPath);
         $contents = array(
             'host' => 'http://www.google.com',
-            'browser' => 'phantomjs local',
+            'browser' => array('phantomjs local'),
             'file' => $this->tempPath,
             'username' => 'tests',
         );

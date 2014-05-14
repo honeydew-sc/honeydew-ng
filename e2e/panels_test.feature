@@ -1,6 +1,6 @@
 Feature: test behavior of right panels
 
-$editor = "/#/features/e2e/panels_test.feature"
+$editor = "/#/features/e2e/filetree_test.feature"
 $font = "Carl"
 $theme = "xq-dark"
 

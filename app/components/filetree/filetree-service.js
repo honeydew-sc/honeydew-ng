@@ -159,10 +159,11 @@ angular.module('honeydew')
             return needles;
         };
 
-        this.collapse = false;
+        this.collapse = $localStorage.filetreeCollapse || false;
 
         this.toggleTree = function () {
             this.collapse = !this.collapse;
+            $localStorage.filetreeCollapse = this.collapse;
         };
 
         this.grep = function (folder, needle) {

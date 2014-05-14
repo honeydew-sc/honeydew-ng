@@ -64,4 +64,15 @@ function endswith( $string, $test ) {
     return substr_compare($string, $test, -$testlen) === 0;
 }
 
+function grepDirectory($dir, $filter, $args = "") {
+    $basedir = "/opt/honeydew/";
+    $grep = "cd $basedir && grep -iRl";
+    $filter = '"' . escapeshellcmd($filter) . '" ';
+    $query = "$grep $args $filter $dir";
+
+    exec($query, $result);
+
+    return $result;
+}
+
 ?>

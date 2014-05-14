@@ -78,17 +78,6 @@ $app->group('/tree', function () use ($app) {
 
         return $files;
     }
-
-    function grepDirectory($dir, $filter = "") {
-        $basedir = "/opt/honeydew/";
-        $grep = "cd $basedir && grep -iRl";
-        $filter = '"' . escapeshellcmd($filter) . '" ';
-        $query = $grep . ' ' . $filter . ' ' . $dir;
-
-        exec($query, $result);
-
-        return $result;
-    }
 });
 
 ?>

@@ -30,6 +30,7 @@ class filesTests extends UnitTestCase {
     }
 
     function cleanUp () {
+        unlink($this->basePath . '/sets/tmp.set');
         unlink($this->tempFile);
     }
 
@@ -97,6 +98,18 @@ class filesTests extends UnitTestCase {
         $this->assertPattern('/default/', $response->body->git, "username is mentioned in git commit");
 
         $this->assertPattern('/SC-12345/', $response->body->git, "jira ticket is mentioned in git commit");
+    }
+
+    function testGetSet() {
+        file_put_contents($this->tempFile, 'Set: tmp');
+        $fakeSet = $this->basePath . '/sets/tmp.set';
+        touch($fakeSet);
+        chmod($fakeSet, 0666);
+        $response = \Httpful\Request::get($this->baseUrl . '/sets/tmp.set')->send();
+
+        $this->assertPattern('/fake.feature/', $response->body->contents, 'GETting a set refreshes its contents');
+
+        $this->cleanUp();
     }
 }
 ?>

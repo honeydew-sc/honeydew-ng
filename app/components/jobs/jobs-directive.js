@@ -23,7 +23,7 @@ angular.module('honeydew')
                 // we have to do it manually.
                 if (scope.$storage.browser) {
                     scope.browserList.forEach( function (element, index, array) {
-                        if (scope.$storage.browser.browser === element.browser) {
+                        if (scope.$storage.browser.label === element.label) {
                             scope.$storage.browser = element;
                         }
                     });

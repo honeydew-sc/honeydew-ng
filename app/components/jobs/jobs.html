@@ -5,7 +5,7 @@
 
   <div class="form-group">
     <label class="sr-only" for="browser">Browser</label>
-    <select class="form-control" ng-init="$storage.browser = browserList[0]" ng-model="$storage.browser" required ng-options="b.browser group by b.group for b in browserList">
+    <select class="form-control" ng-init="$storage.browser = browserList[0]" ng-model="$storage.browser" required ng-options="b.label group by b.group for b in browserList">
     </select>
   </div>
 

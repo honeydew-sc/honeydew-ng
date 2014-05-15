@@ -35,9 +35,10 @@ angular.module('honeydew')
                         tab.data = tree;
                     }
                     else {
-                        tab.data = filetree.filter(tree, tab.needle);
                         filetree.grep(folder, newNeedle).then(function (res) {
                             tab.grepResults = res.tree;
+                        }).then(function () {
+                            tab.data = filetree.filter(tree, tab.needle);
                         });
                     }
                 }

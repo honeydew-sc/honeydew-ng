@@ -2,12 +2,16 @@
 
 angular.module('honeydew')
     .service('availableBrowsers', function () {
+        // in the backend, we look specifically for 'local' to be in
+        // the browser name to determine whether to send it to
+        // saucelabs or not.
         var localBrowsers = [
             'IE Local',
             'Chrome Local',
             'FF Local',
             'Batch: All Local',
-            'Batch: All Local, Serial'
+            'Batch: All Local, Serial',
+            'Local Mobile Emulator'
         ];
         var local = addMetaInformation(localBrowsers, 'Current Local');
 
@@ -26,7 +30,8 @@ angular.module('honeydew')
             'Windows 7 - FF',
             'Windows 8.1 - IE 11',
             'Windows 8 - IE 10',
-            'Windows 7 - IE 9'
+            'Windows 7 - IE 9',
+            'Sauce Mobile Emulator'
         ];
         var sauce = addMetaInformation(sauceBrowsers, 'SauceLabs OnDemand', {sauce: 'on'});
 
@@ -43,9 +48,9 @@ angular.module('honeydew')
 
                 // batch browsers need to have an array
                 if (label.indexOf('Batch') === 0) {
-                    // but they shouldn't include themselves
+                    // but they shouldn't include themselves, or mobile
                     browserMeta.browser = localBrowsers.filter(function (label) {
-                        return label.indexOf('Batch') === -1;
+                        return label.indexOf('Batch') === -1 && label.indexOf('Mobile') === -1;
                     });
                 }
 
@@ -63,20 +68,6 @@ angular.module('honeydew')
             });
         }
 
-        var mobile = [
-            {
-                browser: ['iPhone Simulator Local'],
-                label: 'iPhone Simulator Local',
-                group: 'Mobile'
-            },
-            {
-                browser: ['iPhone Simulator Sauce'],
-                label: 'iPhone Simulator Sauce',
-                group: 'Mobile',
-                sauce: 'on'
-            }
-        ];
-
-        this.all = local.concat(grandPoobah).concat(sauce).concat(mobile);
+        this.all = local.concat(grandPoobah).concat(sauce);
         this.set = grandPoobah.concat(sauce);
     });

@@ -49,10 +49,15 @@ describe('hostnameService', function () {
         expect(hostname.host).not.toMatch(/prod/);
     });
 
-    it('should resolve iOS differently', function () {
-        hostname.app = 'iOS';
-        hostname.env = 'SCPrototype';
+    it('should resolve mobile differently', function () {
+        hostname.app = 'Mobile';
+        hostname.env = 'iOS';
         scope.$apply();
         expect(hostname.host).toMatch(/origin.*app\.zip/);
+
+        hostname.app = 'Mobile';
+        hostname.env = 'Android';
+        scope.$apply();
+        expect(hostname.host).toMatch(/origin.*apk$/);
     });
 });

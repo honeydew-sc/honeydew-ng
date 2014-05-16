@@ -11,7 +11,7 @@ angular.module('honeydew')
                 SC: ['al', 'cm', 'dw', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
                 DS: ['qa', 'stage', 'prod'],
-                iOS: ['AskMD', 'SCPrototype'],
+                Mobile: ['iOS', 'Android'],
                 Army: ['dev', 'stage', 'test', 'prod'],
                 TMA: ['dev', 'stage', 'test', 'prod']
             },
@@ -20,7 +20,7 @@ angular.module('honeydew')
                 SC: 'sharecare.com',
                 DROZ: 'doctoroz.com',
                 DS: 'dailystrength.org',
-                iOS: '',
+                Mobile: '',
                 Army: '',
                 TMA: ''
             },
@@ -34,9 +34,9 @@ angular.module('honeydew')
                 if (this.env) {
 
                     // the mobile hostnames look different
-                    if (this.app === 'iOS') {
+                    if (this.app === 'Mobile') {
                         var base = 'http://s.qa.origin.sharecare.com/honeydew/';
-                        var app = this.env === 'AskMD' ? 'askmd.zip' : 'app.zip';
+                        var app = this.env === 'Android' ? 'sc-android.apk' : 'app.zip';
                         store.host = base + app;
                     }
                     else if (this.app === 'Army' || this.app === 'TMA') {

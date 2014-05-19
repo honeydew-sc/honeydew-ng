@@ -4,8 +4,27 @@
     <div class="form-group has-feedback" ng-class="isValidFilename() ? '' : 'has-error'">
       <label for="input-file" class="col-sm-2 control-label" >Name:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" required id="input-file" ng-model="dest.file">
+        <input type="text"
+               class="form-control"
+               required
+               id="input-file"
+               ng-model="dest.file" >
+        <span ng-show="inProperFolder === null" class="help-inline">
+          Please only create files in the features/, phrases/, or
+          sets/ folders. Begin your filename with one of those
+          folders.
+        </span>
+
+        <span ng-if="!hasProperExtension && inProperFolder" class="help-inline">
+          {{ inProperFolder[0] | capitalize }}s must end in ".{{ inProperFolder[0] }}".
+        </span>
+
+        <span ng-show="!noSpecialChars" class="help-inline">
+          Please don't use any special characters: only A-Z, a-z, and
+          /_-. are permitted.
+        </span>
       </div>
+
     </div>
 
     <div class="form-group">

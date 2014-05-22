@@ -25,6 +25,16 @@ angular.module('honeydew')
         var gpAddress = "10.10.0.83";
         var grandPoobah = addMetaInformation(gpBrowsers, 'GP: ' + gpAddress, {local: gpAddress});
 
+        var csBrowsers = [
+            'CS IE Local',
+            'CS Chrome Local',
+            'CS FF Local',
+            'Batch: All CS',
+            'Batch: All CS, Serial'
+        ];
+        var csAddress = '10.10.0.116';
+        var cheeseSauce = addMetaInformation(csBrowsers, 'CS: ' + csAddress, {local: csAddress});
+
         var sauceBrowsers = [
             'Windows 7 - Chrome',
             'Windows 7 - FF',
@@ -68,6 +78,6 @@ angular.module('honeydew')
             });
         }
 
-        this.all = local.concat(grandPoobah).concat(sauce);
+        this.all = local.concat(grandPoobah).concat(cheeseSauce).concat(sauce);
         this.set = grandPoobah.concat(sauce);
     });

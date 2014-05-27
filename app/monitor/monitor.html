@@ -1,9 +1,7 @@
-<nav class="navbar monitor-nav navbar-fixed-top">
-  <div class="container">
-    <div job-options isolated-monitors="monitors"></div>
-  </div>
-</nav>
+<div class="monitor-container container">
+  <job-options monitor="true" submit-action="create"></job-options>
 
-<strong>Filter:</strong> <input type="text" ng-model="filterOptions.filterText" placeholder="Also filters the set list" />
+  <strong>Filter:</strong> <input type="text" ng-model="filterOptions.filterText" placeholder="Also filters the set list" />
 
-<div class="gridStyle" ng-grid="gridOptions"></div>
+  <div class="gridStyle" ng-grid="gridOptions"></div>
+</div>

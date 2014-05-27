@@ -1,22 +1,18 @@
-.gridStyle {
+.monitor-container .gridStyle {
     border: 1px solid rgb(212,212,212);
     width: auto;
     height: 100%;
 }
 
-.ngViewport.ng-scope{
+.monitor-container .ngViewport.ng-scope{
     height: auto !important;
 }
 
-.ngTopPanel.ng-scope, .ngHeaderContainer{
+.monitor-container .ngTopPanel.ng-scope, .ngHeaderContainer{
     width: auto !important;
 }
 
-body {
-    padding-top: 80px;
-}
-
-.monitor-nav {
+.monitor-container .monitor-nav {
     padding-top: 15px;
     background-color: honeydew;
 }

@@ -41,6 +41,14 @@ angular.module('honeydew', [
                 onEnter: ['$rootScope', '$location', function ($rootScope, $location) {
                     $rootScope.title = $location.path().split('/').pop();
                 }]
+            })
+            .state('monitor', {
+                url: '/monitor',
+                templateUrl: 'monitor/monitor.html',
+                controller: 'MonitorCtrl',
+                onEnter: ['$rootScope', function ($rootScope) {
+                    $rootScope.title = 'HD Monitors';
+                }]
             });
     })
     .config(function(PusherServiceProvider) {

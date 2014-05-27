@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts, randomString, liveReport) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts, randomString, liveReport, hostname) {
         return {
             scope: {
                 filename: '@',
@@ -39,7 +39,7 @@ angular.module('honeydew')
 
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: scope.filename,
-                            host: scope.$storage.host,
+                            host: hostname.host,
                             channel: channel
                         });
 

@@ -377,7 +377,7 @@ module.exports = function (grunt) {
                         commands.push('wait');
                     });
 
-                    return commands.join(' & ');
+                    return commands.join(' && ');
                 }
             },
 

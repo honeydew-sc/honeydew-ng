@@ -12,13 +12,16 @@ angular.module('honeydew')
         };
 
         $scope.create = function(newMonitor) {
-            if ($scope.monitorIsNew(newMonitor)) {
+            if ($scope.isMonitorUnique(newMonitor)) {
                 newMonitor.$save( function ( u ) {
                     $scope.monitors.push(u);
                 });
             }
             else {
-                console.log('oops!');
+                alerts.addAlert({
+                    msg: 'Sorry, that monitor already exists. Maybe you want to edit it?',
+                    type: 'warning'
+                }, 7500);
             }
         };
 
@@ -42,7 +45,7 @@ angular.module('honeydew')
             });
         };
 
-        $scope.monitorIsNew = function (newMonitor) {
+        $scope.isMonitorUnique = function (newMonitor) {
             var isUnique = true;
             angular.forEach($scope.monitors, function ( monitor, index ) {
                 if (newMonitor.set === monitor.set &&

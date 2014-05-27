@@ -70,16 +70,20 @@ angular.module('honeydew')
                 field: 'on',
                 displayName: 'On',
                 width: 30,
-                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="toggleEnabled(row)"/></div>'
+                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="toggleEnabled(row)"/></div>',
+                enableCellEdit: false
             }, {
                 field:'set',
-                displayName:'Set'
+                displayName:'Set',
+                enableCellEdit: false
             }, {
                 field:'host',
-                displayName:'Host'
+                displayName:'Host',
+                enableCellEdit: true
             }, {
                 field:'browser',
-                displayName:'Browser'
+                displayName:'Browser',
+                enableCellEdit: false
             }, {
                 field:'',
                 width: 40,
@@ -93,6 +97,9 @@ angular.module('honeydew')
             multiSelect: false,
             filterOptions: $scope.filterOptions,
             showGroupPanel: true,
-            jqueryUIDraggable: true
+            jqueryUIDraggable: true,
+            enableCellSelection: true,
+            enableRowSelection: false,
+            enableCellEdit: true
         };
     });

@@ -1,15 +1,13 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('MonitorCtrl', function ($scope, Monitor) {
-        console.log('hi');
-
+    .controller('MonitorCtrl', function ($scope, $timeout, Monitor, alerts) {
         $scope.query = function () {
             $scope.monitors = Monitor.query( function ( u ) {
-                window.setTimeout(function () {
+                $timeout(function () {
                     $(window).resize();
                     $(window).resize();
-                }, 1);
+                });
             });
         };
 

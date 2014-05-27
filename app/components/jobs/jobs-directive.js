@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, panes, alerts, randomString, liveReport, hostname) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, Sets, Monitor, panes, alerts, randomString, liveReport, hostname) {
         return {
             scope: {
                 filename: '@',
                 jira: '=',
-                control: '='
+                control: '=',
+                submitAction: '='
             },
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
@@ -32,33 +33,54 @@ angular.module('honeydew')
                     scope.$storage.browser = scope.browserList[1];
                 }
 
-                scope.control.executeJob = function () {
-                    if (scope.jobOptions.$valid) {
-                        panes.openPane('report');
-                        var channel = liveReport.switchChannel();
+                scope.monitor = attrs.monitor;
+                if (scope.monitor) {
+                    Sets.get( {}, function (res) {
+                        scope.setList = res.sets;
+                        scope.setName = scope.setList[0];
+                    });
 
-                        var job = angular.extend({}, scope.$storage.browser, {
-                            file: scope.filename,
+                    scope.action = function () {
+                        var maybeNewMonitor = new Monitor({
+                            browser: scope.$storage.browser.browser[0],
                             host: hostname.host,
-                            channel: channel
+                            set: scope.setName,
+                            on: true
                         });
 
-                        Jobs.execute(job);
+                        return scope.submitAction(maybeNewMonitor);
+                    };
 
-                        var file = new Files({
-                            file: Files.encode(scope.filename),
-                            msg: scope.jira()
-                        });
+                }
+                else if (scope.control) {
+                    scope.control.executeJob = function () {
+                        if (scope.jobOptions.$valid) {
+                            panes.openPane('report');
+                            var channel = liveReport.switchChannel();
 
-                        file.$commit()
-                            .then(function (res) {
-                                alerts.addAlert(res, 1000);
-                            })
-                            .catch(function (res) {
-                                alerts.addAlert(res);
+                            var job = angular.extend({}, scope.$storage.browser, {
+                                file: scope.filename,
+                                host: hostname.host,
+                                channel: channel
                             });
-                    }
-                };
+
+                            Jobs.execute(job);
+
+                            var file = new Files({
+                                file: Files.encode(scope.filename),
+                                msg: scope.jira()
+                            });
+
+                            file.$commit()
+                                .then(function (res) {
+                                    alerts.addAlert(res, 1000);
+                                })
+                                .catch(function (res) {
+                                    alerts.addAlert(res);
+                                });
+                        }
+                    };
+                }
             }
         };
     });

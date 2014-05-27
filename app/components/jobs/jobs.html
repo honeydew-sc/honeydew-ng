@@ -1,4 +1,12 @@
-<form class="navbar-form navbar-left jobs" role="form" name="jobOptions">
+<form class="navbar-form jobs" role="form" name="jobOptions">
+
+  <div class="form-group col-xs-4" ng-if="monitor">
+    <label class="sr-only" for="set">Set</label>
+    <select class="form-control span-one-third" ng-model="setName">
+      <option ng-repeat="set in setList | filter:$parent.filterOptions.filterText">{{ set }}</option>
+    </select>
+  </div>
+
   <div class="form-group">
     <hostname-picker></hostname-picker>
   </div>
@@ -9,14 +17,22 @@
     </select>
   </div>
 
-  <div class="form-group">
-    <button
-      type="submit"
-      id="execute"
-      class="btn btn-hdew"
-      popover="F5"
-      popover-placement="bottom"
-      popover-trigger="mouseenter"
-      ng-click="control.executeJob()"><i class="fa fa-play"></i> execute!</button>
+  <div class="form-group" ng-if="!monitor">
+    <button ng-click="executeJob()"
+            id="execute"
+            class="btn btn-hdew"
+            popover="F5"
+            popover-placement="bottom"
+            popover-trigger="mouseenter"
+            ng-click="control.executeJob()">
+      <i class="fa fa-play"></i> execute!
+    </button>
   </div>
+
+  <div class="form-group" ng-if="monitor">
+    <button ng-click="action()" class="btn btn-hdew">
+      <i class="fa fa-plus-square"></i> add
+    </button>
+  </div>
+
 </form>

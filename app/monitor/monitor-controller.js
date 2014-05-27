@@ -91,6 +91,8 @@ angular.module('honeydew')
                 directions: ['asc']
             },
             multiSelect: false,
-            filterOptions: $scope.filterOptions
+            filterOptions: $scope.filterOptions,
+            showGroupPanel: true,
+            jqueryUIDraggable: true
         };
     });

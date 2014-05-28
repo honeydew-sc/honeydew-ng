@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, Jobs, Files, Sets, Monitor, panes, alerts, randomString, liveReport, hostname) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, Jobs, Files, Sets, Monitor, panes, alerts, randomString, liveReport, hostname) {
         return {
             scope: {
                 filename: '@',
@@ -12,9 +12,32 @@ angular.module('honeydew')
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
-                scope.browserList = availableBrowsers.all;
+                scope.monitor = attrs.monitor;
+                if (scope.monitor) {
+                    scope.browserList = availableBrowsers.set;
+                    console.log(scope.monitor, scope.browserList, availableBrowsers);
 
-                scope.$storage = $localStorage.$default({
+                    Sets.get( {}, function (res) {
+                        scope.setList = res.sets;
+                        scope.setName = scope.setList[0];
+                    });
+
+                    scope.action = function () {
+                        var maybeNewMonitor = new Monitor({
+                            browser: scope.$storage.browser.browser[0],
+                            host: hostname.host,
+                            set: scope.setName,
+                            on: true
+                        });
+
+                        return scope.submitAction(maybeNewMonitor);
+                    };
+                }
+                else {
+                    scope.browserList = availableBrowsers.all;
+                }
+
+                scope.$storage = $sessionStorage.$default({
                     host: ''
                     // , browser: scope.browserList[1]
                 });
@@ -31,25 +54,6 @@ angular.module('honeydew')
                 }
                 else {
                     scope.$storage.browser = scope.browserList[1];
-                }
-
-                scope.monitor = attrs.monitor;
-                if (scope.monitor) {
-                    Sets.get( {}, function (res) {
-                        scope.setList = res.sets;
-                        scope.setName = scope.setList[0];
-                    });
-
-                    scope.action = function () {
-                        var maybeNewMonitor = new Monitor({
-                            browser: scope.$storage.browser.browser[0],
-                            host: hostname.host,
-                            set: scope.setName,
-                            on: true
-                        });
-
-                        return scope.submitAction(maybeNewMonitor);
-                    };
                 }
 
                 scope.executeJob = function () {

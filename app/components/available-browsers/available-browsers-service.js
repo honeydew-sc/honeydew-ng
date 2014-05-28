@@ -78,6 +78,6 @@ angular.module('honeydew')
             });
         }
 
-        this.all = local.concat(grandPoobah).concat(cheeseSauce).concat(sauce);
-        this.set = grandPoobah.concat(sauce);
+        this.set = grandPoobah.concat(cheeseSauce).concat(sauce);
+        this.all = local.concat(this.set);
     });

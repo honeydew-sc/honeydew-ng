@@ -165,7 +165,7 @@ function validateNewMonitor($monitor) {
         $reason = "Error: set file not found: " . $monitor->{"set"};
     }
 
-    if (!preg_match("/sharecare|doctoroz|army|ultimateme/", $monitor->{"host"})) {
+    if (!preg_match("/sharecare|doctoroz|army|ultimateme|bactes|dailystrength/", $monitor->{"host"})) {
         $reason = "Error: invalid host selection: " . $monitor->{'host'};
     }
 

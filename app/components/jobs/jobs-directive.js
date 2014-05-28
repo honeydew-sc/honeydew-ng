@@ -87,6 +87,5 @@ angular.module('honeydew')
                     scope.control.executeJob = scope.executeJob;
                 }
             }
-
         };
     });

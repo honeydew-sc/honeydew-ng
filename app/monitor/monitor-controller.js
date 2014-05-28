@@ -56,7 +56,6 @@ angular.module('honeydew')
             return !isDuplicated;
         };
 
-
         $scope.$on('ngGridEventStartCellEdit', function(evt){
             $scope.currentEdit = angular.copy(evt.targetScope.row.entity);
         });

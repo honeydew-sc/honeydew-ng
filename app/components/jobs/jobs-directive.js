@@ -15,18 +15,19 @@ angular.module('honeydew')
                 scope.monitor = attrs.monitor;
                 if (scope.monitor) {
                     scope.browserList = availableBrowsers.set;
-                    console.log(scope.monitor, scope.browserList, availableBrowsers);
 
                     Sets.get( {}, function (res) {
                         scope.setList = res.sets;
-                        scope.setName = scope.setList[0];
+                        scope.set = {
+                            name: scope.setList[0]
+                        };
                     });
 
                     scope.action = function () {
                         var maybeNewMonitor = new Monitor({
                             browser: scope.$storage.browser.browser[0],
                             host: hostname.host,
-                            set: scope.setName,
+                            set: scope.set.name,
                             on: true
                         });
 

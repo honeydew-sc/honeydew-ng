@@ -2,8 +2,7 @@
 
   <div class="form-group col-xs-4" ng-if="monitor">
     <label class="sr-only" for="set">Set</label>
-    <select class="form-control span-one-third" ng-model="setName">
-      <option ng-repeat="set in setList | filter: $parent.$parent.filterOptions.filterText">{{ set }}</option>
+    <select required class="form-control span-one-third" ng-model="set.name" ng-options="set as set for set in setList | filter: $parent.$parent.filterOptions.filterText">
     </select>
   </div>
 

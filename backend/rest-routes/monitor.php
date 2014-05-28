@@ -9,7 +9,6 @@ $app->group('/monitor', function () use ($app) {
     `on` as "on"
     FROM `monitor`';
 
-
     $app->get('/', function () use ($monitorGetQuery) {
         $pdo = hdewdb_connect();
         $query = $pdo->prepare($monitorGetQuery);

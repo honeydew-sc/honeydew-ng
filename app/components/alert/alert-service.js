@@ -2,10 +2,10 @@
 
 angular.module('honeydew')
     .service('alerts', function ($timeout) {
-        this.globalAlerts =  [];
+        var self = this;
+        self.globalAlerts =  [];
 
-        this.addAlert = function(res, timeout) {
-            var alerts = this;
+        self.addAlert = function(res, timeout) {
             var alert = res;
 
             if (typeof(alert.type) === 'undefined') {
@@ -14,16 +14,21 @@ angular.module('honeydew')
                     msg: typeof(res.data) === 'undefined' ? res.notes : res.data.reason
                 };
             }
-            this.globalAlerts.push(alert);
+            self.globalAlerts.push(alert);
 
             if (timeout) {
                 $timeout(function () {
-                    alerts.closeAlert(alerts.globalAlerts.indexOf(alert));
+                    self.closeAlert(self.globalAlerts.indexOf(alert));
                 }, timeout);
             }
         };
 
-        this.closeAlert = function(index) {
+        self.catcher = function ( res ) {
+            self.addAlert(res);
+            return res;
+        };
+
+        self.closeAlert = function(index) {
             this.globalAlerts.splice(index, 1);
         };
     });

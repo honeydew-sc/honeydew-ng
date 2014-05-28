@@ -40,25 +40,24 @@ angular.module('honeydew')
         };
 
         $scope.isMonitorUnique = function (newMonitor) {
-            var isUnique = $scope.monitors.some(function ( element ) {
+            var isDuplicated = $scope.monitors.some(function ( element ) {
                 return newMonitor.set === element.set &&
                     newMonitor.host === element.host &&
                     newMonitor.browser === element.browser;
             });
 
-            if (!isUnique) {
+            if (isDuplicated) {
                 alerts.addAlert({
                     msg: 'Sorry, that monitor (' + newMonitor.set + ' on ' + newMonitor.host + ' in ' + newMonitor.browser + ') already exists. Maybe you want to edit it?',
                     type: 'warning'
                 }, 7500);
             }
 
-            return isUnique;
+            return !isDuplicated;
         };
 
         $scope.$on('ngGridEventEndCellEdit', function(evt){
             var monitor = evt.targetScope.row.entity;
-            console.log(monitor);
             if ($scope.isMonitorUnique(monitor)) {
                 monitor.$save();
             }

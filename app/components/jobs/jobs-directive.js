@@ -50,37 +50,43 @@ angular.module('honeydew')
 
                         return scope.submitAction(maybeNewMonitor);
                     };
-
                 }
-                else if (scope.control) {
-                    scope.control.executeJob = function () {
-                        if (scope.jobOptions.$valid) {
-                            panes.openPane('report');
-                            var channel = liveReport.switchChannel();
 
-                            var job = angular.extend({}, scope.$storage.browser, {
-                                file: scope.filename,
-                                host: hostname.host,
-                                channel: channel
+                scope.executeJob = function () {
+                    if (scope.jobOptions.$valid) {
+                        panes.openPane('report');
+                        var channel = liveReport.switchChannel();
+
+                        var job = angular.extend({}, scope.$storage.browser, {
+                            file: scope.filename,
+                            host: hostname.host,
+                            channel: channel
+                        });
+
+                        Jobs.execute(job);
+
+                        var file = new Files({
+                            file: Files.encode(scope.filename),
+                            msg: scope.jira()
+                        });
+
+                        file.$commit()
+                            .then(function (res) {
+                                alerts.addAlert(res, 1000);
+                            })
+                            .catch(function (res) {
+                                alerts.addAlert(res);
                             });
+                    }
+                };
 
-                            Jobs.execute(job);
-
-                            var file = new Files({
-                                file: Files.encode(scope.filename),
-                                msg: scope.jira()
-                            });
-
-                            file.$commit()
-                                .then(function (res) {
-                                    alerts.addAlert(res, 1000);
-                                })
-                                .catch(function (res) {
-                                    alerts.addAlert(res);
-                                });
-                        }
-                    };
+                // put executeJob on control, which is passed up to
+                // the editor-nav directive, and from there to the
+                // EditorCtrl scope
+                if (scope.control) {
+                    scope.control.executeJob = scope.executeJob;
                 }
             }
+
         };
     });

@@ -13,9 +13,9 @@ angular.module('honeydew')
 
         $scope.create = function(newMonitor) {
             if ($scope.isMonitorUnique(newMonitor)) {
-                newMonitor.$save( function ( u ) {
-                    $scope.monitors.push(u);
-                });
+                newMonitor.$save( function ( res ) {
+                    $scope.monitors.push(res);
+                }).catch( alerts.catcher );
             }
         };
 
@@ -56,11 +56,18 @@ angular.module('honeydew')
             return !isDuplicated;
         };
 
+
+        $scope.$on('ngGridEventStartCellEdit', function(evt){
+            $scope.currentEdit = angular.copy(evt.targetScope.row.entity);
+        });
+
         $scope.$on('ngGridEventEndCellEdit', function(evt){
             var monitor = evt.targetScope.row.entity;
-            if ($scope.isMonitorUnique(monitor)) {
-                monitor.$save();
-            }
+
+            monitor.$save().catch( function (res) {
+                alerts.addAlert(res);
+                monitor.host = $scope.currentEdit.host;
+            });
         });
 
         $scope.query();

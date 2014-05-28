@@ -52,12 +52,10 @@ $app->group('/monitor', function () use ($app) {
 
     $app->post('/', function() use ($app) {
         $body = json_decode($app->request()->getBody());
-        $status = validateNewMonitor($body);
 
-        if ($status["success"] == "false") {
-            echo json_encode($status);
-        }
-        else {
+        try {
+            validateNewMonitor($body);
+
             $pdo = hdewdb_connect();
             /* new entries are "on" by default */
             $body->{"on"} = true;
@@ -79,16 +77,17 @@ $app->group('/monitor', function () use ($app) {
             $body->{"id"} = $id[0][0];
             echo successMessage($body);
         }
+        catch (Exception $e) {
+            $app->halt('418', errorMessage($e->getMessage()));
+        }
     });
 
     $app->post('/:id', function ($id) use ($app) {
         $body = json_decode($app->request()->getBody());
-        $status = validateNewMonitor($body);
 
-        if ($status["success"] == "false") {
-            echo json_encode($status);
-        }
-        else {
+        try {
+            $status = validateNewMonitor($body);
+
             $pdo = hdewdb_connect();
 
             $sql = "UPDATE `monitor` SET `set` = ?, `browser` = ?, `host` = ?, `on` = ? WHERE `id` = ?;";
@@ -103,6 +102,9 @@ $app->group('/monitor', function () use ($app) {
 
             echo successMessage($body);
         }
+        catch (Exception $e) {
+            $app->halt('418', errorMessage($e->getMessage()));
+        }
     });
 
     $app->delete('/:id', function($id) {
@@ -111,9 +113,9 @@ $app->group('/monitor', function () use ($app) {
             echo successMessage();
         }
         else {
-            echo errorMessage(Array(
-                "request" => $body,
-                "id" => "Invalid id: " . $id
+            $app->halt('418', Array(
+                'request' => $body,
+                'id' => 'Invalid id: ' . $id
             ));
         }
     });
@@ -158,27 +160,18 @@ function convertJsonToSQL( $monitorFile = "/opt/honeydew/sets/setInfo" ) {
 }
 
 function validateNewMonitor($monitor) {
-    $valid = true;
-    $reason = Array();
+    $reason = "";
     if (!file_exists($monitor->{"set"}) &&
         !file_exists("/opt/honeydew/sets/" . $monitor->{"set"})) {
-        $valid = false;
-        $reason["set"] = "Error: set file not found";
+        $reason = "Error: set file not found: " . $monitor->{"set"};
     }
 
     if (!preg_match("/sharecare|doctoroz|army|ultimateme/", $monitor->{"host"})) {
-        $valid = false;
-        $reason["host"] = "Error: invalid host selection";
+        $reason = "Error: invalid host selection: " . $monitor->{'host'};
     }
 
-    if ($valid) {
-        return array(
-            "success" => "true"
-        );
-    }
-    else {
-        $reason["request"] = $monitor;
-        return errorMessage($reason, 0);
+    if ($reason != "") {
+        throw new Exception($reason);
     }
 }
 
@@ -188,7 +181,7 @@ function deleteFromDB ( $id, $pdo = "" ) {
     }
 
     $query = $pdo->prepare('DELETE FROM `monitor` WHERE `id` = ?');
-    $query->execute(Array($id));
+    $query->execute(array($id));
 }
 
 

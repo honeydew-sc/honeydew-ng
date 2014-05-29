@@ -3,6 +3,9 @@
 angular.module('honeydew')
     .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree) {
         $scope.$storage = $localStorage;
+
+        // put the tree on the scope so we can have
+        // $scope.tree.collapse prop in the html template
         $scope.tree = filetree;
 
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);

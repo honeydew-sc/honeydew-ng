@@ -34,6 +34,9 @@ describe('Controller: EditorCtrl', function () {
 
     it('should put the feature contents in the model', function() {
         httpMock.expectGET(testFileUrl).respond(fakedContents);
+        console.log('doc:', scope.doc);
+        console.log('file:', scope.file);
+        console.log('Files:', Files);
         scope.display(shortFile);
         httpMock.flush();
         expect(scope.file.contents).toBe(fakeText);

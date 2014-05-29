@@ -87,8 +87,10 @@ angular.module('honeydew')
                 // something; clicking on not CM parts of the page
                 // hide the dropdown just fine.
                 cm.on('focus', function (cm) {
-                    document.querySelectorAll('.file-nav-dropdown')[0]
-                        .classList.remove('open');
+                    $scope.$apply( function () {
+                        document.querySelectorAll('.file-nav-dropdown')[0]
+                            .classList.remove('open');
+                    });
                 });
 
                 // :( I don't know why, but a directive

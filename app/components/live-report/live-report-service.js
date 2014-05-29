@@ -70,7 +70,17 @@ angular.module('honeydew')
             }
 
             // need a placeholder while the job starts
-            service.output = 'Loading...' + "\n";
+            var outputMessages = [
+                'Floating...',
+                'Loading...',
+                'Wrapping burritos...',
+                'Flapping chorizos...',
+                'Taco Tuesday?...',
+                'Taco Twosday!...',
+                'Black Widow has the same powers as Batman...'
+            ];
+
+            service.output = outputMessages[Math.floor(Math.random()*outputMessages.length)] + "\n";
             service.placeHolder = true;
 
             // we don't have a slick way of knowing when to close the

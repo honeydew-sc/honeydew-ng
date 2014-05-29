@@ -42,7 +42,7 @@ describe('LiveReportService', function () {
 
     it('should update the report in scope on pusher updates', function () {
         liveReportService.switchChannel(channel);
-        expect(liveReportService.output).toMatch('Loading...');
+        expect(liveReportService.output).toMatch('...');
         var message = 'a pretend pusher message';
     });
 

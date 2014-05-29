@@ -140,7 +140,7 @@ angular.module('honeydew')
             var needleRegex = new RegExp(needle.replace(' ', '.'), 'i');
 
             angular.copy(haystack).forEach(function (item) {
-                if (item.label === needle) {
+                if (item.label.toLowerCase() === needle.toLowerCase()) {
                     needles.push(item);
                 }
                 else {

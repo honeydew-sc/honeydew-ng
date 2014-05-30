@@ -24,6 +24,7 @@ describe('Controller: EditorCtrl', function () {
         };
         scope.file = fakeFile;
         scope.file.debouncedSave = function () {};
+        scope.file.debouncedSave.bind = function () {};
 
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope,

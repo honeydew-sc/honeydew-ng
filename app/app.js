@@ -21,8 +21,16 @@ angular.module('honeydew', [
                 var featureName = url.slice(2);
                 window.location.href = '/#/features/' + featureName;
             }
+
+            if (url.search(/\?\/.*\.set$/) != -1) {
+                var setName = url.slice(2);
+                window.location.href = '/#/sets/' + setName;
+            }
         })();
 
+        // we used to store an unnecessarily large amount of data in
+        // the setsAsJSON cookie, and it would be sent with every
+        // single request, even backend ones. Let's stop doing that.
         document.cookie = 'setsAsJSON=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 
         var defaultPath = '/features/test/FAQ.feature';

@@ -79,5 +79,22 @@ class jobsTests extends UnitTestCase {
         $cmd = $response->body->command;
         $this->assertTrue(preg_match('/17/', $cmd), 'rerun all failed jobs');
     }
+
+    function testCanDeleteSetRun() {
+        $pdo = hdewdb_connect();
+        $sth = $pdo->prepare('insert into setRun (setRunUnique, setName, userId, host, browser, status, startDate, endDate) values("setRunUn", "setName", 1, "host", "browser", "success", NOW(), NOW());');
+        $sth->execute();
+        $id = $pdo->lastInsertId();
+
+        $response = \Httpful\Request::delete($this->baseUrl . '/sets/' . $id)->send();
+        $sth = $pdo->prepare('select id from setRun where deleted = 1');
+        $sth->execute();
+        $res = $sth->fetchAll();
+        $this->assertEqual($res[0]["id"], $id);
+
+        $sth = $pdo->prepare('delete from setRun where id = ?');
+        $sth->execute(array($id));
+
+    }
 }
 ?>

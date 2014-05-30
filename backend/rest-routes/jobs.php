@@ -41,10 +41,7 @@ $app->group('/jobs', function () use ($app) {
 
     $app->post('/sets/rerunfailed/:setId', function ($setId) use ($app) {
         try {
-            $set = intval($setId);
-            if (!is_int($set) || $set == 0) {
-                throw new Exception('The setId must be an integer: ' . $setId);
-            }
+            validateSetId($setId);
 
             $cmds = getFailuresForSet($setId);
             $cmd = runInSerial($cmds);
@@ -52,6 +49,20 @@ $app->group('/jobs', function () use ($app) {
             echo successMessage(array(
                 "command" => $cmd
             ));
+        }
+        catch (Exception $e) {
+            $app->halt('418', errorMessage($e->getMessage()));
+        }
+    });
+
+    $app->delete('/sets/:setId', function ($setId) use ($app) {
+        try {
+            validateSetId($setId);
+
+            $pdo = hdewdb_connect();
+            $sth = $pdo->prepare('UPDATE setRun set deleted = 1 where id = ?');
+            $sth->execute(array($setId));
+            echo successMessage("set run deleted!");
         }
         catch (Exception $e) {
             $app->halt('418', errorMessage($e->getMessage()));
@@ -66,6 +77,13 @@ $app->group('/jobs', function () use ($app) {
                 throw new Exception('Your ' . $it . ' is invalid: [' . $jobData[$it] . ']');
             }
         });
+        }
+
+    function validateSetId( $setId ) {
+        $set = intval($setId);
+        if (!is_int($set) || $set == 0) {
+            throw new Exception('The setId must be an integer: ' . $setId);
+        }
     }
 
     function getFailuresForSet($setId) {

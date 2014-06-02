@@ -50,8 +50,6 @@ angular.module('honeydew')
 
                     modalInstance.result.then(function (dest) {
                         $location.path('/' + dest.file);
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
                     });
                 };
 
@@ -72,6 +70,10 @@ angular.module('honeydew')
 
                         filetree.addLeaf(destination.file);
                         return newFile.$save();
+                    },
+
+                    'Copy': function (destination) {
+                        return scope.file.copy(destination.file, scope.file.contents);
                     },
 
                     'Delete': function () {

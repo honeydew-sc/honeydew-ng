@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('Files', function ($resource, alerts) {
+    .factory('Files', function ($resource, alerts, $location, filetree) {
         var res = $resource('/rest.php/files/:file', {
             file: '@file'
         }, {
@@ -32,6 +32,16 @@ angular.module('honeydew')
             var matches = this.contents.match(/Sets?: ?(.*)/);
             this.oldSets = matches !== null ? matches[1] : '';
             return this.oldSets;
+        };
+
+        res.prototype.copy = function ( destination, contents ) {
+            return res.save({
+                file: res.encode(destination),
+                contents: contents
+            }, function ( res ) {
+                $location.path(destination);
+                filetree.addLeaf(destination);
+            }).$promise;
         };
 
         res.prototype.debouncedSave = function ( newContents, oldContents ) {

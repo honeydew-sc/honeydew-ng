@@ -32,25 +32,33 @@ angular.module('honeydew')
                 };
 
                 scope.open = function (action) {
-                    var modalInstance = $modal.open({
-                        templateUrl: 'components/modal/modal.html',
-                        controller: 'ModalInstanceCtrl',
-                        resolve: {
-                            filename: function () {
-                                return scope.filename;
-                            },
-                            title: function () {
-                                return action;
-                            },
-                            action: function () {
-                                return scope.fileActions[action];
-                            }
-                        }
-                    });
+                    if (action === 'CopyTemp') {
+                        var temp = new Date().getTime();
+                        temp = 'features/test/tmp/' + temp + '.feature';
 
-                    modalInstance.result.then(function (dest) {
-                        $location.path('/' + dest.file);
-                    });
+                        scope.file.copy(temp, scope.file.contents);
+                    }
+                    else {
+                        var modalInstance = $modal.open({
+                            templateUrl: 'components/modal/modal.html',
+                            controller: 'ModalInstanceCtrl',
+                            resolve: {
+                                filename: function () {
+                                    return scope.filename;
+                                },
+                                title: function () {
+                                    return action;
+                                },
+                                action: function () {
+                                    return scope.fileActions[action];
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (dest) {
+                            $location.path('/' + dest.file);
+                        });
+                    }
                 };
 
                 scope.fileActions = {

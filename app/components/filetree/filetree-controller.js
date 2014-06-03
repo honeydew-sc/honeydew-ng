@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce, $localStorage) {
+    .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce, $localStorage, alerts) {
         // put filetree.show() on the scope as the display fn
         $scope.tree = filetree;
 
@@ -10,18 +10,28 @@ angular.module('honeydew')
         };
 
         $scope.tabs = [
-            { label: "Features" },
-            { label: "Phrases" },
-            { label: "Sets"}
+            {
+                label: "Features",
+                refreshing: true
+            },
+            {
+                label: "Phrases",
+                refreshing: true
+            },
+            {
+                label: "Sets",
+                refreshing: true
+            }
         ];
 
         var path = $location.path();
         $scope.tabs.forEach(function (tab) {
             var tree, folder = tab.label.toLowerCase();
             tab.data = $localStorage.topLevelTree[folder];
-            // TODO: maybe optimize this so tab doesn't block pageload?
-            filetree.get(folder).then(function () {
+
+            filetree.get(folder).then(function ( res ) {
                 tree = tab.data = filetree[folder + 'tree'];
+                tab.refreshing = false;
             });
 
             tab.active = !!path.match('^.' + folder);
@@ -53,6 +63,22 @@ angular.module('honeydew')
             });
             tab.data = filetree[data.folder + 'tree'];
         });
+
+        $scope.refresh = function ( label ) {
+            var folder = label.toLowerCase();
+            var tab = $scope.tabs.find(function (tab) {
+                return tab.label.toLowerCase() === folder;
+            });
+
+            tab.refreshing = true;
+            filetree.get(folder)
+                .then(function ( res ) {
+                    tab.data = filetree[folder + 'tree'];
+                }).catch( alerts.catcher )
+                .finally( function ( res ) {
+                    tab.refreshing = false;
+                });
+        };
 
         $timeout(function () {
             // prevent animations during pageload

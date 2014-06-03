@@ -138,7 +138,7 @@ describe('filetreeService', function () {
             expect(root[oldLength].label).toBe(leafName);
         });
 
-        iit('should not add leaf if it already exists', function () {
+        it('should not add leaf if it already exists', function () {
             var leafName = 'zTopLevelLeaf.feature';
             filetree.addLeaf('features/' + leafName);
             filetree.addLeaf('features/' + leafName);

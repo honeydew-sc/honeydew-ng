@@ -12,10 +12,14 @@ describe('filesFactory', function () {
         filetree = _filetree_;
 
         spyOn(filetree, 'addLeaf');
+        spyOn(filetree, 'deleteLeaf');
     }));
 
     function _setup () {
-        httpMock.expectGET(backend + 'features%2Ffake.feature').respond({ contents: contents });
+        httpMock.expectGET(backend + 'features%2Ffake.feature').respond({
+            file: 'features%2Ffake.feature',
+            contents: contents
+        });
         var file = Files.get({file: 'features/fake.feature'});
         httpMock.flush();
         return file;
@@ -55,5 +59,16 @@ describe('filesFactory', function () {
         _fileCopySetup(destination);
 
         expect(filetree.addLeaf).toHaveBeenCalled();
+    });
+
+    it('should move files to a new place', function () {
+        var file = _setup();
+
+        httpMock.expectPOST(backend + 'features%252Fmoved.feature').respond({ success: true });
+        httpMock.expectDELETE(backend + 'features%252Ffake.feature').respond({ success: true });
+        file.move('features/moved.feature');
+        httpMock.flush();
+
+        expect(filetree.deleteLeaf).toHaveBeenCalled();
     });
 });

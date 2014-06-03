@@ -34,14 +34,28 @@ angular.module('honeydew')
             return this.oldSets;
         };
 
-        res.prototype.copy = function ( destination, contents ) {
+        res.prototype.copy = function ( destination ) {
+            var self = this;
+
             return res.save({
                 file: res.encode(destination),
-                contents: contents
+                contents: self.contents
             }, function ( res ) {
                 $location.path(destination);
                 filetree.addLeaf(destination);
-            }).$promise;
+            }, alerts.catcher).$promise;
+        };
+
+        res.prototype.move = function ( destination, contents) {
+            var self = angular.copy(this);
+            return self.copy(destination).then(function (response) {
+                if (response.success) {
+                    self.$delete().then(function ( response ) {
+                        var leaf = decodeURIComponent(self.file);
+                        filetree.deleteLeaf(leaf);
+                    }).catch( alerts.catcher );
+                }
+            }).catch( alerts.catcher);
         };
 
         res.prototype.debouncedSave = function ( newContents, oldContents ) {

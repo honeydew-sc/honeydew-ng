@@ -31,32 +31,38 @@ angular.module('honeydew')
                     $window.open(scope.base + destination);
                 };
 
-                scope.open = function (action) {
-                    var modalInstance = $modal.open({
-                        templateUrl: 'components/modal/modal.html',
-                        controller: 'ModalInstanceCtrl',
-                        resolve: {
-                            filename: function () {
-                                return scope.filename;
-                            },
-                            title: function () {
-                                return action;
-                            },
-                            action: function () {
-                                return scope.fileActions[action];
-                            }
-                        }
-                    });
+                scope.open = function ( action ) {
+                    if (action === 'CopyTemp') {
+                        var temp = new Date().getTime();
+                        temp = 'features/test/tmp/' + temp + '.feature';
 
-                    modalInstance.result.then(function (dest) {
-                        $location.path('/' + dest.file);
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
+                        scope.file.copy(temp);
+                    }
+                    else {
+                        var modalInstance = $modal.open({
+                            templateUrl: 'components/modal/modal.html',
+                            controller: 'ModalInstanceCtrl',
+                            resolve: {
+                                filename: function () {
+                                    return scope.filename;
+                                },
+                                title: function () {
+                                    return action;
+                                },
+                                action: function () {
+                                    return scope.fileActions[action];
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (dest) {
+                            $location.path('/' + dest.file);
+                        });
+                    }
                 };
 
                 scope.fileActions = {
-                    'Create New': function (destination) {
+                    'Create New': function ( destination ) {
                         destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
                         var newFile = new Files({
                             file: Files.encode(destination.file),
@@ -72,6 +78,14 @@ angular.module('honeydew')
 
                         filetree.addLeaf(destination.file);
                         return newFile.$save();
+                    },
+
+                    'Copy': function ( destination ) {
+                        return scope.file.copy(destination.file);
+                    },
+
+                    'Move': function ( destination ) {
+                        return scope.file.move(destination.file);
                     },
 
                     'Delete': function () {

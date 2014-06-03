@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('honeydew', [
-    'ngCookies',
     'ngResource',
     'ngSanitize',
     'ngStorage',

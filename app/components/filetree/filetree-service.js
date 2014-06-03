@@ -63,8 +63,13 @@ angular.module('honeydew')
                     leaf.folder = directory;
                 }
 
-                tree.push(leaf);
-                tree.sort(treeSorter);
+                if (tree.every( function (existingLeaf) {
+                    return existingLeaf.label !== leaf.label;
+                })) {
+
+                    tree.push(leaf);
+                    tree.sort(treeSorter);
+                }
 
                 return tree;
             }

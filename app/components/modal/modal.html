@@ -1,6 +1,6 @@
 <form class="form-horizontal hdew-modal" role="form">
 
-  <div ng-show="title === 'Create New' || title === 'Copy'">
+  <div ng-show="title === 'Create New' || title === 'Copy' || title === 'Move'">
     <div class="form-group has-feedback" ng-class="isValidFilename() ? '' : 'has-error'">
       <label for="input-file" class="col-sm-2 control-label" >Name:</label>
       <div class="col-sm-10">
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div ng-show="title === 'Create New' || title === 'Copy'">
+  <div ng-show="title === 'Create New' || title === 'Copy' || title === 'Move'">
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button ng-click="ok()" ng-disabled="!isFormValid()" class="btn btn-success btn-submit">{{title}}</button>

@@ -138,6 +138,13 @@ describe('filetreeService', function () {
             expect(root[oldLength].label).toBe(leafName);
         });
 
+        it('should not add leaf if it already exists', function () {
+            var leafName = 'zTopLevelLeaf.feature';
+            filetree.addLeaf('features/' + leafName);
+            filetree.addLeaf('features/' + leafName);
+            expect(root.length).toBe(oldLength + 1);
+        });
+
         it('should add a nested leaf to an existing folder, sorted', function () {
             var leafName = 'zChildLeaf.feature';
             var folderName = 'features/head';

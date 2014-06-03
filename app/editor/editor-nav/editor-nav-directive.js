@@ -31,12 +31,12 @@ angular.module('honeydew')
                     $window.open(scope.base + destination);
                 };
 
-                scope.open = function (action) {
+                scope.open = function ( action ) {
                     if (action === 'CopyTemp') {
                         var temp = new Date().getTime();
                         temp = 'features/test/tmp/' + temp + '.feature';
 
-                        scope.file.copy(temp, scope.file.contents);
+                        scope.file.copy(temp);
                     }
                     else {
                         var modalInstance = $modal.open({
@@ -62,7 +62,7 @@ angular.module('honeydew')
                 };
 
                 scope.fileActions = {
-                    'Create New': function (destination) {
+                    'Create New': function ( destination ) {
                         destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
                         var newFile = new Files({
                             file: Files.encode(destination.file),
@@ -80,8 +80,12 @@ angular.module('honeydew')
                         return newFile.$save();
                     },
 
-                    'Copy': function (destination) {
-                        return scope.file.copy(destination.file, scope.file.contents);
+                    'Copy': function ( destination ) {
+                        return scope.file.copy(destination.file);
+                    },
+
+                    'Move': function ( destination ) {
+                        return scope.file.move(destination.file);
                     },
 
                     'Delete': function () {

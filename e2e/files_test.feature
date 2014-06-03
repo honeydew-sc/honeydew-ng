@@ -2,22 +2,37 @@ Feature: file actions
 
 $file = '/#/features/e2e/files_test.feature'
 $fileMenu = 'partial_link_text=File'
-$input = 'id=input-file'
+$modal_input = 'id=input-file'
 
- Scenario: copy a file 
+ Scenario: copy a file
  Given I am on the $file page
    When I click on the link $fileMenu
    When I click on the link id=copy
-   When I reset the input field $input
-   When I input features/Acopy.feature into the input field $input
+   When I reset the input field $modal_input
+   When I input features/Acopy.feature into the input field $modal_input
    When I click on the link class=btn-submit
      Then the url should match Acopy.feature
      Then the page should contain files_test.feature
-     
- Scenario: temporary copy
+
+ Scenario: temporarily copy
   Given I am on the $file page
    When I click on the link $fileMenu
    When I click on the link id=copy-temp
      Then the url should match \d+.feature
      Then the page should contain files_test.feature
- 
+
+ Scenario: move a file
+ Given I am on the $file page
+   When I click on the link $fileMenu
+   When I click on the link id=copy-temp
+
+   When I click on the link $fileMenu
+   When I click on the link id=move
+   When I input moved.feature into the input field $modal_input
+   When I click on the link class=btn-submit
+   
+     Then the url should match moved.feature
+     Then the url should not match \d+.feature
+     
+     Then I go back to the previous page
+     Then the page should contain No such file or directory

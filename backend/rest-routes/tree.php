@@ -2,6 +2,39 @@
 
 $app->group('/tree', function () use ($app) {
 
+    $app->get('/sets', function () use ($app) {
+        try {
+            exec('grep -hr -P "^Set:" /opt/honeydew/features', $sets);
+
+            /* reduce the list of SetNames to a unique set */
+            $sets = array_unique(array_reduce($sets, function ($acc, $it) {
+                $it = explode(' ', trim(substr($it, 4)));
+                foreach ($it as $set) {
+                    $acc[] = $set;
+                }
+                return $acc;
+            }, array()));
+
+
+            sort($sets);
+            echo successMessage(array(
+                "tree" => array_map(function ($it) {
+                    $leaf['label'] = $it . '.set';
+                    $leaf['children'] = array();
+                    $leaf['folder'] = '/sets';
+                    return $leaf;
+                }, $sets)
+            ));
+        }
+        catch (Exception $e) {
+            $app->halt(418, errorMessage($e->getMessage()));
+        }
+
+        /* /sets would match the /:folder+ route below, so we need to
+        purposefully bail out of the route matching. */
+        $app->stop();
+    });
+
 
     $app->get('/:folder+', function ($folder) use ($app) {
         try {
@@ -12,7 +45,7 @@ $app->group('/tree', function () use ($app) {
 
             $needle = $req->get('needle');
             if ($needle) {
-                $files = grepDirectory($folder, $needle, $basedir);
+                $files = grepDirectory($folder, $needle);
                 echo successMessage(array(
                     "list" => $files
                 ));
@@ -23,7 +56,7 @@ $app->group('/tree', function () use ($app) {
             }
         }
         catch (Exception $e) {
-            $app->halt(404, errorMessage($e->getMessage()));
+            $app->halt(418, errorMessage($e->getMessage()));
         };
     });
 

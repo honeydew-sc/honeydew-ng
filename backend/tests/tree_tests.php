@@ -50,6 +50,7 @@ class treeTests extends UnitTestCase {
 
         $response = \Httpful\Request::get($this->testUrl . '?needle=needle')->send();
         $this->assertPattern('/^tmp\/found.feature/', $response->body->list[0], "grep found the needle");
+        $this->assertTrue(count($response->body->list) == 1, "and ignored the haystack");
     }
 
     function rrmdir($dir) {
@@ -60,6 +61,23 @@ class treeTests extends UnitTestCase {
                 unlink($file);
         }
         rmdir($dir);
+    }
+
+    function testSetsListRefresh () {
+        $tempSet = time();
+        file_put_contents($this->basePath . '/features/ng_test1.feature', 'Set: ' . $tempSet);
+        file_put_contents($this->basePath . '/features/ng_test2.feature', 'Set: ' . $tempSet);
+
+        $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();
+        $tree = $response->body->tree;
+        $firstLeaf = $tree[0];
+        $this->assertEqual($tempSet . '.set', $firstLeaf->label, '/tree/sets: new sets are picked up');
+
+        exec('find /opt/honeydew/features/ -name "*ng_test*.feature" | xargs -I{} rm {}');
+        $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();
+        $tree = $response->body->tree;
+        $firstLeaf = $tree[0];
+        $this->assertNotEqual($tempSet . '.set', $firstLeaf->label, '/tree/sets: old sets are deleted');
     }
 
     function testCleanUp() {

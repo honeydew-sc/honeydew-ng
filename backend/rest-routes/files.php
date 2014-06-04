@@ -165,7 +165,7 @@ $app->group('/files', function () use ($app) {
 
     function refreshSet( $setName ) {
         $shortName = substr(array_pop(explode('/', $setName)), 0, -4);
-        $features = grepDirectory('features', 'Set:.\*' . $shortName, '-e');
+        $features = grepDirectory('features', 'Set:.\*\?\b' . $shortName . '\b', '-P');
         $contents = array_reduce($features, function ($acc, $it) {
             return $acc . substr($it, 9) . "\n";
         });

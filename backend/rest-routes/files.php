@@ -164,8 +164,15 @@ $app->group('/files', function () use ($app) {
     }
 
     function refreshSet( $setName ) {
-        $shortName = substr(array_pop(explode('/', $setName)), 0, -4);
-        $features = grepDirectory('features', 'Set:.\*\?\b' . $shortName . '\b', '-P');
+        $shortName = escapeshellcmd(substr(array_pop(explode('/', $setName)), 0, -4));
+
+        $escape = false;
+        $features = grepDirectory(
+            'features',
+            'Set:.*?\b' . $shortName . '\b',
+            '-rl -P',
+            $escape
+        );
         $contents = array_reduce($features, function ($acc, $it) {
             return $acc . substr($it, 9) . "\n";
         });
@@ -174,7 +181,6 @@ $app->group('/files', function () use ($app) {
             file_put_contents($setName, $contents);
         }
     }
-
 });
 
 ?>

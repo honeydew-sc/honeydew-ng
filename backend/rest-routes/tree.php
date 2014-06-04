@@ -3,6 +3,13 @@
 $app->group('/tree', function () use ($app) {
 
     $app->get('/sets', function () use ($app) {
+        /* pass through if there are query params on the request */
+        $req = $app->request;
+        $needle = $req->get('needle');
+        if ($needle) {
+            $app->pass();
+        }
+
         try {
             exec('grep -hr -P "^Set:" /opt/honeydew/features', $sets);
 

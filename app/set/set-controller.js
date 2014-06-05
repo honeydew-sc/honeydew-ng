@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('SetCtrl', function ($scope, $stateParams, Files, alerts, SetReport) {
+    .controller('SetCtrl', function ($scope, $stateParams, Files, alerts, SetReport, $timeout) {
         $scope.editorOptions = {
             lineWrapping : false,
             lineNumbers: true,
@@ -11,8 +11,15 @@ angular.module('honeydew')
         var filename = 'sets/' + $stateParams.set;
         $scope.file = Files.get({file: Files.encode(filename)}, function () {}, alerts.catcher);
 
-        $scope.setHistory = SetReport.get({ name: $stateParams.set }, function () { }, alerts.catcher);
-        console.log($scope.setHistory);
+        $scope.setHistory = SetReport.get({ name: $stateParams.set }, function ( res ) {
+            // Angular's date filter expects milliseconds, but the
+            // "start" field is only given in seconds.
+            res.report.forEach(function ( it ) {
+                it.start *= 1000;
+            });
+
+            return res;
+        }, alerts.catcher);
 
         $scope.gridOptions = {
             data: 'setHistory.report',
@@ -20,7 +27,7 @@ angular.module('honeydew')
                 {
                     field: 'start',
                     displayName: 'Start Date',
-                    cellFilter: 'date:\'MM/dd/yyyy\''
+                    cellFilter: 'date: "medium"'
                 },
                 {
                     field: 'host',
@@ -40,4 +47,10 @@ angular.module('honeydew')
         };
 
 
+        $scope.$on('filetreeToggle', function (event, data) {
+            $timeout(function () {
+                $(window).resize();
+                $(window).resize();
+            });
+        });
     });

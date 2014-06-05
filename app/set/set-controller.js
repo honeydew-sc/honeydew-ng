@@ -27,7 +27,12 @@ angular.module('honeydew')
                 {
                     field: 'start',
                     displayName: 'Start Date',
-                    cellFilter: 'date: "medium"'
+                    cellTemplate:
+                    '    <div class="ngCellText" ng-class="col.colIndex()">' +
+                        '    <a href="/dashboard/sets/?setId={{ row.entity.id }}" target="_blank">' +
+                        '        <span ng-cell-text>{{row.getProperty(col.field) | date: "medium" }}</span>' +
+                        '    </a>' +
+                        '</div>'
                 },
                 {
                     field: 'host',

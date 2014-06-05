@@ -24,14 +24,14 @@
         <li class="dropdown file-nav-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-show="doc.isDirty()" class="dirty">*</span>File <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a id="new" ng-click="open('Create New')"><i class="fa fa-fw fa-lg fa-plus-square"></i> New File</a></li>
+            <li ng-hide="isSet"><a id="new" ng-click="open('Create New')"><i class="fa fa-fw fa-lg fa-plus-square"></i> New File</a></li>
             <li><a id="share" ng-click="open('Permalink')"><i class="fa fa-fw fa-lg fa-chain"></i> Share/Permalink</a></li>
-            <li><a id="copy" ng-click="open('Copy')"><i class="fa fa-fw fa-lg fa-copy"></i> Copy To...</a></li>
-            <li><a id="copy-temp" ng-click="open('CopyTemp')"><i class="fa fa-fw fa-lg fa-copy"></i> Temporary Copy</a></li>
-            <li><a id="move" ng-click="open('Move')"><i class="fa fa-fw fa-lg fa-cut"></i> Move/Rename</a></li>
-            <li class="divider"></li>
-            <li><a id="delete" ng-click="fileActions.Delete()"><i class="fa fa-fw fa-lg fa-trash-o"></i> Delete</a></li>
-            <li><a id="undoDelete" ng-show="$storage.undoFile" ng-click="undoDelete()"><i class="fa fa-fw fa-lg fa-trash-o fa-rotate-180"></i> Undo Delete</a></li>
+            <li ng-hide="isSet"><a id="copy" ng-click="open('Copy')"><i class="fa fa-fw fa-lg fa-copy"></i> Copy To...</a></li>
+            <li ng-hide="isSet"><a id="copy-temp" ng-click="open('CopyTemp')"><i class="fa fa-fw fa-lg fa-copy"></i> Temporary Copy</a></li>
+            <li ng-hide="isSet"><a id="move" ng-click="open('Move')"><i class="fa fa-fw fa-lg fa-cut"></i> Move/Rename</a></li>
+            <li ng-hide="isSet" class="divider"></li>
+            <li ng-hide="isSet"><a id="delete" ng-click="fileActions.Delete()"><i class="fa fa-fw fa-lg fa-trash-o"></i> Delete</a></li>
+            <li ng-hide="isSet"><a id="undoDelete" ng-show="$storage.undoFile" ng-click="undoDelete()"><i class="fa fa-fw fa-lg fa-trash-o fa-rotate-180"></i> Undo Delete</a></li>
           </ul>
         </li>
       </ul>

@@ -1,3 +1,12 @@
-.sets {
-    margin-left: 10px;
+.sets .CodeMirror {
+    z-index: 0;
+    height: 100%;
+    width: 50%;
+    float: left;
+    overflow: none;
+}
+
+.sets .sets-grid {
+    width: 50%;
+    float: right;
 }

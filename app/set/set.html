@@ -7,8 +7,14 @@
 </editor-nav>
 
 <div ng-class="tree.collapse ? 'filetree-collapsed' : 'filetree-expanded'"
-     class="{{ $storage.settings.font }} settings wrapper remaining-height">
-  <div class="sets">{{ file.contents }}</div>
+     class="{{ $storage.settings.font }} settings wrapper remaining-height sets ">
+  <ui-codemirror
+    ng-model="file.contents"
+    ui-codemirror-opts="editorOptions"
+    ng-class="'cm-s-' + $storage.settings.theme">
+  </ui-codemirror>
+
+  <div class="gridStyle sets-grid" ng-grid="gridOptions"></div>
 </div>
 
 <center-pane></center-pane>

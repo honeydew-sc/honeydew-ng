@@ -35,6 +35,9 @@ angular.module('honeydew', [
         var defaultPath = '/features/test/FAQ.feature';
         $urlRouterProvider.otherwise(defaultPath);
 
+        var setTitle = ['$rootScope', '$location', function ($rootScope, $location) {
+            $rootScope.title = $location.path().split('/').pop();
+        }];
         $stateProvider
             .state('editor', {
                 abstract: true,
@@ -42,12 +45,16 @@ angular.module('honeydew', [
                 controller: 'FileTreeCtrl'
             })
             .state('editor.features', {
-                url: '^/{path:.*\.(?:feature|phrase|set)}',
+                url: '^/{path:.*\.(?:feature|phrase)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl',
-                onEnter: ['$rootScope', '$location', function ($rootScope, $location) {
-                    $rootScope.title = $location.path().split('/').pop();
-                }]
+                onEnter: setTitle
+            })
+            .state('editor.sets', {
+                url: '/sets/:set',
+                templateUrl: 'set/set.html',
+                controller: 'SetCtrl',
+                onEnter: setTitle
             })
             .state('monitor', {
                 url: '/monitor',

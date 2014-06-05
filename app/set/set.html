@@ -1,0 +1,16 @@
+<editor-nav
+  control="jobs"
+  doc="doc"
+  file="file"
+  filename={{filename}}
+  stop-watching="stopWatching">
+</editor-nav>
+
+<div ng-class="tree.collapse ? 'filetree-collapsed' : 'filetree-expanded'"
+     class="{{ $storage.settings.font }} settings wrapper remaining-height">
+  <div class="sets">{{ file.contents }}</div>
+</div>
+
+<center-pane></center-pane>
+
+<pane-selector></pane-selector>

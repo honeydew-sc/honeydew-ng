@@ -16,7 +16,6 @@ module.exports = function(config) {
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/angular-resource/angular-resource.js',
-            'app/bower_components/angular-cookies/angular-cookies.js',
             'app/bower_components/angular-sanitize/angular-sanitize.js',
             'app/bower_components/angular-ui-codemirror/ui-codemirror.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
@@ -32,6 +31,7 @@ module.exports = function(config) {
             // our scripts
             'app/app.js',
             'app/editor/**/*.js',
+            'app/set/**/*.js',
             'app/components/**/*.js'
         ],
 

@@ -168,6 +168,8 @@ angular.module('honeydew')
 
         this.toggleTree = function () {
             this.collapse = !this.collapse;
+
+            $rootScope.$broadcast('filetreeToggle');
             $localStorage.filetreeCollapse = this.collapse;
         };
 

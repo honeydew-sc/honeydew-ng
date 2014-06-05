@@ -10,6 +10,7 @@ require 'rest-routes/files.php';
 require 'rest-routes/jobs.php';
 require 'rest-routes/monitor.php';
 require 'rest-routes/pusher.php';
+require 'rest-routes/report.php';
 require 'rest-routes/tree.php';
 require 'rest-routes/user.php';
 

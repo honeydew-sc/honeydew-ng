@@ -80,5 +80,23 @@ angular.module('honeydew')
             }
         };
 
+        res.prototype.createNew = function ( destination ) {
+            destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
+            var newFile = new res({
+                file: res.encode(destination.file),
+                contents: [
+                    'Feature:',
+                    '',
+                    'JIRA: ' + destination.jira,
+                    '# Email: ' + destination.author + '@sharecare.com',
+                    '',
+                    ' Scenario: ' + destination.jira
+                ].join("\n")
+            });
+
+            filetree.addLeaf(destination.file);
+            return newFile.$save();
+        };
+
         return res;
     });

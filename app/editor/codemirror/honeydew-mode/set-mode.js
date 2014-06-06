@@ -1,8 +1,8 @@
 CodeMirror.defineMode("set-mode", function () {
     return {
         token: function ( stream, state ) {
-            console.log('lookingAt: ', stream.string.substr(stream.pos));
-            console.log('peek: ', stream.peek());
+            // console.log('lookingAt: ', stream.string.substr(stream.pos));
+            // console.log('peek: ', stream.peek());
 
             if (stream.match(/.*.feature$/)) {
                 return "clickable-link";

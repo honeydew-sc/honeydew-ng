@@ -150,6 +150,13 @@ CodeMirror.defineMode("honeydew", function () {
                 state.inKeywordLine = true;
                 return "keyword";
             }
+            // SET
+            else if (state.allowPreamble && stream.match(/Set:|JIRA|Keep Open/)) {
+                return "keyword";
+            }
+            else if (state.allowPreamble && stream.match(/\$.+ /)) {
+                return "variable";
+            }
             // EXAMPLES
             else if (state.allowScenario && stream.match(/Examples:/)) {
                 state.allowPlaceholders = false;

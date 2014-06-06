@@ -5,7 +5,7 @@ angular.module('honeydew')
         $scope.editorOptions = {
             lineWrapping : false,
             lineNumbers: true,
-            readOnly: true,
+            readOnly: "nocursor",
             mode: 'set-mode',
             onLoad: function (cm) {
                 CmDomHelpers.focus(cm, $scope);

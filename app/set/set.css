@@ -1,6 +1,7 @@
 .sets .CodeMirror {
     z-index: 0;
     height: 50%;
+    width: calc(100% - 40px);
 }
 
 .sets .sets-grid {

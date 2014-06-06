@@ -32,29 +32,59 @@ angular.module('honeydew', [
         // single request, even backend ones. Let's stop doing that.
         document.cookie = 'setsAsJSON=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 
-        var defaultPath = '/features/test/FAQ.feature';
+        var defaultPath = '/';
         $urlRouterProvider.otherwise(defaultPath);
 
-        var setTitle = ['$rootScope', '$location', function ($rootScope, $location) {
-            $rootScope.title = $location.path().split('/').pop();
-        }];
+        var setTitleAndHistory = [
+            '$rootScope', '$location', '$localStorage', '$stateParams',
+            function ($rootScope, $location, $localStorage, $stateParams) {
+                if ($stateParams.path) {
+                    $rootScope.title = $location.path().split('/').pop();
+                    var history;
+
+                    if (!$localStorage.history) {
+                        $localStorage.history = [];
+                    }
+
+                    $localStorage.history.unshift($location.path());
+                    $localStorage.history = $localStorage.history.filter(function ( item, index, self ) {
+                        return self.indexOf(item) === index;
+                    });
+                }
+                else {
+                    $rootScope.title = 'Honeydew: Home';
+                }
+
+                // pare down the length of the history
+                while ($localStorage.history.length > 10) {
+                    $localStorage.history.pop();
+                    console.log($localStorage.history.length);
+                }
+            }];
+
         $stateProvider
             .state('editor', {
                 abstract: true,
                 templateUrl: 'components/filetree/filetree.html',
                 controller: 'FileTreeCtrl'
             })
+            .state('editor.landing', {
+                url: '/',
+                templateUrl: 'landing/landing.html',
+                controller: 'LandingCtrl',
+                onEnter: setTitleAndHistory
+            })
             .state('editor.features', {
                 url: '^/{path:.*\.(?:feature|phrase)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl',
-                onEnter: setTitle
+                onEnter: setTitleAndHistory
             })
             .state('editor.sets', {
                 url: '/sets/:set',
                 templateUrl: 'set/set.html',
                 controller: 'SetCtrl',
-                onEnter: setTitle
+                onEnter: setTitleAndHistory
             })
             .state('monitor', {
                 url: '/monitor',

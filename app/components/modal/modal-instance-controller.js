@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ModalInstanceCtrl', function ($scope, $modalInstance, filename, Author, Files, alerts, title, action) {
+    .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $location, filename, Author, Files, alerts, title, action) {
         $scope.filename = filename;
         $scope.title = title;
         $scope.action = action;
-        $scope.permalink = 'https://honeydew.be.jamconsultg.com/?/' + filename.split('/').splice(1).join('/');
+        $scope.permalink = 'https://honeydew.be.jamconsultg.com/#' + $location.path();
 
         $scope.dest = {
             file: filename.split('/').slice(0, -1).join('/') + '/'

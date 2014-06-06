@@ -36,25 +36,6 @@
         </li>
       </ul>
 
-      <form class="navbar-form navbar-left" name="document-options">
-        <button
-          class="btn btn-hdew"
-          popover="Undo: Ctrl-Z"
-          popover-placement="bottom"
-          popover-trigger="mouseenter"
-          ng-click="doc.undo()">
-          <i class="fa fa-undo"></i>
-        </button>
-        <button
-          class="btn btn-hdew"
-          popover="Redo: Ctrl-Y"
-          popover-placement="bottom"
-          popover-trigger="mouseenter"
-          ng-click="doc.redo()">
-          <i class="fa fa-repeat"></i>
-        </button>
-      </form>
-
       <job-options jira="doc.jira" control="control" filename={{filename}}></job-options>
 
       <!-- Split button -->

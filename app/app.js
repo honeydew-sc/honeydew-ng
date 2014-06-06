@@ -40,27 +40,25 @@ angular.module('honeydew', [
             function ($rootScope, $location, $localStorage, $stateParams) {
                 if ($stateParams.path) {
                     $rootScope.title = $location.path().split('/').pop();
-
                     var history;
 
                     if (!$localStorage.history) {
-                        history = $localStorage.history = [];
-                    }
-                    else {
-                        history = $localStorage.history;
+                        $localStorage.history = [];
                     }
 
-                    history.unshift($location.path());
-                    history = history.filter(function ( item, index, self ) {
+                    $localStorage.history.unshift($location.path());
+                    $localStorage.history = $localStorage.history.filter(function ( item, index, self ) {
                         return self.indexOf(item) === index;
                     });
-
-                    if (history.length > 10) {
-                        history.pop();
-                    }
                 }
                 else {
                     $rootScope.title = 'Honeydew: Home';
+                }
+
+                // pare down the length of the history
+                while ($localStorage.history.length > 10) {
+                    $localStorage.history.pop();
+                    console.log($localStorage.history.length);
                 }
             }];
 

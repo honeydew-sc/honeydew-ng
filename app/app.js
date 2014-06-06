@@ -32,7 +32,7 @@ angular.module('honeydew', [
         // single request, even backend ones. Let's stop doing that.
         document.cookie = 'setsAsJSON=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 
-        var defaultPath = '/features/test/FAQ.feature';
+        var defaultPath = '/';
         $urlRouterProvider.otherwise(defaultPath);
 
         var setTitleAndHistory = [
@@ -69,6 +69,12 @@ angular.module('honeydew', [
                 abstract: true,
                 templateUrl: 'components/filetree/filetree.html',
                 controller: 'FileTreeCtrl'
+            })
+            .state('editor.landing', {
+                url: '/',
+                templateUrl: 'landing/landing.html',
+                controller: 'LandingCtrl',
+                onEnter: setTitleAndHistory
             })
             .state('editor.features', {
                 url: '^/{path:.*\.(?:feature|phrase)}',

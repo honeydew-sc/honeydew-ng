@@ -68,7 +68,7 @@ class treeTests extends UnitTestCase {
         $tempSet2 = $tempSet1 + 5;
         file_put_contents($this->basePath . '/features/ng_test1.feature', 'Set: ' . $tempSet1);
         file_put_contents($this->basePath . '/features/ng_test2.feature', 'Set: ' . $tempSet1);
-        file_put_contents($this->basePath . '/features/ng_test3.feature', 'Set: @' . $tempSet1 . ' @' . $tempSet2);
+        file_put_contents($this->basePath . '/features/ng_test3.feature', 'Set:@' . $tempSet1 . ' @' . $tempSet2);
 
         $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();
         $tree = $response->body->tree;

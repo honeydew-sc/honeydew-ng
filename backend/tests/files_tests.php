@@ -31,6 +31,7 @@ class filesTests extends UnitTestCase {
 
     function cleanUp () {
         unlink($this->basePath . '/sets/tmp.set');
+        unlink($this->basePath . '/sets/atSymbol.set');
         unlink($this->tempFile);
     }
 
@@ -101,13 +102,16 @@ class filesTests extends UnitTestCase {
     }
 
     function testGetSet() {
-        file_put_contents($this->tempFile, 'Set: tmp');
+        file_put_contents($this->tempFile, 'Set: tmp @atSymbol');
         $fakeSet = $this->basePath . '/sets/tmp.set';
         touch($fakeSet);
         chmod($fakeSet, 0666);
         $response = \Httpful\Request::get($this->baseUrl . '/sets/tmp.set')->send();
 
         $this->assertPattern('/fake.feature/', $response->body->contents, 'GETting a set refreshes its contents');
+
+        $response = \Httpful\Request::get($this->baseUrl . '/sets/atSymbol.set')->send();
+        $this->assertPattern('/fake.feature/', $response->body->contents, 'GETting a set ignores @ symbols');
 
         $this->cleanUp();
     }

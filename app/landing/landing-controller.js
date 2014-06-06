@@ -5,9 +5,11 @@ angular.module('honeydew')
         $scope.history = $localStorage.history;
 
         // de dupe again just to be sure
-        $scope.history = $scope.history.filter(function ( item, index, self ) {
-            return self.indexOf(item) === index;
-        });
+        if ($scope.history) {
+            $scope.history = $scope.history.filter(function ( item, index, self ) {
+                return self.indexOf(item) === index;
+            });
+        }
 
         $scope.openModal = function () {
             var modalInstance = $modal.open({

@@ -15,7 +15,7 @@ $app->group('/tree', function () use ($app) {
 
             /* reduce the list of SetNames to a unique set */
             $sets = array_unique(array_reduce($sets, function ($acc, $it) {
-                $it = explode(' ', trim(preg_replace('/ @/', '', substr($it, 4))));
+                $it = explode(' ', trim(preg_replace('/\s+@?/', ' ', substr($it, 4))));
                 foreach ($it as $set) {
                     $acc[] = $set;
                 }

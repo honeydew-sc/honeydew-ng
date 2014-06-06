@@ -64,19 +64,23 @@ class treeTests extends UnitTestCase {
     }
 
     function testSetsListRefresh () {
-        $tempSet = time();
-        file_put_contents($this->basePath . '/features/ng_test1.feature', 'Set: ' . $tempSet);
-        file_put_contents($this->basePath . '/features/ng_test2.feature', 'Set: ' . $tempSet);
-        file_put_contents($this->basePath . '/features/ng_test3.feature', 'Set: @' . $tempSet);
+        $tempSet1 = time();
+        $tempSet2 = $tempSet1 + 5;
+        file_put_contents($this->basePath . '/features/ng_test1.feature', 'Set: ' . $tempSet1);
+        file_put_contents($this->basePath . '/features/ng_test2.feature', 'Set: ' . $tempSet1);
+        file_put_contents($this->basePath . '/features/ng_test3.feature', 'Set: @' . $tempSet1 . ' @' . $tempSet2);
 
         $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();
         $tree = $response->body->tree;
         $firstLeaf = $tree[0];
-        $this->assertEqual($tempSet . '.set', $firstLeaf->label, '/tree/sets: new sets are picked up');
+        $this->assertEqual($tempSet1 . '.set', $firstLeaf->label, '/tree/sets: new sets are picked up');
 
         foreach ($tree as $leaf) {
             $this->assertTrue(strpos($leaf->label, '@') === false, '/tree/sets: @ symbols are ignored');
         }
+
+        $secondLeaf = $tree[1];
+        $this->assertEqual($tempSet2 . '.set', $secondLeaf->label, '/tree/sets: consecutive @ symbols are handled');
 
         exec('find /opt/honeydew/features/ -name "*ng_test*.feature" | xargs -I{} rm {}');
         $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();

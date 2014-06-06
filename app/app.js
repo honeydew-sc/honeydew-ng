@@ -35,9 +35,35 @@ angular.module('honeydew', [
         var defaultPath = '/features/test/FAQ.feature';
         $urlRouterProvider.otherwise(defaultPath);
 
-        var setTitle = ['$rootScope', '$location', function ($rootScope, $location) {
-            $rootScope.title = $location.path().split('/').pop();
-        }];
+        var setTitleAndHistory = [
+            '$rootScope', '$location', '$localStorage', '$stateParams',
+            function ($rootScope, $location, $localStorage, $stateParams) {
+                if ($stateParams.path) {
+                    $rootScope.title = $location.path().split('/').pop();
+
+                    var history;
+
+                    if (!$localStorage.history) {
+                        history = $localStorage.history = [];
+                    }
+                    else {
+                        history = $localStorage.history;
+                    }
+
+                    history.unshift($location.path());
+                    history = history.filter(function ( item, index, self ) {
+                        return self.indexOf(item) === index;
+                    });
+
+                    if (history.length > 10) {
+                        history.pop();
+                    }
+                }
+                else {
+                    $rootScope.title = 'Honeydew: Home';
+                }
+            }];
+
         $stateProvider
             .state('editor', {
                 abstract: true,
@@ -48,13 +74,13 @@ angular.module('honeydew', [
                 url: '^/{path:.*\.(?:feature|phrase)}',
                 templateUrl: 'editor/editor.html',
                 controller: 'EditorCtrl',
-                onEnter: setTitle
+                onEnter: setTitleAndHistory
             })
             .state('editor.sets', {
                 url: '/sets/:set',
                 templateUrl: 'set/set.html',
                 controller: 'SetCtrl',
-                onEnter: setTitle
+                onEnter: setTitleAndHistory
             })
             .state('monitor', {
                 url: '/monitor',

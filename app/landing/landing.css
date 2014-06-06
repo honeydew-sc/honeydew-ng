@@ -10,6 +10,7 @@
 
 .landing .parent {
     padding: 12px;
+    word-wrap: break-word;
     border: 1px solid #ccc;
     border-radius: 6px;
 }

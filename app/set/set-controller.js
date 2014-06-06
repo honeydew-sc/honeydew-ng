@@ -6,6 +6,7 @@ angular.module('honeydew')
             lineWrapping : false,
             lineNumbers: true,
             readOnly: true,
+            mode: 'set-mode',
             onLoad: function (cm) {
                 CmDomHelpers.focus(cm, $scope);
                 CmDomHelpers.clickableLinks($);

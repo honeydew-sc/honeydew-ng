@@ -32,7 +32,7 @@ angular.module('honeydew')
             'Batch: All CS',
             'Batch: All CS, Serial'
         ];
-        var csAddress = '10.10.0.115';
+        var csAddress = '10.10.0.114';
         var cheeseSauce = addMetaInformation(csBrowsers, 'CS: ' + csAddress, {local: csAddress});
 
         var sauceBrowsers = [

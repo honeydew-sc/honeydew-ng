@@ -16,7 +16,7 @@ angular.module('honeydew')
                 templateUrl: 'components/modal/modal.html',
                 controller: 'ModalInstanceCtrl',
                 resolve: {
-                    filename: function () { return 'features/t.feature'; },
+                    filename: function () { return 'features/'; },
                     title: function () { return 'Create New'; },
                     action: function () {
                         return new Files().createNew;
@@ -32,7 +32,6 @@ angular.module('honeydew')
         $scope.viewGif = function (active) {
             var modal = $modal.open({
                 templateUrl: 'landing/gif.html',
-                size: 'lg',
                 resolve: {
                     active: function () { return active; }
                 },
@@ -43,7 +42,6 @@ angular.module('honeydew')
                     };
 
                     $scope.src = sources[active];
-                    console.log(active, $scope.src);
                 }
             });
         };

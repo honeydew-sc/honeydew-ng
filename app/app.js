@@ -54,7 +54,6 @@ angular.module('honeydew', [
                     // pare down the length of the history
                     while ($localStorage.history.length > 10) {
                         $localStorage.history.pop();
-                        console.log($localStorage.history.length);
                     }
                 }
                 else {

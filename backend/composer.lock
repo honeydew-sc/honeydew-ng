@@ -56,16 +56,16 @@
     "packages-dev": [
         {
             "name": "nategood/httpful",
-            "version": "0.2.11",
+            "version": "0.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nategood/httpful.git",
-                "reference": "0bf1423028abe2f630e1d2ef8d62486d6655b2f3"
+                "reference": "e923b8e3903bc81e9300a386fff1074364fb3bc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nategood/httpful/zipball/0bf1423028abe2f630e1d2ef8d62486d6655b2f3",
-                "reference": "0bf1423028abe2f630e1d2ef8d62486d6655b2f3",
+                "url": "https://api.github.com/repos/nategood/httpful/zipball/e923b8e3903bc81e9300a386fff1074364fb3bc1",
+                "reference": "e923b8e3903bc81e9300a386fff1074364fb3bc1",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,7 @@
                 "rest",
                 "restful"
             ],
-            "time": "2013-10-20 11:03:40"
+            "time": "2014-05-21 10:58:38"
         },
         {
             "name": "simpletest/simpletest",

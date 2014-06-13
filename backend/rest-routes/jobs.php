@@ -88,14 +88,15 @@ $app->group('/jobs', function () use ($app) {
 
     function getFailuresForSet($setId) {
         $pdo = hdewdb_connect();
-        $sth = $pdo->prepare("SELECT id, browser, host, featureFile FROM report WHERE setRunId = ? AND status != \"success\"");
+        $sth = $pdo->prepare("SELECT r.id, r.browser, r.host, r.featureFile, u.name FROM report r JOIN user u ON r.userId = u.id WHERE setRunId = ? AND status != \"success\"");
         $sth->execute(array($setId));
-        $res = $sth->fetchAll(PDO::FETCH_FUNC, function ($id, $browser, $host, $file) {
+        $res = $sth->fetchAll(PDO::FETCH_FUNC, function ($id, $browser, $host, $file, $name) {
             $job = new HoneydewJob(array(
                 'reportId' => $id,
                 'browser' => $browser,
                 'host' => $host,
-                'filename' => $file
+                'filename' => $file,
+                'username' => $name
             ));
 
             return $job->syncShellCommand();
@@ -106,7 +107,8 @@ $app->group('/jobs', function () use ($app) {
 
     function runInSerial( $cmds ) {
         $cmd = implode(' && ', $cmds) . ' > /dev/null 2>&1 &';
-        if (!preg_match('/::1/', $cmd)) {
+        $testUser = 'php_backend_tester';
+        if (!preg_match('/\^user=' . $testUser. '/', $cmd)) {
             system($cmd);
         }
 

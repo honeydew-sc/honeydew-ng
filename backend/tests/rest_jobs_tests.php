@@ -9,6 +9,7 @@ class jobsTests extends UnitTestCase {
     protected $baseUrl = "http://localhost/rest.php/jobs";
     protected $basePath = "/opt/honeydew/";
     protected $tempPath = "features/fake.feature";
+    protected $testUser = 'php_backend_tester';
 
     function testCanPost() {
         $response = \Httpful\Request::post($this->baseUrl)->send();
@@ -20,12 +21,9 @@ class jobsTests extends UnitTestCase {
             'host' => 'http://www.google.com',
             'browser' => array('phantomjs local'),
             'file' => $this->tempPath,
-            'username' => 'tests',
+            'username' => $this->testUser,
         );
 
-        /* these tests will never run because the 'local' parameter is
-        set to ::1 instead of 127.0.0.1; the webdriver standalone
-        doesn't receive requests at ::1 */
         $response = \Httpful\Request::post($this->baseUrl)
              ->sendsJson()
              ->body(json_encode($contents))
@@ -40,13 +38,10 @@ class jobsTests extends UnitTestCase {
             'host' => 'http://www.google.com',
             'browser' => array('phantomjs local', 'phantomjs local again'),
             'file' => $this->tempPath,
-            'username' => 'tests',
+            'username' => $this->testUser,
             'serial' => 'test'
         );
 
-        /* these tests will never run because the 'local' parameter is
-        set to ::1 instead of 127.0.0.1; the webdriver standalone
-        doesn't receive requests at ::1 */
         $response = \Httpful\Request::post($this->baseUrl)
              ->sendsJson()
              ->body(json_encode($contents))
@@ -68,12 +63,11 @@ class jobsTests extends UnitTestCase {
 
     function testCanRerunFailedSet() {
         $pdo = hdewdb_connect();
-        $sth = $pdo->prepare('UPDATE report set browser = "*firefox wd local", host = "http://www.realage.com", featureFile = "test/dan.feature", status = "failure" WHERE setRunId = 3 and id > 15;');
+        $sth = $pdo->prepare('UPDATE user set name = "' . $this->testUser .'" where id = 1');
+        $sth->execute();
+        $sth = $pdo->prepare('UPDATE report set browser = "*firefox wd local", host = "http://www.realage.com", featureFile = "test/dan.feature", status = "failure", userId = 1 WHERE setRunId = 3 and id > 15;');
         $sth->execute();
 
-        /* these tests will never run because the 'local' parameter is
-        set to ::1 instead of 127.0.0.1; the webdriver standalone
-        doesn't receive requests at ::1 */
         $response = \Httpful\Request::post($this->baseUrl . '/sets/rerunfailed/3')->send();
 
         $cmd = $response->body->command;

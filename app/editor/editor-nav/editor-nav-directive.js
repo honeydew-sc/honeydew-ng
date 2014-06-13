@@ -17,6 +17,8 @@ angular.module('honeydew')
                 scope.$storage = $localStorage;
                 scope.tree = filetree;
 
+                scope.isSet = $location.path().match(/sets\/.*\.set/);
+
                 // for the 'Other Locations' dropdown in the top
                 // right, we need to take care of properly setting the
                 // protocol
@@ -90,7 +92,9 @@ angular.module('honeydew')
 
                     'Delete': function () {
                         scope.$storage.undoFile = angular.copy(scope.file);
-                        scope.stopWatching();
+                        if (scope.stopWatching) {
+                            scope.stopWatching();
+                        }
                         scope.file.$delete().then(function (res) {
                             res.notes = scope.filename + " has been deleted";
                             alerts.addAlert(res, 3000);
@@ -99,23 +103,6 @@ angular.module('honeydew')
                         $location.path('/');
                     }
                 };
-
-                // scope.copy = function( destination ) {
-                //     scope.copied = angular.copy(scope.file);
-                //     scope.copied.file = Files.encode(destination);
-                //     scope.copied.$save().then( function (res) {
-                //         $location.path(res.file);
-                //     });
-                // };
-
-                // scope.move = function( destination ) {
-                //     scope.new = angular.copy(scope.file);
-                //     scope.new.file = Files.encode(destination);
-                //     scope.new.$save().then( function (res) {
-                //         scope.file.$delete();
-                //         $location.path(res.file);
-                //     });
-                // };
 
                 scope.undoDelete = function () {
                     var restore = new Files(scope.$storage.undoFile);

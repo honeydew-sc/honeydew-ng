@@ -1,19 +1,15 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('filetree', function ($resource, $localStorage, $location, $rootScope) {
+    .service('filetree', function ($resource, $localStorage, $location, $rootScope, Tree) {
         var self = this;
 
         if (typeof($localStorage.topLevelTree) === 'undefined') {
             $localStorage.topLevelTree = {};
         }
 
-        var backend = $resource('/rest.php/tree/:folder', {
-            folder: '@folder'
-        });
-
         this.get = function ( folder ) {
-            var promise = backend.get({ folder: folder }).$promise;
+            var promise = Tree.get({ folder: folder }).$promise;
 
             promise.then(function (res) {
                 persistTree(folder, res.tree);
@@ -168,11 +164,13 @@ angular.module('honeydew')
 
         this.toggleTree = function () {
             this.collapse = !this.collapse;
+
+            $rootScope.$broadcast('filetreeToggle');
             $localStorage.filetreeCollapse = this.collapse;
         };
 
         this.grep = function (folder, needle) {
-            return backend.get({
+            return Tree.get({
                 folder: folder,
                 needle: needle
             }).$promise.then(function (res) {

@@ -3,8 +3,55 @@
  Report bugs/issues here: https://github.com/marijnh/CodeMirror/issues
  */
 CodeMirror.defineMode("honeydew", function () {
+    var projects = [
+        'ADTECH',
+        'AREPORT',
+        'ARMYFIT',
+        'AFFEEDBACK',
+        'SCMOBILE',
+        'BACTES',
+        'BLOG',
+        'DS',
+        'DATA',
+        'DROZ',
+        'EMAILMARK',
+        'FRAMEWORK',
+        'HLTHLN',
+        'HLEXPORT',
+        'HELPDESK',
+        'HFPINTERNA',
+        'HDEW',
+        'MAINT',
+        'MOBILE',
+        'QA',
+        'REALAGE',
+        'SC',
+        'SCBS',
+        'SCFIT',
+        'SN',
+        'SCPHP',
+        'SCPROG',
+        'SCWEST',
+        'SCME',
+        'SSO',
+        'SITEOPS',
+        'STAR',
+        'TEAM',
+        'TIC',
+        'TMA',
+        'TMAFEEDBAC',
+        'TNATION',
+        'YUBARI'
+    ];
+
+    var stopEatingAt = projects.map( function (it) {
+        return it.substr(0, 1);
+    }).filter( function ( value, index, self ) {
+        return self.indexOf(value) === index;
+    }).join('');
+    var jiraProjectsRegex = new RegExp(projects.map(function ( it ) { return it + '\-\\d+'; }).join('|'));
+
     return {
-        lineComment: '#',
         startState: function () {
             return {
                 lineNumber: 0,
@@ -21,6 +68,9 @@ CodeMirror.defineMode("honeydew", function () {
             };
         },
         token: function (stream, state) {
+            // console.log('lookingAt: ', stream.string.substr(stream.pos));
+            // console.log('peek: ', stream.peek());
+
             if (stream.sol()) {
                 state.lineNumber++;
                 state.inKeywordLine = false;
@@ -35,7 +85,12 @@ CodeMirror.defineMode("honeydew", function () {
                 }
             }
 
-            stream.eatSpace();
+            // we don't want to eat space if we're trying to parse
+            // something like two links on the same line
+            if (stream.string.match(/[\|']/)) {
+                stream.eatSpace();
+            }
+
 
             if (state.allowMultilineArgument) {
                 // TABLE
@@ -65,13 +120,13 @@ CodeMirror.defineMode("honeydew", function () {
                 // we want to highlight new things in the middle of
                 // the line, we need to put their starting characters
                 // in here
-                stream.eatWhile(/[^$"'<#h]/);
+                var stopOn = /[^\s$"'<#hA-Z]/;
+                stream.eatWhile(stopOn);
             };
 
             stream.isComment = function () {
                 return this.indentation() === 0;
             };
-
 
             // LINE COMMENT
             if (state.inCommentLine) {
@@ -94,6 +149,13 @@ CodeMirror.defineMode("honeydew", function () {
                 state.allowMultilineArgument = false;
                 state.inKeywordLine = true;
                 return "keyword";
+            }
+            // SET
+            else if (state.allowPreamble && stream.match(/Set:|JIRA|Keep Open/)) {
+                return "keyword";
+            }
+            else if (state.allowPreamble && stream.match(/\$.+ /)) {
+                return "variable";
             }
             // EXAMPLES
             else if (state.allowScenario && stream.match(/Examples:/)) {
@@ -137,6 +199,9 @@ CodeMirror.defineMode("honeydew", function () {
             }
             // CLICKABLE LINKS
             else if (stream.match(/^https?:\/\/[^\s]*/)) {
+                return "clickable-link";
+            }
+            else if (stream.match(jiraProjectsRegex)) {
                 return "clickable-link";
             }
             // FALL THROUGH

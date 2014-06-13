@@ -1,0 +1,23 @@
+.wrapper-collapsed .landing {
+    margin-left: 250px;
+}
+
+.landing {
+    background: white;
+    position: fixed;
+    height: 100%;
+    width: calc(100% - 250px);
+}
+
+.landing video {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: auto;
+}
+
+.landing .parent {
+    padding: 12px;
+    word-wrap: break-word;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}

@@ -42,6 +42,11 @@ $app->group('/files', function () use ($app) {
     $app->get('/:filename+', function ($filename) use ($app) {
         try {
             $filename = resolveFilename($filename);
+
+            if (endswith($filename, '.set')) {
+                refreshSet($filename);
+            }
+
             echo json_encode(array(
                 "file" => encodeFilename($filename),
                 "contents" => file_get_contents($filename)
@@ -100,63 +105,82 @@ $app->group('/files', function () use ($app) {
             $app->halt(503, errorMessage($e->getMessage()));
         }
     });
+
+    function resolveFilename( $filename) {
+        $base = "/opt/honeydew/";
+        $filename = implode("/", $filename);
+
+        // handle invalid characters
+        $filename = preg_replace('/%2F/', '/', $filename);
+        $filename = preg_replace('/\s+/', '', $filename);
+        $filename = str_replace('&', 'and', $filename);
+        $filename = str_replace('//', '/', $filename);
+
+        return $base . $filename;
+    }
+
+    function encodeFilename( $filename ) {
+        return urlencode(str_replace('/opt/honeydew/', '', $filename));
+    }
+
+    function saveFile( $filename, $featureData ) {
+        $featureData = str_replace("\r", "", $featureData);
+
+        $newMD5 = hash('md5', $featureData);
+        $oldMD5 = hash('md5', @file_get_contents($filename));
+
+        if($oldMD5 != $newMD5) {
+            $dir = dirname($filename);
+            if(!is_dir($dir)) {
+                $old = umask(0);
+                mkdir($dir, 0777, true);
+                umask($old);
+            }
+
+            /* encode the data to avoid problems with (char-to-string 160)
+             */
+            file_put_contents($filename, utf8_encode($featureData));
+            $processOwner = posix_getpwuid(posix_geteuid());
+            $fileOwner = posix_getpwuid(fileowner($filename));
+            if ($fileOwner == $processOwner) {
+                chmod($filename, 0666);
+            }
+        }
+    }
+
+    function commitChanges($filename, $msg) {
+        $username = getUser();
+        $filename = str_replace("/opt/honeydew/", "", $filename);
+
+        $message = '"' . $username  . ' ' . $msg . '"';
+        $command = "sh /opt/honeydew-ui/user-push.sh " . $filename . " " . $message;
+        $output = $command;
+
+        if (isProduction()) {
+            exec($command, $output);
+        }
+
+        return $output;
+    }
+
+    function refreshSet( $setName ) {
+        $shortName = escapeshellcmd(substr(array_pop(explode('/', $setName)), 0, -4));
+
+        $escape = false;
+        $features = grepDirectory(
+            'features',
+            'Set:.*?\b' . $shortName . '\b',
+            '-rl -P',
+            $escape
+        );
+        $contents = array_reduce($features, function ($acc, $it) {
+            return $acc . substr($it, 9) . "\n";
+        });
+
+        if ($contents != "") {
+            file_put_contents($setName, $contents);
+        }
+    }
 });
-
-function resolveFilename( $filename) {
-    $base = "/opt/honeydew/";
-    $filename = implode("/", $filename);
-
-    // handle invalid characters
-    $filename = preg_replace('/%2F/', '/', $filename);
-    $filename = preg_replace('/\s+/', '', $filename);
-    $filename = str_replace('&', 'and', $filename);
-    $filename = str_replace('//', '/', $filename);
-
-    return $base . $filename;
-}
-
-function encodeFilename( $filename ) {
-    return urlencode(str_replace('/opt/honeydew/', '', $filename));
-}
-
-function saveFile( $filename, $featureData ) {
-    $featureData = str_replace("\r", "", $featureData);
-
-    $newMD5 = hash('md5', $featureData);
-    $oldMD5 = hash('md5', @file_get_contents($filename));
-
-    if($oldMD5 != $newMD5) {
-        $dir = dirname($filename);
-        if(!is_dir($dir)) {
-            $old = umask(0);
-            mkdir($dir, 0777, true);
-            umask($old);
-        }
-
-        /* encode the data to avoid problems with (char-to-string 160)
-         */
-        file_put_contents($filename, utf8_encode($featureData));
-        $processOwner = posix_getpwuid(posix_geteuid());
-        $fileOwner = posix_getpwuid(fileowner($filename));
-        if ($fileOwner == $processOwner) {
-            chmod($filename, 0666);
-        }
-    }
-}
-
-function commitChanges($filename, $msg) {
-    $username = getUser();
-    $filename = str_replace("/opt/honeydew/", "", $filename);
-
-    $message = '"' . $username  . ' ' . $msg . '"';
-    $command = "sh /opt/honeydew-ui/user-push.sh " . $filename . " " . $message;
-    $output = $command;
-
-    if (isProduction()) {
-        exec($command, $output);
-    }
-
-    return $output;
-}
 
 ?>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, $location, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers) {
         $scope.$storage = $localStorage;
 
         // put the tree on the scope so we can have
@@ -81,31 +81,8 @@ angular.module('honeydew')
                     $scope.jobs.executeJob();
                 };
 
-                // sorry. for whatever reason, the dropdown
-                // retains the open class when clicking into the
-                // codemirror. Seems like CM swallows the click or
-                // something; clicking on not CM parts of the page
-                // hide the dropdown just fine.
-                cm.on('focus', function (cm) {
-                    $scope.$apply( function () {
-                        document.querySelectorAll('.file-nav-dropdown')[0]
-                            .classList.remove('open');
-                    });
-                });
-
-                // :( I don't know why, but a directive
-                // with restrict: 'C' wasn't picking up on these spans
-                // when added by the mode highlighter. Manually
-                // $apply()ing and $digest()ing didn't seem to make a
-                // difference
-                $('.CodeMirror').on('click', '.cm-clickable-link', function(event) {
-                    var url;
-                    url = $(event.target).text();
-                    if (url.indexOf('http') !== 0) {
-                        url = 'http://' + url;
-                    }
-                    return window.open(url, '_blank');
-                });
+                CmDomHelpers.focus(cm, $scope);
+                CmDomHelpers.clickableLinks($);
             }
         };
 

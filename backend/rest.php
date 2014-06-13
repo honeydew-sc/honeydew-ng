@@ -13,6 +13,7 @@ require 'rest-routes/files.php';
 require 'rest-routes/jobs.php';
 require 'rest-routes/monitor.php';
 require 'rest-routes/pusher.php';
+require 'rest-routes/report.php';
 require 'rest-routes/tree.php';
 require 'rest-routes/upload.php';
 require 'rest-routes/user.php';
@@ -66,6 +67,22 @@ function endswith( $string, $test ) {
     $testlen = strlen($test);
     if ($testlen > $strlen) return false;
     return substr_compare($string, $test, -$testlen) === 0;
+}
+
+function grepDirectory($dir, $filter, $args = "-iRl", $escape = true) {
+    $basedir = "/opt/honeydew/";
+    $grep = "cd $basedir && grep";
+    if ($escape) {
+        $filter = '"' . escapeshellcmd($filter) . '" ';
+    }
+    else {
+        $filter = '"' . $filter . '"';
+    }
+    $query = "$grep $args $filter $dir";
+
+    exec($query, $result);
+
+    return $result;
 }
 
 ?>

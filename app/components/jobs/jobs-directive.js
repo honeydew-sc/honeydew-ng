@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $sessionStorage, Jobs, Files, Sets, Monitor, panes, alerts, randomString, liveReport, hostname) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Jobs, Files, Tree, Monitor, panes, alerts, randomString, liveReport, hostname) {
         return {
             scope: {
-                filename: '@',
                 jira: '=',
                 control: '=',
                 submitAction: '='
@@ -16,8 +15,12 @@ angular.module('honeydew')
                 if (scope.monitor) {
                     scope.browserList = availableBrowsers.set;
 
-                    Sets.get( {}, function (res) {
-                        scope.setList = res.sets;
+                    Tree.get( {
+                        folder: 'sets'
+                    }, function (res) {
+                        scope.setList = res.tree.map( function ( it ) {
+                            return it.label;
+                        });
                         scope.set = {
                             name: scope.setList[0]
                         };
@@ -62,8 +65,9 @@ angular.module('honeydew')
                         panes.openPane('report');
                         var channel = liveReport.switchChannel();
 
+                        var filename = $location.path().substr(1);
                         var job = angular.extend({}, scope.$storage.browser, {
-                            file: scope.filename,
+                            file: filename,
                             host: hostname.host,
                             channel: channel
                         });
@@ -71,8 +75,8 @@ angular.module('honeydew')
                         Jobs.execute(job);
 
                         var file = new Files({
-                            file: Files.encode(scope.filename),
-                            msg: scope.jira()
+                            file: Files.encode(filename),
+                            msg: scope.jira ? scope.jira() : ''
                         });
 
                         file.$commit()

@@ -1,0 +1,22 @@
+<editor-nav
+  control="jobs"
+  doc="doc"
+  file="file"
+  filename={{filename}}
+  stop-watching="stopWatching">
+</editor-nav>
+
+<div ng-class="tree.collapse ? 'filetree-collapsed' : 'filetree-expanded'"
+     class="{{ $storage.settings.font }} settings wrapper remaining-height sets ">
+  <ui-codemirror
+    ng-model="file.contents"
+    ui-codemirror-opts="editorOptions"
+    ng-class="'cm-s-' + $storage.settings.theme">
+  </ui-codemirror>
+
+  <div class="gridStyle sets-grid" ng-grid="gridOptions"></div>
+</div>
+
+<center-pane></center-pane>
+
+<pane-selector></pane-selector>

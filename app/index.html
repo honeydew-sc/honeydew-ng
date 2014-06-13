@@ -25,8 +25,10 @@
     <link rel="stylesheet" href="components/live-report/live-report.css" />
     <link rel="stylesheet" href="components/modal/modal.css" />
     <link rel="stylesheet" href="editor/editor.css" />
-    <link rel="stylesheet" href="monitor/monitor.css" />
+    <link rel="stylesheet" href="set/set.css" />
     <link rel="stylesheet" href="editor/editor-nav/editor-nav.css" />
+    <link rel="stylesheet" href="landing/landing.css" />
+    <link rel="stylesheet" href="monitor/monitor.css" />
 
     <link rel="stylesheet" href="editor/codemirror/fonts/carl.css" />
     <link rel="stylesheet" href="editor/codemirror/autocomplete-service/autocomplete-service.css" />
@@ -111,6 +113,9 @@
     <script src="config.js"></script>
     <script src="app.js"></script>
 
+    <!-- landing -->
+    <script src="landing/landing-controller.js"></script>
+
     <!-- monitor -->
     <script src="monitor/monitor-controller.js"></script>
 
@@ -119,8 +124,12 @@
     <script src="editor/editor-nav/editor-nav-directive.js"></script>
     <script src="components/autofocus/autofocus-directive.js"></script>
 
+    <!-- sets -->
+    <script src="set/set-controller.js"></script>
+
     <!-- customize codemirror -->
-    <script src="editor/codemirror/honeydew-mode/honeydew-mode.js"></script>
+    <script src="editor/codemirror/honeydew-mode/feature-mode.js"></script>
+    <script src="editor/codemirror/honeydew-mode/set-mode.js"></script>
     <script src="editor/codemirror/honeydew-mode/honeydew-lint.js"></script>
     <script src="editor/codemirror/autocomplete-service/autocomplete-service.js"></script>
     <script src="editor/codemirror/jump-cursor/jump-cursor.js"></script>
@@ -146,9 +155,11 @@
     <script src="components/available-browsers/available-browsers-service.js"></script>
     <script src="components/author/author-service.js"></script>
     <script src="components/capitalize/capitalize-filter.js"></script>
+    <script src="components/cm-dom-helper/cm-dom-helper-factory.js"></script>
     <script src="components/debounce/debounce-service.js"></script>
     <script src="components/files/files-factory.js"></script>
     <script src="components/filetree/filetree-controller.js"></script>
+    <script src="components/filetree/filetree-factory.js"></script>
     <script src="components/filetree/filetree-service.js"></script>
     <script src="components/hostname/hostname-picker-directive.js"></script>
     <script src="components/hostname/hostname-service.js"></script>
@@ -159,8 +170,10 @@
     <script src="components/modal/modal-instance-controller.js"></script>
     <script src="components/monitor/monitor-factory.js"></script>
     <script src="editor/panes/scroll-to/scroll-to-directive.js"></script>
+    <script src="components/report/set/set-factory.js"></script>
     <script src="components/copy-style/copy-style-directive.js"></script>
     <script src="components/random-string/random-string-service.js"></script>
+    <script src="components/substring/substring-filter.js"></script>
     <!-- endbuild -->
   </body>
 </html>

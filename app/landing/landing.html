@@ -1,0 +1,58 @@
+<div class="landing jumbotron container">
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="parent">
+        <h3>Common Tasks:</h3>
+        <p>
+          <ul>
+            <li>
+              Create a <a class="btn btn-primary btn-lg" ng-click="openModal()">New Feature File</a>
+            </li>
+            <li>
+              View the <a target="_blank" href="/dashboard">Dashboard</a>, or the <a target="_blank" href="/#/monitor">Monitor Setup</a>
+            </li>
+            <!-- <li>
+            View the <a href="#/reports">reports</a>, including <a href="#/reports/current">currently running tests</a>
+            </li> -->
+          </ul>
+        </p>
+
+
+        <div class="">
+          <h3>FAQ:</h3>
+          <p>How do I...
+            <ul>
+              <li>
+                <p><a ng-click="viewGif('feature')" class="btn btn-default" role="button">create new folders?</a> or <a class="btn btn-default" role="button" ng-click="viewGif('set')">new sets?</a></p>
+              </li>
+              <li>set up my <a role="button" target="_blank" href="https://gist.github.com/gempesaw/4a317a5076644f263642">Local Honeydew</a> or <a role="button" target="_blank" href="http://appium.io/getting-started.html?lang=en">Appium</a>?
+              </li>
+              <li>go to the <a href="/old.php">previous editor?</a>
+              </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <div class="parent">
+        <h3>Your recent files:</h3>
+        <p>
+          <span ng-show="!history.length">You don't have any history items. Browse a few features and come back!</span>
+          <ul ng-show="history.length">
+            <li ng-repeat="item in history">
+              <small><a href="#{{ item }}">{{ item | substring: 10 }}</a></small>
+            </li>
+          </ul>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row"></div>
+
+</div>

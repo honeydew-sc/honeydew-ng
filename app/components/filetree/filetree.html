@@ -9,9 +9,14 @@
                placeholder="Regex for {{ tab.label | lowercase | limitTo: tab.label.length - 1 }} filenames"
                ng-model="tab.needle"
                class="{{ tab.label }}-search form-control">
-        <span class="input-group-addon">
-          <span class="fa fa-search"></span>
-        </span>
+        <a class="input-group-addon btn btn-bland"
+           ng-click="refresh(tab.label)"
+           ng-mouseenter="tab.showRefreshLabel = true"
+           ng-mouseleave="tab.showRefreshLabel = false">
+          <span ng-show="tab.showRefreshLabel" class="slide"> Refresh </span>
+          <i class="fa fa-refresh"
+                ng-class="{'fa-spin': tab.refreshing}" ></i>
+        </a>
       </div>
 
       <div ng-show="tab.needle">

@@ -32,6 +32,7 @@ module.exports = function(config) {
             'app/app.js',
             'app/editor/**/*.js',
             'app/monitor/**/*.js',
+            'app/set/**/*.js',
             'app/components/**/*.js'
         ],
 

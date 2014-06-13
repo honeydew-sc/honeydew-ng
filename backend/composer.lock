@@ -50,44 +50,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2014-04-05 18:33:59"
-        },
-        {
-            "name": "tpyo/amazon-s3-php-class",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tpyo/amazon-s3-php-class.git",
-                "reference": "8413f6f70ad3bb79ae756958d4ba2238514b00af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/8413f6f70ad3bb79ae756958d4ba2238514b00af",
-                "reference": "8413f6f70ad3bb79ae756958d4ba2238514b00af",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "S3.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Donovan Schönknecht",
-                    "email": "don@tpyo.net"
-                }
-            ],
-            "description": "A standalone Amazon S3 (REST) client for PHP 5.2.x using CURL that does not require PEAR.",
-            "homepage": "https://github.com/tpyo/amazon-s3-php-class",
-            "time": "2014-05-15 07:48:56"
+            "time": "2014-02-16 18:18:25"
         }
     ],
     "packages-dev": [
@@ -223,7 +186,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "tpyo/amazon-s3-php-class": 20,
         "simpletest/simpletest": 20
     },
     "platform": [

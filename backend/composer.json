@@ -2,7 +2,6 @@
     "name": "gempesaw/honeydew-rest-backend",
     "description": "The ReSTful backend to the HD AngularJS rewrite",
     "require": {
-        "tpyo/amazon-s3-php-class": "dev-master",
         "slim/slim": "*"
     },
     "require-dev": {
@@ -13,7 +12,7 @@
     "authors": [
         {
             "name": "Daniel Gempesaw",
-            "email": "dgempesaw@sharecare.com"
+            "email": "gempesaw@gmail.com"
         }
     ]
 }

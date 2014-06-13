@@ -1,44 +1,5 @@
 [
     {
-        "name": "tpyo/amazon-s3-php-class",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tpyo/amazon-s3-php-class.git",
-            "reference": "8413f6f70ad3bb79ae756958d4ba2238514b00af"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/8413f6f70ad3bb79ae756958d4ba2238514b00af",
-            "reference": "8413f6f70ad3bb79ae756958d4ba2238514b00af",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2014-05-15 07:48:56",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "S3.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-2-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Donovan Schönknecht",
-                "email": "don@tpyo.net"
-            }
-        ],
-        "description": "A standalone Amazon S3 (REST) client for PHP 5.2.x using CURL that does not require PEAR.",
-        "homepage": "https://github.com/tpyo/amazon-s3-php-class"
-    },
-    {
         "name": "simpletest/simpletest",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -118,17 +79,17 @@
     },
     {
         "name": "slim/slim",
-        "version": "2.4.3",
-        "version_normalized": "2.4.3.0",
+        "version": "2.4.2",
+        "version_normalized": "2.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/codeguy/Slim.git",
-            "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106"
+            "reference": "3a2ac723f17b5d81607287ff28575d38b9fbc70e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/codeguy/Slim/zipball/4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
-            "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
+            "url": "https://api.github.com/repos/codeguy/Slim/zipball/3a2ac723f17b5d81607287ff28575d38b9fbc70e",
+            "reference": "3a2ac723f17b5d81607287ff28575d38b9fbc70e",
             "shasum": ""
         },
         "require": {
@@ -137,7 +98,7 @@
         "suggest": {
             "ext-mcrypt": "Required for HTTP cookie encryption"
         },
-        "time": "2014-04-05 18:33:59",
+        "time": "2014-02-16 18:18:25",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -166,17 +127,17 @@
     },
     {
         "name": "nategood/httpful",
-        "version": "0.2.13",
-        "version_normalized": "0.2.13.0",
+        "version": "0.2.11",
+        "version_normalized": "0.2.11.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nategood/httpful.git",
-            "reference": "e923b8e3903bc81e9300a386fff1074364fb3bc1"
+            "reference": "0bf1423028abe2f630e1d2ef8d62486d6655b2f3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nategood/httpful/zipball/e923b8e3903bc81e9300a386fff1074364fb3bc1",
-            "reference": "e923b8e3903bc81e9300a386fff1074364fb3bc1",
+            "url": "https://api.github.com/repos/nategood/httpful/zipball/0bf1423028abe2f630e1d2ef8d62486d6655b2f3",
+            "reference": "0bf1423028abe2f630e1d2ef8d62486d6655b2f3",
             "shasum": ""
         },
         "require": {
@@ -186,7 +147,7 @@
         "require-dev": {
             "phpunit/phpunit": "*"
         },
-        "time": "2014-05-21 10:58:38",
+        "time": "2013-10-20 11:03:40",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

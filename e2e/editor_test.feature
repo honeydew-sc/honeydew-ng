@@ -16,8 +16,7 @@ $alert = 'css=.alert div element'
  # chmod 0777 .
  Scenario: new file
  Given I am on the / page
-   When I click on the link $fileMenu
-   When I click on the link partial_link_text=New
+   When I click on the link link_text=New Feature File
    When I reset the input field id=input-file
    When I input features/Anew.feature into the input field id=input-file
    When I input random text into the input field id=input-jira
@@ -68,16 +67,14 @@ $alert = 'css=.alert div element'
  Given I am on the $new page
    When I click on the link $fileMenu
    When I click on the link partial_link_text=Delete
-     Then the url should match FAQ.feature
+     Then the url should match #\/$
      Then the page should not contain $input
-     Then the inner text of the css=.tree-label span element should be the same as $firstLeaf
 
  # undo delete
  Given I am on the $new page
    When I click on the link $fileMenu
    When I click on the link partial_link_text=Undo
      Then the url should match new.feature
-     Then the css=.tree-label span element should contain the text Anew.feature
 
  # cleanup
    When I click on the link $fileMenu

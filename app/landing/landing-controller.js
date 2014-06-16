@@ -35,14 +35,15 @@ angular.module('honeydew')
                 resolve: {
                     active: function () { return active; }
                 },
-                controller: function ($scope, active) {
-                    var sources = {
-                        feature: '/landing/new-feature.webm',
-                        set: '/landing/new-set.webm'
-                    };
+                controller: [
+                    '$scope', 'active', function ($scope, active) {
+                        var sources = {
+                            feature: '/landing/new-feature.webm',
+                            set: '/landing/new-set.webm'
+                        };
 
-                    $scope.src = sources[active];
-                }
+                        $scope.src = sources[active];
+                    }]
             });
         };
 

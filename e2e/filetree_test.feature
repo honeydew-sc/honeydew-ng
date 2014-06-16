@@ -20,6 +20,7 @@ $leaf = 'css=.tree-label span:contains("feature")'
 
  Scenario: can switch to a new file
  Given I am on the $test page
+   When I click on the link class=fa-chevron-right and do not end
    When I click on the link $branch
    When I click on the link $leaf
      Then the url should not match filetree_test

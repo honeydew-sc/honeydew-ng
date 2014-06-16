@@ -52,6 +52,7 @@ CodeMirror.defineMode("honeydew", function () {
     var jiraProjectsRegex = new RegExp(projects.map(function ( it ) { return it + '\-\\d+'; }).join('|'));
 
     return {
+        lineComment: '#',
         startState: function () {
             return {
                 lineNumber: 0,

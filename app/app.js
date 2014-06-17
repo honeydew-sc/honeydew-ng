@@ -38,7 +38,7 @@ angular.module('honeydew', [
         var setTitleAndHistory = [
             '$rootScope', '$location', '$localStorage', '$stateParams',
             function ($rootScope, $location, $localStorage, $stateParams) {
-                if ($stateParams.path) {
+                if ($stateParams.path || $stateParams.set) {
                     $rootScope.title = $location.path().split('/').pop();
                     var history;
 

@@ -44,7 +44,7 @@
           <span ng-show="!history.length">You don't have any history items. Browse a few features and come back!</span>
           <ul ng-show="history.length">
             <li ng-repeat="item in history">
-              <small><a href="#{{ item }}">{{ item | substring: 10 }}</a></small>
+              <small><a href="#{{ item.href }}">{{ item.label }}</a></small>
             </li>
           </ul>
         </p>

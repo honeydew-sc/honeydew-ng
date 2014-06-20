@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('availableBrowsers', function () {
+    .service('availableBrowsers', function (localConfig) {
+        var self = this;
+        self.set = [];
         // in the backend, we look specifically for 'local' to be in
         // the browser name to determine whether to send it to
         // saucelabs or not.
@@ -15,25 +17,22 @@ angular.module('honeydew')
         ];
         var local = addMetaInformation(localBrowsers, 'Current Local');
 
-        var gpBrowsers = [
-            'GP IE 10 Local',
-            'GP Chrome Local',
-            'GP FF Local',
-            'Batch: All GP',
-            'Batch: All GP, Serial'
-        ];
-        var gpAddress = "10.10.0.83";
-        var grandPoobah = addMetaInformation(gpBrowsers, 'GP: ' + gpAddress, {local: gpAddress});
+        // add the browsers from the local configuration
+        Object.keys(localConfig).forEach(function (key) {
+            var ip = localConfig[key];
+            var prefix = key.split('_').pop().toUpperCase();
 
-        var csBrowsers = [
-            'CS IE Local',
-            'CS Chrome Local',
-            'CS FF Local',
-            'Batch: All CS',
-            'Batch: All CS, Serial'
-        ];
-        var csAddress = '10.10.0.114';
-        var cheeseSauce = addMetaInformation(csBrowsers, 'CS: ' + csAddress, {local: csAddress});
+            var browsers = [
+                prefix + ' IE 10 Local',
+                prefix + ' Chrome Local',
+                prefix + ' FF Local',
+                'Batch: All ' + prefix ,
+                'Batch: All ' + prefix + ', Serial'
+            ];
+
+            var decoratedBrowsers = addMetaInformation(browsers, prefix + ': ' + ip, {local: ip});
+            self.set = self.set.concat(decoratedBrowsers);
+        });
 
         var sauceBrowsers = [
             'Windows 7 - Chrome',
@@ -44,6 +43,9 @@ angular.module('honeydew')
             'Sauce Mobile Emulator'
         ];
         var sauce = addMetaInformation(sauceBrowsers, 'SauceLabs OnDemand', {sauce: 'on'});
+
+        self.set = self.set.concat(sauce);
+        self.all = local.concat(self.set);
 
         function addMetaInformation( browsers, group, extra ) {
             // takes an array of browser names and returns an array of
@@ -77,7 +79,4 @@ angular.module('honeydew')
                 return browserMeta;
             });
         }
-
-        this.set = grandPoobah.concat(cheeseSauce).concat(sauce);
-        this.all = local.concat(this.set);
     });

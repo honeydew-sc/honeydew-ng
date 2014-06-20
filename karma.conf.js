@@ -29,6 +29,7 @@ module.exports = function(config) {
             'app/bower_components/angular-tree-control/angular-tree-control.js',
 
             // our scripts
+            'app/config.js',
             'app/app.js',
             'app/editor/**/*.js',
             'app/monitor/**/*.js',

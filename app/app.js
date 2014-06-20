@@ -10,7 +10,8 @@ angular.module('honeydew', [
     'ui.router',
     'btford.markdown',
     'doowb.angular-pusher',
-    'treeControl'
+    'treeControl',
+    'config'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         (function setLocationFromURL() {
@@ -94,11 +95,10 @@ angular.module('honeydew', [
                 }]
             });
     })
-    .config(function(PusherServiceProvider) {
+    .config(function(pusherConfig, PusherServiceProvider) {
         // pusherToken is globally defined in app/config.js
-        var token = typeof(pusherToken) === 'undefined' ? '' : pusherToken;
         PusherServiceProvider
-            .setToken(token)
+            .setToken(pusherConfig.pusher_auth_key)
             .setOptions({
                 authEndpoint: '/rest.php/pusher/auth'
             });

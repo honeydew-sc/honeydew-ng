@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('hostname', function ($rootScope, $localStorage) {
+    .service('hostname', function (hostnamePickerDomains, $rootScope, $localStorage) {
         var store = $localStorage;
         var hostnameService = {
             env: 'stage',
@@ -40,7 +40,7 @@ angular.module('honeydew')
                         store.host = base + app;
                     }
                     else if (this.app === 'Army' || this.app === 'TMA') {
-                        store.host = domains[this.app.toLowerCase()][this.env];
+                        store.host = hostnamePickerDomains[this.app.toLowerCase()][this.env];
                     }
                     else {
                         var q = this.env === 'prod' ? '' : '.';

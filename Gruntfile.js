@@ -341,6 +341,36 @@ module.exports = function (grunt) {
             }
         },
 
+        ngconstant: {
+            options: {
+                name: 'config',
+                dest: 'app/config.js',
+                constants: function () {
+                    var prefix, ret = {};
+                    grunt.file.read('/opt/honeydew/honeydew.ini')
+                        .split("\n")
+                        .filter(function (it) {
+                            return it !== '';
+                        }).forEach(function (line) {
+                            if (line.indexOf('[') !== -1) {
+                                prefix = line.slice(1, -1) + 'Config';
+                                ret[prefix] = {};
+                            }
+                            else {
+                                var data = line.split('=');
+                                ret[prefix][data[0]] = data[1];
+                            }
+                        });
+
+                    return ret;
+                },
+                values: {
+                    hostnamePickerDomains: grunt.file.readJSON('domains.json')
+                }
+            },
+            build: {}
+        },
+
         // e2e test settings
         shell: {
             copyDev: {

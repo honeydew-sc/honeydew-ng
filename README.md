@@ -41,3 +41,13 @@ $ ln -s backend/rest.php /Library/WebServer/Documents/rest.php
 ```
 
 [uncomment]: http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-9-mavericks/
+
+## configuration
+
+Configuration is copied out of the `/opt/honeydew/honeydew.ini` file
+via the `ngconstant:build` task into app/config.js. It also draws data
+from a `domains.json` file in the root of this repo. Empty copies of
+`app/config.js` and `domains.js` are kept in the module via git's
+`update-index`:
+
+    $ git update-index --assume-unchanged app/config.js

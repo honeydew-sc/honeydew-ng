@@ -2,6 +2,5 @@ node_modules
 /dist
 .tmp
 .sass-cache
-/app/config.js
 /e2e/new.feature
 /domains.json

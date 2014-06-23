@@ -444,17 +444,18 @@ module.exports = function (grunt) {
 
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'connect:dist:keepalive']);
+            grunt.task.run(['build', 'connect:dist:keepalive']);
         }
-
-        grunt.task.run([
-            'clean:server',
-            'configureProxies:server',
-            'bower-install',
-            'autoprefixer',
-            'connect:livereload',
-            'watch'
-        ]);
+        else {
+            grunt.task.run([
+                'clean:server',
+                'configureProxies:server',
+                'bower-install',
+                'autoprefixer',
+                'connect:livereload',
+                'watch'
+            ]);
+        }
     });
 
     grunt.registerTask('test', [
@@ -470,6 +471,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'bower-install',
+        'ngconstant:build',
         'useminPrepare',
         'autoprefixer',
         'concat',

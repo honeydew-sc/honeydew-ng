@@ -1,7 +1,3 @@
-// delete this comment and fill in the proper army urls to populate
-// this properly. TMA = UltimateMe. This populates the hostname picker
-// dropdown.
-
 {
     "army": {
         "prod": "<redacted>",

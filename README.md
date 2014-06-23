@@ -4,7 +4,7 @@
 
 The `bower` and `composer` dependencies are checked in to the repo, so
 you shouldn't have to `bower install` or `composer
-install`. Otherwise, just
+install`. So, just
 
 ```bash
 $ npm install

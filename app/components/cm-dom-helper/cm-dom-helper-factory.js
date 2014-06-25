@@ -28,12 +28,19 @@ angular.module('honeydew')
             $('.CodeMirror').on('click', '.cm-clickable-link', function(event) {
                 var url = $(event.target).text();
 
-                if (url.match(/\w+\-\d+/)) {
+                // link to sets from the features page
+                if (url.match(/^@[\w\d_\-\.]+/)) {
+                    url = '/#/sets/' + url.substring(1) + '.set';
+                }
+                // JIRA tickets
+                else if (url.match(/\w+\-\d+/)) {
                     url = 'https://arnoldmedia.jira.com/browse/' + url;
                 }
+                // from the set page, link to its features
                 else if (url.match(/.feature$/)) {
                     url = '/#/features/' + url;
                 }
+                // normal/boring links
                 else if (url.indexOf('http') !== 0) {
                     url = 'http://' + url;
                 }

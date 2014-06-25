@@ -121,7 +121,7 @@ CodeMirror.defineMode("honeydew", function () {
                 // we want to highlight new things in the middle of
                 // the line, we need to put their starting characters
                 // in here
-                var stopOn = /[^\s$"'<#hA-Z]/;
+                var stopOn = /[^\s$"'<#hA-Z@]/;
                 stream.eatWhile(stopOn);
             };
 
@@ -199,6 +199,9 @@ CodeMirror.defineMode("honeydew", function () {
                 return "variable";
             }
             // CLICKABLE LINKS
+            else if (stream.string.match(/^Set/) && stream.match(/^@[\w\d_\-\.]+/)) {
+                return "clickable-link";
+            }
             else if (stream.match(/^https?:\/\/[^\s]*/)) {
                 return "clickable-link";
             }

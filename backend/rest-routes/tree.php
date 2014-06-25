@@ -17,7 +17,9 @@ $app->group('/tree', function () use ($app) {
             $sets = array_unique(array_reduce($sets, function ($acc, $it) {
                 $it = explode(' ', trim(preg_replace('/\s+@?|@/', ' ', substr($it, 4))));
                 foreach ($it as $set) {
-                    $acc[] = $set;
+                    if ($set != '') {
+                        $acc[] = $set;
+                    }
                 }
                 return $acc;
             }, array()));

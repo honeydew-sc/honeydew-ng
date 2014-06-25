@@ -56,11 +56,16 @@ describe('cmAutocompleteService', function () {
         };
     };
 
+    var setupBackendExpects = function (res) {
+        httpMock.expectGET('/rest.php/tree/sets').respond({tree: []});
+        httpMock.expectGET('/rest.php/autocomplete').respond(res);
+    };
+
     beforeEach(module('honeydew'));
 
     beforeEach(inject(function (_cmAutocomplete_, _$httpBackend_) {
         httpMock = _$httpBackend_;
-        httpMock.expectGET('/rest.php/autocomplete').respond(httpResponse);
+        setupBackendExpects(httpResponse);
         cmAutocomplete = _cmAutocomplete_;
         httpMock.flush();
 
@@ -76,7 +81,7 @@ describe('cmAutocompleteService', function () {
     });
 
     it('can get updates from the server', function () {
-        httpMock.expectGET('/rest.php/autocomplete').respond(newResponse);
+        setupBackendExpects(newResponse);
         cmAutocomplete.populateAutocompleteSources();
         httpMock.flush();
 
@@ -92,7 +97,7 @@ describe('cmAutocompleteService', function () {
     });
 
     it('can fail gracefully when nothing matches', function () {
-        httpMock.expectGET('/rest.php/autocomplete').respond(newResponse);
+        setupBackendExpects(newResponse);
         cmAutocomplete.populateAutocompleteSources();
         httpMock.flush();
 

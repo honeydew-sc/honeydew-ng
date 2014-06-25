@@ -60,6 +60,7 @@ CodeMirror.defineMode("honeydew", function () {
                 inCommentLine: false,
                 allowFeature: true,
                 allowPreamble: false,
+                allowSets: false,
                 allowScenario: false,
                 allowSteps: false,
                 allowPlaceholders: false,
@@ -128,6 +129,17 @@ CodeMirror.defineMode("honeydew", function () {
             stream.isComment = function () {
                 return this.indentation() === 0;
             };
+
+            stream.isSet = function () {
+                return stream.string.match(/^Set: /);
+            };
+
+            if (stream.isSet()) {
+                state.allowSets = true;
+            }
+            else {
+                state.allowSets = false;
+            }
 
             // LINE COMMENT
             if (state.inCommentLine) {

@@ -250,7 +250,7 @@ it. You'll have to click on the replacement items:</p>
  When I click on the link link_text=United States
 </code></pre>
 
-</accordion-group><accordion-group heading="Omniture">
+</accordion-group><accordion-group heading="Omniture and Comscore">
 
 <h4>Normal Omniture Tags</h4>
 
@@ -258,20 +258,43 @@ it. You'll have to click on the replacement items:</p>
 
 <pre><code> Scenario: check omniture tags
 
-     Then the javascript variable &lt;tag&gt; should contain &lt;value&gt;
+     Then the omniture request should include &lt;tag&gt;=&lt;value&gt;
 
  Examples:
- | tag        | value
- | s.pagename | .sharecare.com
- | s.channel  | "homepage"
- | s.events   | event29
- | s.eVar25   | non
- | s.eVar34   | homepage
- | s.prop63   | New
+ | tag      | value
+ | s.events | event4
+ | events   | event4
+ | s.eVar1  | index
+ | eVar1    | index
+ | v1       | index
+ | s.prop8  | unregistered
+ | prop8    | un.*
 </code></pre>
 
-<p>Make sure to have the scenario on its own, so that the only thing
-being repeated is the javascript variable line.</p>
+<p>The <tag> can be in any of the following formats:</p>
+
+<ul>
+<li><code>eVar1</code>   - the most readable format; use this one if possible</li>
+<li><code>s.eVar1</code> - the old format used for javascript variables</li>
+<li><code>v1</code>      - query parameter format, this matches the actual request param</li>
+</ul>
+
+<h4>Comscore Tags</h4>
+
+<p>The rule for checking ComScore tags is very similar:</p>
+
+<pre><code> Scenario: check comscore tags
+
+     Then the comscore request should include &lt;tag&gt;=&lt;value&gt;
+
+ Examples:
+ | tag  | value
+ | c1   | 2
+</code></pre>
+
+<p>Unlike the omniture request, there is no leeway for the formats
+of the <tag>. It must exactly match the query parameter name - <code>c1</code>,
+<code>c2</code>, etc.</p>
 
 <h4>Omniture Events</h4>
 

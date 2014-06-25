@@ -10,6 +10,8 @@ angular.module('honeydew')
 
         var preambleHints = [
             'Existing Bug: ',
+            'Set: ',
+            'Proxy',
             'Email: ',
             'Subtitles: ',
             'Keep Open',

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('cmAutocomplete', function ($resource, $http, alerts) {
+    .service('cmAutocomplete', function ($resource, $http, alerts, Tree) {
         CodeMirror.commands.jumpOrAutocomplete = function (cm) {
             if (!CodeMirror.commands.jumpCursor(cm)) {
                 CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
@@ -25,19 +25,36 @@ angular.module('honeydew')
 
         var autocompleteService = {
             getHints:  function (cm) {
-                var cur = cm.getCursor();
-                var token = cm.getTokenAt(cur);
-                var needle = cm.getLine(cur.line);
-                var end = needle.length;
+                var cur = cm.getCursor(),
+                    token = cm.getTokenAt(cur),
+                    needle = cm.getLine(cur.line),
+                    end = needle.length,
 
-                var completionBackend, indent;
-                if (token.state.allowPreamble) {
+                    indent = 1,
+                    // our completion replaces the entire line with
+                    // the needle (if found)
+                    completionObject = {
+                        from: CodeMirror.Pos(cur.line, 0),
+                        to: CodeMirror.Pos(cur.line, end)
+                    },
+                    completionBackend;
+
+                if (token.state.allowSets) {
+                    // Autocompleting a set name should only replace
+                    // the token, instead of the entire line.
+                    completionObject = {
+                        from: CodeMirror.Pos(cur.line, token.start),
+                        to: CodeMirror.Pos(cur.line, token.end)
+                    };
+                    completionBackend = autocompleteService.getSets();
+                    needle = token.string;
+                }
+                else if (token.state.allowPreamble) {
+                    indent = 0;  // preamble items need no indentation
                     completionBackend = autocompleteService.getPreamble();
-                    indent = 0;
                 }
                 else {
                     completionBackend = autocompleteService.getSteps();
-                    indent = 1;
                 }
 
                 var result = completionBackend.filter( function (it) {
@@ -61,11 +78,7 @@ angular.module('honeydew')
                     return completion;
                 });
 
-                var completionObject = {
-                    list: result && result.length ? result : [],
-                    from: CodeMirror.Pos(cur.line, 0),
-                    to: CodeMirror.Pos(cur.line, end)
-                };
+                completionObject.list = result && result.length ? result : [];
 
                 CodeMirror.on(completionObject, "close", function () {
                     var found = cm.getLine(cur.line);
@@ -88,7 +101,17 @@ angular.module('honeydew')
                 return autocompleteService.validSteps;
             },
 
+            getSets: function () {
+                return autocompleteService.sets;
+            },
+
             populateAutocompleteSources: function () {
+                Tree.get({ folder: 'sets' }, function (res)  {
+                    autocompleteService.sets = res.tree.map( function (it) {
+                        return '@' + it.label.replace(/\.set$/, '');
+                    });
+                });
+
                 return $http.get('/rest.php/autocomplete').success(function (res) {
                     autocompleteService.phrases = res.phrases;
                     autocompleteService.suggestRules = res.suggestRules;

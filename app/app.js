@@ -11,6 +11,7 @@ angular.module('honeydew', [
     'btford.markdown',
     'doowb.angular-pusher',
     'treeControl',
+    'ui.select2',
     'config'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {

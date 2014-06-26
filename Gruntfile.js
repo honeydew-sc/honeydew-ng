@@ -348,7 +348,7 @@ module.exports = function (grunt) {
                 constants: function () {
                     var prefix, ret = {};
                     grunt.file.read('/opt/honeydew/honeydew.ini')
-                        .split("\n")
+                        .split(/\n/)
                         .filter(function (it) {
                             return it !== '';
                         }).forEach(function (line) {

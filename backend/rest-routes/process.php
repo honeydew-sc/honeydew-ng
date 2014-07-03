@@ -7,21 +7,31 @@ $app->group('/process', function () use ($app) {
             array(
                 array(
                     "name" => "saucelabs",
-                    "status" => "on"
+                    "status" => sauceTunnelStatus()
                 ),
                 array(
                     "name" => "browsermob",
-                    "status" => "on"
+                    "status" => browsermobStatus()
                 )
             ));
 
     });
 
-    $app->get('/saucelabs', function () use ($app) {
-        echo successMessage(array(
-            "name" => "saucelabs",
-            "status" => "on"
-        ));
-    });
+    function sauceTunnelStatus() {
+        $account = 'arnoldmedia';
+        $endpoint = "@saucelabs.com/rest/$account/tunnels";
+        $settings = readInConfSettings();
+        $auth = $account . ':' . $settings[$account];
+        $tunnel = "https://" . $auth . $endpoint;
+
+        $res = json_decode(file_get_contents($tunnel));
+        return @$res[0];
+    }
+
+    function browsermobStatus() {
+        $command = 'ps aux | grep [b]rowsermob | awk \'{print $2}\'';
+        exec($command, $output);
+        return @$output[0];
+    }
 
 });

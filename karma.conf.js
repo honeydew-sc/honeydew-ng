@@ -27,6 +27,7 @@ module.exports = function(config) {
             'app/bower_components/angular-markdown-directive/markdown.js',
             'app/bower_components/showdown/compressed/showdown.js',
             'app/bower_components/angular-tree-control/angular-tree-control.js',
+            'app/bower_components/angular-ui-select2/src/select2.js',
 
             // our scripts
             'app/config.js',

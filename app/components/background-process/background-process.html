@@ -2,7 +2,12 @@
   <h4>Process Status</h4>
 
   <ul>
-    <li ng-repeat="proc in processes.list">{{ proc.name }}: {{ proc.status }}</li>
+    <li ng-repeat="proc in processes.list">
+      {{ proc.name }}:
+      <span class="label {{ proc.status ? 'green' : 'red' }}">
+        {{ proc.status ? 'on' : 'off' }}
+      </span>
+    </li>
   </ul>
 
 </div>

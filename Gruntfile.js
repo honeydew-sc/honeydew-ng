@@ -180,8 +180,8 @@ module.exports = function (grunt) {
                     src: [
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%= yeoman.dist %>/styles/{,*/}*.css',
-                        '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webm,webp,svg}',
-                        '<%= yeoman.dist %>/styles/fonts/*'
+                        '<%= yeoman.dist %>/images/{,*/}*.{jpg,jpeg,gif,webm,webp,svg}',
+                        // '<%= yeoman.dist %>/styles/fonts/*'
                     ]
                 }
             }
@@ -287,6 +287,24 @@ module.exports = function (grunt) {
                     cwd: '.tmp/images',
                     dest: '<%= yeoman.dist %>/images',
                     src: ['generated/*']
+                }, {
+                    expand: true,
+                    flatten: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>/styles',
+                    src: ['bower_components/angular-ui-select2/**/*.png']
+                }, {
+                    expand: true,
+                    flatten: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>/images',
+                    src: ['bower_components/angular-tree-control/**/*.png']
+                }, {
+                    expand: true,
+                    flatten: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>/fonts',
+                    src: ['bower_components/font-awesome/fonts/*.*']
                 }]
             },
             styles: {

@@ -292,7 +292,7 @@ module.exports = function (grunt) {
                     flatten: true,
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>/styles',
-                    src: ['bower_components/angular-ui-select2/**/*.png']
+                    src: ['bower_components/select2/**/*.png']
                 }, {
                     expand: true,
                     flatten: true,

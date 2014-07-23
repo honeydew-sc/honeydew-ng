@@ -29,7 +29,7 @@ describe('HostnamePickerDirective', function () {
         expect(element.find('.env').length).toBe(3);
         hostname.app = 'SC';
         scope.$apply();
-        expect(element.find('.env').length).toBe(5);
+        expect(element.find('.env').length).toBe(8);
     });
 
     it('should list the apps', function () {

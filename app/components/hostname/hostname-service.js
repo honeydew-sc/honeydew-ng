@@ -8,7 +8,7 @@ angular.module('honeydew')
             app: 'SC',
 
             envs: {
-                SC: ['al', 'cm', 'dw', 'stage', 'prod'],
+                SC: ['al', 'cm', 'dw', 'al2', 'cm2', 'dw2', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
                 DS: ['qa', 'stage', 'prod'],
                 Mobile: ['iOS', 'Android'],

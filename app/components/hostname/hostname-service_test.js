@@ -31,7 +31,7 @@ describe('hostnameService', function () {
         expect(hostname.envOptions.length).toBe(3);
         hostname.app = 'SC';
         scope.$apply();
-        expect(hostname.envOptions.length).toBe(5);
+        expect(hostname.envOptions.length).toBe(8);
         hostname.app = 'DROZ';
         scope.$apply();
         expect(hostname.envOptions.length).toBe(3);
@@ -40,7 +40,7 @@ describe('hostnameService', function () {
     it('should have env and app options', function () {
         expect(Object.keys(hostname.apps).length).toBe(6);
         expect(Object.keys(hostname.envs.DROZ).length).toBe(3);
-        expect(Object.keys(hostname.envs.SC).length).toBe(5);
+        expect(Object.keys(hostname.envs.SC).length).toBe(8);
     });
 
     it('should replace "prod" with an empty string', function () {

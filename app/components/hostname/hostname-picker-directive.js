@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sc.hostname')
-    .directive('hostnamePicker', function (hostname) {
+    .directive('hostnamePicker', function ( hostname ) {
         return {
             template:
             '    <div class="hostname-group">' +
@@ -37,6 +37,15 @@ angular.module('sc.hostname')
             controller: function ( $scope, hostname ) {
                 var self = this;
                 self.name = hostname;
+
+                self.emit = function (app, env) {
+                    $scope.$emit('hostname:update', app, env);
+
+                    if (env) {
+                        self.open = false;
+                    }
+                };
+
             },
             controllerAs: 'Host'
         };

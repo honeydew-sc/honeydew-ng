@@ -4,9 +4,6 @@ angular.module('sc.hostname')
     .service('hostname', function (hostnamePickerDomains, $rootScope, $localStorage) {
         var store = $localStorage;
         var hostnameService = {
-            env: 'stage',
-            app: 'SC',
-
             envs: {
                 SC: ['al', 'cm', 'dw', 'al2', 'cm2', 'dw2', 'stage', 'prod'],
                 DROZ: ['qa', 'stage', 'prod'],
@@ -54,32 +51,50 @@ angular.module('sc.hostname')
             }
         };
 
-        // update localStorage when we change the env
-        $rootScope.$watch(function() {
-            return hostnameService.env;
-        }, function (newValue, oldValue) {
-            hostnameService.resolve();
-        });
+        (function initializeHostnameService () {
+            hostnameService.appOptions = Object.keys(hostnameService.apps);
 
-        // and the app value
-        $rootScope.$watch(function() {
-            return hostnameService.app;
-        }, function () {
-            var app = hostnameService.app;
+            if (store.host) {
+                hostnameService.host = store.host;
+            }
+            else {
+                hostnameService.host = 'https://www.stage.sharecare.com';
+            }
+
+            if (store.hostname) {
+                if (store.hostname.app) {
+                    setEnvOptions(store.hostname.app);
+                }
+
+                if (store.hostname.env) {
+                    hostnameService.env = store.hostname.env;
+                }
+            }
+            else {
+                store.hostname = {};
+            }
+        })();
+
+        function setEnvOptions(app, resetEnv) {
+            hostnameService.app = store.hostname.app = app;
             hostnameService.envOptions = hostnameService.envs[app];
+
+            if (resetEnv) {
+                hostnameService.env = undefined;
+            }
+        }
+
+        $rootScope.$on('hostname:update', function (event, app, env) {
+            if (app) {
+                setEnvOptions(app, true);
+            }
+
+            if (env) {
+                store.hostname.env = hostnameService.env = env;
+            }
+
             hostnameService.resolve();
         });
-
-        hostnameService.appOptions = Object.keys(hostnameService.apps);
-        hostnameService.envOptions = ['qa', 'stage', 'prod'];
-
-        if (store.host) {
-            hostnameService.env = undefined;
-            hostnameService.host = store.host;
-        }
-        else {
-            hostnameService.host = 'https://www.stage.sharecare.com';
-        }
 
         // we want to update localStorage when there are manual changes to the hostname
         $rootScope.$watch(function() {

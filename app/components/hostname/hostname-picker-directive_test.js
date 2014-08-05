@@ -1,7 +1,7 @@
 describe('HostnamePickerDirective', function () {
     var scope, $compile, hostname, element, hostValue;
 
-    beforeEach(module('honeydew'));
+    beforeEach(module('sc.hostname'));
 
     beforeEach(inject(function ($rootScope, _$compile_, _hostname_) {
         scope = $rootScope.$new();

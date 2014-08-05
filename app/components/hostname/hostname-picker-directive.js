@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('honeydew')
+angular.module('sc.hostname')
     .directive('hostnamePicker', function (hostname) {
         return {
             template:

@@ -30,12 +30,17 @@ module.exports = function(config) {
             'app/bower_components/angular-ui-select2/src/select2.js',
 
             // our scripts
+
+            // load components first so module dependencies are available
             'app/config.js',
+            'app/components/**/*-app.js',
+
             'app/app.js',
             'app/editor/**/*.js',
             'app/monitor/**/*.js',
             'app/set/**/*.js',
-            'app/components/**/*.js'
+
+            'app/components/**/*.js',
         ],
 
         // list of files / patterns to exclude

@@ -1,7 +1,7 @@
 describe('hostnameService', function () {
     var hostname, scope;
 
-    beforeEach(module('honeydew'));
+    beforeEach(module('sc.hostname'));
 
     beforeEach(inject(function (_hostname_, _$rootScope_) {
         hostname = _hostname_;

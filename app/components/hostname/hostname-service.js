@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('honeydew')
+angular.module('sc.hostname')
     .service('hostname', function (hostnamePickerDomains, $rootScope, $localStorage) {
         var store = $localStorage;
         var hostnameService = {

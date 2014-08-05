@@ -315,9 +315,9 @@ module.exports = function (grunt) {
             }
         },
 
-        // concat component modules
+        // concat hostname component modules
         concat: {
-            hostname: {
+            hostnameJs: {
                 src: [
                     '<%= yeoman.app %>/config.js',
                     '<%= yeoman.app %>/bower_components/ngstorage/ngStorage.min.js',
@@ -325,14 +325,26 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/components/hostname/*.js',
                     '!<%= yeoman.app %>/components/hostname/*_test.js'
                 ],
-                dest: '.tmp/hostname.js'
+                dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
+                // dest: '.tmp/concat/scripts/hostname.js'
+            },
+            hostnameCss: {
+                src: '<%= yeoman.app %>/components/hostname/*.css',
+                dest: '.tmp/styles/hostname.css'
             }
         },
 
         uglify: {
             hostname: {
-                src: '.tmp/hostname.js',
-                dest: '<%= yeoman.dist %>/scripts/hostname.js'
+                src: '.tmp/concat/scripts/hostname.js',
+                dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
+            }
+        },
+
+        cssmin: {
+            hostname: {
+                src: '.tmp/styles/hostname.css',
+                dest: '<%= yeoman.dist %>/styles/sc.hostname.min.css'
             }
         },
 
@@ -487,16 +499,16 @@ module.exports = function (grunt) {
         'ngconstant:build',
         'useminPrepare',
         'autoprefixer',
-        'concat',
+        'concat:generated',
         'ngAnnotate',
         'copy:dist',
         'cdnify',
-        'cssmin',
-        'uglify',
+        'cssmin:generated',
+        'uglify:generated',
         'rev',
         'usemin',
         'htmlmin',
-        'shell:copyDev'
+        'hostname'
     ]);
 
     grunt.registerTask('dist', function () {
@@ -512,5 +524,14 @@ module.exports = function (grunt) {
     grunt.registerTask('deployBack', [
         'shell:phpTests',
         'shell:deployBack'
+    ]);
+
+    grunt.registerTask('hostname', [
+        'concat:hostnameJs',
+        'concat:hostnameCss',
+        'ngAnnotate',
+        // 'uglify:hostname',
+        'cssmin:hostname',
+        'shell:copyDev'
     ]);
 };

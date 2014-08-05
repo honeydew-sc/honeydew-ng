@@ -341,6 +341,27 @@ module.exports = function (grunt) {
         //   dist: {}
         // },
 
+        // concat component modules
+        concat: {
+            hostname: {
+                src: [
+                    '<%= yeoman.app %>/config.js',
+                    '<%= yeoman.app %>/bower_components/ngstorage/ngStorage.min.js',
+                    '<%= yeoman.app %>/components/hostname/sc-hostname-app.js',
+                    '<%= yeoman.app %>/components/hostname/*.js',
+                    '!<%= yeoman.app %>/components/hostname/*_test.js'
+                ],
+                dest: '.tmp/hostname.js'
+            }
+        },
+
+        uglify: {
+            hostname: {
+                src: '.tmp/hostname.js',
+                dest: '<%= yeoman.dist %>/scripts/hostname.js'
+            }
+        },
+
         // Test settings
         karma: {
             unit: {

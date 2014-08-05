@@ -17,3 +17,9 @@
     left: -6px;
     top: 5px;
 }
+
+.btn.btn-hdew {
+    background-color: #f0fff0;
+    color: #444;
+    border: 1px solid #DDD;
+}

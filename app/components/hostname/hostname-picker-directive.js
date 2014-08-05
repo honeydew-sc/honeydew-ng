@@ -6,7 +6,7 @@ angular.module('sc.hostname')
             template:
             '    <div class="hostname-group">' +
                 '  <div class="input-group" ng-class="{ open: Host.open}">' +
-                '    <input class="form-control hostname" name="host" ng-model="Host.name.host" required placeholder="http://www.sharecare.com" ng-click="Host.open = false">' +
+                '    <input class="form-control hostname" name="host" ng-model="Host.name.host" required placeholder="http://www.sharecare.com" id="hostname" ng-click="Host.open = false">' +
                 '    <label class="sr-only" for="host">Hostname</label>' +
                 '    <button type="button" class="btn btn-default" ng-click="Host.open = !Host.open">' +
                 '      <span class="caret"></span>' +

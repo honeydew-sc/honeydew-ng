@@ -1,5 +1,5 @@
 describe('HostnamePickerDirective', function () {
-    var scope, $compile, hostname, element, hostValue;
+    var scope, $compile, hostname, element, hostValue, ctrl;
 
     beforeEach(module('sc.hostname'));
 
@@ -7,11 +7,12 @@ describe('HostnamePickerDirective', function () {
         scope = $rootScope.$new();
         $compile = _$compile_;
         hostname = _hostname_;
-        scope.hostname = hostname;
+        scope.name = hostname;
 
         var tpl = '<hostname-picker></hostname-picker>';
         element = angular.element(tpl);
         var elm = $compile(element)(scope);
+        ctrl = element.controller('hostnamePicker');
         scope.$digest();
         hostValue = element.find('.hostname');
     }));
@@ -26,9 +27,7 @@ describe('HostnamePickerDirective', function () {
     });
 
     it('should list the environments', function () {
-        expect(element.find('.env').length).toBe(3);
-        hostname.app = 'SC';
-        scope.$apply();
+        ctrl.emit('SC');
         expect(element.find('.env').length).toBe(8);
     });
 
@@ -37,9 +36,7 @@ describe('HostnamePickerDirective', function () {
     });
 
     it('should change the hostname', function () {
-        scope.hostname.app = 'SC';
-        scope.hostname.env = 'qa';
-        scope.$apply();
-        expect(scope.hostname.host).toMatch(/qa.*sharecare/);
+        ctrl.emit('SC', 'qa');
+        expect(scope.name.host).toMatch(/qa.*sharecare/);
     });
 });

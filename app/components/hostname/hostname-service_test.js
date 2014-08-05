@@ -1,11 +1,16 @@
 describe('hostnameService', function () {
-    var hostname, scope;
+    var hostname, scope, ctrl;
 
     beforeEach(module('sc.hostname'));
 
-    beforeEach(inject(function (_hostname_, _$rootScope_) {
+    beforeEach(inject(function (_hostname_, _$rootScope_, $compile) {
         hostname = _hostname_;
         scope = _$rootScope_;
+
+        var tpl = '<hostname-picker></hostname-picker>';
+        var element = angular.element(tpl);
+        var elm = $compile(element)(scope);
+        ctrl = element.controller('hostnamePicker');
     }));
 
     it('should get an instance of the hostname service', function () {
@@ -13,27 +18,22 @@ describe('hostnameService', function () {
     });
 
     it('should resolve the host from the env', function () {
-        hostname.env = 'qa';
-        scope.$apply();
+        ctrl.emit('SC', 'qa');
         expect(hostname.host).toMatch(/qa.*\.com/);
 
-        hostname.env = 'stage';
-        scope.$apply();
+        ctrl.emit('SC', 'stage');
         expect(hostname.host).toMatch(/stage.*\.com/);
     });
 
     it('should resolve the host from the app', function () {
-        hostname.app = 'SC';
+        ctrl.emit('SC', undefined);
         expect(hostname.host).toMatch(/sharecare\.com/);
     });
 
     it('should switch the envs according to host', function () {
-        expect(hostname.envOptions.length).toBe(3);
-        hostname.app = 'SC';
-        scope.$apply();
+        ctrl.emit('SC', undefined);
         expect(hostname.envOptions.length).toBe(8);
-        hostname.app = 'DROZ';
-        scope.$apply();
+        ctrl.emit('DROZ', undefined);
         expect(hostname.envOptions.length).toBe(3);
     });
 
@@ -44,20 +44,15 @@ describe('hostnameService', function () {
     });
 
     it('should replace "prod" with an empty string', function () {
-        hostname.env = 'prod';
-        scope.$apply();
+        ctrl.emit('SC', 'prod');
         expect(hostname.host).not.toMatch(/prod/);
     });
 
     it('should resolve mobile differently', function () {
-        hostname.app = 'Mobile';
-        hostname.env = 'iOS';
-        scope.$apply();
+        ctrl.emit('Mobile', 'iOS');
         expect(hostname.host).toMatch(/origin.*app\.zip/);
 
-        hostname.app = 'Mobile';
-        hostname.env = 'Android';
-        scope.$apply();
+        ctrl.emit('Mobile', 'Android');
         expect(hostname.host).toMatch(/origin.*apk$/);
     });
 });

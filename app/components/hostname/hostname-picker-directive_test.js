@@ -28,6 +28,7 @@ describe('HostnamePickerDirective', function () {
 
     it('should list the environments', function () {
         ctrl.emit('SC');
+        scope.$apply();
         expect(element.find('.env').length).toBe(8);
     });
 

@@ -64,14 +64,17 @@ angular.module('sc.hostname')
             if (store.hostname) {
                 if (store.hostname.app) {
                     setEnvOptions(store.hostname.app);
+                    if (store.hostname.env) {
+                        hostnameService.env = store.hostname.env;
+                    }
                 }
-
-                if (store.hostname.env) {
-                    hostnameService.env = store.hostname.env;
+                else {
+                    setEnvOptions('SC');
                 }
             }
             else {
                 store.hostname = {};
+                setEnvOptions('SC');
             }
         })();
 

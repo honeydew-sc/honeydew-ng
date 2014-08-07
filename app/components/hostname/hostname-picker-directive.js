@@ -17,13 +17,13 @@ angular.module('sc.hostname')
                 '        <span aria-hidden="true">&times;</span>' +
                 '        <span class="sr-only">Close</span>' +
                 '      </button>' +
-                '      <li>' +
+                '      <li class="hostname-apps">' +
                 '        <div class="btn-group">' +
                 '          <button ng-repeat="app in Host.name.appOptions" type="button" class="btn btn-hdew app" ng-model="Host.name.app" btn-radio="app" ng-click="Host.emit(app, undefined)">{{ app }}</button>' +
                 '        </div>' +
                 '      </li>' +
                 '      <li class="divider"></li>' +
-                '      <li>' +
+                '      <li class="hostname-envs">' +
                 '        <div class="btn-group">' +
                 '          <button ng-repeat="env in Host.name.envOptions" type="button" class="btn btn-hdew env" ng-model="Host.name.env" btn-radio="env" ng-click="Host.emit(undefined, env)">{{ env }}</button>' +
                 '        </div>' +

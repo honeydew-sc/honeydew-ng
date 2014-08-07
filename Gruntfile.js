@@ -423,7 +423,7 @@ module.exports = function (grunt) {
                     ].join(' ');
                     var commands = [];
 
-                    glob('e2e/*_test.feature', {sync: true}, function (er, files) {
+                    glob('**/*/*_test.feature', {sync: true}, function (er, files) {
                         files.forEach( function (feature) {
                             commands.push(command + feature);
                         });

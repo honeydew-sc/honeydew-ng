@@ -47,6 +47,8 @@ angular.module('sc.hostname')
                     }
 
                     this.host = store.host;
+
+                    $rootScope.$emit('hostname:changed', this.host);
                 }
             }
         };

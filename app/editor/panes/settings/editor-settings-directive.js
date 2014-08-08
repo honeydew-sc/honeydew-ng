@@ -13,7 +13,11 @@ angular.module('honeydew')
                 $scope.$storage = $localStorage.$default({
                     settings: {
                         font: 'Default',
-                        theme: 'xq-light'
+                        theme: 'xq-light',
+                        collapse: {
+                            tree: 'false',
+                            execute: 'false'
+                        }
                     }
                 });
 

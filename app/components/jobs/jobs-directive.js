@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Jobs, Files, Tree, Monitor, panes, alerts, randomString, liveReport, hostname) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Jobs, Files, Tree, filetree, Monitor, panes, alerts, randomString, liveReport, hostname) {
         return {
             scope: {
                 jira: '=',
@@ -89,6 +89,8 @@ angular.module('honeydew')
                             host: hostname.host,
                             channel: channel
                         });
+
+                        filetree.closeTreeViaSettings( 'execute' );
 
                         Jobs.execute(job);
 

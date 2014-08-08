@@ -28,6 +28,13 @@ angular.module('honeydew')
 
         this.show = function (node) {
             $location.path(node.folder + '/' + node.label);
+            self.closeTreeViaSettings( 'tree' );
+        };
+
+        this.closeTreeViaSettings = function ( type ) {
+            if ($localStorage.settings.collapse[type] === 1 && !self.collapse) {
+                self.toggleTree();
+            }
         };
 
         this.addLeaf = function (filename, tree) {

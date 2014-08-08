@@ -26,6 +26,46 @@
     </select>
   </div>
 
-  </select>
+  <div class="form-group">
+    Collapse file tree on file selection: <br />
+    <div class="btn-group">
+      <label class="btn btn-default"
+             ng-model="$storage.settings.collapse.tree"
+             btn-radio="1"
+             uncheckable
+             >
+        Yes
+      </label>
+      <label class="btn btn-default"
+             ng-model="$storage.settings.collapse.tree"
+             btn-radio="0"
+             uncheckable
+             >
+        No
+      </label>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    Collapse tree on job execution: <br />
+    <div class="btn-group">
+      <label class="btn btn-default"
+             ng-model="$storage.settings.collapse.execute"
+             btn-radio="1"
+             uncheckable
+             >
+        Yes
+      </label>
+      <label class="btn btn-default"
+             ng-model="$storage.settings.collapse.execute"
+             btn-radio="0"
+             uncheckable
+             >
+        No
+      </label>
+    </div>
+
+  </div>
 
 </div>

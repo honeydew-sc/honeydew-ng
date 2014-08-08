@@ -8,6 +8,7 @@ angular.module('honeydew')
             restrict: 'E',
             link: function (scope, element) {
                 scope.panes = panes;
+                panes.closePane();
 
                 scope.togglePaneWithScope = function (pane) {
                     if (pane.include) {

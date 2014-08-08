@@ -17,6 +17,7 @@
             ng-init="$storage.browser = browserList[0]"
             ng-model="$storage.browser"
             required
+            id="browser-choice"
             ng-options="b.label group by b.group for b in browserList">
     </select>
   </div>

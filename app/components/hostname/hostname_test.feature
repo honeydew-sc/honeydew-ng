@@ -3,7 +3,8 @@ Feature: Validate Hostname Service
 $test = '/#/monitor'
 
  Scenario: Environments show initially
- NB: This must be the first scenario!
+ NB: This must be the first scenario! The whole point of this test is
+ to check with an empty localStorage cache
 
  Given I am on the <test> page
    When I click on the link css=.hostname-group button

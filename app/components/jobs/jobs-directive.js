@@ -50,15 +50,33 @@ angular.module('honeydew')
                 // setting a default for an ng-options select, so
                 // we have to do it manually.
                 if (scope.$storage.browser) {
-                    scope.browserList.forEach( function (element, index, array) {
-                        if (scope.$storage.browser.label === element.label) {
-                            scope.$storage.browser = element;
-                        }
-                    });
+                    selectBrowser( scope.$storage.browser.label );
                 }
                 else {
                     scope.$storage.browser = scope.browserList[1];
                 }
+
+                function selectBrowser ( label ) {
+                    scope.browserList.forEach( function (element, index, array) {
+                        if (label === element.label) {
+                            scope.$storage.browser = element;
+                        }
+                    });
+                }
+
+                var cleanup = scope.$root.$on('hostname:changed', function (event, hostname) {
+                    var mobile = 'Local Mobile Emulator';
+                    if (hostname.match(/origin.*honeydew\//)) {
+                        selectBrowser( mobile );
+                    }
+                    else if (scope.$storage.browser.label === mobile) {
+                        selectBrowser( 'Chrome Local' );
+                    }
+                });
+
+                scope.$on('$destroy', function () {
+                    cleanup();
+                });
 
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {

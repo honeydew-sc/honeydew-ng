@@ -1,7 +1,7 @@
 'use strict';
 
 describe('filetreeService', function () {
-    var httpMock, filetree, scope, location;
+    var httpMock, filetree, scope, location, store;
     var root, oldLength;
     var base = '/rest.php/tree/';
     var folder = 'features';
@@ -27,11 +27,12 @@ describe('filetreeService', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_filetree_, _$rootScope_, _$httpBackend_, _$location_) {
+    beforeEach(inject(function (_filetree_, _$rootScope_, _$httpBackend_, _$location_, _$localStorage_) {
         location = _$location_;
         filetree = _filetree_;
         scope = _$rootScope_;
         httpMock = _$httpBackend_;
+        store = _$localStorage_;
 
         httpMock.expectGET( base + folder ).respond({ tree: features });
         filetree.get(folder);
@@ -81,11 +82,14 @@ describe('filetreeService', function () {
         expect(filetree.collapse).toBe(false);
     });
 
-    it('should be able to set the location', function () {
+    iit('should be able to set the location', function () {
         var fakeNode = {
             folder: '/folder',
             label: 'label'
         };
+
+        // mock out a fake settings object
+        store.settings = { collapse: {} };
 
         filetree.show(fakeNode);
         scope.$apply();

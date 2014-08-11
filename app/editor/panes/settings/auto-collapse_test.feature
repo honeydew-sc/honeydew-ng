@@ -19,7 +19,6 @@ $leaf = 'css=.tree-label span:contains("feature")'
    When I click on the link class=settings-pane
    When I click on the link css=label[btn-radio]
 
-   When I click on the link $branch
    When I click on the link $leaf
      Then the class=fa-chevron-right element should be visible
 

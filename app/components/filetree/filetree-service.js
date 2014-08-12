@@ -32,7 +32,10 @@ angular.module('honeydew')
         };
 
         this.closeTreeViaSettings = function ( type ) {
-            if ($localStorage.settings.collapse[type] === 1 && !self.collapse) {
+            if ($localStorage.settings &&
+                $localStorage.settings.collapse &&
+                $localStorage.settings.collapse[type] === 1 &&
+                !self.collapse) {
                 self.toggleTree();
             }
         };

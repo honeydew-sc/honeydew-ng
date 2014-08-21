@@ -515,14 +515,11 @@ module.exports = function (grunt) {
         grunt.task.run(['build']);
     });
 
-    grunt.registerTask('deployFront', [
+    grunt.registerTask('deploy', [
         'build',
         'karma:unit',
-        'shell:deployFront'
-    ]);
-
-    grunt.registerTask('deployBack', [
         'shell:phpTests',
+        'shell:deployFront',
         'shell:deployBack'
     ]);
 

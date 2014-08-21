@@ -5,9 +5,10 @@ angular.module('sc.hostname')
         var store = $localStorage;
         var hostnameService = {
             envs: {
-                SC: ['al', 'cm', 'dw', 'al2', 'cm2', 'dw2', 'stage', 'prod'],
-                DROZ: ['qa', 'stage', 'prod'],
-                DS: ['qa', 'stage', 'prod'],
+                SC: ['al', 'cm', 'dw', 'al2', 'cm2', 'dw2', 'hca', 'stage', 'prod'],
+                DROZ: ['qa', 'stage', 'prod' ],
+                DS: ['qa', 'stage', 'prod' ],
+                HCA: [ 'qa', 'stage', 'prod' ],
                 Mobile: ['iOS', 'Android'],
                 Army: ['dev', 'stage', 'test', 'prod'],
                 TMA: ['dev', 'stage', 'test', 'prod']
@@ -16,6 +17,7 @@ angular.module('sc.hostname')
             apps: {
                 SC: 'sharecare.com',
                 DROZ: 'doctoroz.com',
+                HCA: 'hca.sharecare.com',
                 DS: 'dailystrength.org',
                 Mobile: '',
                 Army: '',

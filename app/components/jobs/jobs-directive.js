@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Jobs, Files, Tree, filetree, Monitor, panes, alerts, randomString, liveReport, hostname) {
+    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Jobs, Files, Tree, filetree, Monitor, panes, alerts, randomString, liveReport, hostname, BackgroundStatus) {
         return {
             scope: {
                 jira: '=',
@@ -78,6 +78,7 @@ angular.module('honeydew')
                     cleanup();
                 });
 
+                // TODO: this is getting too big
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         panes.openPane('report');
@@ -90,9 +91,27 @@ angular.module('honeydew')
                             channel: channel
                         });
 
-                        filetree.closeTreeViaSettings( 'execute' );
 
-                        Jobs.execute(job);
+                        filetree.closeTreeViaSettings( 'execute' );
+                        if (job.label.match(/local(?! mobile)/i)) {
+                            BackgroundStatus.get({
+                                status: 'webdriver',
+                                local: job.local || '127.0.0.1'
+                            }, function (res) {
+                                if (res.webdriverStatus) {
+                                    Jobs.execute(job);
+                                }
+                                else {
+                                    alerts.addAlert({
+                                        type: 'danger',
+                                        msg: 'The webdriver server at ' + res.serverAddress + ':4444 is unreachable! Your test is not running!'
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            Jobs.execute(job);
+                        }
 
                         var file = new Files({
                             file: Files.encode(filename),

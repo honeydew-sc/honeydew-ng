@@ -14,7 +14,7 @@ angular.module('honeydew')
                 evalRule: 'client-eval-rule',
                 finish: 'client-finish'
             },
-            autoVacateDelay: 5 * 60 * 1000,
+            autoVacateDelay: 3 * 60 * 1000,
             breakpoint: {
                 rule: 'When I set a breakpoint',
                 alert: {

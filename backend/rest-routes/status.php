@@ -1,5 +1,5 @@
 <?php
-$app->group('/process', function () use ($app) {
+$app->group('/status', function () use ($app) {
 
     $app->get('/', function() use ($app) {
 

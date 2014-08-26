@@ -1,8 +1,8 @@
-<div class="background-process">
+<div class="background-status">
   <h4>Process Status</h4>
 
   <ul>
-    <li ng-repeat="proc in processes.list">
+    <li ng-repeat="proc in statuses.list">
       {{ proc.name }}:
       <span class="label {{ proc.status ? 'green' : 'red' }}">
         {{ proc.status ? 'on' : 'off' }}

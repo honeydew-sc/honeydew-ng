@@ -2,8 +2,8 @@
 $app->group('/status', function () use ($app) {
 
     $app->get('/', function() use ($app) {
+        $wd = localWebdriverStatus(getRemoteServerAddress());
 
-        $wd = localWebdriverStatus();
         echo json_encode(
             array(
                 array(
@@ -28,10 +28,7 @@ $app->group('/status', function () use ($app) {
 
         /* If it's unavailable, try to use HTTP_X_FORWARDED_FOR header. */
         if (!isset($wd_server) || !$wd_server) {
-            $wd_server = $_SERVER['REMOTE_ADDR'];
-            if (array_key_exists("HTTP_X_FORWARDED_FOR", $_SERVER) || $wd_serverAddress == "192.168.169.9") {
-                $wd_server = $_SERVER["HTTP_X_FORWARDED_FOR"];
-            }
+            $wd_server = getRemoteServerAddress();
         }
         $wd = localWebdriverStatus($wd_server);
 
@@ -40,6 +37,18 @@ $app->group('/status', function () use ($app) {
             'serverAddress' => $wd['remote_server_address']
         ));
     });
+
+    function getRemoteServerAddress() {
+        $remoteServer = $_SERVER['REMOTE_ADDR'];
+        if (array_key_exists("HTTP_X_FORWARDED_FOR", $_SERVER) || $remoteServer == "192.168.169.9") {
+            $remoteServer = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        else {
+            $remoteServer = '127.0.0.1';
+        }
+
+        return $remoteServer;
+    }
 
     function sauceTunnelStatus() {
         $account = 'arnoldmedia';

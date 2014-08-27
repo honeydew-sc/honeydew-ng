@@ -96,7 +96,7 @@ angular.module('honeydew')
                         if (job.label.match(/local(?! mobile)/i)) {
                             BackgroundStatus.get({
                                 status: 'webdriver',
-                                local: job.local || '127.0.0.1'
+                                local: job.local
                             }, function (res) {
                                 if (res.webdriverStatus) {
                                     Jobs.execute(job);

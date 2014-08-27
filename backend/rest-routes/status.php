@@ -23,7 +23,17 @@ $app->group('/status', function () use ($app) {
     });
 
     $app->get('/webdriver', function () use ($app) {
-        $wd = localWebdriverStatus($app->request()->params('local'));
+        /* We try to use the server address in the local query parameter. */
+        $wd_server = $app->request()->params('local');
+
+        /* If it's unavailable, try to use HTTP_X_FORWARDED_FOR header. */
+        if (!isset($wd_server) || !$wd_server) {
+            $wd_server = $_SERVER['REMOTE_ADDR'];
+            if (array_key_exists("HTTP_X_FORWARDED_FOR", $_SERVER) || $wd_serverAddress == "192.168.169.9") {
+                $wd_server = $_SERVER["HTTP_X_FORWARDED_FOR"];
+            }
+        }
+        $wd = localWebdriverStatus($wd_server);
 
         echo successMessage(array(
             'webdriverStatus' => $wd['status'],

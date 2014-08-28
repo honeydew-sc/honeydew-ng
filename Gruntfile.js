@@ -449,7 +449,7 @@ module.exports = function (grunt) {
                 options: {
                     stdout: true
                 },
-                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@termdew:/opt/honeydew-ui/htdocs/'
+                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@honeydew:/opt/honeydew-ui/htdocs/'
             },
 
             deployBack: {
@@ -458,7 +458,7 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command: 'git push && ssh termdew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
+                command: 'git push && ssh honeydew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
         }
     });

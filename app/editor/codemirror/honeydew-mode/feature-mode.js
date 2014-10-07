@@ -44,6 +44,15 @@ CodeMirror.defineMode("honeydew", function () {
         'YUBARI'
     ];
 
+    var phrases = [];
+    (function () {
+        var autocompleteSources = angular.element(document).injector().get('cmAutocomplete');
+        autocompleteSources.populateAutocompleteSources()
+            .success(function ( res ) {
+                phrases = res.phrases;
+            });
+    })();
+
     var stopEatingAt = projects.map( function (it) {
         return it.substr(0, 1);
     }).filter( function ( value, index, self ) {

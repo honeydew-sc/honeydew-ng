@@ -200,6 +200,27 @@ CodeMirror.defineMode("honeydew", function () {
                 }
                 return type;
             }
+            // PHRASES
+            //
+            // The regex for phrases must come before (given|when|then)
+            // check. Phrases can contain (given|when|then), and if the
+            // tokenizer eats up the (given|when|then) as a keyword
+            // before it realizes the whole line is a string, it won't
+            // get a chance to look at the whole line and realize it's
+            // a phrase.
+            else if ( phrases.find(function ( it ) {
+                var regex = new RegExp('^\s*' + it + '$');
+                // use this to diagnose whether the line should be a
+                // phrase:
+                //
+                // if (stream.string.trim().match(regex)) {
+                //     console.log(regex, stream.string.substr(stream.pos));
+                // }
+                return stream.match(regex);
+            }) ) {
+                // We're hijacking the atom color for phrases and keywords ????
+                return "atom";
+            }
             // STEPS
             else if (!state.inKeywordLine && state.allowSteps && stream.match(/Given|When|Then/)) {
                 state.inStep = true;

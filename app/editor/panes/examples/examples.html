@@ -78,16 +78,6 @@ free. It decides what to do based on using a specific hostname:</p>
 <p>N.B.: Currently, some of the login flows are broken. Sorry for the
 inconvenience.</p>
 
-</accordion-group><accordion-group heading="Start a new logged-in test browser">
-
-<p>You can use these buttons to create a clean session for
-testing. They'll use the same hostname and browser that you've
-specified over there to the left, but it will always try to run on
-your local computer.</p>
-
-<p><input type="button" id="login-js" class="start-job-js" value="logged in" />
-<input type="button" id="create-js" class="start-job-js" value="create a user" /></p>
-
 </accordion-group><accordion-group heading="Logging out of Sharecare">
 
 <p>Use the following rule to log out of Sharecare:</p>
@@ -451,4 +441,20 @@ $away = 'https://armyfit.army.mil'
  Scenario: go to homepage
  Given I am on the $home page
 </code></pre>
+
+<h4>SScenarios</h4>
+
+<p>During test debugging or authoring, you may want to only run only a
+specific scenario instead of the entire script to save time. You can
+do this by putting an extra 's' in front of the Scenario like such:</p>
+
+<pre><code> Scenario: this will be skipped now
+     Then I wait 50 years for the css=never element to be present
+
+ sScenario: Only this scenario will run
+ Given I am on the /wonderful page
+</code></pre>
+
+<p>In the above example, only the second scenario will be run. If multiple
+scenarios have the "sScenario", they will all run, as expected.</p>
 </accordion>

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('CmDomHelpers', function ($location) {
+    .factory('CmDomHelpers', function ($location, $compile) {
         var factory = this;
 
         factory.focus = function (cm, $scope) {
-            // sorry. for whatever reason, the dropdown
+            // for whatever reason, the dropdown
             // retains the open class when clicking into the
             // codemirror. Seems like CM swallows the click or
             // something; clicking on not CM parts of the page
@@ -46,6 +46,27 @@ angular.module('honeydew')
                 }
 
                 return window.open(url, '_blank');
+            });
+        };
+
+        factory.compileRenderedLines = function (cm, scope) {
+            cm.on('renderLine', function (cm, line, elt) {
+                var phrases = elt.getElementsByClassName('cm-atom');
+
+                if (phrases.length) {
+                    [].forEach.call(phrases, function ( span ) {
+                        var popoverOpts = {
+                            'popover': 'howdy!',
+                            'popover-trigger': 'mouseenter'
+                        };
+
+                        for (var key in popoverOpts) {
+                            span.setAttribute(key, popoverOpts[key]);
+                        }
+
+                    });
+                    elt = $compile(elt)(scope);
+                }
             });
         };
 

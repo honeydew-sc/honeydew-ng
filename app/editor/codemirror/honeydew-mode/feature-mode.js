@@ -179,7 +179,7 @@ CodeMirror.defineMode("honeydew", function () {
                 return "keyword";
             }
             // SCENARIO
-            else if (!state.inKeywordLine && state.allowScenario && stream.match(/(only|skip)? ?Scenario:/i)) {
+            else if (!state.inKeywordLine && state.allowScenario && stream.match(/(only|skip)? ?s?Scenario:/i)) {
                 state.allowPlaceholders = false;
                 state.allowSteps = true;
                 state.allowPreamble = false;
@@ -197,7 +197,7 @@ CodeMirror.defineMode("honeydew", function () {
                 state.allowPlaceholders = true;
                 state.allowMultilineArgument = true;
                 state.inKeywordLine = true;
-                return "keyword";
+                return "variable-2";
             }
             // INLINE STRING
             else if (stream.match(/"[^"]*"?/) || stream.match(/ '[^']*' /)) {

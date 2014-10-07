@@ -21,9 +21,13 @@
     height: calc(100% - 41px) !important;
 }
 
-.cm-clickable-link {
+.CodeMirror .cm-clickable-link {
     color: blue;
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.CodeMirror .cm-atom {
     cursor: pointer;
 }
 

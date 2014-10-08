@@ -105,12 +105,14 @@ angular.module('honeydew')
                 return autocompleteService.sets;
             },
 
-            populateAutocompleteSources: function () {
-                Tree.get({ folder: 'sets' }, function (res)  {
-                    autocompleteService.sets = res.tree.map( function (it) {
-                        return '@' + it.label.replace(/\.set$/, '');
+            populateAutocompleteSources: function ( getTree ) {
+                if (typeof(getTree) === 'undefined' || getTree) {
+                    Tree.get({ folder: 'sets' }, function (res)  {
+                        autocompleteService.sets = res.tree.map( function (it) {
+                            return '@' + it.label.replace(/\.set$/, '');
+                        });
                     });
-                });
+                }
 
                 return $http.get('/rest.php/autocomplete').success(function (res) {
                     autocompleteService.phrases = res.phrases;

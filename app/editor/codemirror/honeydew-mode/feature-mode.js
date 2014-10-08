@@ -44,21 +44,24 @@ CodeMirror.defineMode("honeydew", function () {
         'YUBARI'
     ];
 
-    var phrases = [];
+    var phrases = [],
+        keywords = [],
+        PHRASE_TOKEN = 'atom',
+        KEYWORD_TOKEN = 'tag';
     (function () {
         var autocompleteSources = angular.element(document).injector().get('cmAutocomplete');
         autocompleteSources.populateAutocompleteSources()
             .success(function ( res ) {
                 phrases = res.phrases;
+                keywords = Object.keys(res.keywords);
             });
     })();
 
-    var stopEatingAt = projects.map( function (it) {
-        return it.substr(0, 1);
-    }).filter( function ( value, index, self ) {
-        return self.indexOf(value) === index;
-    }).join('');
-    var jiraProjectsRegex = new RegExp(projects.map(function ( it ) { return it + '\-\\d+'; }).join('|'));
+    var jiraProjectsRegex = new RegExp(
+        projects.map(function ( it ) {
+            return it + '\-\\d+';
+        }).join('|')
+    );
 
     return {
         lineComment: '#',
@@ -219,7 +222,12 @@ CodeMirror.defineMode("honeydew", function () {
                 return stream.match(regex);
             }) ) {
                 // We're hijacking the atom color for phrases and keywords ????
-                return "atom";
+                return PHRASE_TOKEN;
+            }
+            else if (keywords.some( function ( it ) {
+                return stream.match(it);
+            }) ) {
+                return KEYWORD_TOKEN;
             }
             // STEPS
             else if (!state.inKeywordLine && state.allowSteps && stream.match(/Given|When|Then/)) {

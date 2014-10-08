@@ -1,7 +1,7 @@
 'use strict';
 
 describe('FeatureMode', function () {
-    var httpMock, featureMode, feature,
+    var httpMock, featureMode, feature, tests,
         PHRASE_TOKEN = 'atom',
         KEYWORD_TOKEN = 'tag';
 
@@ -30,26 +30,42 @@ describe('FeatureMode', function () {
         feature = [
             'Feature: test',
             '',
-            ' Scenario: something',
+            ' sScenario: something',
             '   An example phrase',
             '   A line with an ExampleKeyword in it'
         ].join("\n");
+
+        tests = 0;
     }));
 
     it('should parse phrases out!', function () {
         CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
-            if (token.match('superman')) {
+            if (token.match('An example phrase')) {
+                tests++;
                 expect(styleClass).toBe(PHRASE_TOKEN);
             }
         });
+        expect(tests).toBe(1);
     });
 
     it('should parse keywords out', function () {
         CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
             if (token.match('ExampleKeyword')) {
+                tests++;
                 expect(styleClass).toBe(KEYWORD_TOKEN);
             }
         });
+        expect(tests).toBe(1);
+    });
+
+    it('should parse SScenarios', function () {
+        CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
+            if (token.match('sScenario')) {
+                tests++;
+                expect(styleClass).toBe('sscenario');
+            }
+        });
+        expect(tests).toBe(1);
     });
 
 

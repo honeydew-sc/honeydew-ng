@@ -190,8 +190,12 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
                     state.allowMultilineArgument = true;
                     return "keyword";
                 }
+                // SSCENARIO
+                else if (!state.inKeywordLine && state.allowScenario && stream.match(/\s*sscenario:/i)) {
+                    return "sscenario";
+                }
                 // SCENARIO
-                else if (!state.inKeywordLine && state.allowScenario && stream.match(/(only|skip)? ?s?Scenario:/i)) {
+                else if (!state.inKeywordLine && state.allowScenario && stream.match(/(only|skip)? ?Scenario:/i)) {
                     state.allowPlaceholders = false;
                     state.allowSteps = true;
                     state.allowPreamble = false;

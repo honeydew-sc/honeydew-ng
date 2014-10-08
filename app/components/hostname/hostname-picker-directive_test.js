@@ -1,5 +1,7 @@
 describe('HostnamePickerDirective', function () {
     var scope, $compile, hostname, element, hostValue, ctrl;
+    var ENV_COUNT = 9,
+        APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));
 
@@ -29,11 +31,11 @@ describe('HostnamePickerDirective', function () {
     it('should list the environments', function () {
         ctrl.emit('SC');
         scope.$apply();
-        expect(element.find('.env').length).toBe(8);
+        expect(element.find('.env').length).toBe(ENV_COUNT);
     });
 
     it('should list the apps', function () {
-        expect(element.find('.app').length).toBe(6);
+        expect(element.find('.app').length).toBe(APP_COUNT);
     });
 
     it('should change the hostname', function () {

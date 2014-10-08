@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('FeatureMode', function () {
+describe('FeatureMode', function () {
     var httpMock, featureMode, feature,
         PHRASE_TOKEN = 'atom',
         KEYWORD_TOKEN = 'tag';

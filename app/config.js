@@ -1,1 +1,12 @@
-angular.module("config", []);
+angular.module("config", [])
+    .constant("AccountsConfig", {})
+    .constant("mysqlConfig", {})
+    .constant("pusherConfig", {})
+    .constant("androidConfig", {})
+    .constant("localConfig", {})
+    .constant("lockerboxConfig", {})
+    .constant("proxyConfig", {})
+    .constant("iosConfig", {})
+    .constant("redisConfig", {})
+    .constant("flagsConfig", {})
+    .value("hostnamePickerDomains", {}) ;

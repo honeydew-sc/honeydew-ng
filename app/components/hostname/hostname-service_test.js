@@ -1,6 +1,6 @@
 describe('hostnameService', function () {
     var hostname, scope, ctrl;
-    var ENV_COUNT = 9,
+    var ENV_COUNT = 10,
         APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));

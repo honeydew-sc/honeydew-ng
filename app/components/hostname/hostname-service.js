@@ -3,12 +3,24 @@
 angular.module('sc.hostname')
     .service('hostname', function (hostnamePickerDomains, $rootScope, $localStorage) {
         var store = $localStorage;
+        var defaultEnvs = ['qa', 'stage', 'prod' ];
         var hostnameService = {
             envs: {
-                SC: ['al', 'cm', 'dw', 'al2', 'cm2', 'dw2', 'hca', 'stage', 'prod'],
-                DROZ: ['qa', 'stage', 'prod' ],
-                DS: ['qa', 'stage', 'prod' ],
-                HCA: [ 'qa', 'stage', 'prod' ],
+                SC: [
+                    'al',
+                    'al2',
+                    'cm',
+                    'cm2',
+                    'dw',
+                    'dw2',
+                    'jd',
+                    'jd2',
+                    'stage',
+                    'prod'
+                ],
+                DROZ: defaultEnvs,
+                DS: defaultEnvs,
+                HCA: defaultEnvs,
                 Mobile: ['iOS', 'Android'],
                 Army: ['dev', 'stage', 'test', 'prod'],
                 TMA: ['dev', 'stage', 'test', 'prod']

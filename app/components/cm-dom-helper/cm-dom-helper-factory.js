@@ -51,22 +51,43 @@ angular.module('honeydew')
 
         factory.compileRenderedLines = function (cm, scope) {
             cm.on('renderLine', function (cm, line, elt) {
-                var phrases = elt.getElementsByClassName('cm-atom');
+                // Phrases hijack the 'atom' token, and keywords
+                // hijack the 'tag' token. These tokens are already
+                // themed appropriately in each CodeMirror theme, so
+                // they already look good and save us from having to
+                // decide a color per theme or for all themes.
+                var TOKENS = {
+                    atom: 'phrase',
+                    tag: 'keyword'
+                };
 
-                if (phrases.length) {
-                    [].forEach.call(phrases, function ( span ) {
-                        var popoverOpts = {
-                            'popover': 'howdy!',
-                            'popover-trigger': 'mouseenter'
-                        };
+                var foundTokens = false;
 
-                        for (var key in popoverOpts) {
-                            span.setAttribute(key, popoverOpts[key]);
-                        }
+                Object.keys(TOKENS).forEach(function (token) {
+                    var elementsWithTokens = elt.getElementsByClassName('cm-' + token);
 
-                    });
+                    if (elementsWithTokens.length) {
+                        foundTokens = true;
+                        [].forEach.call(elementsWithTokens, function ( span ) {
+                            var popoverOpts = {
+                                'popover': 'This is a ' + TOKENS[token] + '! Cheerio!',
+                                'popover-trigger': 'mouseenter'
+                            };
+
+                            for (var key in popoverOpts) {
+                                span.setAttribute(key, popoverOpts[key]);
+                            }
+
+                        });
+
+                    }
+
+                });
+
+                if (foundTokens) {
                     elt = $compile(elt)(scope);
                 }
+
             });
         };
 

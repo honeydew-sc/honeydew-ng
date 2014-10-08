@@ -82,7 +82,7 @@ describe('filetreeService', function () {
         expect(filetree.collapse).toBe(false);
     });
 
-    iit('should be able to set the location', function () {
+    it('should be able to set the location', function () {
         var fakeNode = {
             folder: '/folder',
             label: 'label'

@@ -119,6 +119,7 @@ angular.module('honeydew')
                     autocompleteService.suggestRules = res.suggestRules;
                     autocompleteService.regexRules = res.regexRules;
                     autocompleteService.preamble = preambleHints;
+                    autocompleteService.keywords = res.keywords;
                     autocompleteService.validSteps = res.suggestRules.concat(res.phrases);
                 });
             }

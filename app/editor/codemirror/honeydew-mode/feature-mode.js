@@ -214,7 +214,9 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
                 // before it realizes the whole line is a string, it won't
                 // get a chance to look at the whole line and realize it's
                 // a phrase.
-                else if ( phrases.find(function ( it ) {
+                else if ( phrases.some(function ( it ) {
+                    // phrases should only match if the entire line is
+                    // an exact match
                     var regex = new RegExp('^\s*' + it + '$');
                     // use this to diagnose whether the line should be a
                     // phrase:

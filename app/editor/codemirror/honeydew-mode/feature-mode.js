@@ -10,8 +10,8 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
         KEYWORD_TOKEN = 'tag';
     cmAutocomplete.populateAutocompleteSources( false )
         .success(function ( res ) {
-            phrases = res.phrases;
-            keywords = Object.keys(res.keywords);
+            phrases = cmAutocomplete.phrases;
+            keywords = Object.keys(cmAutocomplete.keywords);
         });
 
 

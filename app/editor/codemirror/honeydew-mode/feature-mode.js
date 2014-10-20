@@ -82,8 +82,7 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
                 };
             },
             token: function (stream, state) {
-                // console.log('lookingAt: ', stream.string.substr(stream.pos));
-                // console.log('peek: ', stream.peek());
+                // console.log('lookingAt: ', stream.string.substr(stream.pos), '| peek: ', stream.peek());
 
                 if (stream.sol()) {
                     state.lineNumber++;
@@ -134,7 +133,7 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
                     // we want to highlight new things in the middle of
                     // the line, we need to put their starting characters
                     // in here
-                    var stopOn = /[^\s$"'<#hA-Z@]/;
+                    var stopOn = /[^\s$"'<#hA-Za-z@]/;
                     stream.eatWhile(stopOn);
                 };
 
@@ -228,7 +227,14 @@ angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
                     // We're hijacking the atom color for phrases and keywords ????
                     return PHRASE_TOKEN;
                 }
+                // KEYWORDS
                 else if (keywords.some( function ( it ) {
+                    // useful for diagnosing if the line should
+                    // contain a match at all:
+                    //
+                    // if (stream.string.trim().match(regex)) {
+                    //     console.log(regex, stream.string.substr(stream.pos));
+                    // }
                     return stream.match(it);
                 }) ) {
                     return KEYWORD_TOKEN;

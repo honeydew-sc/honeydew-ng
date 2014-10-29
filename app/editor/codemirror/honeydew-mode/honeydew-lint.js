@@ -38,9 +38,9 @@ angular.module('honeydew')
                 return cmAutocomplete.regexRules.some(function (rule) {
                     // rule is the regexp we're trying against - we
                     // try each candidate against every rule
-                    var ruleReg = RegExp(rule.trim()
-                                         .replace(/([dw]\+)/g, "\\$1")
-                                         .replace(/\$/g, "\\$"), "i");
+                    var ruleReg = RegExp(
+                        rule.trim().replace(/\$/g, "\\$")
+                        , "i");
 
                     // `this` refers to the candidate line of text
                     return ruleReg.test(this);

@@ -62,8 +62,8 @@ angular.module('honeydew')
             var self = this;
 
             if (newContents !== oldContents && oldContents !== undefined) {
-                if (self.contents.split("\n").join('') === "") {
-                    alerts.addAlert({data: {reason: "Cowardly refusing to save an empty file. Sorry! Try Ctrl-Z or the undo button up there to get your work back :)"}});
+                if (self.contents.split("\n").join('').match(/^\s*$/)) {
+                    alerts.addAlert({data: {reason: "Cowardly refusing to save an empty file. Sorry! Try Ctrl-Z to undo, or refresh the page to get your work back :)"}});
                 }
                 else {
                     // the response to $save includes the file contents;

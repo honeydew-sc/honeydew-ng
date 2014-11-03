@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('Files', function ($resource, alerts, $location, filetree) {
+    .factory('Files', function ($resource, $localStorage, $location, alerts, filetree) {
         var res = $resource('/rest.php/files/:file', {
             file: '@file'
         }, {
@@ -46,11 +46,24 @@ angular.module('honeydew')
             }, alerts.catcher).$promise;
         };
 
+        res.prototype.delete = function () {
+            var self = this;
+
+            var deletedFile = decodeURIComponent(self.file);
+            return self.$delete().then( function removeFromHistory ( response ) {
+                $localStorage.history.forEach(function ( item, index, history ) {
+                    if (item === '/' + deletedFile) {
+                        history.splice( index, 1 );
+                    }
+                });
+            });
+        };
+
         res.prototype.move = function ( destination, contents) {
             var self = angular.copy(this);
             return self.copy(destination).then(function (response) {
                 if (response.success) {
-                    self.$delete().then(function ( response ) {
+                    self.delete().then(function ( response ) {
                         var leaf = decodeURIComponent(self.file);
                         filetree.deleteLeaf(leaf);
                     }).catch( alerts.catcher );

@@ -95,7 +95,7 @@ angular.module('honeydew')
                         if (scope.stopWatching) {
                             scope.stopWatching();
                         }
-                        scope.file.$delete().then(function (res) {
+                        scope.file.delete().then(function (res) {
                             res.notes = scope.filename + " has been deleted";
                             alerts.addAlert(res, 3000);
                             filetree.deleteLeaf(scope.filename);

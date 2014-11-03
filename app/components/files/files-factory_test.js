@@ -1,15 +1,17 @@
 describe('filesFactory', function () {
-    var Files, httpMock, location, filetree;
+    var Files, httpMock, location, filetree, storage;
     var backend = '/rest.php/files/';
     var contents = 'fake contents';
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ( _Files_, $httpBackend, _$location_, _filetree_ ) {
+    beforeEach(inject(function ( _Files_, $httpBackend, _$location_, _$localStorage_, _filetree_ ) {
         Files = _Files_;
         httpMock = $httpBackend;
         location = _$location_;
         filetree = _filetree_;
+        storage = _$localStorage_;
+        storage.history = [];
 
         spyOn(filetree, 'addLeaf');
         spyOn(filetree, 'deleteLeaf');

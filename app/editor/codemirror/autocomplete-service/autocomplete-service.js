@@ -19,6 +19,11 @@ angular.module('honeydew')
             'Scenario: '
         ];
 
+        var bodyHints = [
+            'Scenario: ',
+            "Examples: \n | "
+        ];
+
         String.prototype.repeat = function( num ) {
             return new Array( num + 1 ).join( this );
         };
@@ -80,7 +85,8 @@ angular.module('honeydew')
 
                 completionObject.list = result && result.length ? result : [];
 
-                CodeMirror.on(completionObject, "close", function () {
+                // After successfully doing an autocomplete, what should we do?
+                CodeMirror.on(completionObject, "pick", function addTooltipAboutCaptureGroup () {
                     var found = cm.getLine(cur.line);
                     if (found.indexOf('(.*)') !== -1) {
                         alerts.addAlert({
@@ -120,7 +126,7 @@ angular.module('honeydew')
                     autocompleteService.regexRules = res.regexRules;
                     autocompleteService.preamble = preambleHints;
                     autocompleteService.keywords = res.keywords;
-                    autocompleteService.validSteps = res.suggestRules.concat(res.phrases);
+                    autocompleteService.validSteps = bodyHints.concat(res.suggestRules).concat(res.phrases);
                 });
             }
         };

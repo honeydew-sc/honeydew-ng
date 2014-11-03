@@ -31,11 +31,6 @@ angular.module('honeydew')
                 'Ctrl-Y': 'redo'
             },
             onLoad: function (cm) {
-                // no need to hint the startup FAQ page
-                if (/test\/FAQ\.feature/.test($location.path())) {
-                    cm.setOption('lint', false);
-                }
-
                 $scope.editorOptions.refresh = function () {
                     $timeout(function () {
                         cm.refresh();

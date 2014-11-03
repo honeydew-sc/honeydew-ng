@@ -19,6 +19,7 @@ angular.module('honeydew')
             lint: true,
             extraKeys: {
                 'Ctrl-Space': 'jumpOrAutocomplete', // defined in autocomplete-service.js
+                'Tab': 'jumpOrAutocomplete',
                 'Cmd-Enter': 'repl',
                 'Alt-Enter': 'repl',
                 'Cmd-Esc': 'quitRepl',

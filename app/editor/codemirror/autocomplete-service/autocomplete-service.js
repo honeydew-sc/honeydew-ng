@@ -20,8 +20,9 @@ angular.module('honeydew')
         ];
 
         var bodyHints = [
-            'Scenario: ',
-            "Examples: \n | "
+            'Scenario: (.*)',
+            'Examples:  ' + "\n",
+            '| email_address | password |' + "\n" + ' | (.*) | (.*) |'
         ];
 
         String.prototype.repeat = function( num ) {
@@ -77,7 +78,7 @@ angular.module('honeydew')
 
                     var completion = {
                         text: ' '.repeat(indent) + it,
-                        displayText: it
+                        displayText: it.split("\n").shift()
                     };
 
                     return completion;

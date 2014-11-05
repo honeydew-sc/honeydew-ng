@@ -9,14 +9,14 @@ angular.module('honeydew')
         };
 
         var preambleHints = [
-            'Existing Bug: ',
+            'Existing Bug: (.*)',
             'Set: ',
             'Proxy',
-            'Email: ',
-            'Subtitles: ',
+            'Email: (.*)',
+            'Subtitles: (.*)',
             'Keep Open',
-            'JIRA: ',
-            'Scenario: '
+            'JIRA: (.*)',
+            'Scenario: (.*)'
         ];
 
         var bodyHints = [

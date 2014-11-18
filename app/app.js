@@ -95,6 +95,14 @@ angular.module('honeydew', [
                 onEnter: ['$rootScope', function ($rootScope) {
                     $rootScope.title = 'HD Monitors';
                 }]
+            })
+            .state('screenshot', {
+                url: '/screenshot/:screenshot',
+                templateUrl: 'screenshot/screenshot.html',
+                controller: 'ScreenshotCtrl',
+                onEnter: ['$rootScope', function ($rootScope) {
+                    $rootScope.title = 'HD Screenshots';
+                }]
             });
     })
     .config(function(pusherConfig, PusherServiceProvider) {

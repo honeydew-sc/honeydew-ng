@@ -122,7 +122,8 @@ angular.module('honeydew')
                 }
 
                 return $http.get('/rest.php/autocomplete').success(function (res) {
-                    autocompleteService.phrases = res.phrases;
+                    autocompleteService.phrases = Object.keys(res.phrases);
+                    autocompleteService.phraseLookup = res.phrases;
                     autocompleteService.suggestRules = res.suggestRules;
                     autocompleteService.regexRules = res.regexRules;
                     autocompleteService.preamble = preambleHints;

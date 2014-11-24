@@ -16,13 +16,13 @@ describe('FeatureMode', function () {
         httpMock.expectGET('/rest.php/autocomplete').respond({
             suggestRules: ['placeholder'],
             regexRules: ['placeholder'],
-            phrases: [ 'An example phrase' ],
+            phrases: { 'An example phrase' : '' },
             keywords: { ExampleKeyword: 'word' }
         });
         httpMock.expectGET('/rest.php/autocomplete').respond({
             suggestRules: ['placeholder'],
             regexRules: ['placeholder'],
-            phrases: [ 'An example phrase' ],
+            phrases: { 'An example phrase': '' },
             keywords: { ExampleKeyword: 'word' }
         });
         httpMock.flush();

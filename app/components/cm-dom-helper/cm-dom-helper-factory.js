@@ -71,6 +71,7 @@ angular.module('honeydew')
                         [].forEach.call(elementsWithTokens, function ( span ) {
                             var popoverOpts = {
                                 'popover': 'This is a ' + TOKENS[token] + '! Cheerio!',
+                                'popover-placement': 'right',
                                 'popover-trigger': 'mouseenter'
                             };
 

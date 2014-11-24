@@ -9,10 +9,10 @@ describe('cmAutocompleteService', function () {
         regexRules: [
             'oh boy'
         ],
-        phrases: [
-            'this is a test phrase',
-            'and so is this!'
-        ]
+        phrases: {
+            'this is a test phrase': '',
+            'and so is this!': ''
+        }
     };
 
     var newResponse = {
@@ -22,9 +22,9 @@ describe('cmAutocompleteService', function () {
         regexRules: [
             'oh boy'
         ],
-        phrases: [
-            'this is new'
-        ]
+        phrases: {
+            'this is new': ''
+        }
     };
 
     var mockCodeMirror = function (preamble) {
@@ -76,8 +76,8 @@ describe('cmAutocompleteService', function () {
     });
 
     it('comes populated with steps out of the box!', function () {
-        expect(cmAutocomplete.getSteps()).toContain(httpResponse.phrases[0]);
-        expect(cmAutocomplete.getSteps()).toContain(httpResponse.phrases[1]);
+        expect(cmAutocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[0]);
+        expect(cmAutocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[1]);
     });
 
     it('can get updates from the server', function () {
@@ -85,15 +85,15 @@ describe('cmAutocompleteService', function () {
         cmAutocomplete.populateAutocompleteSources();
         httpMock.flush();
 
-        expect(cmAutocomplete.getSteps()).not.toContain(httpResponse.phrases[0]);
-        expect(cmAutocomplete.getSteps()).toContain(newResponse.phrases[0]);
+        expect(cmAutocomplete.getSteps()).not.toContain(Object.keys(httpResponse.phrases)[0]);
+        expect(cmAutocomplete.getSteps()).toContain(Object.keys(newResponse.phrases)[0]);
     });
 
     it('can return a filtered list of rules', function () {
         var hints = cmAutocomplete.getHints(mockCodeMirror());
         expect(hints.list.length).toBe(1);
-        expect(httpResponse.phrases[0]).toMatch(hints.list[0].displayText);
-        expect(hints.list).not.toContain(httpResponse.phrases[1].displayText);
+        expect(Object.keys(httpResponse.phrases)[0]).toMatch(hints.list[0].displayText);
+        expect(hints.list).not.toContain(Object.keys(httpResponse.phrases)[1].displayText);
     });
 
     it('can fail gracefully when nothing matches', function () {

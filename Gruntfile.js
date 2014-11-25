@@ -27,6 +27,10 @@ module.exports = function (grunt) {
 
         // Watches files for changes and runs tasks based on the changed files
         watch: {
+            traceur:  {
+                files:  [ '<%= yeoman.app %>/components/**/*.es6.js' ],
+                tasks:  [ 'newer:traceur' ]
+            },
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',
@@ -459,6 +463,22 @@ module.exports = function (grunt) {
                     failOnError: true
                 },
                 command: 'git push && ssh honeydew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
+            }
+        },
+
+        traceur: {
+            options: {
+                'arrow-functions': true,
+                modules: 'inline'
+            },
+            custom: {
+                files:[{
+                    expand: true,
+                    cwd: 'app/components',
+                    src: ['**/*.es6.js'],
+                    dest: 'app/components',
+                    ext: '.js'
+                }]
             }
         }
     });

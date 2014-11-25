@@ -45,7 +45,7 @@ module.exports = function(config) {
         ],
 
         // list of files / patterns to exclude
-        exclude: [],
+        exclude: [ '**/*.es6.js' ],
 
         // web server port
         port: 7979,

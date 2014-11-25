@@ -18,9 +18,9 @@ describe('cmAtom clickable phrase directive', () => {
 
     }));
 
-    iit('makes the thing clickable', () => {
+    it('makes the thing clickable', () => {
         var elem = $compile(angular.element('<span class="cm-atom">' + fakePhrase + '</span>'))($rootScope);
         elem.triggerHandler('click');
-        expect($window.open).toHaveBeenCalledWith('dest');
+        expect($window.open).toHaveBeenCalledWith('/#/dest');
     });
 });

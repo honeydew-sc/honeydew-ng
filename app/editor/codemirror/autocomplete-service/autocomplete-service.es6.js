@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('cmAutocomplete', function ($resource, $http, alerts, Tree) {
+    .service('autocomplete', function ($resource, $http, alerts, Tree) {
         CodeMirror.commands.jumpOrAutocomplete = function (cm) {
             if (!CodeMirror.commands.jumpCursor(cm)) {
                 CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
@@ -112,7 +112,11 @@ angular.module('honeydew')
                 return autocompleteService.sets;
             },
 
-            populateAutocompleteSources: function ( getTree ) {
+            getPhraseFile: phrase => {
+                return autocompleteService.phraseLookup[phrase];
+            },
+
+            populateSources: function ( getTree ) {
                 if (typeof(getTree) === 'undefined' || getTree) {
                     Tree.get({ folder: 'sets' }, function (res)  {
                         autocompleteService.sets = res.tree.map( function (it) {
@@ -135,7 +139,7 @@ angular.module('honeydew')
             }
         };
 
-        autocompleteService.populateAutocompleteSources();
+        autocompleteService.populateSources();
 
         return autocompleteService;
     });

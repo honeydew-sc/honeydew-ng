@@ -474,9 +474,9 @@ module.exports = function (grunt) {
             custom: {
                 files:[{
                     expand: true,
-                    cwd: 'app/components',
+                    cwd: '<%= yeoman.app %>',
                     src: ['**/*.es6.js'],
-                    dest: 'app/components',
+                    dest: '<%= yeoman.app %>',
                     ext: '.js'
                 }]
             }
@@ -498,6 +498,7 @@ module.exports = function (grunt) {
                 'bower-install',
                 'autoprefixer',
                 'connect:livereload',
+                'traceur',
                 'watch'
             ]);
         }

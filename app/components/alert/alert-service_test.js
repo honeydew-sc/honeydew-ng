@@ -1,5 +1,5 @@
 describe('alertService', function () {
-    var alerts;
+    var $timeout, alerts;
     var success = {
         success: true,
         notes: "a successful alert"
@@ -13,9 +13,14 @@ describe('alertService', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_alerts_) {
+    beforeEach(inject(function (_$timeout_, _alerts_) {
+        $timeout = _$timeout_;
         alerts = _alerts_;
     }));
+
+    afterEach(function () {
+        alerts.globalAlerts = [];
+    });
 
     it('can get an instance of the alert service', function () {
         expect(alerts).toBeDefined();
@@ -38,13 +43,11 @@ describe('alertService', function () {
     });
 
     it('can close alerts with timeout', function () {
-        var timeout = 1000;
-        runs(function () {
-            alerts.addAlert(failure, timeout);
-        });
-
-        waits(timeout + 1);
+        var timeout = 1;
+        alerts.addAlert(failure, timeout);
+        $timeout.flush();
 
         expect(alerts.globalAlerts.length).toBe(0);
+
     });
 });

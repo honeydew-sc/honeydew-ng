@@ -15,7 +15,7 @@ describe('LiveReportService', function () {
         spyOn(pusherMock.channel, 'trigger');
 
         timeout = $timeout;
-        spyOn(pusherMock, 'subscribe').andCallFake(function (params) {
+        spyOn(pusherMock, 'subscribe').and.callFake(function (params) {
             return {
                 then: function (cb) {
                     cb(pusherMock.channel);
@@ -24,7 +24,13 @@ describe('LiveReportService', function () {
         });
 
         spyOn(pusherMock, 'unsubscribe');
+
+        spyOn(liveReportService, 'close').and.callThrough();
     }));
+
+    afterEach( function () {
+        liveReportService.close.calls.reset();
+    });
 
     it('can be instantiated', function () {
         expect(liveReportService).toBeDefined();
@@ -60,23 +66,18 @@ describe('LiveReportService', function () {
     });
 
     it('closes itself if we join a new channel and immediately idle', function () {
-        spyOn(liveReportService, 'close');
-
         liveReportService.switchChannel();
         expect(liveReportService.close).toHaveBeenCalled();
         timeout.flush();
-        expect(liveReportService.close.callCount).toBe(2);
+        expect(liveReportService.close.calls.count()).toBe(2);
     });
 
     it('can we idle after evaluating a rule', function () {
-        spyOn(liveReportService, 'close');
-
         liveReportService.switchChannel();
-        liveReportService.close.reset();
         liveReportService.evalRule('blah blah blah');
-        expect(liveReportService.close).not.toHaveBeenCalled();
+        liveReportService.close.calls.reset();
         timeout.flush();
-        expect(liveReportService.close.callCount).toBe(1);
+        expect(liveReportService.close.calls.count()).toBe(1);
         expect(liveReportService.close).toHaveBeenCalled();
     });
 

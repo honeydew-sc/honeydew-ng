@@ -5,3 +5,4 @@ node_modules
 /e2e/new.feature
 /app/components/cm-dom-helper/cm-atom-directive.js
 /app/editor/codemirror/autocomplete-service/autocomplete-service.js
+/app/components/cm-dom-helper/cm-atom-directive_test.js

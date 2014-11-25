@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('cmAtom', (cmAutocomplete, $window) => {
+    .directive('cmAtom', (autocomplete, $window) => {
         return {
             restrict: 'C',
             link: function (scope, element, attrs) {
                 element.bind('click', event => {
-                    var destination = '/#/' + cmAutocomplete.phraseLookup[element.text()];
+                    var destination = '/#/' + autocomplete.getPhraseFile(element.text());
                     $window.open(destination);
                 });
             }

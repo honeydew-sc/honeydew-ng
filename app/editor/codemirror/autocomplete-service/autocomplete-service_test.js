@@ -1,7 +1,7 @@
 'use strict';
 
-describe('cmAutocompleteService', function () {
-    var cmAutocomplete, httpMock;
+describe('autocompleteService', function () {
+    var autocomplete, httpMock;
     var httpResponse = {
         suggestRules: [
             'what a rule'
@@ -63,34 +63,34 @@ describe('cmAutocompleteService', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_cmAutocomplete_, _$httpBackend_) {
+    beforeEach(inject(function (_autocomplete_, _$httpBackend_) {
         httpMock = _$httpBackend_;
         setupBackendExpects(httpResponse);
-        cmAutocomplete = _cmAutocomplete_;
+        autocomplete = _autocomplete_;
         httpMock.flush();
 
     }));
 
     it('can get an instance of the service', function () {
-        expect(cmAutocomplete).toBeDefined();
+        expect(autocomplete).toBeDefined();
     });
 
     it('comes populated with steps out of the box!', function () {
-        expect(cmAutocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[0]);
-        expect(cmAutocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[1]);
+        expect(autocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[0]);
+        expect(autocomplete.getSteps()).toContain(Object.keys(httpResponse.phrases)[1]);
     });
 
     it('can get updates from the server', function () {
         setupBackendExpects(newResponse);
-        cmAutocomplete.populateAutocompleteSources();
+        autocomplete.populateSources();
         httpMock.flush();
 
-        expect(cmAutocomplete.getSteps()).not.toContain(Object.keys(httpResponse.phrases)[0]);
-        expect(cmAutocomplete.getSteps()).toContain(Object.keys(newResponse.phrases)[0]);
+        expect(autocomplete.getSteps()).not.toContain(Object.keys(httpResponse.phrases)[0]);
+        expect(autocomplete.getSteps()).toContain(Object.keys(newResponse.phrases)[0]);
     });
 
     it('can return a filtered list of rules', function () {
-        var hints = cmAutocomplete.getHints(mockCodeMirror());
+        var hints = autocomplete.getHints(mockCodeMirror());
         expect(hints.list.length).toBe(1);
         expect(Object.keys(httpResponse.phrases)[0]).toMatch(hints.list[0].displayText);
         expect(hints.list).not.toContain(Object.keys(httpResponse.phrases)[1].displayText);
@@ -98,15 +98,15 @@ describe('cmAutocompleteService', function () {
 
     it('can fail gracefully when nothing matches', function () {
         setupBackendExpects(newResponse);
-        cmAutocomplete.populateAutocompleteSources();
+        autocomplete.populateSources();
         httpMock.flush();
 
-        var hints = cmAutocomplete.getHints(mockCodeMirror());
+        var hints = autocomplete.getHints(mockCodeMirror());
         expect(hints.list.length).toBe(0);
     });
 
     it('can suggest preamble options when appropriate', function () {
-        var hints = cmAutocomplete.getHints(mockCodeMirror(true));
+        var hints = autocomplete.getHints(mockCodeMirror(true));
         expect(hints.list.length).toBe(1);
         expect(hints.list[0].displayText).toContain('Existing');
     });

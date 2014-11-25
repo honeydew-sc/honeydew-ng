@@ -27,7 +27,7 @@ describe('Controller: EditorCtrl', function () {
 
         EditorCtrl = $controller('EditorCtrl', {
             $scope: scope,
-            cmAutocomplete: {},
+            autocomplete: {},
             honeydewLint: {}
         });
     }));

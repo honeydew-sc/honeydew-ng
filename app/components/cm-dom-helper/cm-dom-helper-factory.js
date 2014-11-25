@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('CmDomHelpers', function ($location, $compile, cmAutocomplete) {
+    .factory('CmDomHelpers', function ($location, $compile, autocomplete) {
         var factory = this;
 
         factory.focus = function (cm, $scope) {
@@ -74,7 +74,7 @@ angular.module('honeydew')
                             [].forEach.call(elementsWithTokens, function ( span ) {
                                 var elemText = span.innerHTML;
                                 var popoverOpts = {
-                                    'popover': cmAutocomplete.keywords[elemText],
+                                    'popover': autocomplete.keywords[elemText],
                                     'popover-placement': 'right',
                                     'popover-trigger': 'mouseenter'
                                 };

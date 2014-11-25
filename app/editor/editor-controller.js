@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, cmAutocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, autocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode) {
         $scope.$storage = $localStorage;
 
         // put the tree on the scope so we can have
@@ -9,7 +9,7 @@ angular.module('honeydew')
         $scope.tree = filetree;
 
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
-        CodeMirror.registerHelper('hint', 'honeydew', cmAutocomplete.getHints);
+        CodeMirror.registerHelper('hint', 'honeydew', autocomplete.getHints);
 
         $scope.editorOptions = {
             lineWrapping : true,

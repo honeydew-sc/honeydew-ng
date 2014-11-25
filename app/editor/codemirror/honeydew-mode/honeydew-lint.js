@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('honeydewLint', function (cmAutocomplete) {
+    .service('honeydewLint', function (autocomplete) {
         var honeydewLintService = {
             found: [],
 
@@ -31,11 +31,11 @@ angular.module('honeydew')
             },
 
             isAPhrase: function (line) {
-                return cmAutocomplete.phrases.indexOf(line.trim()) > -1;
+                return autocomplete.phrases.indexOf(line.trim()) > -1;
             },
 
             isARule: function( line ) {
-                return cmAutocomplete.regexRules.some(function (rule) {
+                return autocomplete.regexRules.some(function (rule) {
                     // rule is the regexp we're trying against - we
                     // try each candidate against every rule
                     var ruleReg = RegExp(

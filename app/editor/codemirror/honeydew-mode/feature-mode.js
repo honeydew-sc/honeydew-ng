@@ -3,15 +3,15 @@
  Report bugs/issues here: https://github.com/marijnh/CodeMirror/issues
  */
 
-angular.module('honeydew').service('featureMode', function (cmAutocomplete) {
+angular.module('honeydew').service('featureMode', function (autocomplete) {
     var phrases = [],
         keywords = [],
         PHRASE_TOKEN = 'atom',
         KEYWORD_TOKEN = 'tag';
-    cmAutocomplete.populateAutocompleteSources( false )
+    autocomplete.populateSources( false )
         .success(function ( res ) {
-            phrases = cmAutocomplete.phrases;
-            keywords = Object.keys(cmAutocomplete.keywords);
+            phrases = autocomplete.phrases;
+            keywords = Object.keys(autocomplete.keywords);
         });
 
 

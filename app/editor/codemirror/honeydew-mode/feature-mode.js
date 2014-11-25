@@ -82,16 +82,42 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
                 };
             },
             token: function (stream, state) {
-                // console.log('lookingAt: ', stream.string.substr(stream.pos), '| peek: ', stream.peek());
+                // console.log('lookingAt: [' + stream.string.substr(stream.pos) + ']| peek: [' + stream.peek() + ']');
+
+                // Define the functions first so we can invoke them at
+                // any time. Perhaps we should be doing this better?
+                // These will have to get redefined at every single
+                // token, seems a bit of a waste, yeah ?
+                stream.isComment = function () {
+                    return this.indentation() === 0 || state.inCommentLine;
+                };
+
+                stream.isSet = function () {
+                    return stream.string.match(/^Set: /);
+                };
+
+                stream.proceed = function () {
+                    stream.next();
+                    // this eatWhile will consume everything in the rest
+                    // of the line except for the characters here, so if
+                    // we want to highlight new things in the middle of
+                    // the line, we need to put their starting characters
+                    // in here
+                    var stopOn = /[^\s$"'<#hA-Za-z@]/;
+                    stream.eatWhile(stopOn);
+                };
 
                 if (stream.sol()) {
                     state.lineNumber++;
                     state.inKeywordLine = false;
+
+                    // DON'T FORGET: THIS SKIPS AN ENTIRE COMMENTED
+                    // OUT LINE. CAREFUL!
                     state.inCommentLine = stream.match(/^\s*#.*/);
 
                     if (state.inMultilineTable) {
                         state.tableHeaderLine = false;
-                        if (!stream.match(/\s*\|/, false)) {
+                        if (!stream.match(/\s*\|/, false) && !stream.isComment()) {
                             state.allowMultilineArgument = false;
                             state.inMultilineTable = false;
                         }
@@ -105,7 +131,7 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
                 }
 
 
-                if (state.allowMultilineArgument) {
+                if (state.allowMultilineArgument && !stream.isComment()) {
                     // TABLE
                     if (state.inMultilineTable) {
                         if (stream.match(/\|\s*/)) {
@@ -125,25 +151,6 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
                     }
 
                 }
-
-                stream.proceed = function () {
-                    stream.next();
-                    // this eatWhile will consume everything in the rest
-                    // of the line except for the characters here, so if
-                    // we want to highlight new things in the middle of
-                    // the line, we need to put their starting characters
-                    // in here
-                    var stopOn = /[^\s$"'<#hA-Za-z@]/;
-                    stream.eatWhile(stopOn);
-                };
-
-                stream.isComment = function () {
-                    return this.indentation() === 0;
-                };
-
-                stream.isSet = function () {
-                    return stream.string.match(/^Set: /);
-                };
 
                 if (stream.isSet()) {
                     state.allowSets = true;

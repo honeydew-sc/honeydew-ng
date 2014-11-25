@@ -89,25 +89,35 @@ describe('FeatureMode', () => {
         expect(tests).toBe(2);
     });
 
-    iit('should handle example tables with commented out lines', () => {
+    it('should handle example tables with commented out lines', () => {
         var examples = [
             'Feature:',
             '',
             ' Scenario: whee',
             ' Examples:',
             ' | header | row |',
+            ' | first | row|',
             ' # | commented | row |',
             ' | another | row |'
         ].join("\n");
         CodeMirror.runMode(examples, 'honeydew', ( token, styleClass ) => {
-            console.log(token, styleClass);
-            if (token === ' | another | row | ') {
+            if (token === 'first ') {
                 tests++;
                 expect(styleClass).toBe('string');
             }
 
-            expect(tests).toBe(1);
+            if (token === ' # | commented | row |' ) {
+                tests++;
+                expect(styleClass).toBe('comment');
+            }
+
+            if (token === 'another ') {
+                tests++;
+                expect(styleClass).toBe('string');
+            }
+
         });
+        expect(tests).toBe(3);
     });
 
 

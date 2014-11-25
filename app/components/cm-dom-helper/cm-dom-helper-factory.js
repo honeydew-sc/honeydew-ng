@@ -68,28 +68,29 @@ angular.module('honeydew')
 
                     if (elementsWithTokens.length) {
                         foundTokens = true;
-                        [].forEach.call(elementsWithTokens, function ( span ) {
-                            var popoverOpts = {
-                                'popover': 'This is a ' + TOKENS[token] + '! Cheerio!',
-                                'popover-placement': 'right',
-                                'popover-trigger': 'mouseenter'
-                            };
+                        if (TOKENS[token] === 'keyword') {
+                            // We want keywords to show their value on
+                            // mouseover
+                            [].forEach.call(elementsWithTokens, function ( span ) {
+                                var elemText = span.innerHTML;
+                                var popoverOpts = {
+                                    'popover': cmAutocomplete.keywords[elemText],
+                                    'popover-placement': 'right',
+                                    'popover-trigger': 'mouseenter'
+                                };
 
-                            var elemText = span.innerHTML;
-                            if (elemText in cmAutocomplete.keywords) {
-                                popoverOpts.popover = cmAutocomplete.keywords[elemText];
-                            }
-
-                            for (var key in popoverOpts) {
-                                span.setAttribute(key, popoverOpts[key]);
-                            }
-
-                        });
-
+                                for (var key in popoverOpts) {
+                                    span.setAttribute(key, popoverOpts[key]);
+                                }
+                            });
+                        }
                     }
 
                 });
 
+                // We have a cmAtom directive that is restricted to
+                // class. Compiling these spans will activate their
+                // behavior.
                 if (foundTokens) {
                     elt = $compile(elt)(scope);
                 }

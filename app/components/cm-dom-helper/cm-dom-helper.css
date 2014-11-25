@@ -1,0 +1,3 @@
+.CodeMirror span.cm-tag + div.popover {
+    max-width: none;
+}

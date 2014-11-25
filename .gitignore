@@ -3,3 +3,4 @@ node_modules
 .tmp
 .sass-cache
 /e2e/new.feature
+/app/components/cm-dom-helper/cm-atom-directive.js

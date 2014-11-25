@@ -56,7 +56,7 @@ module.exports = function(config) {
         ],
 
         // list of files / patterns to exclude
-        exclude: [ '**/*.es6.js' ],
+        exclude: [ '**/*.es6.js', '**/traceur-runtime.js' ],
 
         // web server port
         port: 7979,

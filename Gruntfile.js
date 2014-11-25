@@ -34,7 +34,7 @@ module.exports = function (grunt) {
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',
-                    '<%= yeoman.app %>/{components,editor,report}/**/*.js'
+                    '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.js'
                 ],
                 tasks: ['newer:jshint:all'],
                 options: {
@@ -49,12 +49,12 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{components,editor,report}/**/*.{js,html,css}',
+                    '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.{js,html,css}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
                     '.tmp/styles/**/*.css'
                 ]
-            },
+            }
         },
 
         // The actual grunt server settings
@@ -132,8 +132,8 @@ module.exports = function (grunt) {
             },
             all: grunt.file.expand([
                 '<%= yeoman.app %>/app.js',
-                '<%= yeoman.app %>/{components,editor,report}/**/*.js',
-                '!<%= yeoman.app %>/{components,editor,report}/**/*_test.js',
+                '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.js',
+                '!<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*_test.js',
                 'Gruntfile.js'
             ])
         },

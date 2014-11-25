@@ -517,6 +517,7 @@ module.exports = function (grunt) {
         'clean:dist',
         'bower-install',
         'ngconstant:build',
+        'traceur',
         'useminPrepare',
         'autoprefixer',
         'concat:generated',

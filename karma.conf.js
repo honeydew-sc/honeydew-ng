@@ -7,7 +7,18 @@ module.exports = function(config) {
         basePath: '',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'traceur'],
+
+        preprocessors: {
+            '**/*_test.es6.js': ['traceur']
+        },
+
+        traceurPreprocessor: {
+            options: {
+                'arrow-functions': true,
+                modules: 'inline'
+            }
+        },
 
         // list of files / patterns to load in the browser
         files: [

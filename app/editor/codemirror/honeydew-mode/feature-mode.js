@@ -178,7 +178,7 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
                 else if (state.allowPreamble && stream.match(/Set:|JIRA|Keep Open/)) {
                     return "keyword";
                 }
-                else if (state.allowPreamble && stream.match(/\$.+ /)) {
+                else if (state.allowPreamble && stream.match(/\$[^ =]+/)) {
                     return "variable";
                 }
                 // EXAMPLES

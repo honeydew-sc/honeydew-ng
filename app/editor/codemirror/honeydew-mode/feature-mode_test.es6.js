@@ -1,6 +1,6 @@
 'use strict';
 
-describe('FeatureMode', function () {
+describe('FeatureMode', () => {
     var httpMock, featureMode, feature, tests,
         PHRASE_TOKEN = 'atom',
         KEYWORD_TOKEN = 'tag';
@@ -8,7 +8,7 @@ describe('FeatureMode', function () {
     beforeEach(module('honeydew'));
 
 
-    beforeEach( inject( function ( _$httpBackend_, _featureMode_ ) {
+    beforeEach( inject( ( _$httpBackend_, _featureMode_ ) => {
         httpMock = _$httpBackend_;
         featureMode = _featureMode_;
 
@@ -38,8 +38,8 @@ describe('FeatureMode', function () {
         tests = 0;
     }));
 
-    it('should parse phrases out!', function () {
-        CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
+    it('should parse phrases out!', () => {
+        CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
             if (token.match('An example phrase')) {
                 tests++;
                 expect(styleClass).toBe(PHRASE_TOKEN);
@@ -48,8 +48,8 @@ describe('FeatureMode', function () {
         expect(tests).toBe(1);
     });
 
-    it('should parse keywords out', function () {
-        CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
+    it('should parse keywords out', () => {
+        CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
             if (token.match('ExampleKeyword')) {
                 tests++;
                 expect(styleClass).toBe(KEYWORD_TOKEN);
@@ -58,14 +58,56 @@ describe('FeatureMode', function () {
         expect(tests).toBe(1);
     });
 
-    it('should parse SScenarios', function () {
-        CodeMirror.runMode(feature, 'honeydew', function ( token, styleClass) {
+    it('should parse SScenarios', () => {
+        CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
             if (token.match('sScenario')) {
                 tests++;
                 expect(styleClass).toBe('sscenario');
             }
         });
         expect(tests).toBe(1);
+    });
+
+    it('should handle variables with spaces', () => {
+        var preamble = [
+            'Feature: variable',
+            '',
+            '$whee = "spaces here"'
+        ].join("\n");
+        CodeMirror.runMode(preamble, 'honeydew', ( token, styleClass ) => {
+            if (token === '$whee') {
+                tests++;
+                expect(styleClass).toBe('variable');
+            }
+
+            if (token === '"spaces here"') {
+                tests++;
+                expect(styleClass).toBe('string');
+            }
+        });
+
+        expect(tests).toBe(2);
+    });
+
+    iit('should handle example tables with commented out lines', () => {
+        var examples = [
+            'Feature:',
+            '',
+            ' Scenario: whee',
+            ' Examples:',
+            ' | header | row |',
+            ' # | commented | row |',
+            ' | another | row |'
+        ].join("\n");
+        CodeMirror.runMode(examples, 'honeydew', ( token, styleClass ) => {
+            console.log(token, styleClass);
+            if (token === ' | another | row | ') {
+                tests++;
+                expect(styleClass).toBe('string');
+            }
+
+            expect(tests).toBe(1);
+        });
     });
 
 

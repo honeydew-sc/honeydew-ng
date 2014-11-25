@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             traceur:  {
-                files:  [ '<%= yeoman.app %>/components/**/*.es6.js' ],
+                files:  [ '<%= yeoman.app %>/**/*.es6.js' ],
                 tasks:  [ 'newer:traceur' ]
             },
             js: {

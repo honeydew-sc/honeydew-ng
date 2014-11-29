@@ -26,6 +26,7 @@ angular.module('honeydew')
                 prefix + ' IE 10 Local',
                 prefix + ' Chrome Local',
                 prefix + ' FF Local',
+                prefix + ' Local Mobile Emulator',
                 'Batch: All ' + prefix ,
                 'Batch: All ' + prefix + ', Serial',
                 'Local Mobile Emulator'
@@ -47,6 +48,13 @@ angular.module('honeydew')
 
         self.set = self.set.concat(sauce);
         self.all = local.concat(self.set);
+
+        self.browsers = localBrowsers;
+        self.servers = Object.keys(localConfig).map(function (key) {
+            var ip = localConfig[key];
+            var prefix = key.split('_').pop().toUpperCase();
+            return prefix + ": " + ip;
+        });
 
         function addMetaInformation( browsers, group, extra ) {
             // takes an array of browser names and returns an array of

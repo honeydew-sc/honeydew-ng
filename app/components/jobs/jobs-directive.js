@@ -38,12 +38,13 @@ angular.module('honeydew')
                     };
                 }
                 else {
-                    scope.browserList = availableBrowsers.all;
+                    scope.browsers = availableBrowsers.browsers;
+                    scope.servers = availableBrowsers.servers;
                 }
 
                 scope.$storage = $sessionStorage.$default({
-                    host: ''
-                    // , browser: scope.browserList[1]
+                    server: '',
+                    browser: ''
                 });
 
                 // the defaults for ngStorage don't mesh well with
@@ -57,19 +58,23 @@ angular.module('honeydew')
                 }
 
                 function selectBrowser ( label ) {
-                    scope.browserList.forEach( function (element, index, array) {
-                        if (label === element.label) {
-                            scope.$storage.browser = element;
-                        }
-                    });
+                    if (typeof scope.browserList !== 'undefined') {
+                        scope.browserList.forEach( function (element, index, array) {
+                            if (label === element.label) {
+                                scope.$storage.browser = label;
+                            }
+                        });
+                    }
+                    else {
+                        scope.$storage.browserName = label;
+                    }
                 }
 
                 var cleanup = scope.$root.$on('hostname:changed', function (event, hostname) {
-                    var mobile = 'Local Mobile Emulator';
                     if (hostname.match(/origin.*honeydew\//)) {
-                        selectBrowser( mobile );
+                        selectBrowser( 'Local Mobile Emulator' );
                     }
-                    else if (scope.$storage.browser.label === mobile) {
+                    else {
                         selectBrowser( 'Chrome Local' );
                     }
                 });
@@ -81,10 +86,14 @@ angular.module('honeydew')
                 // TODO: this is getting too big
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
+                        console.log(scope.$storage.browser);
+                        return '';
+
                         panes.openPane('report');
                         var channel = liveReport.switchChannel();
 
                         var filename = $location.path().substr(1);
+
                         var job = angular.extend({}, scope.$storage.browser, {
                             file: filename,
                             host: hostname.host,

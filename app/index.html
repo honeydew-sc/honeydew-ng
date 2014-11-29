@@ -118,31 +118,57 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <!-- put the pusher token in an ignored file -->
     <script src="config.js"></script>
+    <script src="components/hostname/sc-hostname-app.js"></script>
     <script src="app.js"></script>
 
-    <!-- landing -->
-    <script src="landing/landing-controller.js"></script>
-
-    <!-- monitor -->
-    <script src="monitor/monitor-controller.js"></script>
-
-    <!-- screenshot -->
-    <script src="screenshot/screenshot-controller.js"></script>
-
-    <!-- editor page layout -->
+    <!-- fileblock:js scripts -->
     <script src="editor/editor-controller.js"></script>
-    <script src="editor/editor-nav/editor-nav-directive.js"></script>
+    <script src="components/alert/alert-directive.js"></script>
+    <script src="components/alert/alert-service.js"></script>
+    <script src="components/author/author-service.js"></script>
     <script src="components/autofocus/autofocus-directive.js"></script>
-
-    <!-- sets -->
-    <script src="set/set-controller.js"></script>
-
-    <!-- customize codemirror -->
-    <script src="editor/codemirror/honeydew-mode/feature-mode.js"></script>
-    <script src="editor/codemirror/honeydew-mode/set-mode.js"></script>
-    <script src="editor/codemirror/honeydew-mode/honeydew-lint.js"></script>
+    <script src="components/available-browsers/available-browsers-service.js"></script>
+    <script src="components/background-status/background-status-directive.js"></script>
+    <script src="components/background-status/background-status-factory.js"></script>
+    <script src="components/capitalize/capitalize-filter.js"></script>
+    <script src="components/cm-dom-helper/cm-atom-directive.js"></script>
+    <script src="components/cm-dom-helper/cm-dom-helper-factory.js"></script>
+    <script src="components/copy-style/copy-style-directive.js"></script>
+    <script src="components/debounce/debounce-service.js"></script>
+    <script src="components/files/files-factory.js"></script>
+    <script src="components/filetree/filetree-controller.js"></script>
+    <script src="components/filetree/filetree-factory.js"></script>
+    <script src="components/filetree/filetree-service.js"></script>
+    <script src="components/hostname/hostname-picker-directive.js"></script>
+    <script src="components/hostname/hostname-service.js"></script>
+    <script src="components/jobs/jobs-directive.js"></script>
+    <script src="components/jobs/jobs-service.js"></script>
+    <script src="components/live-report/live-report-directive.js"></script>
+    <script src="components/live-report/live-report-service.js"></script>
+    <script src="components/modal/modal-instance-controller.js"></script>
+    <script src="components/monitor/monitor-factory.js"></script>
+    <script src="components/random-string/random-string-service.js"></script>
+    <script src="components/report/set/set-factory.js"></script>
+    <script src="components/substring/substring-filter.js"></script>
     <script src="editor/codemirror/autocomplete-service/autocomplete-service.js"></script>
+    <script src="editor/codemirror/honeydew-mode/feature-mode.js"></script>
+    <script src="editor/codemirror/honeydew-mode/honeydew-lint.js"></script>
+    <script src="editor/codemirror/honeydew-mode/set-mode.js"></script>
+    <script src="editor/editor-nav/editor-nav-directive.js"></script>
+    <script src="editor/panes/center-pane/center-pane-directive.js"></script>
+    <script src="editor/panes/help/editor-help-directive.js"></script>
+    <script src="editor/panes/pane-selector/pane-selector-directive.js"></script>
+    <script src="editor/panes/panes-service.js"></script>
+    <script src="editor/panes/scroll-to/scroll-to-directive.js"></script>
+    <script src="editor/panes/settings/editor-settings-directive.js"></script>
+    <script src="landing/landing-controller.js"></script>
+    <script src="monitor/monitor-controller.js"></script>
+    <script src="screenshot/screenshot-controller.js"></script>
+    <script src="set/set-controller.js"></script>
     <script src="editor/codemirror/jump-cursor/jump-cursor.js"></script>
+    <!-- endfileblock -->
+
+    <!-- codemirror plugins -->
     <script src="bower_components/codemirror/addon/comment/comment.js"></script>
     <script src="bower_components/codemirror/addon/lint/lint.js"></script>
     <script src="bower_components/codemirror/addon/search/search.js"></script>
@@ -152,42 +178,6 @@
     <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
     <script src="bower_components/codemirror/addon/selection/active-line.js"></script>
 
-    <!-- editor panes -->
-    <script src="editor/panes/panes-service.js"></script>
-    <script src="editor/panes/help/editor-help-directive.js"></script>
-    <script src="editor/panes/settings/editor-settings-directive.js"></script>
-    <script src="editor/panes/center-pane/center-pane-directive.js"></script>
-    <script src="editor/panes/pane-selector/pane-selector-directive.js"></script>
-
-    <!-- components -->
-    <script src="components/alert/alert-directive.js"></script>
-    <script src="components/alert/alert-service.js"></script>
-    <script src="components/available-browsers/available-browsers-service.js"></script>
-    <script src="components/background-status/background-status-directive.js"></script>
-    <script src="components/background-status/background-status-factory.js"></script>
-    <script src="components/author/author-service.js"></script>
-    <script src="components/capitalize/capitalize-filter.js"></script>
-    <script src="components/cm-dom-helper/cm-dom-helper-factory.js"></script>
-    <script src="components/cm-dom-helper/cm-atom-directive.js"></script>
-    <script src="components/debounce/debounce-service.js"></script>
-    <script src="components/files/files-factory.js"></script>
-    <script src="components/filetree/filetree-controller.js"></script>
-    <script src="components/filetree/filetree-factory.js"></script>
-    <script src="components/filetree/filetree-service.js"></script>
-    <script src="components/hostname/sc-hostname-app.js"></script>
-    <script src="components/hostname/hostname-picker-directive.js"></script>
-    <script src="components/hostname/hostname-service.js"></script>
-    <script src="components/jobs/jobs-directive.js"></script>
-    <script src="components/jobs/jobs-service.js"></script>
-    <script src="components/live-report/live-report-directive.js"></script>
-    <script src="components/live-report/live-report-service.js"></script>
-    <script src="components/modal/modal-instance-controller.js"></script>
-    <script src="components/monitor/monitor-factory.js"></script>
-    <script src="editor/panes/scroll-to/scroll-to-directive.js"></script>
-    <script src="components/report/set/set-factory.js"></script>
-    <script src="components/copy-style/copy-style-directive.js"></script>
-    <script src="components/random-string/random-string-service.js"></script>
-    <script src="components/substring/substring-filter.js"></script>
     <!-- endbuild -->
   </body>
 </html>

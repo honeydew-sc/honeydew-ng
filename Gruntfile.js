@@ -480,6 +480,28 @@ module.exports = function (grunt) {
                     ext: '.js'
                 }]
             }
+        },
+
+        fileblocks: {
+            scripts: {
+                src: '<%= yeoman.app %>/index.html',
+                blocks: {
+                    scripts: {
+                        src: [
+                            '**/*.js',
+                            '!*app.js',
+                            '!config.js',
+                            '!bower_components/**',
+                            '!**/*.es6.js',
+                            '!**/*_test*'
+                        ],
+                        cwd: '<%= yeoman.app %>'
+                    }
+                },
+                options: {
+                    removeFiles: true
+                }
+            }
         }
     });
 

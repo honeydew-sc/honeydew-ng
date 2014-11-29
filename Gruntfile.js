@@ -483,17 +483,24 @@ module.exports = function (grunt) {
         },
 
         fileblocks: {
-            scripts: {
+            all: {
                 src: '<%= yeoman.app %>/index.html',
                 blocks: {
                     scripts: {
                         src: [
                             '**/*.js',
-                            '!*app.js',
+                            '!**/*app.js',
                             '!config.js',
                             '!bower_components/**',
                             '!**/*.es6.js',
                             '!**/*_test*'
+                        ],
+                        cwd: '<%= yeoman.app %>'
+                    },
+                    styles: {
+                        src: [
+                            '**/*.css',
+                            '!bower_components/**',
                         ],
                         cwd: '<%= yeoman.app %>'
                     }
@@ -521,6 +528,7 @@ module.exports = function (grunt) {
                 'autoprefixer',
                 'connect:livereload',
                 'traceur',
+                'fileblocks',
                 'watch'
             ]);
         }
@@ -541,6 +549,7 @@ module.exports = function (grunt) {
         'bower-install',
         'ngconstant:build',
         'traceur',
+        'fileblocks',
         'useminPrepare',
         'autoprefixer',
         'concat:generated',

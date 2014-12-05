@@ -11,6 +11,8 @@ angular.module('honeydew')
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
         CodeMirror.registerHelper('hint', 'honeydew', autocomplete.getHints);
 
+        var isMac = /Mac/.test(navigator.platform);
+
         $scope.editorOptions = {
             lineWrapping : true,
             lineNumbers: true,
@@ -28,7 +30,8 @@ angular.module('honeydew')
                 'Ctrl-/': 'toggleComment',
                 'Cmd-/': 'toggleComment',
                 'Ctrl-Z': 'undo',
-                'Ctrl-Y': 'redo'
+                'Ctrl-Y': 'redo',
+                'Ctrl-A': isMac ? 'goLineStartSmart' : 'selectAll'
             },
             onLoad: function (cm) {
                 $scope.editorOptions.refresh = function () {

@@ -21,8 +21,9 @@ angular.module('honeydew')
 
         var bodyHints = [
             'Scenario: (.*)',
-            'Examples:  ' + "\n",
-            '| email_address | password |' + "\n" + ' | (.*) | (.*) |'
+            'Examples:  ' + "\n" + ' | (.*) |',
+            '| email_address | password |' + "\n" + ' | (.*) | (.*) |',
+            'sScenario: (.*)'
         ];
 
         String.prototype.repeat = function( num ) {

@@ -110,4 +110,8 @@ describe('autocompleteService', function () {
         expect(hints.list.length).toBe(1);
         expect(hints.list[0].displayText).toContain('Existing');
     });
+
+    it('should always suggest Scenario: (.*)', function () {
+        expect(autocomplete.validSteps[0]).toBe('Scenario: (.*)');
+    });
 });

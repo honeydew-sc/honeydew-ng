@@ -2,7 +2,7 @@
 
 angular.module('honeydew')
     .factory('Files', function ($resource, $localStorage, $location, alerts, filetree) {
-        var res = $resource('/rest.php/files/:file', {
+        var Files = $resource('/rest.php/files/:file', {
             file: '@file'
         }, {
             'commit': {
@@ -10,7 +10,7 @@ angular.module('honeydew')
             }
         });
 
-        res.encode = function ( file ) {
+        Files.encode = function ( file ) {
             // ngResource encodes the slashes to %2F. Apache needs
             // 'AllowEncodedSlashes' set to true in htaccess, but we
             // have no permissions for that. Double encoding the url
@@ -19,14 +19,14 @@ angular.module('honeydew')
             return encodeURIComponent(file);
         };
 
-        res.prototype.jira = function () {
+        Files.prototype.jira = function () {
             var self = this;
 
             var matches = this.contents.match(/JIRA: (.*)/);
             return matches !== null ? matches[1] : '';
         };
 
-        res.prototype.sets = function () {
+        Files.prototype.sets = function () {
             var self = this;
 
             var matches = this.contents.match(/Sets?: ?(.*)/);
@@ -34,11 +34,11 @@ angular.module('honeydew')
             return this.oldSets;
         };
 
-        res.prototype.copy = function ( destination ) {
+        Files.prototype.copy = function ( destination ) {
             var self = this;
 
-            return res.save({
-                file: res.encode(destination),
+            return Files.save({
+                file: Files.encode(destination),
                 contents: self.contents
             }, function ( res ) {
                 $location.path(destination);
@@ -46,7 +46,7 @@ angular.module('honeydew')
             }, alerts.catcher).$promise;
         };
 
-        res.prototype.delete = function () {
+        Files.prototype.delete = function () {
             var self = this;
 
             var deletedFile = decodeURIComponent(self.file);
@@ -59,7 +59,7 @@ angular.module('honeydew')
             });
         };
 
-        res.prototype.move = function ( destination, contents) {
+        Files.prototype.move = function ( destination, contents) {
             var self = angular.copy(this);
             return self.copy(destination).then(function (response) {
                 if (response.success) {
@@ -71,7 +71,7 @@ angular.module('honeydew')
             }).catch( alerts.catcher);
         };
 
-        res.prototype.debouncedSave = function ( newContents, oldContents ) {
+        Files.prototype.debouncedSave = function ( newContents, oldContents ) {
             var self = this;
 
             if (newContents !== oldContents && oldContents !== undefined) {
@@ -93,10 +93,10 @@ angular.module('honeydew')
             }
         };
 
-        res.prototype.createNew = function ( destination ) {
+        Files.prototype.createNew = function ( destination ) {
             destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
             var newFile = new res({
-                file: res.encode(destination.file),
+                file: Files.encode(destination.file),
                 contents: [
                     'Feature:',
                     '',
@@ -112,4 +112,5 @@ angular.module('honeydew')
         };
 
         return res;
+        return Files;
     });

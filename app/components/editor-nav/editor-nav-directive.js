@@ -3,7 +3,7 @@
 angular.module('honeydew')
     .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree) {
         return {
-            templateUrl: 'editor/editor-nav/editor-nav.html',
+            templateUrl: 'components/editor-nav/editor-nav.html',
             scope: {
                 filename: '@',
                 control: '=',
@@ -80,6 +80,20 @@ angular.module('honeydew')
 
                         filetree.addLeaf(destination.file);
                         return newFile.$save();
+                    },
+
+                    'New Phrase': function ( phrase ) {
+                        var newPhrase = new Files({
+                            file: Files.encode(phrase.filepath),
+                            contents: [
+                                'Phrase: ' + phrase.title,
+                                '',
+                                ' '
+                            ].join("\n")
+                        });
+
+                        filetree.addLeaf(phrase.filepath);
+                        return newPhrase.$save();
                     },
 
                     'Copy': function ( destination ) {

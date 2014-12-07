@@ -198,6 +198,11 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
                 }
                 // SSCENARIO
                 else if (!state.inKeywordLine && state.allowScenario && stream.match(/\s*sscenario:/i)) {
+                    state.allowPlaceholders = false;
+                    state.allowSteps = true;
+                    state.allowPreamble = false;
+                    state.allowMultilineArgument = false;
+                    state.inKeywordLine = true;
                     return "sscenario";
                 }
                 // SCENARIO

@@ -120,5 +120,28 @@ describe('FeatureMode', () => {
         expect(tests).toBe(3);
     });
 
+    it('should handle sScenario as the first line', () => {
+        var sscenario = [
+            'Feature: okay',
+            '',
+            ' sScenario: whee',
+            ' Given I am on the / page'
+        ].join("\n");
+
+        CodeMirror.runMode(sscenario, 'honeydew', ( token, styleClass ) => {
+            if (token.match('sScenario')) {
+                tests++;
+                expect(styleClass).toBe('sscenario');
+            }
+
+            if (token.match('Given')) {
+                tests++;
+                expect(styleClass).toBe('variable-2');
+            }
+        });
+
+        expect(tests).toBe(2);
+    });
+
 
 });

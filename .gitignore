@@ -8,3 +8,5 @@ node_modules
 /app/components/cm-dom-helper/cm-atom-directive_test.js
 /app/editor/codemirror/honeydew-mode/feature-mode_test.js
 /app/components/autocomplete-service/autocomplete-service.js
+/app/components/honeydew-mode/feature-mode.js
+/app/components/honeydew-mode/feature-mode_test.js

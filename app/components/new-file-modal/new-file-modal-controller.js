@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $location, filename, Author, Files, alerts, title, action) {
+    .controller('NewFileModalCtrl', function ($scope, $modalInstance, $location, filename, Author, Files, alerts, title, action) {
         $scope.filename = filename;
         $scope.title = title;
         $scope.action = action;

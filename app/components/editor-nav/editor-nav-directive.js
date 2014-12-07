@@ -42,8 +42,8 @@ angular.module('honeydew')
                     }
                     else {
                         var modalInstance = $modal.open({
-                            templateUrl: 'components/modal/modal.html',
-                            controller: 'ModalInstanceCtrl',
+                            templateUrl: 'components/new-file-modal/new-file-modal.html',
+                            controller: 'NewFileModalCtrl',
                             resolve: {
                                 filename: function () {
                                     return scope.filename;

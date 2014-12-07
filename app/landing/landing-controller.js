@@ -18,7 +18,7 @@ angular.module('honeydew')
         $scope.openModal = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'components/modal/modal.html',
-                controller: 'ModalInstanceCtrl',
+                controller: 'NewFileModalCtrl',
                 resolve: {
                     filename: function () { return 'features/'; },
                     title: function () { return 'Create New'; },

@@ -9,9 +9,9 @@ describe('SetCtrl', function () {
         httpMock = $httpBackend;
         scope = $rootScope.$new();
 
-        SetCtrl    = $controller('SetCtrl', {
-                $scope: scope
-            });
+        SetCtrl = $controller('SetCtrl', {
+            $scope: scope
+        });
     }));
 
     it('should have a file on the scope', function () {

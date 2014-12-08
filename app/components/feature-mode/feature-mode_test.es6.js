@@ -7,7 +7,7 @@ describe('FeatureMode', () => {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject( ( _$httpBackend_, _featureMode_ ) => {
+    beforeEach(inject( function ( _$httpBackend_, _featureMode_ ) {
         httpMock = _$httpBackend_;
         featureMode = _featureMode_;
 

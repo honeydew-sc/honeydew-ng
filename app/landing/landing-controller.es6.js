@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('LandingCtrl', function ($scope, $localStorage, $modal, $location, Files) {
+    .controller('LandingCtrl', ($scope, $localStorage, $modal, $location, Files) => {
         var self = this;
 
         self.history = ($localStorage.history || [])
-            .filter(function ( item, index, self ) {
+            .filter(( item, index, self ) => {
                 // de dupe again just to be sure
                 return self.indexOf(item) === index;
             })
-            .map( function (item) {
+            .map( (item) => {
                 // format the history items for use in the view
                 return {
                     href: item,
@@ -29,39 +29,39 @@ angular.module('honeydew')
             ].join("\n");
 
             var tempFile = new Files({file, contents});
-            tempFile.$save().then((res) => {
+            tempFile.$save().then( () => {
                 $location.path('/' + filename);
             });
         };
 
-        self.openModal = function () {
+        self.openModal = () => {
             var modalInstance = $modal.open({
                 templateUrl: 'components/new-file-modal/new-file-modal.html',
                 controller: 'NewFileModalCtrl',
                 resolve: {
-                    filename: function () { return 'features/'; },
-                    title: function () { return 'Create New'; },
-                    action: function () {
+                    filename: () => { return 'features/'; },
+                    title: () => { return 'Create New'; },
+                    action: () => {
                         return new Files().createNew;
                     }
                 }
             });
 
-            modalInstance.result.then(function (dest) {
+            modalInstance.result.then( dest => {
                 $location.path('/' + dest.file);
             });
         };
 
 
 
-        self.viewGif = function (active) {
+        self.viewGif = active => {
             var modal = $modal.open({
                 templateUrl: 'landing/gif.html',
                 resolve: {
-                    active: function () { return active; }
+                    active: () => { return active; }
                 },
                 controller: [
-                    '$scope', 'active', function ($scope, active) {
+                    '$scope', 'active', ($scope, active) => {
                         var sources = {
                             feature: '/landing/new-feature.webm',
                             set: '/landing/new-set.webm'

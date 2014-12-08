@@ -12,3 +12,4 @@ node_modules
 /app/components/honeydew-mode/feature-mode_test.js
 /app/components/new-file-modal/new-phrase-controller_test.js
 /app/components/new-file-modal/new-phrase-controller.js
+/app/landing/landing-controller.js

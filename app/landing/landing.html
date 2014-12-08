@@ -1,4 +1,4 @@
-<div class="landing jumbotron container">
+<div class="landing jumbotron container" ng-controller="LandingCtrl as Landing">
   <div class="row">
 
     <div class="col-md-6">
@@ -7,7 +7,7 @@
         <p>
           <ul>
             <li>
-              Create a <a class="btn btn-primary btn-lg" ng-click="openModal()">New Feature File</a>
+              Create a <a class="btn btn-primary btn-lg" ng-click="Landing.openModal()">New Feature File</a> or a <a class="btn btn-primary btn-md" ng-click="Landing.gotoTempFile()">temporary file</a>
             </li>
             <li>
               View the <a target="_blank" href="/dashboard/index.html">Dashboard</a>, or the <a target="_blank" href="/#/monitor">Monitor Setup</a>
@@ -24,7 +24,7 @@
           <p>How do I...
             <ul>
               <li>
-                <p><a ng-click="viewGif('feature')" class="btn btn-default" role="button">create new folders?</a> or <a class="btn btn-default" role="button" ng-click="viewGif('set')">new sets?</a></p>
+                <p><a ng-click="Landing.viewGif('feature')" class="btn btn-default" role="button">create new folders?</a> or <a class="btn btn-default" role="button" ng-click="Landing.viewGif('set')">new sets?</a></p>
               </li>
               <li>set up my <a role="button" target="_blank" href="https://gist.github.com/gempesaw/4a317a5076644f263642">Local Honeydew</a> or <a role="button" target="_blank" href="http://appium.io/getting-started.html?lang=en">Appium</a>?
               </li>
@@ -45,9 +45,9 @@
       <div class="parent">
         <h3>Your recent files:</h3>
         <p>
-          <span ng-show="!history.length">You don't have any history items. Browse a few features and come back!</span>
-          <ul ng-show="history.length">
-            <li ng-repeat="item in history">
+          <span ng-show="!Landing.history.length">You don't have any history items. Browse a few features and come back!</span>
+          <ul ng-show="Landing.history.length">
+            <li ng-repeat="item in Landing.history">
               <small><a href="#{{ item.href }}">{{ item.label }}</a></small>
             </li>
           </ul>

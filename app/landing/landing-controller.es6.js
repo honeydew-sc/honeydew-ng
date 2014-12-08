@@ -2,7 +2,9 @@
 
 angular.module('honeydew')
     .controller('LandingCtrl', function ($scope, $localStorage, $modal, $location, Files) {
-        $scope.history = ($localStorage.history || [])
+        var self = this;
+
+        self.history = ($localStorage.history || [])
             .filter(function ( item, index, self ) {
                 // de dupe again just to be sure
                 return self.indexOf(item) === index;
@@ -15,7 +17,24 @@ angular.module('honeydew')
                 };
             });
 
-        $scope.openModal = function () {
+        self.gotoTempFile = () => {
+            var filename = 'features/test/tmp/' + new Date().getTime() + '.feature';
+
+            var file = Files.encode(filename);
+            var contents = [
+                'Feature: temporary',
+                '',
+                ' Scenario: temp',
+                ' '
+            ].join("\n");
+
+            var tempFile = new Files({file, contents});
+            tempFile.$save().then((res) => {
+                $location.path('/' + filename);
+            });
+        };
+
+        self.openModal = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'components/new-file-modal/new-file-modal.html',
                 controller: 'NewFileModalCtrl',
@@ -33,7 +52,9 @@ angular.module('honeydew')
             });
         };
 
-        $scope.viewGif = function (active) {
+
+
+        self.viewGif = function (active) {
             var modal = $modal.open({
                 templateUrl: 'landing/gif.html',
                 resolve: {

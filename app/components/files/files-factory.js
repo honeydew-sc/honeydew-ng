@@ -95,7 +95,7 @@ angular.module('honeydew')
 
         Files.prototype.createNew = function ( destination ) {
             destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
-            var newFile = new res({
+            var newFile = new Files({
                 file: Files.encode(destination.file),
                 contents: [
                     'Feature:',

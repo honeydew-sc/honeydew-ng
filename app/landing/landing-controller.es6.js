@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('LandingCtrl', ($scope, $localStorage, $modal, $location, Files) => {
+    .controller('LandingCtrl', function ($scope, $localStorage, $modal, $location, Files) {
         var self = this;
 
         self.history = ($localStorage.history || [])

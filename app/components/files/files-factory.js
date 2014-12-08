@@ -111,6 +111,5 @@ angular.module('honeydew')
             return newFile.$save();
         };
 
-        return res;
         return Files;
     });

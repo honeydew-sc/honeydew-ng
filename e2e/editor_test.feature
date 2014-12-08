@@ -50,7 +50,7 @@ $alert = 'css=.alert div element'
    When I click on the link $executeButton
      Then the $reportsPanel element should be visible
 
- # ln -s . /opt/honeydew/features/
+ # ln -s $(pwd) /opt/honeydew/features/e2e
  Scenario: no permissions
  Given I am on the $noPermissions page
    When I input random text into the editor cm

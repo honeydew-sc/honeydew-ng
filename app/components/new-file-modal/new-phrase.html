@@ -1,0 +1,66 @@
+<form class="form-horizontal hdew-modal" role="form">
+
+  <div class="form-group">
+    <label for="phrase" class="col-sm-2 control-label">Phrase:</label>
+    <div class="col-sm-10">
+      <input type="text"
+             class="form-control"
+             id="phrase"
+             required
+             ng-model="dest.phrase"
+             ng-change="updatePhrase()"
+             placeholder="REQUIRED: When I make a new phrase">
+    </div>
+  </div>
+
+  <span ng-show="!phraseChars" class="help-inline">
+    Please don't use any special characters: only A-Z, a-z,
+    numbers, spaces, and .' are permitted.
+  </span>
+
+  <div class="form-group">
+    <label for="project" class="col-sm-2 control-label">Project:</label>
+    <div class="col-sm-10">
+      <input type="text"
+             class="form-control"
+             id="project"
+             ng-model="dest.project"
+             ng-change="updatePhrase()"
+             required
+             placeholder="REQUIRED: Project">
+    </div>
+  </div>
+
+  <span ng-show="!projectChars" class="help-inline">
+    Please don't use any special characters: only A-Z and a-z, are
+    permitted; no spaces.
+  </span>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="ok()"
+              ng-disabled="!isFormValid()"
+              class="btn btn-success btn-submit">
+        {{ title }}
+      </button>
+      <a class="btn btn-hdew"
+         href="javascript:void(0)"
+         ng-click="cancel()">Cancel</a>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="filename"
+           class="col-sm-2 control-label">
+      Filename:
+    </label>
+    <div class="col-sm-10">
+      <input type="text"
+             class="form-control"
+             id="filename"
+             ng-model="newFilename"
+             readonly>
+    </div>
+  </div>
+
+</form>

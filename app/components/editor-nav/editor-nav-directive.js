@@ -88,15 +88,11 @@ angular.module('honeydew')
                         }
                     },
 
-                    'New Phrase': function ( phrase ) {
-                        var newPhrase = new Files({
-                            file: Files.encode(phrase.filepath),
-                            contents: [
-                                'Phrase: ' + phrase.title,
-                                '',
-                                ' '
-                            ].join("\n")
-                        });
+                    'New Phrase': {
+                        template: 'components/new-file-modal/new-phrase.html',
+                        controller: 'NewPhraseCtrl',
+                        cb: function ( phrase ) { }
+                    },
 
                     'Permalink': {
                         template: 'components/new-file-modal/new-file-modal.html',

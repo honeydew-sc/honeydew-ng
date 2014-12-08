@@ -7,8 +7,7 @@ describe('FeatureMode', () => {
 
     beforeEach(module('honeydew'));
 
-
-    beforeEach( inject( ( _$httpBackend_, _featureMode_ ) => {
+    beforeEach(inject( ( _$httpBackend_, _featureMode_ ) => {
         httpMock = _$httpBackend_;
         featureMode = _featureMode_;
 
@@ -30,6 +29,8 @@ describe('FeatureMode', () => {
         feature = [
             'Feature: test',
             '',
+            ' Scenario: something',
+            ' Given something',
             ' sScenario: something',
             '   An example phrase',
             '   A line with an ExampleKeyword in it'

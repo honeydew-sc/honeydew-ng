@@ -9,14 +9,13 @@
                required
                id="input-file"
                ng-model="dest.file" >
-        <span ng-show="inProperFolder === null" class="help-inline">
-          Please only create files in the features/, phrases/, or
-          sets/ folders. Begin your filename with one of those
-          folders.
+        <span ng-show="!inProperFolder" class="help-inline">
+          Please only create files in the features/, or phrases/
+          folders. Begin your filename with one of those folders.
         </span>
 
-        <span ng-if="!hasProperExtension && inProperFolder" class="help-inline">
-          {{ inProperFolder[0] | capitalize }}s must end in ".{{ inProperFolder[0] }}".
+        <span ng-show="!hasProperExtension && inProperFolder" class="help-inline">
+          {{ inProperFolder | capitalize }}s must end in ".{{ inProperFolder }}".
         </span>
 
         <span ng-show="!noSpecialChars" class="help-inline">

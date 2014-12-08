@@ -16,11 +16,27 @@ angular.module('honeydew')
         };
 
         $scope.isValidFilename = function () {
-            $scope.inProperFolder = $scope.dest.file.match(/^(feature|phrase|set)/);
-            $scope.hasProperExtension = $scope.dest.file.match(/^(feature|phrase|set)s\/.+\.\1$/);
-            $scope.noSpecialChars = $scope.dest.file.match(/^[0-9a-zA-Z_\-\.\/]+$/);
+            var file = $scope.dest.file || '';
 
-            return $scope.hasProperExtension && $scope.noSpecialChars;
+            if (file === '') {
+                $scope.noSpecialChars = true;
+                $scope.hasProperExtension = false;
+                $scope.inProperFolder = '';
+            }
+            else {
+                var folder = file.match(/^(feature|phrase|set)/);
+                if (folder) {
+                    $scope.inProperFolder = folder[0];
+                }
+                else {
+                    $scope.inProperFolder = '';
+                }
+                $scope.hasProperExtension = file.match(/^(feature|phrase|set)s\/.+\.\1$/);
+                $scope.noSpecialChars = file.match(/^[0-9a-zA-Z_\-\.\/]+$/);
+            }
+
+                return $scope.hasProperExtension && $scope.noSpecialChars;
+
         };
 
         Author.get().$promise.then( function (res) {

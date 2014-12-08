@@ -41,9 +41,11 @@ angular.module('honeydew')
                         scope.file.copy(temp);
                     }
                     else {
+                        var todo = scope.fileActions[action];
+
                         var modalInstance = $modal.open({
-                            templateUrl: 'components/new-file-modal/new-file-modal.html',
-                            controller: 'NewFileModalCtrl',
+                            templateUrl: todo.template,
+                            controller: todo.controller,
                             resolve: {
                                 filename: function () {
                                     return scope.filename;
@@ -52,7 +54,7 @@ angular.module('honeydew')
                                     return action;
                                 },
                                 action: function () {
-                                    return scope.fileActions[action];
+                                    return todo.cb;
                                 }
                             }
                         });
@@ -64,22 +66,26 @@ angular.module('honeydew')
                 };
 
                 scope.fileActions = {
-                    'Create New': function ( destination ) {
-                        destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
-                        var newFile = new Files({
-                            file: Files.encode(destination.file),
-                            contents: [
-                                'Feature:',
-                                '',
-                                'JIRA: ' + destination.jira,
-                                '# Email: ' + destination.author + '@sharecare.com',
-                                '',
-                                ' Scenario: ' + destination.jira
-                            ].join("\n")
-                        });
+                    'Create New': {
+                        template: 'components/new-file-modal/new-file-modal.html',
+                        controller: 'NewFileModalCtrl',
+                        cb: function ( destination ) {
+                            destination.jira = typeof(destination.jira) === 'undefined' ? '' : destination.jira;
+                            var newFile = new Files({
+                                file: Files.encode(destination.file),
+                                contents: [
+                                    'Feature:',
+                                    '',
+                                    'JIRA: ' + destination.jira,
+                                    '# Email: ' + destination.author + '@sharecare.com',
+                                    '',
+                                    ' Scenario: ' + destination.jira
+                                ].join("\n")
+                            });
 
-                        filetree.addLeaf(destination.file);
-                        return newFile.$save();
+                            filetree.addLeaf(destination.file);
+                            return newFile.$save();
+                        }
                     },
 
                     'New Phrase': function ( phrase ) {
@@ -92,29 +98,44 @@ angular.module('honeydew')
                             ].join("\n")
                         });
 
-                        filetree.addLeaf(phrase.filepath);
-                        return newPhrase.$save();
+                    'Permalink': {
+                        template: 'components/new-file-modal/new-file-modal.html',
+                        controller: 'NewFileModalCtrl',
+                        cb: function ( ) { }
                     },
 
-                    'Copy': function ( destination ) {
-                        return scope.file.copy(destination.file);
-                    },
-
-                    'Move': function ( destination ) {
-                        return scope.file.move(destination.file);
-                    },
-
-                    'Delete': function () {
-                        scope.$storage.undoFile = angular.copy(scope.file);
-                        if (scope.stopWatching) {
-                            scope.stopWatching();
+                    'Copy': {
+                        template: 'components/new-file-modal/new-file-modal.html',
+                        controller: 'NewFileModalCtrl',
+                        cb: function ( destination ) {
+                            return scope.file.copy(destination.file);
                         }
-                        scope.file.delete().then(function (res) {
-                            res.notes = scope.filename + " has been deleted";
-                            alerts.addAlert(res, 3000);
-                            filetree.deleteLeaf(scope.filename);
-                        });
-                        $location.path('/');
+                    },
+
+                    'Move': {
+                        template: 'components/new-file-modal/new-file-modal.html',
+                        controller: 'NewFileModalCtrl',
+                        cb: function ( destination ) {
+                            return scope.file.move(destination.file);
+                        }
+                    },
+
+                    'Delete': {
+                        template: 'components/new-file-modal/new-file-modal.html',
+                        controller: 'NewFileModalCtrl',
+                        cb: function () {
+                            scope.$storage.undoFile = angular.copy(scope.file);
+                            if (scope.stopWatching) {
+                                scope.stopWatching();
+                            }
+                            scope.file.delete().then(function (res) {
+                                res = res || {};
+                                res.notes = scope.filename + " has been deleted";
+                                alerts.addAlert(res, 3000);
+                                filetree.deleteLeaf(scope.filename);
+                            });
+                            $location.path('/');
+                        }
                     }
                 };
 

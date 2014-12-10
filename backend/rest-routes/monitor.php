@@ -160,11 +160,6 @@ function convertJsonToSQL( $monitorFile = "/opt/honeydew/sets/setInfo" ) {
 
 function validateNewMonitor($monitor) {
     $reason = "";
-    if (!file_exists($monitor->{"set"}) &&
-        !file_exists("/opt/honeydew/sets/" . $monitor->{"set"})) {
-        $reason = "Error: set file not found: " . $monitor->{"set"};
-    }
-
     if (!preg_match("/sharecare|doctoroz|army|ultimateme|bactes|dailystrength/", $monitor->{"host"})) {
         $reason = "Error: invalid host selection: " . $monitor->{'host'};
     }

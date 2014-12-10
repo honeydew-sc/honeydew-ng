@@ -44,11 +44,10 @@ class monitorTests extends UnitTestCase {
         $res = $response->body;
         $this->assertEqual($res->{"success"}, "false", "bad monitor post fails");
         $this->assertTrue($response->code != 200, 'bad monitor post fails code');
-        $this->assertPattern("/Error/", $res->{"reason"}, "missing file gets rejected");
-        $this->assertPattern("/Error/", $res->{"reason"}, "bad browser gets rejected");
+        $this->assertNoPattern("/filename/", $res->{"reason"}, "missing file gets rejected");
+        $this->assertPattern("/Error: invalid host/", $res->{"reason"}, "bad host gets rejected");
 
         $fakeSet = "/tmp/fake.set";
-        touch($fakeSet);
         $validMonitor = array(
             "set" => $fakeSet,
             "browser" => "Chrome",

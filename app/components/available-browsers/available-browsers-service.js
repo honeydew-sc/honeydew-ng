@@ -27,7 +27,8 @@ angular.module('honeydew')
                 prefix + ' Chrome Local',
                 prefix + ' FF Local',
                 'Batch: All ' + prefix ,
-                'Batch: All ' + prefix + ', Serial'
+                'Batch: All ' + prefix + ', Serial',
+                'Local Mobile Emulator'
             ];
 
             var decoratedBrowsers = addMetaInformation(browsers, prefix + ': ' + ip, {local: ip});

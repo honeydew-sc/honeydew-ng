@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('cmAtom', (autocomplete, $window) => {
+    .directive('cmAtom', function (autocomplete, $window) {
         return {
             restrict: 'C',
             link: function (scope, element, attrs) {

@@ -20,11 +20,12 @@ angular.module('honeydew')
         };
 
         factory.clickableLinks = function ($) {
-            // :( I don't know why, but a directive
-            // with restrict: 'C' wasn't picking up on these spans
-            // when added by the mode highlighter. Manually
-            // $apply()ing and $digest()ing didn't seem to make a
-            // difference
+            // TODO: Convert this to branches in
+            // factory.compileRenderedLines. This didn't work before
+            // because CodeMirror was applying the classes to elements
+            // that had already been $compiled. Manually triggering a
+            // $compile phase on the element picks up the necessary
+            // directives, like cmAtom/cm-atom.
             $('.CodeMirror').on('click', '.cm-clickable-link', function(event) {
                 var url = $(event.target).text();
 
@@ -33,7 +34,7 @@ angular.module('honeydew')
                     url = '/#/sets/' + url.substring(1) + '.set';
                 }
                 // JIRA tickets
-                else if (url.match(/\w+\-\d+/)) {
+                else if (url.match(/\s\w+\-\d+\s/)) {
                     url = 'https://arnoldmedia.jira.com/browse/' + url;
                 }
                 // from the set page, link to its features

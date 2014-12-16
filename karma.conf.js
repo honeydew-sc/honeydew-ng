@@ -10,7 +10,8 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'traceur'],
 
         preprocessors: {
-            '**/*_test.es6.js': ['traceur']
+            '**/*_test.es6.js': ['traceur'],
+            '**/*.html': ['ng-html2js']
         },
 
         traceurPreprocessor: {
@@ -18,6 +19,11 @@ module.exports = function(config) {
                 'arrow-functions': true,
                 modules: 'inline'
             }
+        },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'app/',
+            moduleName: 'tpl'
         },
 
         // list of files / patterns to load in the browser
@@ -53,6 +59,9 @@ module.exports = function(config) {
             'app/set/**/*.js',
 
             'app/components/**/*.js',
+
+            // let karma see our templates for pre-processing
+            'app/components/**/*.html'
         ],
 
         // list of files / patterns to exclude

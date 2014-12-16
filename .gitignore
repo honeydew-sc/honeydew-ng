@@ -14,3 +14,4 @@ node_modules
 /app/components/new-file-modal/new-phrase-controller.js
 /app/landing/landing-controller.js
 /app/components/feature-mode/feature-mode_test.js
+/domains.json-backup

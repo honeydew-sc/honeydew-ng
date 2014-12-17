@@ -7,12 +7,15 @@ angular.module('honeydew')
         // the browser name to determine whether to send it to
         // saucelabs or not.
         service.getBrowsers = () => {
-            var localBrowsers = [
+            let localBrowsers = [
                 'Chrome',
                 'Firefox',
-                'IE',
                 'Android Mobile',
-                'iOS Mobile'
+                'iOS Mobile',
+                'IE 8',
+                'IE 9',
+                'IE 10',
+                'IE 11',
             ];
 
             return localBrowsers;

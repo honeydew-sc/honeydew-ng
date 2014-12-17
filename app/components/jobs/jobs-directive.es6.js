@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Jobs, Files, Tree, filetree, Monitor, panes, alerts, randomString, liveReport, hostname, BackgroundStatus) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, Monitor) {
         return {
             scope: {
                 submitAction: '='
@@ -16,7 +16,7 @@ angular.module('honeydew')
                     scope.servers = availableBrowsers.getServers();
                 })();
             },
-            controller: ($scope, hostname, Jobs) => {
+            controller: function ($scope, $location, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
                 $scope.executeJob = () => {
                     (function updateWindowLayout() {
                         // oooh side effects

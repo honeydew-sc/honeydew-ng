@@ -24,9 +24,14 @@ angular.module('honeydew')
                         filetree.closeTreeViaSettings('execute');
                     })();
 
-                    var job = createJob($scope.$storage.browser, $scope.$storage.server);
-                    $scope.$emit('file:commit');
-                    return job.$save();
+                    if ($scope.jobOptions.$valid) {
+                        var job = createJob($scope.$storage.browser, $scope.$storage.server);
+                        $scope.$emit('file:commit');
+                        return job.$save();
+                    }
+                    else {
+                        return false;
+                    }
                 };
 
                 var createJob = (browser, server) => {

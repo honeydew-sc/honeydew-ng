@@ -60,7 +60,7 @@ angular.module('honeydew')
                     keyMap: CodeMirror.keyMap.default,
 
                     jira: function () {
-                        var matches = $scope.file.contents.match(/JIRA: (.*)/i);
+                        var matches = $scope.file.contents.match(/\nJIRA: (.*)/i);
                         return matches !== null ? matches[1] : '';
                     }
                 };
@@ -111,4 +111,18 @@ angular.module('honeydew')
             $scope.filename = $stateParams.path;
             $scope.display($scope.filename);
         }
+
+        (function listenForFileCommits() {
+            $scope.$on('file:commit', function (event, data) {
+                var file = angular.copy($scope.file);
+                file.msg = $scope.doc.jira();
+
+                file.$commit().then(function (res) {
+                    alerts.addAlert(res, 1000);
+                })
+                    .catch(function (res) {
+                        alerts.addAlert(res);
+                    });
+            });
+        })();
     });

@@ -139,25 +139,6 @@ angular.module('honeydew')
                     scope.browsers = availableBrowsers.browsers;
                     scope.servers = availableBrowsers.servers;
                 }
-
-                // TODO: this is getting too big
-                scope.executeJob = function () {
-                    if (scope.jobOptions.$valid) {
-
-                        var file = new Files({
-                            file: Files.encode(filename),
-                            msg: scope.jira ? scope.jira() : ''
-                        });
-
-                        file.$commit()
-                            .then(function (res) {
-                                alerts.addAlert(res, 1000);
-                            })
-                            .catch(function (res) {
-                                alerts.addAlert(res);
-                            });
-                    }
-                };
             }
         };
     });

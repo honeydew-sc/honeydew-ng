@@ -100,68 +100,9 @@ angular.module('honeydew')
                     scope.servers = availableBrowsers.servers;
                 }
 
-                scope.$storage = $sessionStorage.$default({
-                    server: '',
-                    browser: ''
-                });
-
-                // the defaults for ngStorage don't mesh well with
-                // setting a default for an ng-options select, so
-                // we have to do it manually.
-                if (scope.$storage.browser) {
-                    selectBrowser( scope.$storage.browser.label );
-                }
-                else {
-                    scope.$storage.browser = scope.browserList[1];
-                }
-
-                function selectBrowser ( label ) {
-                    if (typeof scope.browserList !== 'undefined') {
-                        scope.browserList.forEach( function (element, index, array) {
-                            if (label === element.label) {
-                                scope.$storage.browser = label;
-                            }
-                        });
-                    }
-                    else {
-                        scope.$storage.browserName = label;
-                    }
-                }
-
-                var cleanup = scope.$root.$on('hostname:changed', function (event, hostname) {
-                    if (hostname.match(/origin.*honeydew\//)) {
-                        selectBrowser( 'Mobile Emulator' );
-                    }
-                    else {
-                        selectBrowser( 'Chrome Local' );
-                    }
-                });
-
-                scope.$on('$destroy', function () {
-                    cleanup();
-                });
-
                 // TODO: this is getting too big
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
-                        panes.openPane('report');
-                        var channel = liveReport.switchChannel();
-
-                        var filename = $location.path().substr(1);
-
-                        var job = {
-                            file: filename,
-                            host: hostname.host,
-                            channel: channel
-                        };
-
-                        var isServer = scope.$storage.server.match(/^\w\w: ((?:\d\.?){4})/);
-                        if (isServer) {
-                            console.log(isServer);
-                        }
-                        return job;
-
-                        filetree.closeTreeViaSettings( 'execute' );
                         if (job.label.match(/local(?! mobile)/i)) {
                             BackgroundStatus.get({
                                 status: 'webdriver',
@@ -196,13 +137,6 @@ angular.module('honeydew')
                             });
                     }
                 };
-
-                // put executeJob on control, which is passed up to
-                // the editor-nav directive, and from there to the
-                // EditorCtrl scope
-                if (scope.control) {
-                    scope.control.executeJob = scope.executeJob;
-                }
             }
         };
     });

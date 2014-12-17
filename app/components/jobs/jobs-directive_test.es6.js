@@ -16,7 +16,14 @@ describe('Jobs directive', function () {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( function ( $compile, $rootScope, $sessionStorage, $httpBackend, $location, _hostname_, _liveReport_, _availableBrowsers_ ) {
+    beforeEach(inject( function ( $compile,
+                           $rootScope,
+                           $sessionStorage,
+                           $httpBackend,
+                           $location,
+                           _hostname_,
+                           _liveReport_,
+                           _availableBrowsers_) {
         elm = angular.element('<job-options></job-options>');
         scope = $rootScope;
         compile = $compile;
@@ -76,16 +83,20 @@ describe('Jobs directive', function () {
             content.browser = browserName;
             delete content.local;
         }
+        else {
+            // we check our webdriver status for local servers
+            httpMock.expectGET(`/rest.php/status/webdriver?local=${ local }`)
+                .respond({webdriverStatus: true});
+        }
 
+        // the backend expects an array of browsers
         content.browser = [ content.browser ];
-
-        return content;
+        return httpMock.expectPOST('/rest.php/jobs', content)
+            .respond({});
     };
 
     it('should execute the proper job parameters for localhost', () => {
-        var content = setupPostContent(storage.browser, storage.server);
-
-        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        setupPostContent(storage.browser, storage.server);
         elm.find('#execute').click();
         httpMock.flush();
     });
@@ -93,8 +104,7 @@ describe('Jobs directive', function () {
     it('should execute the proper job parameters for a local server', () => {
         storage.server = availableBrowsers.getServers()[1];
 
-        var content = setupPostContent(storage.browser, storage.server);
-        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
         httpMock.flush();
     });
@@ -102,15 +112,13 @@ describe('Jobs directive', function () {
     it('should approriately execute a saucelabs job', () => {
         storage.server = 'Saucelabs';
 
-        var content = setupPostContent(storage.browser, storage.server);
-        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
         httpMock.flush();
     });
 
     it('should execute on job:execute events', () => {
-        var content = setupPostContent(storage.browser, storage.server);
-        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        setupPostContent(storage.browser, storage.server);
         scope.$broadcast('job:execute');
         httpMock.flush();
     });
@@ -125,8 +133,7 @@ describe('Jobs directive', function () {
             emits++;
         });
 
-        var content = setupPostContent(storage.browser, storage.server);
-        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
         httpMock.flush();
 
@@ -152,5 +159,15 @@ describe('Jobs directive', function () {
         hostname.app = 'SC';
         hostname.resolve();
         expect(storage.browser).toBe('Firefox');
+    });
+
+    it('should not run if the webdriver server is down', () => {
+        // Note that we are asserting that we only receive a single
+        // GET request, and implicitly asserting that we do not see
+        // the subsequent POST to /jobs that would start the job.
+        httpMock.expectGET('/rest.php/status/webdriver?local=Localhost').respond({webdriverStatus: false});
+        elm.find('#execute').eq(0).click();
+        httpMock.flush();
+
     });
 });

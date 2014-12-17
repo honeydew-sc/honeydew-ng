@@ -24,31 +24,64 @@ angular.module('honeydew')
                         filetree.closeTreeViaSettings('execute');
                     })();
 
-                    if ($scope.jobOptions.$valid) {
-                        var job = createJob($scope.$storage.browser, $scope.$storage.server);
-                        $scope.$emit('file:commit');
-                        return job.$save();
-                    }
-                    else {
-                        return false;
-                    }
+                    hasWebdriver($scope.$storage.server).then( res => {
+                        if (res.webdriverStatus && $scope.jobOptions.$valid) {
+                            let job = createJob($scope.$storage.browser, $scope.$storage.server);
+                            $scope.$emit('file:commit');
+                            return job.$execute();
+                        }
+                        else {
+                            return false;
+                        }
+                    });
                 };
 
-                var createJob = (browser, server) => {
-                    var file = $location.path().substr(1);
-                    var host = hostname.host;
-                    var channel = liveReport.switchChannel();
-                    var job = { file, host, channel, server, browser };
+                var getLocalIp = value => value.split(' ').pop();
 
-                    if (server !== 'Saucelabs') {
+                var isSaucelabs = () => $scope.$storage.server === 'Saucelabs';
+
+                var createJob = (browser, server) => {
+                    var file    = $location.path().substr(1),
+                        host    = hostname.host,
+                        channel = liveReport.switchChannel(),
+                        job     = { file, host, channel, server, browser };
+
+                    if ( !isSaucelabs() ) {
                         job.browser += ' Local';
-                        job.local = server.split(' ').pop();
+                        job.local = getLocalIp(server);
                     }
 
                     // The backend expects an array of browser names
                     job.browser = [ job.browser ];
 
                     return new Jobs(job);
+                };
+
+                var hasWebdriver = (server) => {
+                    if ( isSaucelabs() ) {
+                        // TODO: we're just assume Saucelabs is up
+                        let deferred = $q.defer();
+                        deferred.resolve({webdriverStatus: true});
+
+                        return deferred.promise;
+                    }
+                    else {
+                        let statusPromise = BackgroundStatus.get({
+                            status: 'webdriver',
+                            local: getLocalIp(server)
+                        }, res => {
+                            if (!res.webdriverStatus) {
+                                alerts.addAlert({
+                                    type: 'danger',
+                                    msg: 'The webdriver server at ' + res.serverAddress + ':4444 is unreachable! Your test is not running!'
+                                });
+                            }
+
+                            return res.webdriverStatus;
+                        }).$promise;
+
+                        return statusPromise;
+                    }
                 };
 
                 (function listenForExecutes() {
@@ -109,20 +142,7 @@ angular.module('honeydew')
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
                         if (job.label.match(/local(?! mobile)/i)) {
-                            BackgroundStatus.get({
-                                status: 'webdriver',
-                                local: job.local
-                            }, function (res) {
-                                if (res.webdriverStatus) {
-                                    Jobs.execute(job);
-                                }
-                                else {
-                                    alerts.addAlert({
-                                        type: 'danger',
-                                        msg: 'The webdriver server at ' + res.serverAddress + ':4444 is unreachable! Your test is not running!'
-                                    });
-                                }
-                            });
+
                         }
                         else {
                             Jobs.execute(job);

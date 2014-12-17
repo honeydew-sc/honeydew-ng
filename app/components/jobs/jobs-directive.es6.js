@@ -44,6 +44,13 @@ angular.module('honeydew')
 
                     return new Jobs(job);
                 };
+
+                (function listenForExecutes() {
+                    $scope.$on('job:execute', (event, data) => {
+                        $scope.executeJob();
+                    });
+                })();
+
             },
             somethingElse: function (scope, element, attrs) {
                 scope.monitor = attrs.monitor;

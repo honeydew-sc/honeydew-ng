@@ -99,4 +99,30 @@ describe('Jobs directive', function () {
         elm.find('#execute').eq(0).click();
         httpMock.flush();
     });
+
+    it('should execute on job:execute events', () => {
+        var content = setupPostContent(storage.browser, storage.server);
+        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        scope.$broadcast('job:execute');
+        httpMock.flush();
+    });
+
+    it('should emit a file:commit event when executing', () => {
+        // the scope that we have access to doesn't seem to be the
+        // scope in the directive controller (ie our scope.$emit is
+        // never called), so we'll just listen for the event like a
+        // regular scope instead of spying.
+        var emits = 0;
+        scope.$on('file:commit', (args) => {
+            emits++;
+        });
+
+        var content = setupPostContent(storage.browser, storage.server);
+        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        elm.find('#execute').eq(0).click();
+        httpMock.flush();
+
+        expect(emits).toBe(1);
+    });
+
 });

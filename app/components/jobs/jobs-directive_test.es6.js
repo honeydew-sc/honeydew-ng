@@ -38,7 +38,10 @@ describe('Jobs directive', function () {
         storage.browser = browser;
         storage.server = server;
         $compile(elm)(scope);
+
+        httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [] });
         scope.$digest();
+        httpMock.flush();
 
         hostname.env = 'prod';
         hostname.app = 'SC';

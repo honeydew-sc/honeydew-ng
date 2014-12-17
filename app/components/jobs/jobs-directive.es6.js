@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $sessionStorage, Monitor) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Monitor, Tree) {
         return {
             scope: {
                 submitAction: '='
@@ -15,8 +15,17 @@ angular.module('honeydew')
                     scope.browsers = availableBrowsers.getBrowsers();
                     scope.servers = availableBrowsers.getServers();
                 })();
+
+                scope.isMonitor = $location.path().match(/\/monitor$/);
+
+                (function populateSets() {
+                    Tree.get( {folder: 'sets'}, res => {
+                        scope.setList = res.tree.map( it => it.label );
+                        scope.set = { name: scope.setList[0] };
+                    });
+                })();
             },
-            controller: function ($scope, $location, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
+            controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
                 $scope.executeJob = () => {
                     (function updateWindowLayout() {
                         // oooh side effects
@@ -35,8 +44,6 @@ angular.module('honeydew')
                         }
                     });
                 };
-
-                $scope.isMonitor = $location.path().match(/\/monitor$/);
 
                 var getLocalIp = value => value.split(' ').pop();
 
@@ -114,16 +121,7 @@ angular.module('honeydew')
                 if (scope.monitor) {
                     scope.browserList = availableBrowsers.set;
 
-                    Tree.get( {
-                        folder: 'sets'
-                    }, function (res) {
-                        scope.setList = res.tree.map( function ( it ) {
-                            return it.label;
-                        });
-                        scope.set = {
-                            name: scope.setList[0]
-                        };
-                    });
+                    ;
 
                     scope.action = function () {
                         var maybeNewMonitor = new Monitor({

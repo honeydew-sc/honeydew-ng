@@ -18,3 +18,4 @@ node_modules
 /app/components/jobs/jobs-directive_test.js
 /app/components/available-browsers/available-browsers-service_test.js
 /app/components/available-browsers/available-browsers-service.js
+/app/components/jobs/jobs-directive.js

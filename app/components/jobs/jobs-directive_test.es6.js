@@ -71,12 +71,12 @@ ddescribe('Jobs directive', function () {
 
     iit('should execute the proper job parameters for a local server', () => {
         storage.server = availableBrowsers.getServers()[2];
-        compile(elm)(scope);
 
         var file = 'test.feature',
             host = 'https://www.stage.sharecare.com',
             browser = storage.browser + ' Local',
             local = storage.server.split(' ').pop(),
+            server = server,
             channel = 'channel';
         spyOn(location, 'path').and.returnValue('/' + file);
         spyOn(liveReport, 'switchChannel').and.returnValue(channel);

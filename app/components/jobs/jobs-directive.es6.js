@@ -20,7 +20,8 @@ angular.module('honeydew')
             },
             controller: ($scope, hostname, Jobs) => {
                 $scope.executeJob = () => {
-                    panes.openPane('report');
+                    console.log('hi');
+                    // panes.openPane('report');
                     var job = createJob($scope.$storage.browser, $scope.$storage.server);
                     job.$save();
                 };

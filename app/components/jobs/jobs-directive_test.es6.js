@@ -34,18 +34,16 @@ describe('Jobs directive', function () {
         storage = $sessionStorage;
         availableBrowsers = _availableBrowsers_;
 
-        // $compile mutates elm
-        storage.browser = browser;
-        storage.server = server;
-        $compile(elm)(scope);
-
-        httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [] });
-        scope.$digest();
-        httpMock.flush();
-
         hostname.env = 'prod';
         hostname.app = 'SC';
         hostname.resolve();
+
+        storage.browser = browser;
+        storage.server = server;
+
+        // $compile mutates elm
+        $compile(elm)(scope);
+        scope.$digest();
     }));
 
     it('should remember browsers through refreshes', () => {
@@ -178,5 +176,38 @@ describe('Jobs directive', function () {
         setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
         httpMock.flush();
+    });
+});
+
+ddescribe('Jobs directive for sets page', () => {
+    var elm,
+        scope,
+        location,
+        httpMock;
+
+    beforeEach(module('honeydew'));
+    beforeEach(module('tpl'));
+
+    beforeEach(inject( function (
+        $compile,
+        $location,
+        $rootScope,
+        $httpBackend
+    ) {
+        elm = angular.element('<job-options></job-options>');
+        scope = $rootScope;
+        location = $location;
+        httpMock = $httpBackend;
+
+        spyOn(location, 'path').and.returnValue('#/monitor');
+        $compile(elm)(scope);
+
+        httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [ { name: 'it', label: 'it' } ] });
+        scope.$digest();
+
+        httpMock.flush();
+    }));
+
+    it('should do some stuff', () => {
     });
 });

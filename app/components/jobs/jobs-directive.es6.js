@@ -19,10 +19,13 @@ angular.module('honeydew')
                 scope.isMonitor = $location.path().match(/\/monitor$/);
 
                 (function populateSets() {
-                    Tree.get( {folder: 'sets'}, res => {
-                        scope.setList = res.tree.map( it => it.label );
-                        scope.set = { name: scope.setList[0] };
-                    });
+                    if (scope.isMonitor) {
+                        Tree.get( {folder: 'sets'}, res => {
+                            console.log(res);
+                            // scope.setList = res.tree.map( it => it.label );
+                            // scope.set = { name: scope.setList[0] };
+                        });
+                    }
                 })();
             },
             controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {

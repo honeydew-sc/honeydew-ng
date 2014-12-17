@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('Jobs directive', function () {
+describe('Jobs directive', function () {
     var elm,
         scope,
         compile,
@@ -54,34 +54,47 @@ ddescribe('Jobs directive', function () {
         expect(selected.text()).toBe(server);
     });
 
-    iit('should execute the proper job parameters for localhost', () => {
+    var setupPostContent = (browserName, serverName) => {
         var file = 'test.feature',
-            host = 'https://www.stage.sharecare.com',
-            browser = storage.browser + ' Local',
-            local = server,
+            host = 'https://www.sharecare.com',
+            browser = browserName + ' Local',
+            local = serverName.split(' ').pop(),
+            server = serverName,
             channel = 'channel';
         spyOn(location, 'path').and.returnValue('/' + file);
         spyOn(liveReport, 'switchChannel').and.returnValue(channel);
 
         var content = {file, host, channel, browser, server, local};
+        if (serverName.match(/Saucelabs/)) {
+            content.server = 'Saucelabs';
+            content.browser = browserName;
+            delete content.local;
+        }
+
+        return content;
+    };
+
+    it('should execute the proper job parameters for localhost', () => {
+        var content = setupPostContent(storage.browser, storage.server);
+
         httpMock.expectPOST('/rest.php/jobs', content).respond({});
         elm.find('#execute').click();
         httpMock.flush();
     });
 
-    iit('should execute the proper job parameters for a local server', () => {
-        storage.server = availableBrowsers.getServers()[2];
+    it('should execute the proper job parameters for a local server', () => {
+        storage.server = availableBrowsers.getServers()[1];
 
-        var file = 'test.feature',
-            host = 'https://www.stage.sharecare.com',
-            browser = storage.browser + ' Local',
-            local = storage.server.split(' ').pop(),
-            server = server,
-            channel = 'channel';
-        spyOn(location, 'path').and.returnValue('/' + file);
-        spyOn(liveReport, 'switchChannel').and.returnValue(channel);
+        var content = setupPostContent(storage.browser, storage.server);
+        httpMock.expectPOST('/rest.php/jobs', content).respond({});
+        elm.find('#execute').eq(0).click();
+        httpMock.flush();
+    });
 
-        var content = {file, host, channel, browser, server, local};
+    it('should approriately execute a saucelabs job', () => {
+        storage.server = 'Saucelabs';
+
+        var content = setupPostContent(storage.browser, storage.server);
         httpMock.expectPOST('/rest.php/jobs', content).respond({});
         elm.find('#execute').eq(0).click();
         httpMock.flush();

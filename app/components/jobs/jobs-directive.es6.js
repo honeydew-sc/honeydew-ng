@@ -20,10 +20,15 @@ angular.module('honeydew')
             },
             controller: ($scope, hostname, Jobs) => {
                 $scope.executeJob = () => {
-                    console.log('hi');
-                    // panes.openPane('report');
+                    (function updateWindowLayout() {
+                        // oooh side effects
+                        panes.openPane('report');
+                        filetree.closeTreeViaSettings('execute');
+                    })();
+
                     var job = createJob($scope.$storage.browser, $scope.$storage.server);
-                    job.$save();
+                    $scope.$emit('file:commit');
+                    return job.$save();
                 };
 
                 var createJob = (browser, server) => {

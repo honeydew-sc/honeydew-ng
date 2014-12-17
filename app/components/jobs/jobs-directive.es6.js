@@ -4,8 +4,6 @@ angular.module('honeydew')
     .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Jobs, Files, Tree, filetree, Monitor, panes, alerts, randomString, liveReport, hostname, BackgroundStatus) {
         return {
             scope: {
-                jira: '=',
-                control: '=',
                 submitAction: '='
             },
             templateUrl: 'components/jobs/jobs.html',

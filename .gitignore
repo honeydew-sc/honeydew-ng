@@ -15,5 +15,6 @@ node_modules
 /app/landing/landing-controller.js
 /app/components/feature-mode/feature-mode_test.js
 /domains.json-backup
+/app/components/jobs/jobs-directive_test.js
 /app/components/available-browsers/available-browsers-service_test.js
 /app/components/available-browsers/available-browsers-service.js

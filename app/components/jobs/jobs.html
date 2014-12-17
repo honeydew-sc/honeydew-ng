@@ -14,8 +14,8 @@
   <div class="form-group">
     <label class="sr-only" for="browser">Browser</label>
     <select class="form-control"
-            ng-init="$storage.browserName = browsers[0]"
-            ng-model="$storage.browserName"
+            ng-init="$storage.browser = browsers[0]"
+            ng-model="$storage.browser"
             required
             id="browser"
             ng-options="b for b in browsers ">
@@ -25,7 +25,7 @@
   <div class="form-group">
     <label class="sr-only" for="server">Server</label>
     <select class="form-control"
-            ng-init="$storage.server = serverList[0]"
+            ng-init="$storage.server = servers[0]"
             ng-model="$storage.server"
             required
             id="server"

@@ -10,7 +10,36 @@ angular.module('honeydew')
             },
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
-            link: function postLink(scope, element, attrs) {
+            link: function (scope, element, attrs) {
+                (function populateBrowsers() {
+                    scope.$storage = $sessionStorage;
+
+                    scope.browsers = availableBrowsers.getBrowsers();
+                    scope.servers = availableBrowsers.getServers();
+                })();
+            },
+            controller: ($scope, hostname, Jobs) => {
+                $scope.executeJob = () => {
+                    panes.openPane('report');
+                    var job = createJob($scope.$storage.browser, $scope.$storage.server);
+                    job.$save();
+                };
+
+                var createJob = (browser, server) => {
+                    var file = $location.path().substr(1);
+                    var host = hostname.host;
+                    var channel = liveReport.switchChannel();
+                    var job = { file, host, channel, browser, server };
+
+                    if (server !== 'Saucelabs') {
+                        job.browser += ' Local';
+                        job.local = server.split(' ').pop();
+                    }
+
+                    return new Jobs(job);
+                };
+            },
+            somethingElse: function (scope, element, attrs) {
                 scope.monitor = attrs.monitor;
                 if (scope.monitor) {
                     scope.browserList = availableBrowsers.set;
@@ -72,7 +101,7 @@ angular.module('honeydew')
 
                 var cleanup = scope.$root.$on('hostname:changed', function (event, hostname) {
                     if (hostname.match(/origin.*honeydew\//)) {
-                        selectBrowser( 'Local Mobile Emulator' );
+                        selectBrowser( 'Mobile Emulator' );
                     }
                     else {
                         selectBrowser( 'Chrome Local' );
@@ -86,20 +115,22 @@ angular.module('honeydew')
                 // TODO: this is getting too big
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
-                        console.log(scope.$storage.browser);
-                        return '';
-
                         panes.openPane('report');
                         var channel = liveReport.switchChannel();
 
                         var filename = $location.path().substr(1);
 
-                        var job = angular.extend({}, scope.$storage.browser, {
+                        var job = {
                             file: filename,
                             host: hostname.host,
                             channel: channel
-                        });
+                        };
 
+                        var isServer = scope.$storage.server.match(/^\w\w: ((?:\d\.?){4})/);
+                        if (isServer) {
+                            console.log(isServer);
+                        }
+                        return job;
 
                         filetree.closeTreeViaSettings( 'execute' );
                         if (job.label.match(/local(?! mobile)/i)) {

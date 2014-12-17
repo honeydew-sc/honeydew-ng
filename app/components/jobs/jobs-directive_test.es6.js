@@ -77,6 +77,8 @@ describe('Jobs directive', function () {
             delete content.local;
         }
 
+        content.browser = [ content.browser ];
+
         return content;
     };
 

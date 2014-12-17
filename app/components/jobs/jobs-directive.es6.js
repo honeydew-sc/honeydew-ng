@@ -35,12 +35,15 @@ angular.module('honeydew')
                     var file = $location.path().substr(1);
                     var host = hostname.host;
                     var channel = liveReport.switchChannel();
-                    var job = { file, host, channel, browser, server };
+                    var job = { file, host, channel, server, browser };
 
                     if (server !== 'Saucelabs') {
                         job.browser += ' Local';
                         job.local = server.split(' ').pop();
                     }
+
+                    // The backend expects an array of browser names
+                    job.browser = [ job.browser ];
 
                     return new Jobs(job);
                 };
@@ -51,7 +54,7 @@ angular.module('honeydew')
                     });
                 })();
 
-                (function listenToHostnames() {
+                (function listenForHostnames() {
                     $scope.$on('hostname:changed', function (event, hostname) {
                         if (hostname.match(/app\.zip$/)) {
                             $scope.$storage.browser = 'iOS';

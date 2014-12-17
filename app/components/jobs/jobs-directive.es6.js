@@ -40,6 +40,8 @@ angular.module('honeydew')
 
                 var isSaucelabs = () => $scope.$storage.server === 'Saucelabs';
 
+                var isMobile = () => $scope.$storage.browser.match(/Mobile/i);
+
                 var createJob = (browser, server) => {
                     var file    = $location.path().substr(1),
                         host    = hostname.host,
@@ -58,7 +60,7 @@ angular.module('honeydew')
                 };
 
                 var hasWebdriver = (server) => {
-                    if ( isSaucelabs() ) {
+                    if ( isSaucelabs() || isMobile() ) {
                         // TODO: we're just assume Saucelabs is up
                         let deferred = $q.defer();
                         deferred.resolve({webdriverStatus: true});
@@ -141,12 +143,6 @@ angular.module('honeydew')
                 // TODO: this is getting too big
                 scope.executeJob = function () {
                     if (scope.jobOptions.$valid) {
-                        if (job.label.match(/local(?! mobile)/i)) {
-
-                        }
-                        else {
-                            Jobs.execute(job);
-                        }
 
                         var file = new Files({
                             file: Files.encode(filename),

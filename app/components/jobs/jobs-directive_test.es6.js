@@ -83,7 +83,7 @@ describe('Jobs directive', function () {
             content.browser = browserName;
             delete content.local;
         }
-        else {
+        else if (!browserName.match(/Mobile/i)) {
             // we check our webdriver status for local servers
             httpMock.expectGET(`/rest.php/status/webdriver?local=${ local }`)
                 .respond({webdriverStatus: true});
@@ -168,6 +168,12 @@ describe('Jobs directive', function () {
         httpMock.expectGET('/rest.php/status/webdriver?local=Localhost').respond({webdriverStatus: false});
         elm.find('#execute').eq(0).click();
         httpMock.flush();
+    });
 
+    it('should not yet check for local mobile server status', () => {
+        storage.browser = 'iOS Mobile';
+        setupPostContent(storage.browser, storage.server);
+        elm.find('#execute').eq(0).click();
+        httpMock.flush();
     });
 });

@@ -51,6 +51,21 @@ angular.module('honeydew')
                     });
                 })();
 
+                (function listenToHostnames() {
+                    $scope.$on('hostname:changed', function (event, hostname) {
+                        if (hostname.match(/app\.zip$/)) {
+                            $scope.$storage.browser = 'iOS';
+                        }
+                        else if (hostname.match(/\.apk$/)) {
+                            $scope.$storage.browser = 'Android';
+                        }
+                        else {
+                            if ($scope.$storage.browser.match(/iOS|Android/)) {
+                                $scope.$storage.browser = 'Chrome';
+                            }
+                        }
+                    });
+                })();
             },
             somethingElse: function (scope, element, attrs) {
                 scope.monitor = attrs.monitor;

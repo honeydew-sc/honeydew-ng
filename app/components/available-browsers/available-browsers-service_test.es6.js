@@ -19,7 +19,7 @@ describe('availableBrowsersService', () => {
     it('should have a couple server choices', () => {
         var servers = availableBrowsers.getServers();
 
-        expect(servers.length).toBeGreaterThan(5);
+        expect(servers.length).toBeGreaterThan(1);
         expect(servers).toContain('Localhost');
     });
 

@@ -586,4 +586,8 @@ module.exports = function (grunt) {
         'cssmin:hostname',
         'shell:copyDev'
     ]);
+
+    grunt.registerTask('config', [
+        'ngconstant:build'
+    ]);
 };

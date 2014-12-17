@@ -137,12 +137,12 @@ describe('Jobs directive', function () {
         hostname.env = 'iOS';
         hostname.app = 'Mobile';
         hostname.resolve();
-        expect(storage.browser).toBe('iOS');
+        expect(storage.browser).toMatch('iOS');
 
         hostname.env = 'Android';
         hostname.app = 'Mobile';
         hostname.resolve();
-        expect(storage.browser).toBe('Android');
+        expect(storage.browser).toMatch('Android');
     });
 
     it('should not change the browser when hostname goes from SC to DrOZ', () => {

@@ -10,9 +10,9 @@ angular.module('honeydew')
             var localBrowsers = [
                 'Chrome',
                 'Firefox',
-                'Internet Explorer',
-                'Android',
-                'iOS'
+                'IE',
+                'Android Mobile',
+                'iOS Mobile'
             ];
 
             return localBrowsers;

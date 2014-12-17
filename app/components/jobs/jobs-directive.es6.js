@@ -60,10 +60,10 @@ angular.module('honeydew')
                 (function listenForHostnames() {
                     $scope.$on('hostname:changed', function (event, hostname) {
                         if (hostname.match(/app\.zip$/)) {
-                            $scope.$storage.browser = 'iOS';
+                            $scope.$storage.browser = 'iOS Mobile';
                         }
                         else if (hostname.match(/\.apk$/)) {
-                            $scope.$storage.browser = 'Android';
+                            $scope.$storage.browser = 'Android Mobile';
                         }
                         else {
                             if ($scope.$storage.browser.match(/iOS|Android/)) {

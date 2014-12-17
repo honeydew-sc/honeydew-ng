@@ -36,6 +36,8 @@ angular.module('honeydew')
                     });
                 };
 
+                $scope.isMonitor = $location.path().match(/\/monitor$/);
+
                 var getLocalIp = value => value.split(' ').pop();
 
                 var isSaucelabs = () => $scope.$storage.server === 'Saucelabs';
@@ -109,7 +111,6 @@ angular.module('honeydew')
                 })();
             },
             somethingElse: function (scope, element, attrs) {
-                scope.monitor = attrs.monitor;
                 if (scope.monitor) {
                     scope.browserList = availableBrowsers.set;
 

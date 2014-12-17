@@ -21,9 +21,7 @@ angular.module('honeydew')
             return localBrowsers;
         };
 
-        // We don't want to set up monitors to run against Localhost,
-        // as we have no idea what that means in the middle of the
-        // night.
+
         service.getServers = () => {
             var url = $location.path();
 
@@ -35,7 +33,10 @@ angular.module('honeydew')
             }
             service.servers = [ "Localhost" ].concat(localServers).concat(["Saucelabs"]);
 
-            if (url.match(/\/monitor\//)) {
+            // We don't want to set up monitors to run against
+            // Localhost, as we have no idea what that means in the
+            // middle of the night.
+            if (url.match(/\/monitor/)) {
                 service.servers.shift();
             }
             return service.servers;

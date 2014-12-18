@@ -1,10 +1,14 @@
+// CodeMirror, copyright (c) by Marijn Haverbeke and others
+// Distributed under an MIT license: http://codemirror.net/LICENSE
+
 // Utility function that allows modes to be combined. The mode given
 // as the base argument takes care of most of the normal mode
 // functionality, but a second (typically simple) mode is used, which
 // can override the style of text. Both modes get to parse all of the
 // text, but when both assign a non-null style to a piece of code, the
-// overlay wins, unless the combine argument was true, in which case
-// the styles are combined.
+// overlay wins, unless the combine argument was true and not overridden,
+// or state.overlay.combineTokens was true, in which case the styles are
+// combined.
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
@@ -24,7 +28,7 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
         overlay: CodeMirror.startState(overlay),
         basePos: 0, baseCur: null,
         overlayPos: 0, overlayCur: null,
-        lineSeen: null
+        streamSeen: null
       };
     },
     copyState: function(state) {
@@ -37,9 +41,9 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
     },
 
     token: function(stream, state) {
-      if (stream.sol() || stream.string != state.lineSeen ||
+      if (stream != state.streamSeen ||
           Math.min(state.basePos, state.overlayPos) < stream.start) {
-        state.lineSeen = stream.string;
+        state.streamSeen = stream;
         state.basePos = state.overlayPos = stream.start;
       }
 
@@ -54,8 +58,13 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
       }
       stream.pos = Math.min(state.basePos, state.overlayPos);
 
+      // state.overlay.combineTokens always takes precedence over combine,
+      // unless set to null
       if (state.overlayCur == null) return state.baseCur;
-      if (state.baseCur != null && combine) return state.baseCur + " " + state.overlayCur;
+      else if (state.baseCur != null &&
+               state.overlay.combineTokens ||
+               combine && state.overlay.combineTokens == null)
+        return state.baseCur + " " + state.overlayCur;
       else return state.overlayCur;
     },
 

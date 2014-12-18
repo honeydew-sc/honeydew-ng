@@ -29,6 +29,7 @@
                    tree-model="tab.data"
                    options="treeOptions"
                    selected-node="node1"
+                   order-by="label"
                    on-selection="tree.show(node)">
         {{ node.label }}
       </treecontrol>
@@ -40,6 +41,7 @@
                      tree-model="tab.grepResults"
                      options="treeOptions"
                      selected-node="node1"
+                     order-by="label"
                      on-selection="tree.show(node)">
           {{ node.label }}
         </treecontrol>

@@ -1,22 +1,25 @@
 'use strict';
 
 describe('LiveReportDirective', function () {
-    var scope, ctrl, channel, pusherMock, liveReportService;
+    var elm, compile, scope, ctrl, channel, pusherMock, liveReport;
+
     beforeEach(module('honeydew'));
+    beforeEach(module('tpl'));
 
-    beforeEach(inject(function($controller, $rootScope, _liveReport_) {
-        scope = $rootScope.$new();
+    beforeEach(inject(function ($rootScope, $compile, _liveReport_) {
+        elm = angular.element('<live-report></live-report>');
+
+        liveReport = _liveReport_;
+
         channel = 'testChannel';
-        liveReportService = _liveReport_;
+        $compile(elm)($rootScope);
+        $rootScope.$digest();
 
-        ctrl = $controller('LiveReportDirectiveCtrl', {
-            $scope: scope,
-            liveReport: liveReportService
-        });
+        scope = elm.isolateScope();
     }));
 
     it('should subscribe to a channel and put it on the scope', function() {
-        liveReportService.switchChannel(channel);
+        liveReport.switchChannel(channel);
         expect(scope.report.channel).toMatch(channel);
         expect(scope.report.output).not.toMatch('nothing');
     });

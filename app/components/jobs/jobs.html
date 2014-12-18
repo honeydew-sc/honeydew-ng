@@ -1,10 +1,18 @@
 <form class="navbar-form jobs" ng-class="{ 'navbar-left': !isMonitor }" role="form" name="jobOptions">
 
-  <div class="form-group col-xs-3" ng-if="isMonitor">
+  <div class="form-group col-lg-3 col-sm-12" ng-if="isMonitor">
     <label class="sr-only" for="set">Set</label>
-    <select ui-select2 required class="set-select span-one-third" ng-model="set.name">
-      <option ng-repeat="set in setList | filter: $parent.$parent.filterOptions.filterText" value="{{ set }}">{{ set }}</option>
-    </select>
+    <ui-select required
+               id="set"
+               class="set-select span-one-third"
+               ng-model="set.name"
+               theme="select2"
+               search-enabled="false">
+      <ui-select-match placeholder="Choose a set...">{{ set.name }}</ui-select-match>
+      <ui-select-choices repeat="set in setList | filter: filterOptions.filterText" >
+        {{ set }}
+      </ui-select-choices>
+    </ui-select>
   </div>
 
   <div class="form-group">
@@ -37,16 +45,13 @@
     <button ng-click="executeJob()"
             id="execute"
             class="btn btn-hdew"
-            popover="F5"
-            popover-placement="bottom"
-            popover-trigger="mouseenter"
             ng-click="executeJob()">
-      <i class="fa fa-play"></i> execute!
+      <i class="fa fa-play"></i> F5: execute
     </button>
   </div>
 
   <div class="form-group" ng-if="isMonitor">
-    <button ng-click="action()" class="btn btn-hdew" id="add-set">
+    <button ng-click="addMonitor()" class="btn btn-hdew" id="add-set">
       <i class="fa fa-plus-square"></i> add
     </button>
   </div>

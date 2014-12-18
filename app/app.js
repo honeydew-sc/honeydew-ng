@@ -11,7 +11,7 @@ angular.module('honeydew', [
     'btford.markdown',
     'doowb.angular-pusher',
     'treeControl',
-    'ui.select2',
+    'ui.select',
     'config',
     'sc.hostname'
 ])

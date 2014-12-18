@@ -69,6 +69,10 @@ angular.module('honeydew')
             });
         });
 
+        $scope.$on('monitor:create', (event, monitor) => {
+            $scope.create(monitor);
+        });
+
         $scope.query();
 
         $scope.filterOptions = {

@@ -33,7 +33,44 @@ module.exports = function(grunt) {
     bump: {
       options: {
         files: ['package.json', 'bower.json', 'lib/select2-bootstrap/version.rb'],
-        push: false
+        push: false,
+        createTag: false
+      }
+    },
+
+    copy: {
+      main: {
+        files: [
+          { src: ['bower_components/bootstrap/dist/css/bootstrap.min.css'], dest: '_jekyll/css/bootstrap.min.css', expand: false },
+          { src: ['bower_components/bootstrap/dist/js/bootstrap.min.js'], dest: '_jekyll/js/bootstrap.min.js', expand: false },
+          { src: ['bower_components/respond/dest/respond.min.js'], dest: '_jekyll/js/respond.min.js', expand: false },
+          { cwd: 'bower_components/bootstrap/dist/fonts', src: ['**/*'], dest: '_jekyll/fonts', expand: true }
+        ]
+      }
+    },
+
+    shell: {
+      jekyllBuild: {
+        command: 'jekyll build -s _jekyll -d docs'
+      },
+      jekyllServe: {
+        command: 'jekyll serve -w -s _jekyll -d docs'
+      }
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'docs',
+        message: 'Update gh-pages.'
+      },
+      src: ['**/*']
+    },
+
+    watch: {
+      files: 'lib/select2-bootstrap.scss',
+      tasks: ['sass'],
+      options: {
+        livereload: true
       }
     }
 

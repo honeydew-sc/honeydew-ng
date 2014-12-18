@@ -3,9 +3,7 @@
 angular.module('honeydew')
     .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Monitor, Tree) {
         return {
-            scope: {
-                submitAction: '='
-            },
+            scope: true,
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
             link: function (scope, element, attrs) {
@@ -21,9 +19,8 @@ angular.module('honeydew')
                 (function populateSets() {
                     if (scope.isMonitor) {
                         Tree.get( {folder: 'sets'}, res => {
-                            console.log(res);
-                            // scope.setList = res.tree.map( it => it.label );
-                            // scope.set = { name: scope.setList[0] };
+                            scope.setList = res.tree.map( it => it.label );
+                            scope.set = { name: scope.setList[0] };
                         });
                     }
                 })();
@@ -46,6 +43,11 @@ angular.module('honeydew')
                             return false;
                         }
                     });
+                };
+
+                $scope.addMonitor = () => {
+                    var monitor = constructMonitor($scope.$storage.browser, $scope.$storage.server);
+                    $scope.$emit('monitor:create', monitor);
                 };
 
                 var getLocalIp = value => value.split(' ').pop();
@@ -96,6 +98,19 @@ angular.module('honeydew')
 
                         return statusPromise;
                     }
+                };
+
+                var constructMonitor = (browser, server) => {
+                    let set = $scope.set.name,
+                        host = hostname.host,
+                        monitor = { set, host, browser };
+
+                    if (!isSaucelabs()) {
+                        let prefix = server.split(': ').shift();
+                        monitor.browser = `${ prefix } ${browser} Local`;
+                    }
+
+                    return new Monitor(monitor);
                 };
 
                 (function listenForExecutes() {

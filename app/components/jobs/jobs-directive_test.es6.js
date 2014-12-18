@@ -179,11 +179,13 @@ describe('Jobs directive', function () {
     });
 });
 
-ddescribe('Jobs directive for sets page', () => {
+describe('Jobs directive for sets page', () => {
     var elm,
         scope,
+        storage,
         location,
-        httpMock;
+        httpMock,
+        Monitor;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
@@ -192,22 +194,48 @@ ddescribe('Jobs directive for sets page', () => {
         $compile,
         $location,
         $rootScope,
-        $httpBackend
+        $httpBackend,
+        $sessionStorage,
+        _hostname_,
+        _Monitor_
     ) {
         elm = angular.element('<job-options></job-options>');
-        scope = $rootScope;
         location = $location;
         httpMock = $httpBackend;
+        storage = $sessionStorage;
+        Monitor = _Monitor_;
+
+        _hostname_.env = 'prod';
+        _hostname_.app = 'SC';
+        _hostname_.resolve();
 
         spyOn(location, 'path').and.returnValue('#/monitor');
-        $compile(elm)(scope);
+        $compile(elm)($rootScope);
 
-        httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [ { name: 'it', label: 'it' } ] });
-        scope.$digest();
+        httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [ { name: 'fake.set', label: 'fake.set' } ] });
+        $rootScope.$digest();
+        scope = elm.scope();
 
         httpMock.flush();
     }));
 
-    it('should do some stuff', () => {
+    it('should know it\'s on a monitor page', () => {
+        expect(!!scope.isMonitor).toBe(true);
+        expect(scope.setList.length).toBe(1);
+    });
+
+    it('should emit a new monitor job properly', () => {
+        let set = 'fake.set',
+            browser = 'GP Chrome Local',
+            host = 'https://www.sharecare.com';
+        var content = { set, host, browser};
+
+        storage.browser = 'Chrome';
+        storage.server = 'GP: a.fake.ip';
+
+        spyOn(scope, '$emit').and.callThrough();
+        elm.find('#add-set').eq(0).click();
+        scope.$digest();
+        expect(scope.$emit).toHaveBeenCalledWith('monitor:create', new Monitor(content));
     });
 });

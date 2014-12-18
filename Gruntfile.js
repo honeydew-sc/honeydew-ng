@@ -524,6 +524,7 @@ module.exports = function (grunt) {
         }
         else {
             grunt.task.run([
+                'config',
                 'clean:server',
                 'configureProxies:server',
                 'bower-install',
@@ -549,7 +550,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'bower-install',
-        'ngconstant:build',
+        'config',
         'traceur',
         'fileblocks',
         'useminPrepare',
@@ -588,6 +589,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('config', [
-        'ngconstant:build'
+        'ngconstant:build',
+        'traceur',
+        'fileblocks'
     ]);
 };

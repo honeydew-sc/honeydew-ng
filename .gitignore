@@ -25,3 +25,4 @@ node_modules
 /app/components/cm-atom/cm-atom-directive_test.js
 /app/components/cm-clickable-link/cm-clickable-link-directive.js
 /app/components/cm-clickable-link/cm-clickable-link-directive_test.js
+/app/components/filetree/filetree-service_test.js

@@ -214,4 +214,45 @@ describe('filetreeService', function () {
         });
 
     });
+
+    describe('treeSorter', () => {
+        var ret;
+
+        var sort = (a, b) => filetree.treeSorter({label: a}, {label: b});
+
+        it('should sort a before b', function () {
+            ret = sort('a', 'b');
+            expect(ret).toBe(-1);
+        });
+
+        it('should sort A before b', function () {
+            ret = sort('A', 'b');
+            expect(ret).toBe(-1);
+        });
+
+        it('should sort B before a', function () {
+            ret = sort('B', 'a');
+            expect(ret).toBe(-1);
+        });
+
+        it('should sort z after a', function () {
+            ret = sort('z', 'a');
+            expect(ret).toBe(1);
+        });
+
+        it('should sort a equal to a', function () {
+            ret = sort('a', 'a');
+            expect(ret).toBe(0);
+        });
+
+        it('should sort a before undefined', () => {
+            ret = filetree.treeSorter({label: 'a'}, undefined);
+            expect(ret).toBe(-1);
+        });
+
+        it('should sort undefined after a', () => {
+            ret = filetree.treeSorter(undefined, {label: 'a'});
+            expect(ret).toBe(1);
+        });
+    });
 });

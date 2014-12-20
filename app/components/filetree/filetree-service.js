@@ -74,7 +74,7 @@ angular.module('honeydew')
                 })) {
 
                     tree.push(leaf);
-                    tree.sort(treeSorter);
+                    tree.sort(self.treeSorter);
                 }
 
                 return tree;
@@ -98,7 +98,20 @@ angular.module('honeydew')
             }
         };
 
-        function treeSorter (a, b) {
+        self.treeSorter = function (a, b) {
+            var a_type = typeof(a),
+                b_type = typeof(b);
+
+            if (a_type === b_type === 'undefined') {
+                return 0;
+            }
+            else if (a_type === 'undefined') {
+                return 1;
+            }
+            else if (b_type === 'undefined') {
+                return -1;
+            }
+
             if (a.label == b.label) {
                 return 0;
             }

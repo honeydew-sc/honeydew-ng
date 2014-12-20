@@ -69,6 +69,36 @@ describe('FeatureMode', () => {
         expect(tests).toBe(1);
     });
 
+    it('should parse clickable links tickets', () => {
+        var feature = `
+Feature: jira tickets
+JIRA: MOBILE-12345
+Set: @example
+
+www.sharecare.com
+http://www.sharecare.com
+  Scenario: cool MOBILE-54321
+        `;
+
+        var tokens = [
+            'http://www.sharecare.com',
+            '@example',
+            'MOBILE-12345',
+            'MOBILE-54321'
+        ];
+
+        CodeMirror.runMode(feature, 'honeydew', (token, styleClass) => {
+            tokens.forEach( it => {
+                if (token.match(it)) {
+                    tests++;
+                    expect(styleClass).toBe('clickable-link');
+                }
+            });
+
+        });
+        expect(tests).toBe(tokens.length);
+    });
+
     it('should handle variables with spaces', () => {
         var preamble = [
             'Feature: variable',
@@ -143,6 +173,5 @@ describe('FeatureMode', () => {
 
         expect(tests).toBe(2);
     });
-
 
 });

@@ -21,5 +21,7 @@ node_modules
 /app/components/jobs/jobs-directive.js
 /app/monitor/monitor-controller.js
 /app/components/feature-mode/set-mode_test.js
-/app/components/cm-dom-helper/cm-clickable-link-directive_test.js
-/app/components/cm-dom-helper/cm-clickable-link-directive.js
+/app/components/cm-atom/cm-atom-directive.js
+/app/components/cm-atom/cm-atom-directive_test.js
+/app/components/cm-clickable-link/cm-clickable-link-directive.js
+/app/components/cm-clickable-link/cm-clickable-link-directive_test.js

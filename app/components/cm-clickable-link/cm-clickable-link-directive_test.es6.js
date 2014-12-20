@@ -58,4 +58,12 @@ describe('cmClickableLink phrase directive', () => {
         expect(window.open)
             .toHaveBeenCalledWith('http://' + text, '_blank');
     });
+
+    it('should make links with ^http clickable', () => {
+        var text = 'http://boring.com';
+        setupElemText(text);
+        elm.triggerHandler('click');
+        expect(window.open)
+            .toHaveBeenCalledWith(text, '_blank');
+    });
 });

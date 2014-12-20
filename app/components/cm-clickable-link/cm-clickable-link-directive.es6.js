@@ -7,6 +7,7 @@ angular.module('honeydew')
             link: function (scope, element, attrs) {
                 var url,
                     text = element.text();
+
                 element.bind('click', event => {
                     if (text.match(/^\w+\-\d+$/)) {
                         url = 'https://arnoldmedia.jira.com/browse/' + text;
@@ -19,6 +20,9 @@ angular.module('honeydew')
                     }
                     else if (text.indexOf('http') !== 0) {
                         url = 'http://' + text;
+                    }
+                    else {
+                        url = text;
                     }
 
                     $window.open(url, '_blank');

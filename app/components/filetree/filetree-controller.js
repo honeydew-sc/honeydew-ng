@@ -27,9 +27,9 @@ angular.module('honeydew')
         var path = $location.path();
         $scope.tabs.forEach(function (tab) {
             var tree, folder = tab.label.toLowerCase();
-            tab.data = $localStorage.topLevelTree[folder];
+            tab.data = $localStorage.topLevelTree[folder] || [];
 
-            filetree.get(folder).then(function ( res ) {
+            filetree.get(folder).finally(function ( res ) {
                 tree = tab.data = filetree[folder + 'tree'];
                 tab.refreshing = false;
             });

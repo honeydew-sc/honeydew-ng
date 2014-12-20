@@ -58,6 +58,7 @@ angular.module('honeydew')
                 // they already look good and save us from having to
                 // decide a color per theme or for all themes.
                 var TOKENS = {
+                    'clickable-link': 'null',
                     atom: 'phrase',
                     tag: 'keyword'
                 };
@@ -93,7 +94,7 @@ angular.module('honeydew')
                 // class. Compiling these spans will activate their
                 // behavior.
                 if (foundTokens) {
-                    elt = $compile(elt)(scope);
+                    $compile(elt)(scope);
                 }
 
             });

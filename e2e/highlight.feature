@@ -1,7 +1,8 @@
 Feature: Referential Integrity
-Set: examples
+Set: @examples
 Keep Open
 JIRA: SC-12345 SC-54321
+Email: cool
 d
 $googs = "http://www.google.com"
 $test = "css=#hello"
@@ -40,6 +41,8 @@ This should be commented out
   Examples:
   | here | is | the | headers | 
   | this | is | an  | example |
+# | this | is | a   | comment |
+  | this | is | an  | example
 
  skip Scenario: set up
  # When comment this out

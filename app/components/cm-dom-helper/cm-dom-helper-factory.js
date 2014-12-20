@@ -19,37 +19,6 @@ angular.module('honeydew')
 
         };
 
-        factory.clickableLinks = function ($) {
-            // TODO: Convert this to branches in
-            // factory.compileRenderedLines. This didn't work before
-            // because CodeMirror was applying the classes to elements
-            // that had already been $compiled. Manually triggering a
-            // $compile phase on the element picks up the necessary
-            // directives, like cmAtom/cm-atom.
-            $('.CodeMirror').on('click', '.cm-clickable-link', function(event) {
-                var url = $(event.target).text();
-
-                // link to sets from the features page
-                if (url.match(/^@[\w\d_\-\.]+/)) {
-                    url = '/#/sets/' + url.substring(1) + '.set';
-                }
-                // JIRA tickets
-                else if (url.match(/\s\w+\-\d+\s/)) {
-                    url = 'https://arnoldmedia.jira.com/browse/' + url;
-                }
-                // from the set page, link to its features
-                else if (url.match(/.feature$/)) {
-                    url = '/#/features/' + url;
-                }
-                // normal/boring links
-                else if (url.indexOf('http') !== 0) {
-                    url = 'http://' + url;
-                }
-
-                return window.open(url, '_blank');
-            });
-        };
-
         factory.compileRenderedLines = function (cm, scope) {
             cm.on('renderLine', function (cm, line, elt) {
                 // Phrases hijack the 'atom' token, and keywords

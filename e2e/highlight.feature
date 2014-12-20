@@ -31,10 +31,11 @@ how about "this sort" of "thing" ?
 Scenario: commented out
 When I log in to test .mil with an example user
  
+ sScenario: quite important
  Given I am on my Account Settings page
  
  When I verify that I can log out
-
+ 
 This should be commented out
  but this shouldn't be
  

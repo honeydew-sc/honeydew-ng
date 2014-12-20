@@ -81,7 +81,6 @@ angular.module('honeydew')
                 };
 
                 CmDomHelpers.focus(cm, $scope);
-                CmDomHelpers.clickableLinks($);
                 CmDomHelpers.compileRenderedLines(cm, $scope);
             }
         };

@@ -7,7 +7,7 @@
  * @source https://github.com/atomicpages/codemirror-pastel-on-dark-theme
  */
 
-.cm-s-pastel-on-dark .CodeMirror {
+.hd-pastel-on-dark, .cm-s-pastel-on-dark .CodeMirror {
         background: #2c2827;
         color: #8F938F;
         line-height: 1.5;

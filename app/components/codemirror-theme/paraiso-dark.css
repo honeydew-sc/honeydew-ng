@@ -8,7 +8,7 @@
 
 */
 
-.cm-s-paraiso-dark .CodeMirror {background: #2f1e2e; color: #b9b6b0;}
+.hd-paraiso-dark, .cm-s-paraiso-dark .CodeMirror {background: #2f1e2e; color: #b9b6b0;}
 .cm-s-paraiso-dark div.CodeMirror-selected {background: #41323f !important;}
 .cm-s-paraiso-dark .CodeMirror-gutters {background: #2f1e2e; border-right: 0px;}
 .cm-s-paraiso-dark .CodeMirror-guttermarker { color: #ef6155; }

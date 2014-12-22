@@ -4,7 +4,7 @@
 /*   Create your own: http://tmtheme-editor.herokuapp.com       */
 /****************************************************************/
 
-.cm-s-mbo .CodeMirror {background: #2c2c2c; color: #ffffec;}
+.hd-mbo, .cm-s-mbo .CodeMirror {background: #2c2c2c; color: #ffffec;}
 .cm-s-mbo div.CodeMirror-selected {background: #716C62 !important;}
 .cm-s-mbo .CodeMirror-gutters {background: #4e4e4e; border-right: 0px;}
 .cm-s-mbo .CodeMirror-guttermarker { color: white; }

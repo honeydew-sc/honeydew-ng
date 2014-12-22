@@ -32,12 +32,12 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   color-profile: sRGB;
   rendering-intent: auto;
 }
-.cm-s-solarized.cm-s-dark {
+.hd-solarized-dark, .cm-s-solarized.cm-s-dark {
   color: #839496;
   background-color:  #002b36;
   text-shadow: #002b36 0 1px;
 }
-.cm-s-solarized.cm-s-light {
+.hd-solarized-light, .cm-s-solarized.cm-s-light {
   background-color: #fdf6e3;
   color: #657b83;
   text-shadow: #eee8d5 0 1px;

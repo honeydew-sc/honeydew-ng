@@ -39,7 +39,7 @@
 
 /* Editor styling */
 
-.cm-s-ambiance .CodeMirror {
+.hd-ambiance, .cm-s-ambiance .CodeMirror {
   line-height: 1.40em;
   color: #E6E1DC;
   background-color: #202020;

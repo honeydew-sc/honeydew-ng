@@ -36,12 +36,15 @@ $alert = 'css=.alert div element'
    Then the page should contain $input
 
  Scenario: preserve choices
+ When I set the browser size to 1440x1024
  Given I am on the $new page
-   When I select IE 10 Local from the css=[ng-options] dropdown
+   When I select IE 11 from the id=browser dropdown
+   When I select Localhost from the id=server dropdown
+   When I reset the input field $hostname
    When I input $url into the input field $hostname
  Given I am on the $noPermissions page
      Then the $hostname:contains('$url') element should be present
-     Then IE 10 Local should be selected in the css=[ng-options] dropdown
+     Then IE 11 should be selected in the id=browser dropdown
 
  Scenario: execute a job
  Given I am on the $new page

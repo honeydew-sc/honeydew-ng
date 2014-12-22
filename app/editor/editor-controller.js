@@ -124,4 +124,10 @@ angular.module('honeydew')
                     });
             });
         })();
+
+        (function listenForCodemirrorRedraws() {
+            $scope.$on('codemirror:refresh', function () {
+                $scope.editorOptions.refresh();
+            });
+        })();
     });

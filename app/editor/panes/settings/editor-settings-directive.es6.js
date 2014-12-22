@@ -37,6 +37,7 @@
                 'midnight',
                 'monokai',
                 'neat',
+                'neo',
                 'night',
                 'paraiso-dark',
                 'paraiso-light',

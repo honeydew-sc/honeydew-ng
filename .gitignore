@@ -26,3 +26,4 @@ node_modules
 /app/components/cm-clickable-link/cm-clickable-link-directive.js
 /app/components/cm-clickable-link/cm-clickable-link-directive_test.js
 /app/components/filetree/filetree-service_test.js
+/app/components/copy-style/copy-style-directive.js

@@ -1,4 +1,4 @@
-<div class="settings">
+<div class="settings" ng-controller="EditorSettingsCtrl as Settings">
   <btf-markdown># Settings
 
 ### Styles
@@ -7,8 +7,9 @@
     <div class="form-group">
       <label class="control-label" for="font">Font:  </label>
       <select id="font" class="form-control"
-              ng-model="$storage.settings.font"
-              ng-options="font for font in settingsOptions.fonts"
+              ng-model="Settings.$storage.settings.font"
+              ng-options="font for font in Settings.options.fonts"
+              ng-change="Settings.redrawPage()"
               >
       </select>
     </div>
@@ -19,9 +20,9 @@
     <label class="control-label" for="theme">Theme:  </label>
     <select id="theme"
             class="form-control"
-            ng-model="$storage.settings.theme"
-            ng-options="theme for theme in settingsOptions.themes"
-            ng-change="options.refresh()"
+            ng-model="Settings.$storage.settings.theme"
+            ng-options="theme for theme in Settings.options.themes"
+            ng-change="Settings.redrawPage()"
             >
     </select>
   </div>
@@ -30,14 +31,14 @@
     Collapse file tree on file selection: <br />
     <div class="btn-group">
       <label class="btn btn-default"
-             ng-model="$storage.settings.collapse.tree"
+             ng-model="Settings.$storage.settings.collapse.tree"
              btn-radio="1"
              uncheckable
              >
         Yes
       </label>
       <label class="btn btn-default"
-             ng-model="$storage.settings.collapse.tree"
+             ng-model="Settings.$storage.settings.collapse.tree"
              btn-radio="0"
              uncheckable
              >
@@ -51,14 +52,14 @@
     Collapse tree on job execution: <br />
     <div class="btn-group">
       <label class="btn btn-default"
-             ng-model="$storage.settings.collapse.execute"
+             ng-model="Settings.$storage.settings.collapse.execute"
              btn-radio="1"
              uncheckable
              >
         Yes
       </label>
       <label class="btn btn-default"
-             ng-model="$storage.settings.collapse.execute"
+             ng-model="Settings.$storage.settings.collapse.execute"
              btn-radio="0"
              uncheckable
              >

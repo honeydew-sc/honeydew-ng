@@ -72,12 +72,8 @@ angular.module('honeydew')
 
                 CodeMirror.commands.quitRepl = liveReport.close;
 
-                // 'jobs' gets passed through two directives in
-                // attributes down to the jobOptions directive, where
-                // executeJob is defined.
-                $scope.jobs = {};
                 CodeMirror.commands.execute = function (cm) {
-                    $scope.jobs.executeJob();
+                    $scope.$broadcast('job:execute');
                 };
 
                 CmDomHelpers.focus(cm, $scope);

@@ -27,7 +27,7 @@ $app->group('/status', function () use ($app) {
         $wd_server = $app->request()->params('local');
 
         /* If it's unavailable, try to use HTTP_X_FORWARDED_FOR header. */
-        if (!isset($wd_server) || !$wd_server) {
+        if (!isset($wd_server) || !$wd_server || $wd_server == 'Localhost') {
             $wd_server = getRemoteServerAddress();
         }
         $wd = localWebdriverStatus($wd_server);

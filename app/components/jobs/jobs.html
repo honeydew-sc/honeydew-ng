@@ -1,15 +1,15 @@
-<form class="navbar-form jobs" ng-class="{ 'navbar-left': !isMonitor }" role="form" name="jobOptions">
+<form class="navbar-form jobs" ng-class="{ 'navbar-left': !job.isMonitor }" role="form" name="jobOptions">
 
-  <div class="form-group col-lg-3 col-sm-12" ng-if="isMonitor">
+  <div class="form-group col-lg-3 col-sm-12" ng-if="job.isMonitor">
     <label class="sr-only" for="set">Set</label>
     <ui-select required
                id="set"
                class="set-select span-one-third"
-               ng-model="set.name"
+               ng-model="job.set.name"
                theme="select2"
                search-enabled="false">
       <ui-select-match placeholder="Choose a set...">{{ set.name }}</ui-select-match>
-      <ui-select-choices repeat="set in setList | filter: filterOptions.filterText" >
+      <ui-select-choices repeat="set in job.setList | filter: filterOptions.filterText" >
         {{ set }}
       </ui-select-choices>
     </ui-select>
@@ -22,36 +22,35 @@
   <div class="form-group">
     <label class="sr-only" for="browser">Browser</label>
     <select class="form-control"
-            ng-init="$storage.browser = browsers[0]"
-            ng-model="$storage.browser"
+            ng-init="job.$storage.browser = job.browsers[0]"
+            ng-model="job.$storage.browser"
             required
             id="browser"
-            ng-options="b for b in browsers ">
+            ng-options="b for b in job.browsers ">
     </select>
   </div>
 
   <div class="form-group">
     <label class="sr-only" for="server">Server</label>
     <select class="form-control"
-            ng-init="$storage.server = servers[0]"
-            ng-model="$storage.server"
+            ng-init="job.$storage.server = job.servers[0]"
+            ng-model="job.$storage.server"
             required
             id="server"
-            ng-options="s for s in servers">
+            ng-options="s for s in job.servers">
     </select>
   </div>
 
-  <div class="form-group" ng-if="!isMonitor">
-    <button ng-click="executeJob()"
+  <div class="form-group" ng-if="!job.isMonitor">
+    <button ng-click="job.$scope.$emit('job:execute')"
             id="execute"
-            class="btn btn-hdew"
-            ng-click="executeJob()">
+            class="btn btn-hdew">
       <i class="fa fa-play"></i> F5: execute
     </button>
   </div>
 
-  <div class="form-group" ng-if="isMonitor">
-    <button ng-click="addMonitor()" class="btn btn-hdew" id="add-set">
+  <div class="form-group" ng-if="job.isMonitor">
+    <button ng-click="job.addMonitor()" class="btn btn-hdew" id="add-set">
       <i class="fa fa-plus-square"></i> add
     </button>
   </div>

@@ -6,36 +6,60 @@ angular.module('honeydew')
             scope: true,
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
-            link: function (scope, element, attrs) {
+            controllerAs: 'job',
+            controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
+                var self = this;
+                self.$scope = $scope;
+                
                 (function populateBrowsers() {
-                    scope.$storage = $sessionStorage;
-
-                    scope.browsers = availableBrowsers.getBrowsers();
-                    scope.servers = availableBrowsers.getServers();
+                    self.$storage = $sessionStorage;
+                    self.browsers = availableBrowsers.getBrowsers();
+                    self.servers = availableBrowsers.getServers();
                 })();
 
-                scope.isMonitor = $location.path().match(/\/monitor$/);
+                self.isMonitor = $location.path().match(/\/monitor$/);
 
                 (function populateSets() {
-                    if (scope.isMonitor) {
+                    if (self.isMonitor) {
                         Tree.get( {folder: 'sets'}, res => {
-                            scope.setList = res.tree.map( it => it.label );
-                            scope.set = { name: scope.setList[0] };
+                            self.setList = res.tree.map( it => it.label );
+                            self.set = { name: self.setList[0] };
                         });
                     }
                 })();
-            },
-            controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
-                $scope.executeJob = () => {
+
+                (function listenForExecutes() {
+                    $scope.$on('job:execute', (event, data) => {
+                        self.executeJob();
+                    });
+                })();
+
+                (function listenForHostnames() {
+                    $scope.$on('hostname:changed', function (event, hostname) {
+                        if (hostname.match(/app\.zip$/)) {
+                            self.$storage.browser = 'iOS Mobile';
+                        }
+                        else if (hostname.match(/\.apk$/)) {
+                            self.$storage.browser = 'Android Mobile';
+                        }
+                        else {
+                            if (self.$storage.browser.match(/iOS|Android/)) {
+                                self.$storage.browser = 'Chrome';
+                            }
+                        }
+                    });
+                })();
+                
+                self.executeJob = () => {
                     (function updateWindowLayout() {
                         // oooh side effects
                         panes.openPane('report');
                         filetree.closeTreeViaSettings('execute');
                     })();
 
-                    hasWebdriver($scope.$storage.server).then( res => {
+                    hasWebdriver(self.$storage.server).then( res => {
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
-                            let job = createJob($scope.$storage.browser, $scope.$storage.server);
+                            let job = createJob(self.$storage.browser, self.$storage.server);
                             $scope.$emit('file:commit');
                             return job.$execute();
                         }
@@ -45,16 +69,16 @@ angular.module('honeydew')
                     });
                 };
 
-                $scope.addMonitor = () => {
-                    var monitor = constructMonitor($scope.$storage.browser, $scope.$storage.server);
+                self.addMonitor = () => {
+                    var monitor = constructMonitor(self.$storage.browser, self.$storage.server);
                     $scope.$emit('monitor:create', monitor);
                 };
 
                 var getLocalIp = value => value.split(' ').pop();
 
-                var isSaucelabs = () => $scope.$storage.server === 'Saucelabs';
+                var isSaucelabs = () => self.$storage.server === 'Saucelabs';
 
-                var isMobile = () => $scope.$storage.browser.match(/Mobile/i);
+                var isMobile = () => self.$storage.browser.match(/Mobile/i);
 
                 var createJob = (browser, server) => {
                     var file    = $location.path().substr(1),
@@ -101,7 +125,7 @@ angular.module('honeydew')
                 };
 
                 var constructMonitor = (browser, server) => {
-                    let set = $scope.set.name,
+                    let set = self.set.name,
                         host = hostname.host,
                         monitor = { set, host, browser };
 
@@ -112,50 +136,6 @@ angular.module('honeydew')
 
                     return new Monitor(monitor);
                 };
-
-                (function listenForExecutes() {
-                    $scope.$on('job:execute', (event, data) => {
-                        $scope.executeJob();
-                    });
-                })();
-
-                (function listenForHostnames() {
-                    $scope.$on('hostname:changed', function (event, hostname) {
-                        if (hostname.match(/app\.zip$/)) {
-                            $scope.$storage.browser = 'iOS Mobile';
-                        }
-                        else if (hostname.match(/\.apk$/)) {
-                            $scope.$storage.browser = 'Android Mobile';
-                        }
-                        else {
-                            if ($scope.$storage.browser.match(/iOS|Android/)) {
-                                $scope.$storage.browser = 'Chrome';
-                            }
-                        }
-                    });
-                })();
-            },
-            somethingElse: function (scope, element, attrs) {
-                if (scope.monitor) {
-                    scope.browserList = availableBrowsers.set;
-
-                    ;
-
-                    scope.action = function () {
-                        var maybeNewMonitor = new Monitor({
-                            browser: scope.$storage.browser.browser[0],
-                            host: hostname.host,
-                            set: scope.set.name,
-                            on: true
-                        });
-
-                        return scope.submitAction(maybeNewMonitor);
-                    };
-                }
-                else {
-                    scope.browsers = availableBrowsers.browsers;
-                    scope.servers = availableBrowsers.servers;
-                }
             }
         };
     });

@@ -185,6 +185,7 @@ describe('Jobs directive for sets page', () => {
         storage,
         location,
         httpMock,
+        controller,
         Monitor;
 
     beforeEach(module('honeydew'));
@@ -215,13 +216,14 @@ describe('Jobs directive for sets page', () => {
         httpMock.expectGET('/rest.php/tree/sets').respond({ tree: [ { name: 'fake.set', label: 'fake.set' } ] });
         $rootScope.$digest();
         scope = elm.scope();
+        controller = elm.controller('jobOptions');
 
         httpMock.flush();
     }));
 
     it('should know it\'s on a monitor page', () => {
-        expect(!!scope.isMonitor).toBe(true);
-        expect(scope.setList.length).toBe(1);
+        expect(!!controller.isMonitor).toBe(true);
+        expect(controller.setList.length).toBe(1);
     });
 
     it('should emit a new monitor job properly', () => {

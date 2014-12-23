@@ -28,3 +28,4 @@ node_modules
 /app/components/filetree/filetree-service_test.js
 /app/components/copy-style/copy-style-directive.js
 /app/editor/panes/settings/editor-settings-directive.js
+/app/editor/editor-controller.js

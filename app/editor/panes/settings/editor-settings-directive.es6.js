@@ -1,7 +1,7 @@
-(() => {
+(function () {
     'use strict';
 
-    function EditorSettingsCtrl($scope, $localStorage) {
+    var EditorSettingsCtrl = function ($scope, $localStorage) {
         this.$storage = $localStorage.$default({
             settings: {
                 font: 'Default',
@@ -55,7 +55,9 @@
         this.redrawPage = () => {
             $scope.$emit('codemirror:redraw');
         };
-    }
+    };
+
+    EditorSettingsCtrl.$inject = ['$scope', '$localStorage'];
 
     angular.module('honeydew')
         .directive('editorSettings', function () {
@@ -63,7 +65,8 @@
                 templateUrl: 'editor/panes/settings/editor-settings.html',
                 replace: true,
                 restrict: 'E',
-                controller: 'EditorSettingsCtrl'
+                controller: 'EditorSettingsCtrl',
+                controllerAs: 'Settings'
             };
         })
         .controller('EditorSettingsCtrl', EditorSettingsCtrl);

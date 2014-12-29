@@ -22,7 +22,7 @@
   <div class="form-group">
     <label class="sr-only" for="browser">Browser</label>
     <select class="form-control"
-            ng-init="job.$storage.browser = job.browsers[0]"
+            ng-init="job.$storage.browser = job.$storage.browser ? job.$storage.browser : job.browsers[0]"
             ng-model="job.$storage.browser"
             required
             id="browser"
@@ -33,7 +33,7 @@
   <div class="form-group">
     <label class="sr-only" for="server">Server</label>
     <select class="form-control"
-            ng-init="job.$storage.server = job.servers[0]"
+            ng-init="job.$storage.server = job.$storage.server ? job.$storage.server : job.servers[0]"
             ng-model="job.$storage.server"
             required
             id="server"

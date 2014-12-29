@@ -9,7 +9,7 @@ angular.module('honeydew')
             mode: 'set-mode',
             onLoad: function (cm) {
                 CmDomHelpers.focus(cm, $scope);
-                CmDomHelpers.clickableLinks($);
+                CmDomHelpers.compileRenderedLines(cm, $scope);
             }
         };
 

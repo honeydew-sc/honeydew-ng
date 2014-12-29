@@ -8,7 +8,7 @@
                ng-model="job.set.name"
                theme="select2"
                search-enabled="false">
-      <ui-select-match placeholder="Choose a set...">{{ set.name }}</ui-select-match>
+      <ui-select-match placeholder="Choose a set...">{{ job.set.name }}</ui-select-match>
       <ui-select-choices repeat="set in job.setList | filter: filterOptions.filterText" >
         {{ set }}
       </ui-select-choices>

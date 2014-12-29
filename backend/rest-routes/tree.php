@@ -13,27 +13,34 @@ $app->group('/tree', function () use ($app) {
         try {
             exec('grep -hr -P "^Set:" /opt/honeydew/features', $sets);
 
+            function isSetNameValid($it) {
+                return substr($it, 0, 1) != '#'
+                && $it != '.set'
+                && $it != ''
+                && $it != '&';
+            }
+
             /* reduce the list of SetNames to a unique set */
             $sets = array_unique(array_reduce($sets, function ($acc, $it) {
                 $it = explode(' ', trim(preg_replace('/\s+@?|@/', ' ', substr($it, 4))));
                 foreach ($it as $set) {
-                    if ($set != '' && $set != '&') {
+                    if (isSetNameValid($set)) {
                         $acc[] = $set;
                     }
                 }
                 return $acc;
             }, array()));
 
+            function setupTreeStructure($it) {
+                $leaf['label'] = $it . '.set';
+                $leaf['children'] = array();
+                $leaf['folder'] = '/sets';
+                return $leaf;
+            }
 
             sort($sets);
-            echo successMessage(array(
-                "tree" => array_map(function ($it) {
-                    $leaf['label'] = $it . '.set';
-                    $leaf['children'] = array();
-                    $leaf['folder'] = '/sets';
-                    return $leaf;
-                }, $sets)
-            ));
+            $tree = array_map('setupTreeStructure', $sets);
+            echo successMessage(array('tree' => $tree));
         }
         catch (Exception $e) {
             $app->halt(418, errorMessage($e->getMessage()));

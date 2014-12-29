@@ -65,8 +65,7 @@ class treeTests extends UnitTestCase {
 
     function testSetsListRefresh () {
         $tempSet1 = time();
-        $tempSet2 = '#' . ($tempSet1 + 5);
-        $tempSet1 = '#' . $tempSet1;
+        $tempSet2 = $tempSet1 + 5;
         file_put_contents($this->basePath . '/features/ng_test1.feature', 'Set: ' . $tempSet1);
         file_put_contents($this->basePath . '/features/ng_test2.feature', 'Set: ' . $tempSet1);
         file_put_contents($this->basePath . '/features/ng_test3.feature', 'Set:@' . $tempSet1 . ' @' . $tempSet2);

@@ -6,17 +6,17 @@ angular.module('honeydew')
             scope: true,
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
-            controllerAs: 'job',
             controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
                 var self = this;
                 self.$scope = $scope;
-                
+
                 (function populateBrowsers() {
                     self.$storage = $sessionStorage;
                     self.browsers = availableBrowsers.getBrowsers();
                     self.servers = availableBrowsers.getServers();
                 })();
 
+                // needed in the view to toggle the set list
                 self.isMonitor = $location.path().match(/\/monitor$/);
 
                 (function populateSets() {
@@ -49,7 +49,7 @@ angular.module('honeydew')
                         }
                     });
                 })();
-                
+
                 self.executeJob = () => {
                     (function updateWindowLayout() {
                         // oooh side effects
@@ -136,6 +136,7 @@ angular.module('honeydew')
 
                     return new Monitor(monitor);
                 };
-            }
+            },
+            controllerAs: 'job'
         };
     });

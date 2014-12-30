@@ -29,3 +29,5 @@ node_modules
 /app/components/copy-style/copy-style-directive.js
 /app/editor/panes/settings/editor-settings-directive.js
 /app/editor/editor-controller.js
+/app/components/background-status/background-status-directive.js
+/app/components/background-status/background-status-factory.js

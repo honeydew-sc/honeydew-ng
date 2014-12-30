@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .factory('BackgroundStatus', function ($resource) {
+    .factory('BackgroundStatus', $resource => {
         return $resource('/rest.php/status/:status', {
             status: '@status'
         });

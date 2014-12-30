@@ -71,8 +71,9 @@ describe('Jobs directive', function () {
     var setupPostContent = (browserName, serverName) => {
         var file = 'test.feature',
             host = 'https://www.sharecare.com',
-            browser = browserName + ' Local',
+            serverPrefix = serverName.split(': ').shift(),
             local = serverName.split(' ').pop(),
+            browser = browserName + ' Local',
             server = serverName,
             channel = 'channel';
         spyOn(location, 'path').and.returnValue('/' + file);
@@ -90,6 +91,11 @@ describe('Jobs directive', function () {
                 .respond({webdriverStatus: true});
         }
 
+        // keep track of the local server via prefix
+        if (serverPrefix.length === 2) {
+            content.browser = serverPrefix + ' ' + content.browser;
+        }
+
         // the backend expects an array of browsers
         content.browser = [ content.browser ];
         return httpMock.expectPOST('/rest.php/jobs', content)
@@ -104,6 +110,14 @@ describe('Jobs directive', function () {
 
     it('should execute the proper job parameters for a local server', () => {
         storage.server = availableBrowsers.getServers()[1];
+
+        setupPostContent(storage.browser, storage.server);
+        elm.find('#execute').eq(0).click();
+        httpMock.flush();
+    });
+
+    it('should prefix the server shortname to the browser', () => {
+        storage.server = 'AB: 1.2.3.4';
 
         setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();

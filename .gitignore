@@ -31,3 +31,4 @@ node_modules
 /app/editor/editor-controller.js
 /app/components/background-status/background-status-directive.js
 /app/components/background-status/background-status-factory.js
+/app/components/background-status/background-status-directive_test.js

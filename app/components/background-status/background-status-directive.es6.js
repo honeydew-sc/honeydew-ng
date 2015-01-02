@@ -4,6 +4,7 @@ angular.module('honeydew')
     .directive('backgroundStatus', function () {
         return {
             templateUrl: 'components/background-status/background-status.html',
+            scope: {},
             restrict: 'E',
             controller: function (BackgroundStatus, localConfig) {
                 this.list = [];
@@ -11,12 +12,13 @@ angular.module('honeydew')
                 BackgroundStatus.query(null, res => {
                     res.forEach( it => this.list.push(it) );
 
+                    // add any broken local servers to the list
                     Object.keys(localConfig).forEach( server => {
                         BackgroundStatus.get({
                             status: 'webdriver',
                             local: localConfig[server]
                         }, res => {
-                            this.list.push({
+                            maybePush({
                                 name: server,
                                 status: res.webdriverStatus
                             });
@@ -24,7 +26,13 @@ angular.module('honeydew')
                     });
                 });
 
+                var maybePush = server => {
+                    if (!server.status) {
+                        this.list.push(server);
+                    }
+                };
+
             },
-            controllerAs: 'statuses'
+            controllerAs: 'Status'
         };
     });

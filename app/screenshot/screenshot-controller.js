@@ -4,8 +4,7 @@ angular.module('honeydew')
     .controller('ScreenshotCtrl', function ($scope, $stateParams, awsConfig) {
         var opponent = $stateParams.screenshot;
 
-
-        var knownGood = opponent.replace(/(\d\.){3}\d{8}-\d{4}/, 'known-good');
+        var knownGood = opponent.replace(/(\w+\-)(.*)(\-\d+x)/, '$1known-good$3');
         var diff = opponent.replace(/\.png$/, '-diff.png');
 
         this.awsBucket = 'http://' + awsConfig.aws_bucket + '/honeydew/screenshots';

@@ -1,5 +1,5 @@
 <div ng-controller="ScreenshotCtrl as ctrl">
-  <div ng-repeat="image in ctrl.images">
+  <div ng-repeat="image in ctrl.images track by $index">
     <img ng-src="{{ ctrl.awsBucket }}/{{ image }}">
   </div>
 </div>

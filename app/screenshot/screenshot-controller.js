@@ -8,5 +8,20 @@ angular.module('honeydew')
         var diff = opponent.replace(/\.png$/, '-diff.png');
 
         this.awsBucket = 'http://' + awsConfig.aws_bucket + '/honeydew/screenshots';
-        this.images = [ knownGood, opponent, diff ];
+        this.images = [
+            {
+                label: 'known good',
+                src: knownGood
+            },
+
+            {
+                label: 'opponent',
+                src: opponent
+            },
+
+            {
+                label: 'diff',
+                src: diff
+            },
+        ];
     });

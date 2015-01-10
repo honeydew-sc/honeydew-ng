@@ -1,0 +1,19 @@
+.screenshot-diff > div {
+    display: inline-block;
+    margin: 0 auto;
+    width: 33.33vw;
+    padding: .33vw;
+}
+
+.screenshot-diff .screenshot-label {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+.screenshot-diff img {
+    display: block;
+    width: 32.33vw;
+    margin: 0 auto;
+    border: 1px outset;
+}

@@ -6,7 +6,14 @@ angular.module('honeydew')
         $scope.tree = filetree;
 
         $scope.treeOptions = {
-            dirSelectable: false
+            dirSelectable: false,
+            equality: (a, b) => {
+                if ( !a || !b ) {
+                    return false;
+                }
+
+                return a.$$hashKey == b.$$hashKey;
+            }
         };
 
         $scope.tabs = [

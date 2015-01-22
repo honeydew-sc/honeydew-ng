@@ -1,0 +1,5 @@
+.CodeMirror .cm-clickable-link {
+    color: #99c;
+    text-decoration: underline;
+    cursor: pointer;
+}

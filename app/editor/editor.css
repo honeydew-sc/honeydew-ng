@@ -21,16 +21,6 @@
     height: calc(100% - 41px) !important;
 }
 
-.CodeMirror .cm-clickable-link {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.CodeMirror .cm-atom {
-    cursor: pointer;
-}
-
 .settings.wrapper {
     position: absolute;
 }

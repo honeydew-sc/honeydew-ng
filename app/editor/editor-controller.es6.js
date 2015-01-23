@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, autocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode) {
+    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, autocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode, $location) {
         $scope.$storage = $localStorage;
 
         // put the tree on the scope so we can have
@@ -125,5 +125,15 @@ angular.module('honeydew')
             $scope.$on('codemirror:refresh', function () {
                 $scope.editorOptions.refresh();
             });
+        })();
+
+        (function updateHistory() {
+            var history;
+
+            if (!$localStorage.history) {
+                $localStorage.history = [];
+            }
+
+            $localStorage.history.unshift($location.path());
         })();
     });

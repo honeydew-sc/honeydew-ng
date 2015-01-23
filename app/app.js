@@ -43,21 +43,6 @@ angular.module('honeydew', [
             function ($rootScope, $location, $localStorage, $stateParams) {
                 if ($stateParams.path || $stateParams.set) {
                     $rootScope.title = $location.path().split('/').pop();
-                    var history;
-
-                    if (!$localStorage.history) {
-                        $localStorage.history = [];
-                    }
-
-                    $localStorage.history.unshift($location.path());
-                    $localStorage.history = $localStorage.history.filter(function ( item, index, self ) {
-                        return self.indexOf(item) === index;
-                    });
-
-                    // pare down the length of the history
-                    while ($localStorage.history.length > 10) {
-                        $localStorage.history.pop();
-                    }
                 }
                 else {
                     $rootScope.title = 'Honeydew: Home';

@@ -17,6 +17,12 @@ angular.module('honeydew')
                 };
             });
 
+        var historyLength = self.history.length;
+        // keep the length manageable
+        if (historyLength > 10) {
+            $localStorage.history.splice(10, historyLength - 10);
+        }
+
         self.gotoTempFile = () => {
             var filename = 'features/test/tmp/' + new Date().getTime() + '.feature';
 

@@ -76,6 +76,10 @@ div.sidebar-wrapper {
     width: 250px;
 }
 
+#filetree .search .highlight {
+    font-weight: bolder;
+}
+
 #filetree hr {
     color: #DDD;
 }

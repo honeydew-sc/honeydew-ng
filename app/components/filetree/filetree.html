@@ -5,17 +5,22 @@
          active="tab.active">
 
       <div class="search input-group">
-        <input type="text"
-               placeholder="Regex for {{ tab.label | lowercase | limitTo: tab.label.length - 1 }} filenames"
-               ng-model="tab.needle"
-               class="{{ tab.label }}-search form-control">
+        <div ng-controller="filetreeSearchCtrl as search">
+          <div mass-autocomplete>
+            <input type="text"
+                   placeholder="{{ tab.label | lowercase | limitTo: tab.label.length - 1 }}"
+                   ng-model="search.needle"
+                   class="{{ tab.label }}-search form-control"
+                   mass-autocomplete-item="search.options">
+          </div>
+        </div>
         <a class="input-group-addon btn btn-bland"
            ng-click="refresh(tab.label)"
            ng-mouseenter="tab.showRefreshLabel = true"
            ng-mouseleave="tab.showRefreshLabel = false">
           <span ng-show="tab.showRefreshLabel" class="slide"> Refresh </span>
           <i class="fa fa-refresh"
-                ng-class="{'fa-spin': tab.refreshing}" ></i>
+             ng-class="{'fa-spin': tab.refreshing}" ></i>
         </a>
       </div>
 

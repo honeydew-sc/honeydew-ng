@@ -23,7 +23,8 @@
     "jqueryui": "~1.10.4",
     "select2-bootstrap-css": "~1.4.4",
     "traceur-runtime": "~0.0.79",
-    "angular-ui-select": "~0.9.5"
+    "angular-ui-select": "~0.9.5",
+    "angular-mass-autocomplete": "~0.2.2",
     "fuse.js": "~1.2.2"
   },
   "devDependencies": {

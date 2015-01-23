@@ -12,6 +12,7 @@ angular.module('honeydew', [
     'doowb.angular-pusher',
     'treeControl',
     'ui.select',
+    'MassAutoComplete',
     'config',
     'sc.hostname'
 ])

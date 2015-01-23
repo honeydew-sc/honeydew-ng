@@ -1,7 +1,7 @@
 {
   "name": "angular-mass-autocomplete",
   "version": "0.2.2",
-  "main": "massautocomplete.min.js",
+  "main": [ "massautocomplete.js", "massautocomplete.theme.css" ],
   "dependencies": {
     "angular": ">=1.2.0"
   },

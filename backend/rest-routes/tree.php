@@ -59,9 +59,11 @@ $app->group('/tree', function () use ($app) {
             $basedir = "/opt/honeydew/";
             $folder = implode("/", $folder);
 
-            $needle = $req->get('needle');
-            if ($needle) {
-                $files = grepDirectory($folder, $needle);
+            $list = $req->get('list');
+            if ($list) {
+                $cmd = 'cd ' . $basedir . ' && find ' . $folder . '/ -type f';
+                exec($cmd, $files);
+
                 echo successMessage(array(
                     "list" => $files
                 ));

@@ -206,6 +206,12 @@ angular.module('honeydew')
             });
         };
 
+        this.list = function (folder) {
+            return Tree.get({
+                folder: folder,
+                list: true
+            }).$promise;
+        };
     });
 
 // polyfill for array.find() from

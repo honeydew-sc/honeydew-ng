@@ -52,6 +52,15 @@ from a `domains.json` file in the root of this repo. Empty copies of
 
     $ git update-index --assume-unchanged app/config.js
 
+## usage gotchas
+
+The version of grep that apache/_www/your webserver user has access to
+might be too old to recognize some of the flags we use. You may need
+to
+
+    $ sudo mv /usr/bin/grep /usr/bin/grep-backup
+    $ sudo ln -s /usr/local/bin/grep /usr/bin/grep
+
 ## contributing
 
 ### style & organization

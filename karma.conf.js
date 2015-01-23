@@ -45,6 +45,7 @@ module.exports = function(config) {
             'app/bower_components/angular-markdown-directive/markdown.js',
             'app/bower_components/showdown/compressed/showdown.js',
             'app/bower_components/angular-tree-control/angular-tree-control.js',
+            'app/bower_components/angular-mass-autocomplete/massautocomplete.js',
             'app/bower_components/angular-ui-select/dist/select.js',
 
             // our scripts

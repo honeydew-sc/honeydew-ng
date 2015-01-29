@@ -202,7 +202,7 @@ angular.module('honeydew')
                     self.addLeaf(file, tree);
                 });
 
-                return { tree: tree };
+                return { tree: tree, list: res.list };
             });
         };
 

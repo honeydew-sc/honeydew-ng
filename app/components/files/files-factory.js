@@ -2,12 +2,9 @@
 
 angular.module('honeydew')
     .factory('Files', function ($resource, $localStorage, $location, alerts, filetree) {
-        var Files = $resource('/rest.php/files/:file', {
-            file: '@file'
-        }, {
-            'commit': {
-                method: 'PUT'
-            }
+        var Files = $resource('/rest.php/files/:file', { file: '@file' }, {
+            commit: { method: 'PUT' },
+            getCached: { method: 'GET', cache: true }
         });
 
         Files.encode = function ( file ) {

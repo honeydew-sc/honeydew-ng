@@ -82,7 +82,7 @@ angular.module('honeydew')
         };
 
         $scope.display = function ( file ) {
-            $scope.file = Files.get({file: Files.encode(file)}, function (res) {
+            $scope.file = Files.getCached({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
 
                 // this is pretty messy - the file itself should know

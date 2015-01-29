@@ -33,3 +33,5 @@ node_modules
 /app/components/background-status/background-status-factory.js
 /app/components/background-status/background-status-directive_test.js
 /app/components/filetree/filetree-controller.js
+/app/editor/panes/phrase-info/phrase-info-directive.js
+/app/editor/panes/phrase-info/phrase-info-directive_test.js

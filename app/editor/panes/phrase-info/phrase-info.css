@@ -1,0 +1,7 @@
+.phrase-info ul {
+    list-style-type: none;
+}
+
+.phrase-info ul li {
+    margin-left: -35px;
+}

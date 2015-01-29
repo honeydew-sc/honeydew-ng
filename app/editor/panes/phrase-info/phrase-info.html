@@ -1,0 +1,17 @@
+<div class="phrase-info">
+
+  <h3>Features with this phrase: </h3>
+  <ul ng-repeat="p in phrase.features">
+    <li>
+      <a target="_blank" href="/#/{{ p }}">{{ p }}</a>
+    </li>
+  </ul>
+
+  <h3>Phrases with this phrase: </h3>
+  <ul ng-repeat="p in phrase.phrases">
+    <li>
+      <a target="_blank" href="/#/{{ p }}">{{ p }}</a>
+    </li>
+  </ul>
+
+</div>

@@ -42,7 +42,6 @@ module.exports = function(config) {
             'app/bower_components/codemirror/lib/codemirror.js',
             'app/bower_components/codemirror/addon/runmode/runmode.js',
             'app/bower_components/ng-grid/build/ng-grid.min.js',
-            'app/bower_components/angular-markdown-directive/markdown.js',
             'app/bower_components/showdown/compressed/showdown.js',
             'app/bower_components/angular-tree-control/angular-tree-control.js',
             'app/bower_components/angular-ui-select/dist/select.js',

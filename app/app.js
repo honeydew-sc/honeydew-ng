@@ -8,7 +8,6 @@ angular.module('honeydew', [
     'ui.codemirror',
     'ui.bootstrap',
     'ui.router',
-    'btford.markdown',
     'doowb.angular-pusher',
     'treeControl',
     'ui.select',

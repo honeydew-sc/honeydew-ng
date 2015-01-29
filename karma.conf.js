@@ -60,7 +60,8 @@ module.exports = function(config) {
             'app/components/**/*.js',
 
             // let karma see our templates for pre-processing
-            'app/components/**/*.html'
+            'app/components/**/*.html',
+            'app/editor/**/*.html'
         ],
 
         // list of files / patterns to exclude

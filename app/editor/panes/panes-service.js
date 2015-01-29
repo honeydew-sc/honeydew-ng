@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('panes', function ($compile, $rootScope) {
+    .service('panes', function ($compile, $rootScope, $stateParams) {
         var base = '/editor/panes/';
-        return {
-            panes: [
+        var panes = [
                 {
                     name: 'report',
                     classes: 'col-md-6',
@@ -45,7 +44,41 @@ angular.module('honeydew')
                     tooltip: 'Help',
                     include: false
                 }
-            ],
+        ];
+
+        var phraseInfo = {
+            name: 'phrase',
+            classes: 'col-md-4',
+            template: '<div data-phrase-info></div',
+            icon: 'fa-plus-square-o',
+            tooltip: 'Phrase Information',
+            include: false
+        };
+        var hasPhraseInfo = function () {
+            return panes[panes.length - 1].name === phraseInfo.name;
+        };
+
+
+        var resolveOptionalIcons = function (path) {
+            if (path.match(/phrases.*\.phrase$/)) {
+                if ( ! hasPhraseInfo() ) {
+                    panes.push(phraseInfo);
+                }
+            }
+            else {
+                if ( hasPhraseInfo() ) {
+                    panes.pop();
+                }
+            }
+        };
+
+        resolveOptionalIcons($stateParams.path || '');
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+            resolveOptionalIcons(toParams.path);
+        });
+
+        return {
+            panes: panes,
 
             activePane: '',
 

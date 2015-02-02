@@ -1,7 +1,6 @@
 .screenshot-diff > div {
     display: inline-block;
     margin: 0 auto;
-    width: 33.33vw;
     padding: .33vw;
 }
 
@@ -13,7 +12,7 @@
 
 .screenshot-diff img {
     display: block;
-    width: 32.33vw;
+    width: 32.3vw;
     margin: 0 auto;
     border: 1px outset;
 }

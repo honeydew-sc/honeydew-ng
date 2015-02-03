@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('EditorCtrl', function ($scope, $stateParams, Files, debounce, autocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode, $location) {
+    .controller('EditorCtrl', function ($scope, $stateParams, $cacheFactory, Files, debounce, autocomplete, alerts, honeydewLint, $timeout, $localStorage, liveReport, filetree, CmDomHelpers, featureMode, $location) {
         $scope.$storage = $localStorage;
 
         // put the tree on the scope so we can have
@@ -85,7 +85,14 @@ angular.module('honeydew')
             }
         };
 
+        // TODO: put this somewhere way better than here. like in the
+        // files factory.
+        var clearCache = cache => {
+            cache.get('$http').removeAll();
+        };
+
         $scope.display = function ( file ) {
+            clearCache($cacheFactory);
             $scope.file = Files.getCached({file: Files.encode(file)}, function (res) {
                 $scope.watchCodeMirror();
 

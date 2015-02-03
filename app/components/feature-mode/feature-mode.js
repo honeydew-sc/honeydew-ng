@@ -3,7 +3,7 @@
  Report bugs/issues here: https://github.com/marijnh/CodeMirror/issues
  */
 
-angular.module('honeydew').service('featureMode', function (autocomplete) {
+angular.module('honeydew').service('featureMode', function (autocomplete, $rootScope) {
     var phrases = [],
         keywords = [],
         PHRASE_TOKEN = 'atom',
@@ -12,6 +12,9 @@ angular.module('honeydew').service('featureMode', function (autocomplete) {
         .success(function ( res ) {
             phrases = autocomplete.phrases;
             keywords = Object.keys(autocomplete.keywords);
+            // force a redraw after having populated the phrases and
+            // keywords
+            $rootScope.$broadcast('codemirror:refresh');
         });
 
 

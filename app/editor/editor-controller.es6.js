@@ -37,6 +37,10 @@ angular.module('honeydew')
                 $scope.editorOptions.refresh = function () {
                     $timeout(function () {
                         cm.refresh();
+
+                        // force a fullText re-highlighting by
+                        // resetting the mode
+                        cm.setOption('mode', 'honeydew');
                     }, 1);
                 };
 

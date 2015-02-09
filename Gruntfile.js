@@ -394,9 +394,6 @@ module.exports = function (grunt) {
                         });
 
                     return ret;
-                },
-                values: {
-                    hostnamePickerDomains: grunt.file.readJSON('domains.json')
                 }
             },
             build: {}

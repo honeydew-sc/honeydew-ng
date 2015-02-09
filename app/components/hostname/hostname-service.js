@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sc.hostname')
-    .service('hostname', function (hostnamePickerDomains, $rootScope, $localStorage) {
+    .service('hostname', function (dotmilConfig, $rootScope, $localStorage) {
         var store = $localStorage;
         var defaultEnvs = ['qa', 'stage', 'prod' ];
         var hostnameService = {
@@ -51,7 +51,7 @@ angular.module('sc.hostname')
                         store.host = base + app;
                     }
                     else if (this.app === 'Army' || this.app === 'TMA') {
-                        store.host = hostnamePickerDomains[this.app.toLowerCase()][this.env];
+                        store.host = dotmilConfig[this.app.toLowerCase() + '_' + this.env];
                     }
                     else {
                         var q = this.env === 'prod' ? '' : '.';

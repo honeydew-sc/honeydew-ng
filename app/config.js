@@ -9,4 +9,5 @@ angular.module("config", [])
     .constant("iosConfig", {})
     .constant("redisConfig", {})
     .constant("flagsConfig", {})
+    .constant("awsConfig", {})
     .value("hostnamePickerDomains", {}) ;

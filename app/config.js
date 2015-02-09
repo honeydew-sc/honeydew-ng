@@ -10,4 +10,4 @@ angular.module("config", [])
     .constant("redisConfig", {})
     .constant("flagsConfig", {})
     .constant("awsConfig", {})
-    .value("hostnamePickerDomains", {}) ;
+    .constant("dotmilConfig", {});

@@ -3,7 +3,7 @@
  Report bugs/issues here: https://github.com/marijnh/CodeMirror/issues
  */
 
-angular.module('honeydew').service('featureMode', function (autocomplete, $rootScope) {
+angular.module('honeydew').service('featureMode', function ($rootScope, autocomplete, preambleOptions) {
     var phrases = [],
         keywords = [],
         PHRASE_TOKEN = 'atom',
@@ -65,6 +65,8 @@ angular.module('honeydew').service('featureMode', function (autocomplete, $rootS
                 return it + '\-\\d+';
             }).join('|')
         );
+
+        var preambleOptionsRegex = new RegExp(Object.keys(preambleOptions).join('|'));
 
         return {
             lineComment: '#',
@@ -185,7 +187,7 @@ angular.module('honeydew').service('featureMode', function (autocomplete, $rootS
                     return "keyword";
                 }
                 // SET
-                else if (state.allowPreamble && stream.match(/Set:|JIRA|Keep Open/)) {
+                else if (state.allowPreamble && stream.match(preambleOptionsRegex)) {
                     return "keyword";
                 }
                 else if (state.allowPreamble && stream.match(/\$[^ =]+/)) {

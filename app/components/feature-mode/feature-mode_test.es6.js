@@ -1,15 +1,16 @@
 'use strict';
 
 describe('FeatureMode', () => {
-    var httpMock, featureMode, feature, tests,
+    var httpMock, featureMode, feature, tests, preambleOptions,
         PHRASE_TOKEN = 'atom',
         KEYWORD_TOKEN = 'tag';
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject( function ( _$httpBackend_, _featureMode_ ) {
+    beforeEach(inject( function ( _$httpBackend_, _featureMode_, _preambleOptions_ ) {
         httpMock = _$httpBackend_;
         featureMode = _featureMode_;
+        preambleOptions = _preambleOptions_;
 
         httpMock.expectGET('/rest.php/tree/sets').respond({tree: []});
         httpMock.expectGET('/rest.php/autocomplete').respond({
@@ -124,7 +125,18 @@ http://www.sharecare.com
         expectClass(sscenario, 'Given', 'variable-2');
     });
 
+    it('should highlight all preamble options', () => {
+        var options = Object.keys(preambleOptions);
 
+        options.forEach( op => {
+            var preamble = [
+                'Feature: okay',
+                op,
+                '',
+            ].join("\n");
+
+            expectClass(preamble, op, 'keyword');
+        });
     });
 
 });

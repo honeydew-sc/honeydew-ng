@@ -35,3 +35,4 @@ node_modules
 /app/components/filetree/filetree-controller.js
 /app/editor/panes/phrase-info/phrase-info-directive.js
 /app/editor/panes/phrase-info/phrase-info-directive_test.js
+/app/components/preamble-options/preamble-options-constant.js

@@ -39,34 +39,28 @@ describe('FeatureMode', () => {
         tests = 0;
     }));
 
-    it('should parse phrases out!', () => {
+    var expectClass = (feature, testToken, assertClass) => {
+        var tests = 0;
         CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
-            if (token.match('An example phrase')) {
+            if (token.match(testToken)) {
                 tests++;
-                expect(styleClass).toBe(PHRASE_TOKEN);
+                expect(styleClass).toBe(assertClass);
             }
         });
+
         expect(tests).toBe(1);
+    };
+
+    it('should parse phrases out!', () => {
+        expectClass(feature, 'An example phrase', (PHRASE_TOKEN) );
     });
 
     it('should parse keywords out', () => {
-        CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
-            if (token.match('ExampleKeyword')) {
-                tests++;
-                expect(styleClass).toBe(KEYWORD_TOKEN);
-            }
-        });
-        expect(tests).toBe(1);
+        expectClass(feature, 'ExampleKeyword', KEYWORD_TOKEN );
     });
 
     it('should parse SScenarios', () => {
-        CodeMirror.runMode(feature, 'honeydew', ( token, styleClass ) => {
-            if (token.match('sScenario')) {
-                tests++;
-                expect(styleClass).toBe('sscenario');
-            }
-        });
-        expect(tests).toBe(1);
+        expectClass(feature, 'sScenario', 'sscenario' );
     });
 
     it('should parse clickable links tickets', () => {
@@ -85,18 +79,9 @@ http://www.sharecare.com
             '@example',
             'MOBILE-12345',
             'MOBILE-54321'
-        ];
-
-        CodeMirror.runMode(feature, 'honeydew', (token, styleClass) => {
-            tokens.forEach( it => {
-                if (token.match(it)) {
-                    tests++;
-                    expect(styleClass).toBe('clickable-link');
-                }
-            });
-
+        ].forEach( it => {
+            expectClass(feature, it, 'clickable-link');
         });
-        expect(tests).toBe(tokens.length);
     });
 
     it('should handle variables with spaces', () => {
@@ -105,19 +90,9 @@ http://www.sharecare.com
             '',
             '$whee = "spaces here"'
         ].join("\n");
-        CodeMirror.runMode(preamble, 'honeydew', ( token, styleClass ) => {
-            if (token === '$whee') {
-                tests++;
-                expect(styleClass).toBe('variable');
-            }
 
-            if (token === '"spaces here"') {
-                tests++;
-                expect(styleClass).toBe('string');
-            }
-        });
-
-        expect(tests).toBe(2);
+        expectClass(preamble, /\$whee/, 'variable');
+        expectClass(preamble, '"spaces here"', 'string');
     });
 
     it('should handle example tables with commented out lines', () => {
@@ -131,24 +106,10 @@ http://www.sharecare.com
             ' # | commented | row |',
             ' | another | row |'
         ].join("\n");
-        CodeMirror.runMode(examples, 'honeydew', ( token, styleClass ) => {
-            if (token === 'first ') {
-                tests++;
-                expect(styleClass).toBe('string');
-            }
 
-            if (token === ' # | commented | row |' ) {
-                tests++;
-                expect(styleClass).toBe('comment');
-            }
-
-            if (token === 'another ') {
-                tests++;
-                expect(styleClass).toBe('string');
-            }
-
-        });
-        expect(tests).toBe(3);
+        expectClass(examples, 'first', 'string');
+        expectClass(examples, / # \| commented \| row \|/, 'comment');
+        expectClass(examples, 'another', 'string');
     });
 
     it('should handle sScenario as the first line', () => {
@@ -159,19 +120,11 @@ http://www.sharecare.com
             ' Given I am on the / page'
         ].join("\n");
 
-        CodeMirror.runMode(sscenario, 'honeydew', ( token, styleClass ) => {
-            if (token.match('sScenario')) {
-                tests++;
-                expect(styleClass).toBe('sscenario');
-            }
+        expectClass(sscenario, 'sScenario', 'sscenario');
+        expectClass(sscenario, 'Given', 'variable-2');
+    });
 
-            if (token.match('Given')) {
-                tests++;
-                expect(styleClass).toBe('variable-2');
-            }
-        });
 
-        expect(tests).toBe(2);
     });
 
 });

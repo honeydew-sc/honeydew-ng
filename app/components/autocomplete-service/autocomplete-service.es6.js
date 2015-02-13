@@ -1,23 +1,14 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('autocomplete', function ($resource, $http, alerts, Tree) {
+    .service('autocomplete', function ($resource, $http, alerts, Tree, preambleOptions) {
         CodeMirror.commands.jumpOrAutocomplete = function (cm) {
             if (!CodeMirror.commands.jumpCursor(cm)) {
                 CodeMirror.showHint(cm, CodeMirror.hint.honeydew);
             }
         };
 
-        var preambleHints = [
-            'Existing Bug: (.*)',
-            'Set: ',
-            'Proxy',
-            'Email: (.*)',
-            'Subtitles: (.*)',
-            'Keep Open',
-            'JIRA: (.*)',
-            'Scenario: (.*)'
-        ];
+        var preambleHints = Object.keys(preambleOptions).map( k => preambleOptions[k] );
 
         var bodyHints = [
             'Scenario: (.*)',

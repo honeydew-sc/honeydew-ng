@@ -28,8 +28,19 @@ module.exports = function (grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             traceur:  {
-                files:  [ '<%= yeoman.app %>/**/*.es6.js' ],
-                tasks:  [ 'newer:traceur' ]
+                files: [ '<%= yeoman.app %>/**/*.es6.js' ],
+                tasks: [ 'newer:traceur' ]
+            },
+            fileblocks: {
+                files: [
+                    '<%= yeoman.app %>/**/*.js',
+                    '!<%= yeoman.app %>/**/*app.js',
+                    '!<%= yeoman.app %>/config.js',
+                    '!<%= yeoman.app %>/bower_components/**',
+                    '!<%= yeoman.app %>/**/*.es6.js',
+                    '!<%= yeoman.app %>/**/*_test*'
+                ],
+                tasks: [ 'newer:fileblocks' ]
             },
             js: {
                 files: [
@@ -527,8 +538,6 @@ module.exports = function (grunt) {
                 'bower-install',
                 'autoprefixer',
                 'connect:livereload',
-                'traceur',
-                'fileblocks',
                 'watch'
             ]);
         }

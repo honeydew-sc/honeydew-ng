@@ -72,15 +72,19 @@ class treeTests extends UnitTestCase {
 
         $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();
         $tree = $response->body->tree;
-        $firstLeaf = $tree[0];
-        $this->assertEqual($tempSet1 . '.set', $firstLeaf->label, '/tree/sets: new sets are picked up');
+        $labels = array_map( function ( $leaf ) {
+            return $leaf->label;
+        }, $tree );
+        $this->assertTrue(in_array( $tempSet1 . '.set', $labels),
+                          '/tree/sets: new sets are picked up');
+        $this->assertTrue(in_array( $tempSet2 . '.set', $labels),
+                          '/tree/sets: consecutive @ symbols are handled');
 
         foreach ($tree as $leaf) {
             $this->assertTrue(strpos($leaf->label, '@') === false, '/tree/sets: @ symbols are ignored');
         }
 
-        $secondLeaf = $tree[1];
-        $this->assertEqual($tempSet2 . '.set', $secondLeaf->label, '/tree/sets: consecutive @ symbols are handled');
+
 
         exec('find /opt/honeydew/features/ -name "*ng_test*.feature" | xargs -I{} rm {}');
         $response = \Httpful\Request::get($this->baseUrl . '/sets')->send();

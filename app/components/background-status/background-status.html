@@ -1,12 +1,24 @@
-<div class="background-status">
+<div class="background-status" ng-mouseenter="mouse = 1" ng-mouseleave="mouse = 0" >
   <h4>Process Status</h4>
 
-  <ul>
-    <li ng-repeat="proc in Status.list" class="small">
-      {{ proc.name }}:
-      <span class="label {{ proc.status ? 'green' : 'red' }}">
-        {{ proc.status ? 'on' : 'off' }}
-      </span>
+  <table>
+    <tr ng-repeat="proc in Status.list" class="small">
+      <td>
+        {{ proc.name }}
+
+        <span ng-if="mouse && proc.name === 'your webdriver' && ! proc.status" class="small">
+          <span class="small">
+            (<a href="#" ng-click="triggerManualAddressModal()">fix this</a>?)
+          </span>
+        </span>
+      </td>
+
+      <td>
+        <span class="label {{ proc.status ? 'green' : 'red' }}">
+          {{ proc.status ? 'on' : 'off' }}
+        </span>
+
+      </td>
     </li>
   </ul>
 

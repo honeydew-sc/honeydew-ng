@@ -1,0 +1,7 @@
+.background-status table {
+    width: 50%;
+}
+
+.background-status tr > td:nth-child(1) {
+    width: 75%;
+}

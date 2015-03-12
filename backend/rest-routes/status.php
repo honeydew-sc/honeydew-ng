@@ -63,8 +63,8 @@ $app->group('/status', function () use ($app) {
         $auth = $account . ':' . $settings[$account];
         $tunnel = "https://" . $auth . $endpoint;
 
-        /* $res = json_decode(file_get_contents($tunnel));
-        return @$res[0]; */
+        $res = json_decode(file_get_contents($tunnel));
+        return @$res[0];
     }
 
     function browsermobStatus() {

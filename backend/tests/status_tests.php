@@ -14,14 +14,14 @@ class reportTests extends UnitTestCase {
 
     function testLocalDefault() {
         $res = \Httpful\Request::get($this->baseUrl)->send();
-        $wd_status = $res->body[2];
+        $wd_status = $res->body[1];
         $this->assertEqual($wd_status->{'name'}, 'your webdriver');
         $this->assertEqual($wd_status->{'remote_server_address'}, '127.0.0.1');
     }
 
     function testLocalManual() {
         $res = \Httpful\Request::get($this->baseUrl . '?local=1.2.3.4')->send();
-        $wd_status = $res->body[2];
+        $wd_status = $res->body[1];
         $this->assertEqual($wd_status->{'remote_server_address'}, '1.2.3.4');
     }
 }

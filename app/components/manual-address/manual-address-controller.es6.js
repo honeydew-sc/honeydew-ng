@@ -4,24 +4,25 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     this.status = 'loading';
 
     var getAddressFromServer = () => {
-        BackgroundStatus.get({status: 'webdriver'}).$promise
-            .then( res => {
-                this.status = res.webdriverStatus;
-                this.address = res.serverAddress;
-                console.log(this.status);
-            })
-            .catch( res => { console.log(res); } );
+        BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
+            this.status = res.webdriverStatus;
+            $localStorage.settings.wdAddress = res.serverAddress;
+        });
     };
 
-    if ( 'wdAddress' in $localStorage.settings ) {
-        this.address = $localStorage.settings.wdAddress;
+    var updateServerStatus = () => {
         BackgroundStatus.get({
             status: 'webdriver',
-            local: this.address
-        }).$promise
-            .then( res => {
-                this.status = res.webdriverStatus;
-            });
+            local: $localStorage.settings.wdAddress
+        }).$promise.then( res => {
+            this.status = res.webdriverStatus;
+        });
+    };
+
+    // handle the new user case
+    $localStorage.settings = $localStorage.settings || {};
+    if ( $localStorage.settings.hasOwnProperty('wdAddress') ) {
+        updateServerStatus();
     }
     else {
         getAddressFromServer();

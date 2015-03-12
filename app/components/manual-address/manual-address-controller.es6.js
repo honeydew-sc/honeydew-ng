@@ -2,18 +2,19 @@
 
 function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     this.status = 'loading';
+    this.addressFromServer = '';
 
     var getAddressFromServer = () => {
         BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
             this.status = res.webdriverStatus;
-            $localStorage.settings.wdAddress = res.serverAddress;
+            this.addressFromServer = $localStorage.settings.wdAddress = res.serverAddress;
         });
     };
 
-    var updateServerStatus = () => {
+    var updateServerStatus = address => {
         BackgroundStatus.get({
             status: 'webdriver',
-            local: $localStorage.settings.wdAddress
+            local: address
         }).$promise.then( res => {
             this.status = res.webdriverStatus;
         });
@@ -22,7 +23,7 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     // handle the new user case
     $localStorage.settings = $localStorage.settings || {};
     if ( $localStorage.settings.hasOwnProperty('wdAddress') ) {
-        updateServerStatus();
+        updateServerStatus( $localStorage.settings.wdAddress );
     }
     else {
         getAddressFromServer();
@@ -32,9 +33,17 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
         if ( angular.isDefined(newAddress) ) {
             return ( $localStorage.settings.wdAddress = newAddress );
         }
-        else {
+        else if ( angular.isDefined( $localStorage.settings.wdAddress ) ) {
             return $localStorage.settings.wdAddress;
         }
+        else {
+            return this.addressFromServer;
+        }
+    };
+
+    this.reset = () => {
+        delete $localStorage.settings.wdAddress;
+        updateServerStatus( getAddressFromServer() );
     };
 
 }

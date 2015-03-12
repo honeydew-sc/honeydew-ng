@@ -43,5 +43,8 @@ describe('ManualAddressCtrl', function () {
         expect(ManualAddressCtrl.address()).toBe('3.3.3.3');
     });
 
+    it('should clear the stored value when requested', () => {
+        ManualAddressCtrl.reset();
+        expect(ManualAddressCtrl.address()).toBe('1.1.1.1');
     });
 });

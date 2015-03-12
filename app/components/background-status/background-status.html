@@ -1,4 +1,4 @@
-<div class="background-status" ng-mouseenter="mouse = 1" ng-mouseleave="mouse = 0" >
+<div class="background-status">
   <h4>Process Status</h4>
 
   <table>
@@ -6,7 +6,7 @@
       <td>
         {{ proc.name }}
 
-        <span ng-if="mouse && proc.name === 'your webdriver' && ! proc.status" class="small">
+        <span ng-if="proc.name === 'your webdriver' && ! proc.status" class="small">
           <span class="small">
             (<a href="#" ng-click="Status.popAddressModal()">fix this</a>?)
           </span>

@@ -1,5 +1,3 @@
-'use strict';
-
 function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     this.status = 'loading';
     this.addressFromServer = '';
@@ -12,11 +10,14 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     };
 
     var updateServerStatus = address => {
+        this.checking = true;
         BackgroundStatus.get({
             status: 'webdriver',
             local: address
         }).$promise.then( res => {
             this.status = res.webdriverStatus;
+        }).finally( () => {
+            this.checking = false;
         });
     };
 
@@ -30,7 +31,8 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     }
 
     this.address = newAddress => {
-        if ( angular.isDefined(newAddress) ) {
+        if ( angular.isDefined( newAddress ) ) {
+            updateServerStatus( newAddress );
             return ( $localStorage.settings.wdAddress = newAddress );
         }
         else if ( angular.isDefined( $localStorage.settings.wdAddress ) ) {
@@ -45,7 +47,6 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
         delete $localStorage.settings.wdAddress;
         updateServerStatus( getAddressFromServer() );
     };
-
 }
 
 angular.module('honeydew').controller('ManualAddressCtrl', ManualAddressCtrl);

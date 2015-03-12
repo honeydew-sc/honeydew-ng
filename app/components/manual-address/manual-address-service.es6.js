@@ -6,9 +6,7 @@ angular.module('honeydew')
                     templateUrl: 'components/manual-address/manual-address.html'
                 });
 
-                modal.result.then( ret => {
-                    console.log(ret);
-                });
+                return modal.result;
             }
         };
 

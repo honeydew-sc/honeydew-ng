@@ -1,0 +1,46 @@
+<div class="manual-address" ng-controller="ManualAddressCtrl as Manual">
+  <div ng-if="Manual.status === 'loading'">
+    One second, checking if your server is up...
+  </div>
+  <div ng-if="Manual.status === true">
+    Looks like everything is okay! Your webdriver server at <a target="_blank" href="http://{{Manual.address}}:4444/wd/hub">{{Manual.address}}:4444</a> is up and running! Great job!
+  </div>
+  <div ng-if="Manual.status === false">
+    <p>Hey, looks like your <a target="_blank" href="http://{{Manual.address}}:4444/wd/hub">webdriver server</a> isn't running. Double check that it's on - to start it, open a console or a terminal and try</p>
+
+    <p>
+      <code>
+        webdriver-manager start
+      </code>
+    </p>
+
+    <p>Also, let's double check your IP. Is this your IP address below? If not, go ahead and correct it!</p>
+
+    <form class="form-horizontal" role="form">
+      <label for="manual">IP Address:
+        <input id="manual" type="text" ng-model="Manual.address">
+      </label>
+    </form>
+
+    <p>To find your ip, you can open a command window or the terminal and try</p>
+
+    <ul>
+      <li>
+        Windows:
+        <code>
+          > ipconfig
+        </code>
+      </li>
+
+      <li>
+        OS X, Linux, Unix:
+        <code>
+          $ ifconfig | grep inet
+        </code>
+      </li>
+    </ul>
+
+    <p>You can also manually set your IP Address over in the Settings panel at any time.</p>
+  </div>
+
+</div>

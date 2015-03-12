@@ -12,6 +12,12 @@ function backgroundStatusDirectiveController ($localStorage, BackgroundStatus, l
         };
     };
 
+    (function getSauceTunnelStatus(ctrl) {
+        BackgroundStatus.get({ status: 'saucelabs'}, res => {
+            ctrl.list.unshift(res);
+        });
+    })(this);
+
     BackgroundStatus.query(queryOpts(), res => {
         res.forEach( it => this.list.push(it) );
 

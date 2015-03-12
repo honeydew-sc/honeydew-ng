@@ -31,6 +31,7 @@ describe('BackgroundStatus directive', () => {
         elm = angular.element('<background-status></background-status>');
         compile(elm)(scope);
 
+        httpMock.expectGET('/rest.php/status/saucelabs').respond({});
         if (storage) {
             httpMock.expectGET('/rest.php/status?local=' + storage).respond([]);
         }
@@ -61,7 +62,7 @@ describe('BackgroundStatus directive', () => {
             webdriverStatus: true
         });
 
-        expect(Status.list.length).toBe(0);
+        expect(Status.list.length).toBe(1);
     });
 
     it('should add failures to the list', () => {
@@ -70,8 +71,8 @@ describe('BackgroundStatus directive', () => {
             webdriverStatus: false
         });
 
-        expect(Status.list.length).toBe(1);
-        expect(Status.list[0].name).toBe('a');
+        expect(Status.list.length).toBe(2);
+        expect(Status.list[1].name).toBe('a');
     });
 
     it('should use the local wdAddress when available', () => {
@@ -85,6 +86,6 @@ describe('BackgroundStatus directive', () => {
         // request that has the ?local=3.3.3.3 query parameter
         // attached to it. It's handled in setup, but let's just make
         // sure that everything still makes sense here:
-        expect(Status.list.length).toBe(1);
+        expect(Status.list.length).toBe(2);
     });
 });

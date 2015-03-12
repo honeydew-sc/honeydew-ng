@@ -7,10 +7,6 @@ $app->group('/status', function () use ($app) {
         echo json_encode(
             array(
                 array(
-                    'name' => 'saucelabs',
-                    'status' => sauceTunnelStatus()
-                ),
-                array(
                     'name' => 'browsermob',
                     'status' => browsermobStatus()
                 ),
@@ -20,7 +16,13 @@ $app->group('/status', function () use ($app) {
                     'remote_server_address' => $wd['remote_server_address']
                 ),
             ));
+    });
 
+    $app->get('/saucelabs', function () use ($app) {
+        echo successMessage(array(
+            'name' => 'saucelabs',
+            'status' => sauceTunnelStatus()
+        ));
     });
 
     $app->get('/webdriver', function () use ($app) {

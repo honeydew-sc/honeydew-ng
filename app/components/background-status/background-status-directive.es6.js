@@ -6,7 +6,7 @@ angular.module('honeydew')
             templateUrl: 'components/background-status/background-status.html',
             scope: {},
             restrict: 'E',
-            controller: function (BackgroundStatus, localConfig) {
+            controller: function (BackgroundStatus, localConfig, manualAddressService) {
                 this.list = [];
 
                 BackgroundStatus.query(null, res => {
@@ -32,6 +32,9 @@ angular.module('honeydew')
                     }
                 };
 
+                this.popAddressModal = () => {
+                    manualAddressService.popModal();
+                };
             },
             controllerAs: 'Status'
         };

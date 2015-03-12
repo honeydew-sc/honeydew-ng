@@ -2,25 +2,46 @@
 
 describe('ManualAddressCtrl', function () {
     var scope,
+        storage,
         httpMock,
-        stateParams,
         ManualAddressCtrl;
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $localStorage) {
         scope = $rootScope.$new();
+        storage = $localStorage;
         httpMock = $httpBackend;
-
-        stateParams = {};
 
         ManualAddressCtrl = $controller('ManualAddressCtrl', {
             $scope: scope,
-            $stateParams: stateParams
+            $localStorage: storage
         });
+
+        httpMock.expectGET('/rest.php/status/webdriver').respond({
+            webdriverStatus: false,
+            serverAddress: '1.1.1.1'
+        });
+        scope.$digest();
+        httpMock.flush();
     }));
 
-    it('should probably exist', () => {
-        expect(ManualAddressCtrl).toBeDefined();
+    it('should ask the server for your IP address', () => {
+        expect(ManualAddressCtrl.address()).toBe('1.1.1.1');
+    });
+
+    it('should let localStorage override the server value', () => {
+        storage.settings = { wdAddress: '2.2.2.2' };
+        expect(ManualAddressCtrl.address()).toBe('2.2.2.2');
+    });
+
+    it('should update itself when localStorage changes', () => {
+        storage.settings = { wdAddress: '2.2.2.2' };
+        expect(ManualAddressCtrl.address()).toBe('2.2.2.2');
+
+        storage.settings = { wdAddress: '3.3.3.3' };
+        expect(ManualAddressCtrl.address()).toBe('3.3.3.3');
+    });
+
     });
 });

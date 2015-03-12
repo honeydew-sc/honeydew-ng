@@ -5,6 +5,7 @@ describe('BackgroundStatus directive', () => {
         scope,
         Status,
         compile,
+        storage,
         httpMock;
 
     var config = {
@@ -17,19 +18,25 @@ describe('BackgroundStatus directive', () => {
 
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope, $httpBackend) => {
+    beforeEach(inject( ($compile, $rootScope, $httpBackend, $localStorage) => {
         scope = $rootScope;
         compile = $compile;
+        storage = $localStorage;
         httpMock = $httpBackend;
 
-
+        storage.settings = {};
     }));
 
-    var setupLocalStatuses = localRes => {
+    var setupLocalStatuses = (localRes, storage) => {
         elm = angular.element('<background-status></background-status>');
         compile(elm)(scope);
 
-        httpMock.expectGET('/rest.php/status').respond([]);
+        if (storage) {
+            httpMock.expectGET('/rest.php/status?local=' + storage).respond([]);
+        }
+        else {
+            httpMock.expectGET('/rest.php/status').respond([]);
+        }
         httpMock.expectGET('/rest.php/status/webdriver?local=' + config.a).respond(localRes);
 
         httpMock.flush();
@@ -65,5 +72,19 @@ describe('BackgroundStatus directive', () => {
 
         expect(Status.list.length).toBe(1);
         expect(Status.list[0].name).toBe('a');
+    });
+
+    it('should use the local wdAddress when available', () => {
+        storage.settings.wdAddress = '3.3.3.3';
+        setupLocalStatuses({
+            name: 'a',
+            webdriverStatus: false
+        }, '3.3.3.3');
+
+        // The actual test for this is the httpMock.expectGET with a
+        // request that has the ?local=3.3.3.3 query parameter
+        // attached to it. It's handled in setup, but let's just make
+        // sure that everything still makes sense here:
+        expect(Status.list.length).toBe(1);
     });
 });

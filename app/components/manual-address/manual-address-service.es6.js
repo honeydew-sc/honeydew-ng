@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('manualAddressService', function ($modal) {
         var service = {

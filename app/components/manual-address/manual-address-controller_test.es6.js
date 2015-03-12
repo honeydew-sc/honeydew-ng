@@ -11,6 +11,7 @@ describe('ManualAddressCtrl', function () {
     beforeEach(inject(function ($controller, $rootScope, $httpBackend, $localStorage) {
         scope = $rootScope.$new();
         storage = $localStorage;
+        storage.settings = {};
         httpMock = $httpBackend;
 
         ManualAddressCtrl = $controller('ManualAddressCtrl', {

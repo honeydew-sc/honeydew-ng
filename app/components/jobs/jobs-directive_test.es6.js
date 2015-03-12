@@ -1,6 +1,5 @@
-'use strict';
-
 describe('Jobs directive', function () {
+    'use strict';
     var elm,
         scope,
         compile,
@@ -9,6 +8,7 @@ describe('Jobs directive', function () {
         httpMock,
         location,
         liveReport,
+        localStorage,
         availableBrowsers,
         browser = 'Chrome',
         server = 'Localhost';
@@ -18,6 +18,7 @@ describe('Jobs directive', function () {
 
     beforeEach(inject( function ( $compile,
                            $rootScope,
+                           $localStorage,
                            $sessionStorage,
                            $httpBackend,
                            $location,
@@ -31,6 +32,8 @@ describe('Jobs directive', function () {
         httpMock = $httpBackend;
         hostname = _hostname_;
         liveReport = _liveReport_;
+        localStorage = $localStorage;
+        localStorage.settings = {};
         storage = $sessionStorage;
         availableBrowsers = _availableBrowsers_;
 
@@ -104,6 +107,28 @@ describe('Jobs directive', function () {
 
     it('should execute the proper job parameters for localhost', () => {
         setupPostContent(storage.browser, storage.server);
+        elm.find('#execute').click();
+        httpMock.flush();
+    });
+
+    it('should use the wdAddress for localhost when present', () => {
+        var local = '1.1.1.1';
+        localStorage.settings = { wdAddress: local };
+
+        spyOn(location, 'path').and.returnValue('/test.feature');
+        spyOn(liveReport, 'switchChannel').and.returnValue('channel');
+
+        httpMock.expectGET(`/rest.php/status/webdriver?local=${ local }`)
+            .respond({webdriverStatus: true});
+        httpMock.expectPOST('/rest.php/jobs', {
+            file: "test.feature",
+            host: "https://www.sharecare.com",
+            channel: "channel",
+            server: "Localhost",
+            browser: ["Chrome Local"],
+            local: "1.1.1.1"
+        })
+            .respond({});
         elm.find('#execute').click();
         httpMock.flush();
     });

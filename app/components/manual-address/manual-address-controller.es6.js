@@ -28,6 +28,15 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
         getAddressFromServer();
     }
 
+    this.address = newAddress => {
+        if ( angular.isDefined(newAddress) ) {
+            return ( $localStorage.settings.wdAddress = newAddress );
+        }
+        else {
+            return $localStorage.settings.wdAddress;
+        }
+    };
+
 }
 
 angular.module('honeydew').controller('ManualAddressCtrl', ManualAddressCtrl);

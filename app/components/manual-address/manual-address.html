@@ -3,10 +3,10 @@
     One second, checking if your server is up...
   </div>
   <div ng-if="Manual.status === true">
-    Looks like everything is okay! Your webdriver server at <a target="_blank" href="http://{{Manual.address}}:4444/wd/hub">{{Manual.address}}:4444</a> is up and running! Great job!
+    Looks like everything is okay! Your webdriver server at <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">{{Manual.address()}}:4444</a> is up and running! Great job!
   </div>
   <div ng-if="Manual.status === false">
-    <p>Hey, looks like your <a target="_blank" href="http://{{Manual.address}}:4444/wd/hub">webdriver server</a> isn't running. Double check that it's on - to start it, open a console or a terminal and try</p>
+    <p>Hey, looks like your <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">webdriver server</a> isn't running. Double check that it's on - to start it, open a console or a terminal and try</p>
 
     <p>
       <code>
@@ -18,7 +18,8 @@
 
     <form class="form-horizontal" role="form">
       <label for="manual">IP Address:
-        <input id="manual" type="text" ng-model="Manual.address">
+        <input id="manual" type="text" ng-model="Manual.address"
+               ng-model-options="{ getterSetter: true, updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
       </label>
     </form>
 

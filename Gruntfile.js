@@ -466,6 +466,13 @@ module.exports = function (grunt) {
                 command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@honeydew:/opt/honeydew-ui/htdocs/'
             },
 
+            fixPermissions: {
+                options: {
+                    stdout: true
+                },
+                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \; &"'
+            },
+
             deployBack: {
                 options: {
                     stdout: true,
@@ -582,7 +589,12 @@ module.exports = function (grunt) {
         'karma:unit',
         'shell:phpTests',
         'shell:deployFront',
+        'fixPermissions',
         'shell:deployBack'
+    ]);
+
+    grunt.registerTask('fixPermissions', [
+        'shell:fixPermissions'
     ]);
 
     grunt.registerTask('hostname', [

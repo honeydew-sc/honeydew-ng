@@ -24,7 +24,6 @@ angular.module('honeydew')
             }
         };
 
-
         service.switchChannel = function (channel) {
             if (typeof(channel) === 'undefined') {
                 var newChannel = 'private-' + randomString.string();
@@ -40,10 +39,6 @@ angular.module('honeydew')
         };
 
         service.pusherListener = function (item) {
-            if (item.match('####.*' + service.breakpoint.rule))  {
-                alerts.addAlert(service.breakpoint.alert, 30000);
-            }
-
             if (service.placeHolder) {
                 service.output = item;
                 service.placeHolder = false;

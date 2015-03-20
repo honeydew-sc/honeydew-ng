@@ -40,3 +40,5 @@ node_modules
 /app/components/manual-address/manual-address-controller_test.js
 /app/components/manual-address/manual-address-service.js
 /app/components/manual-address/manual-address-service_test.js
+/app/components/cm-report-mode/cm-report-mode.js
+/app/components/cm-report-mode/cm-report-mode_test.js

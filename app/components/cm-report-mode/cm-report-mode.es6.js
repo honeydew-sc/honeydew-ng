@@ -8,6 +8,7 @@ function cmReportModeService (preambleOptions) {
             'Browser',
             'Feature File',
             'Job ID',
+            'Feature',
         ].concat(preambleKeys).map(it => it + ':').join('|'));
 
         var successRule = /# \(OK\).*?\)/;

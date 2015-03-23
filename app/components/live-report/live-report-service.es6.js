@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .service('liveReport', function ($rootScope, Pusher, randomString, $timeout, alerts) {
+    .service('liveReport', function ($rootScope, Pusher, randomString, $timeout, alerts, cmReportMode) {
         var timeout;
         var service =  {
             oldChannel: null,
@@ -40,7 +40,7 @@ angular.module('honeydew')
 
         service.pusherListener = function (item) {
             if (service.placeHolder) {
-                service.output = item;
+                service.output = highlightLine(item);
                 service.placeHolder = false;
             }
             else {
@@ -54,8 +54,22 @@ angular.module('honeydew')
                     }).join("\n");
                 }
 
-                service.output += item;
+                service.output += highlightLine(item);
             }
+        };
+
+        var highlightLine = line => {
+            var elem = '';
+            var ret = CodeMirror.runMode(line, 'report', (token, style) => {
+                if (style) {
+                    elem += '<span class="' + style + '">' + token + '</span>';
+                }
+                else {
+                    elem += token;
+                }
+            });
+
+            return elem;
         };
 
         service.tail = function (channel) {

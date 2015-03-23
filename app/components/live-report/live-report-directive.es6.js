@@ -12,7 +12,8 @@ angular.module('honeydew')
         };
     });
 
-var LiveReportDirectiveCtrl = function (liveReport) {
+var LiveReportDirectiveCtrl = function ($localStorage, liveReport) {
+    this.theme = $localStorage.settings.theme;;
     this.report = liveReport;
 
     if (liveReport.registered === false && liveReport.channel !== '') {

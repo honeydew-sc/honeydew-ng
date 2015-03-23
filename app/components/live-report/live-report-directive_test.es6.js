@@ -1,7 +1,6 @@
 'use strict';
 
 describe('LiveReportDirective', function () {
-    var elm, compile, scope, ctrl, channel, pusherMock, liveReport;
     var elm, compile, scope, ctrl, channel, pusherMock, liveReport, ReportPane;
 
     beforeEach(module('honeydew'));

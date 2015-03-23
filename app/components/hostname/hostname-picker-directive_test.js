@@ -1,6 +1,6 @@
 describe('HostnamePickerDirective', function () {
     var scope, $compile, hostname, element, hostValue, ctrl;
-    var ENV_COUNT = 10,
+    var ENV_COUNT = 13,
         APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));

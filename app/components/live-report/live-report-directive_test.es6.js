@@ -2,6 +2,7 @@
 
 describe('LiveReportDirective', function () {
     var elm, compile, scope, ctrl, channel, pusherMock, liveReport;
+    var elm, compile, scope, ctrl, channel, pusherMock, liveReport, ReportPane;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
@@ -15,12 +16,12 @@ describe('LiveReportDirective', function () {
         $compile(elm)($rootScope);
         $rootScope.$digest();
 
-        scope = elm.isolateScope();
+        ReportPane = elm.isolateScope().ReportPane;
     }));
 
     it('should subscribe to a channel and put it on the scope', function() {
         liveReport.switchChannel(channel);
-        expect(scope.report.channel).toMatch(channel);
-        expect(scope.report.output).not.toMatch('nothing');
+        expect(ReportPane.report.channel).toMatch(channel);
+        expect(ReportPane.report.output).not.toMatch('nothing');
     });
 });

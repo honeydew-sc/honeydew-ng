@@ -8,7 +8,7 @@ angular.module('honeydew')
             scope: {},
             restrict: 'E',
             controller: LiveReportDirectiveCtrl,
-            controllerAs: 'report'
+            controllerAs: 'ReportPane'
         };
     });
 

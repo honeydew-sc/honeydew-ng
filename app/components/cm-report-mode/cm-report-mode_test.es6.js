@@ -1,4 +1,4 @@
-ddescribe('ReportMode', function () {
+describe('ReportMode', function () {
     var cmReportMode, preambleOptions;
 
     beforeEach(module('sc.cmmodes'));

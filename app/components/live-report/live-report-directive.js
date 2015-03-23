@@ -7,12 +7,13 @@ angular.module('honeydew')
             replace: true,
             scope: {},
             restrict: 'E',
-            controller: LiveReportDirectiveCtrl
+            controller: LiveReportDirectiveCtrl,
+            controllerAs: 'report'
         };
     });
 
-var LiveReportDirectiveCtrl = function ($scope, liveReport) {
-    $scope.report = liveReport;
+var LiveReportDirectiveCtrl = function (liveReport) {
+    this.report = liveReport;
 
     if (liveReport.registered === false && liveReport.channel !== '') {
         // we might need to subscribe to a channel if the report tab
@@ -20,7 +21,3 @@ var LiveReportDirectiveCtrl = function ($scope, liveReport) {
         liveReport.registered = true;
     }
 };
-
-// ng-min doesn't uglify controller this correctly, I guess as it
-// isn't defined in the usual fashion
-LiveReportDirectiveCtrl.$inject = ['$scope', 'liveReport'];

@@ -25,13 +25,17 @@
     text-align: center;
 }
 
-.east-panel ul > li > a:hover {
+div.east-panel ul > li > a:hover {
     color: #FFF;
-    background-color: #e7e7e7 !important;
+    background-color: #e7e7e7;
 }
 
-.east-panel .active, .east-panel .active:hover {
+div.east-panel a.active, div.east-panel a.active:hover {
     /* aqua */
-    color: #333 !important;
-    background-color: #7FDBFF !important;
+    color: #333;
+    background-color: #7FDBFF;
+                     }
+
+div.east-panel a.active.failure {
+    background-color: red !important;
 }

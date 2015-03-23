@@ -47,3 +47,4 @@ node_modules
 /app/components/live-report/live-report-directive_test.js
 /app/components/live-report/live-report-directive.js
 /app/editor/panes/pane-selector/pane-selector-directive.js
+/app/editor/panes/pane-selector/pane-selector-directive_test.js

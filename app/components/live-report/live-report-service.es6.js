@@ -63,6 +63,10 @@ angular.module('honeydew')
             var ret = CodeMirror.runMode(line, 'report', (token, style) => {
                 if (style) {
                     elem += '<span class="' + style + '">' + token + '</span>';
+
+                    if (style === 'failure') {
+                        $rootScope.$broadcast('report:failure');
+                    }
                 }
                 else {
                     elem += token;

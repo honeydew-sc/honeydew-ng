@@ -6,9 +6,11 @@ describe('LiveReportService', function () {
     var rule = 'Given I am on the / page';
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function (_liveReport_, _Pusher_, $timeout, _cmReportMode_) {
+    beforeEach(inject(function ($rootScope, _liveReport_, _Pusher_, $timeout, _cmReportMode_) {
         liveReportService = _liveReport_;
         pusherMock = pusherReal = _Pusher_;
+        rootScope = $rootScope;
+
         pusherMock.channel = {
             trigger: function () {}
         };
@@ -66,6 +68,15 @@ describe('LiveReportService', function () {
 
         liveReportService.pusherListener(success);
         expect(liveReportService.output).toBe(expectedHighlighting);
+    });
+
+    it('should broadcast an event about a failed test', () => {
+        var failed = '# (ER)  (100)   Given',
+            emits = 0;
+        rootScope.$on('report:failure', () => emits++);
+
+        liveReportService.pusherListener(failed);
+        expect(emits).toBe(1);
     });
 
     it('sends messages in private channels', function () {

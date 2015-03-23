@@ -1,4 +1,19 @@
 function cmReportModeService (preambleOptions) {
+    var style = {
+        HEADER: 'cm-keyword',
+        SUCCESS: 'success',
+        FAILURE: 'failure',
+        SCENARIO: 'scenario',
+
+        successfulScenario () {
+            return this.SUCCESS + ' ' + this.SCENARIO;
+        },
+
+        failedScenario () {
+            return this.FAILURE + ' ' + this.SCENARIO;
+        }
+    };
+
     CodeMirror.defineMode('report', function () {
         var preambleKeys = Object.keys(preambleOptions);
         var headers = new RegExp([
@@ -18,19 +33,19 @@ function cmReportModeService (preambleOptions) {
             startState: () => { return {}; },
             token: (stream, state) => {
                 if (stream.match(headers)) {
-                    return 'header';
+                    return style.HEADER;
                 }
                 else if (stream.match(successRule)) {
-                    return 'success';
+                    return style.SUCCESS;
                 }
                 else if (stream.match(failureRule)) {
-                    return 'failure';
+                    return style.FAILURE;
                 }
                 else if (stream.match(/# Success/)) {
-                    return 'success scenario';
+                    return style.successfulScenario();
                 }
                 else if (stream.match(/# Failure/)) {
-                    return 'failure scenario';
+                    return style.failedScenario();
                 }
                 else {
                     stream.next();
@@ -40,6 +55,8 @@ function cmReportModeService (preambleOptions) {
             }
         };
     });
+
+    return style;
 }
 
 angular.module('sc.cmmodes', [ 'sc.constants' ]).service('cmReportMode', cmReportModeService);

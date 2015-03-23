@@ -35,7 +35,6 @@ User: 1new-email-address@mailinator.com
 End Date: 1427121879`;
 
     describe('Headers:', () => {
-        var HEADER_STYLE = 'header';
         var headers = [
             'Start Date:',
             'Host:',
@@ -52,7 +51,7 @@ End Date: 1427121879`;
             'User:'
         ].map( header => {
             it('should parse the header "' + header + '"', () => {
-                expectClass(feature, header , HEADER_STYLE);
+                expectClass(feature, header , cmReportMode.HEADER);
             });
         });
     });
@@ -60,28 +59,28 @@ End Date: 1427121879`;
     describe('Rules:', () => {
         it('should parse a passing rule', () => {
             var rule = '# (OK)  (100)   Given I am on the / page (2.00 secs)';
-            expectClass(rule, '# ', 'success');
-            expectClass(rule, '(OK)', 'success');
-            expectClass(rule, '(100)', 'success');
+            expectClass(rule, '# ', cmReportMode.SUCCESS);
+            expectClass(rule, '(OK)', cmReportMode.SUCCESS);
+            expectClass(rule, '(100)', cmReportMode.SUCCESS);
         });
 
         it('should parse a failing rule', () => {
             var rule = '# (ER)  (100)   Given I am on the / page (2.00 secs)';
-            expectClass(rule, '# ', 'failure');
-            expectClass(rule, '(ER)', 'failure');
-            expectClass(rule, '(100)', 'failure');
+            expectClass(rule, '# ', cmReportMode.FAILURE);
+            expectClass(rule, '(ER)', cmReportMode.FAILURE);
+            expectClass(rule, '(100)', cmReportMode.FAILURE);
         });
     });
 
     describe('Scenarios: ', () => {
         it('should parse a successful scenario ending', () => {
             var line = '# Success';
-            expectClass(line, line, 'success scenario');
+            expectClass(line, line, cmReportMode.successfulScenario());
         });
 
         it('should parse a failed scenario ending', () => {
             var line = '# Failure';
-            expectClass(line, line, 'failure scenario');
+            expectClass(line, line, cmReportMode.failedScenario());
         });
 
     });

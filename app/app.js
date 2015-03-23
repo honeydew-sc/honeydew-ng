@@ -12,7 +12,8 @@ angular.module('honeydew', [
     'treeControl',
     'ui.select',
     'config',
-    'sc.hostname'
+    'sc.constants',
+    'sc.hostname',
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         (function setLocationFromURL() {

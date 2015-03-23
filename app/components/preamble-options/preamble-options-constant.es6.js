@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('honeydew')
+angular.module('sc.constants', [])
     .constant('preambleOptions', {
         'Existing Bug': 'Existing Bug: (.*)',
         'Set': 'Set: (.*)',

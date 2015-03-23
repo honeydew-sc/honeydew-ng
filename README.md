@@ -96,3 +96,9 @@ directive, etc) appended to the name: `filetree-service.js` and
    loss of functionality is line number coordination, but I think it's
    possible to get source maps to fix this? We don't have the source
    maps set up yet, though.
+
+3. modularize! when applicable, make your new component part of its
+   own module. Currently in progress:
+
+       * sc.cmmodes - this should have all of the CodeMirror modes in
+         it, but it currently only has reportMode

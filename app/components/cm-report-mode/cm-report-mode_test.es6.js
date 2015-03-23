@@ -1,7 +1,7 @@
 ddescribe('ReportMode', function () {
     var cmReportMode, preambleOptions;
 
-    beforeEach(module('honeydew'));
+    beforeEach(module('sc.cmmodes'));
     beforeEach(inject( (_cmReportMode_, _preambleOptions_) => {
         cmReportMode = _cmReportMode_;
         preambleOptions = _preambleOptions_;

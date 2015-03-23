@@ -41,4 +41,4 @@ function cmReportModeService (preambleOptions) {
     });
 }
 
-angular.module('honeydew').service('cmReportMode', cmReportModeService);
+angular.module('sc.cmmodes', [ 'sc.constants' ]).service('cmReportMode', cmReportModeService);

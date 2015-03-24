@@ -19,6 +19,18 @@ angular.module('honeydew')
                         scope.panes.togglePane(pane, contents);
                     };
                 };
+
+                scope.report = { failure: '' };
+                scope.$on('report:reset', () => {
+                    scope.report.failure = '';
+                });
+
+                scope.$on('report:failure', () => {
+                    scope.report.failure = 'failure';
+                });
+
+                // open a pane manually
+                scope.togglePaneWithScope(panes.panes[0]);
             }
         };
     });

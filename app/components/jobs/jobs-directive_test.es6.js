@@ -163,21 +163,21 @@ describe('Jobs directive', function () {
         httpMock.flush();
     });
 
-    it('should emit a file:commit event when executing', () => {
-        // the scope that we have access to doesn't seem to be the
+    it('should emit two events when executing', () => {
+        // The scope that we have access to doesn't seem to be the
         // scope in the directive controller (ie our scope.$emit is
         // never called), so we'll just listen for the event like a
         // regular scope instead of spying.
         var emits = 0;
-        scope.$on('file:commit', (args) => {
-            emits++;
-        });
+        var incEmitCount = () => emits++;
+        scope.$on('file:commit', incEmitCount);
+        scope.$on('report:reset', incEmitCount);
 
         setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
         httpMock.flush();
 
-        expect(emits).toBe(1);
+        expect(emits).toBe(2);
     });
 
     it('should update the browser whenever the hostname changes', () => {

@@ -11,8 +11,13 @@ angular.module('honeydew', [
     'doowb.angular-pusher',
     'treeControl',
     'ui.select',
+
+
+    // internal modules
     'config',
-    'sc.hostname'
+    'sc.constants',
+    'sc.hostname',
+    'sc.cmmodes'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         (function setLocationFromURL() {

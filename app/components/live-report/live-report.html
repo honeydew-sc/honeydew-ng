@@ -1,5 +1,5 @@
-<div class='{{$storage.settings.font}}'>
+<div ng-class="'cm-s-' + ReportPane.theme">
   <div class="CodeMirror live-report">
-    <pre copy-style=".CodeMirror">{{report.output}}</pre>
+    <pre copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
   </div>
 </div>

@@ -611,4 +611,10 @@ module.exports = function (grunt) {
         'traceur',
         'fileblocks'
     ]);
+
+    grunt.registerTask('ci', [
+        'traceur',
+        'fileblocks',
+        'karma:ci',
+    ]);
 };

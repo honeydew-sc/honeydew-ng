@@ -8,8 +8,8 @@ angular.module('honeydew')
             readOnly: "nocursor",
             mode: 'set-mode',
             onLoad: function (cm) {
-                CmDomHelpers.focus(cm, $scope);
                 CmDomHelpers.compileRenderedLines(cm, $scope);
+                CmDomHelpers.focus(cm, $scope);
             }
         };
 

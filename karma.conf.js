@@ -49,7 +49,7 @@ module.exports = function(config) {
             // our scripts
 
             // load components first so module dependencies are available
-            'app/config.js',
+            'app/config_test.js',
             'app/components/**/*-app.js',
 
             'app/app.js',

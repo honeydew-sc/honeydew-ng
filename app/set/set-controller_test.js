@@ -25,6 +25,7 @@ describe('SetCtrl', function () {
         });
 
         spyOn(cm, 'compileRenderedLines');
+        spyOn(cm, 'focus');
 
         httpMock.expectGET('/rest.php/tree/sets').respond({tree: []});
         httpMock.expectGET('/rest.php/autocomplete').respond({
@@ -52,7 +53,11 @@ describe('SetCtrl', function () {
     });
 
     it('should compile the rendered lines from CodeMirror through Angular', function () {
-        scope.editorOptions.onLoad(CodeMirror);
+        var fakeCm = {
+            on: function () {}
+        };
+
+        scope.editorOptions.onLoad(fakeCm);
         expect(cm.compileRenderedLines).toHaveBeenCalled();
         expect(cm.compileRenderedLines.calls.count()).toBe(1);
     });

@@ -470,7 +470,7 @@ module.exports = function (grunt) {
                 options: {
                     stdout: true
                 },
-                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \; &"'
+                command: 'ssh honeydew "umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \; &"'
             },
 
             deployBack: {

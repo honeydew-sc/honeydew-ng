@@ -30,7 +30,7 @@ angular.module('honeydew')
                 });
 
                 // open a pane manually
-                scope.togglePaneWithScope(panes.panes[0]);
+                // scope.togglePaneWithScope(panes.panes[0]);
             }
         };
     });

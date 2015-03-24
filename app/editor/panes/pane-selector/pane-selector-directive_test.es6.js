@@ -9,7 +9,7 @@ describe('Pane Selector directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope, $localStorage) => {
+    beforeEach(inject( ($compile, $rootScope, $localStorage, panes) => {
         elm = angular.element('<pane-selector></pane-selector');
         scope = $rootScope;
         compile = $compile;
@@ -22,6 +22,7 @@ describe('Pane Selector directive', () => {
         scope.$digest();
 
         paneScope = elm.scope();
+        paneScope.togglePaneWithScope(panes.panes[0]);
     }));
 
     it('should do repeat through the different panes', () => {
@@ -31,16 +32,18 @@ describe('Pane Selector directive', () => {
 
     it('should reset a report status', () => {
         paneScope.report.failure = 'failure';
-        scope.$broadcast('report:reset');
-        scope.$digest();
+        scope.$apply( () => {
+            scope.$broadcast('report:reset');
+        });
         expect(paneScope.report.failure).toBe('');
         expect(elm.find('.active.failure').length).toBe(0);
     });
 
-    it('should reset a report status', () => {
+    it('should fail a report status', () => {
         paneScope.report.failure = '';
-        scope.$broadcast('report:failure');
-        scope.$digest();
+        scope.$apply( () => {
+            scope.$broadcast('report:failure');
+        });
         expect(paneScope.report.failure).toBe('failure');
         expect(elm.find('.active.failure').length).toBe(1);
     });

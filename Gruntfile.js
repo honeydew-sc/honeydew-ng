@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             traceur:  {
-                files: [ '<%= yeoman.app %>/**/*.es6.js' ],
+                files: [ '<%= yeoman.app %>/**/*.es6' ],
                 tasks: [ 'newer:traceur' ]
             },
             fileblocks: {
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
                     '!<%= yeoman.app %>/**/*app.js',
                     '!<%= yeoman.app %>/config.js',
                     '!<%= yeoman.app %>/bower_components/**',
-                    '!<%= yeoman.app %>/**/*.es6.js',
+                    '!<%= yeoman.app %>/**/*.es6',
                     '!<%= yeoman.app %>/**/*_test*'
                 ],
                 tasks: [ 'newer:fileblocks' ]
@@ -492,7 +492,7 @@ module.exports = function (grunt) {
                 files:[{
                     expand: true,
                     cwd: '<%= yeoman.app %>',
-                    src: ['**/*.es6.js'],
+                    src: ['**/*.es6'],
                     dest: '<%= yeoman.app %>',
                     ext: '.js'
                 }]
@@ -509,7 +509,7 @@ module.exports = function (grunt) {
                             '!**/*app.js',
                             '!config.js',
                             '!bower_components/**',
-                            '!**/*.es6.js',
+                            '!**/*.es6',
                             '!**/*_test*'
                         ],
                         cwd: '<%= yeoman.app %>'

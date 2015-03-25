@@ -62,7 +62,15 @@ angular.module('honeydew')
             var elem = '';
             var ret = CodeMirror.runMode(line, 'report', (token, style) => {
                 if (style) {
-                    elem += '<span class="' + style + '">' + token + '</span>';
+                    var outputToken;
+                    if (style === 'link') {
+                        outputToken = token.replace(/(\d+)/, '<a href="/report/$1">$1</a>');
+                    }
+                    else {
+                        outputToken = token;
+                    }
+
+                    elem += '<span class="' + style + '">' + outputToken + '</span>';
 
                     if (style === 'failure') {
                         $rootScope.$broadcast('report:failure');

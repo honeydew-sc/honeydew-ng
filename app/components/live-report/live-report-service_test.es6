@@ -62,12 +62,20 @@ describe('LiveReportService', function () {
         expect(liveReportService.output).toBe(rule + rule);
     });
 
-    it('should highlight new messages before outputting them', () => {
-        var success = '# (OK)  (100)   Given';
-        var expectedHighlighting = '<span class="success"># (OK)  (100)</span>   Given';
+    describe('Syntax highlighting:', () => {
+        it('should highlight new messages before outputting them', () => {
+            var success = '# (OK)  (100)   Given';
+            var expectedHighlighting = '<span class="success"># (OK)  (100)</span>   Given';
 
-        liveReportService.pusherListener(success);
-        expect(liveReportService.output).toBe(expectedHighlighting);
+            liveReportService.pusherListener(success);
+            expect(liveReportService.output).toBe(expectedHighlighting);
+        });
+
+        it('should make links clickable', () => {
+            liveReportService.pusherListener( '# Report ID: 44' );
+            expect(liveReportService.output)
+                .toContain( '<a href="/report/44">44</a>' );
+        });
     });
 
     it('should broadcast an event about a failed test', () => {

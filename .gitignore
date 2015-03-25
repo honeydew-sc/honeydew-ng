@@ -11,3 +11,4 @@ node_modules
 /app/set/**/*.js
 /app/app.js
 /app/landing/**/*.js
+/app/app.css

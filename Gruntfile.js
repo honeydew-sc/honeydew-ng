@@ -22,7 +22,8 @@ module.exports = function (grunt) {
         yeoman: {
             // configurable paths
             app: 'app',
-            dist: 'dist'
+            dist: 'dist',
+            folders: '{components,editor,landing,monitor,screenshot,set}'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -60,7 +61,8 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.{js,html,css}',
+                    '<%= yeoman.app %>/app.css',
+                    '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.{js,html,css,scss}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
                     '.tmp/styles/**/*.css'

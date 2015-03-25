@@ -38,3 +38,7 @@
     background-color: #222;
     border-color: #080808;
 }
+
+.navbar-inverse .dropdown-menu > li > a {
+    color: #999;
+}

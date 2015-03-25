@@ -89,14 +89,6 @@ directive, etc) appended to the name: `filetree-service.js` and
    `this`, and makes your html more explicit, especially when nesting
    controllers and dealing with inherited properties in nested scopes.
 
-2. ES6! As you touch a file, change its filename to `whatever.es6.js`
-   (from `whatever.js`). Ignore the normal `.js` file, add your new
-   one to the repo, and use `grunt traceur` to generate the ES5
-   compatible result. Courtesy of a couple traceur modules, the only
-   loss of functionality is line number coordination, but I think it's
-   possible to get source maps to fix this? We don't have the source
-   maps set up yet, though.
-
 3. modularize! when applicable, make your new component part of its
    own module. Currently in progress:
 

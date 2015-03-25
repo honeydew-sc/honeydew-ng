@@ -144,6 +144,9 @@ angular.module('honeydew')
                         $location.path(path);
                     });
                 };
+            },
+            controller: ($scope, $localStorage) => {
+                $scope.settings = $localStorage.settings;
             }
         };
     });

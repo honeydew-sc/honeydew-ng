@@ -24,14 +24,14 @@ describe('ReportCtrl', function () {
 
     it('should go get a single report', () => {
         httpMock.expectGET('/rest.php/report/1')
-            .respond({ report: 'contents' });
+            .respond({ result: 'contents' });
         httpMock.flush();
-        expect(ReportCtrl.output).toBe( 'contents' );
+        expect(ReportCtrl.output).toContain( 'contents' );
     });
 
     it('should highlight the output accordingly', () => {
         httpMock.expectGET('/rest.php/report/1')
-            .respond({ report: '# Success' });
+            .respond({ result: '# Success' });
         httpMock.flush();
 
         expect(ReportCtrl.output).toContain( '# Success' );

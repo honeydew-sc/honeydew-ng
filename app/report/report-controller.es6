@@ -2,8 +2,19 @@
 
 angular.module('honeydew')
     .controller('ReportCtrl', function ($stateParams, Report, cmReportMode) {
-        this.output = Report.get( { report: $stateParams.report } )
+        Report.get( { report: $stateParams.report } )
             .$promise.then( res => {
-                this.output = cmReportMode.highlight(res.report);
+                var report = [
+                    'Start Date: ' + res.startDate,
+                    'Host: ' + res.host,
+                    'Build: ' + res.buildNumber,
+                    'Browser: ' + res.browser,
+                    'Feature File: ' + res.featureFile,
+                    'JobID: ' + res.jobId,
+                    res.result,
+                    'End Date ' + res.endDate
+                ].join("\n");
+
+                this.output = cmReportMode.highlight(report);
             });
     });

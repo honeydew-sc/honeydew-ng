@@ -82,7 +82,12 @@ End Date: 1427121879`;
             var line = '# Failure';
             expectClass(line, line, cmReportMode.failedScenario());
         });
+    });
 
+    it('should make report IDs clickable', () => {
+        var line = '# Report ID: 44';
+        expectClass(line, 'Report ID', cmReportMode.LINK);
+        expectClass(line, '44', cmReportMode.LINK);
     });
 
 

@@ -4,6 +4,7 @@ function cmReportModeService (preambleOptions) {
         SUCCESS: 'success',
         FAILURE: 'failure',
         SCENARIO: 'scenario',
+        LINK: 'link',
 
         successfulScenario () {
             return this.SUCCESS + ' ' + this.SCENARIO;
@@ -46,6 +47,9 @@ function cmReportModeService (preambleOptions) {
                 }
                 else if (stream.match(/# Failure/)) {
                     return style.failedScenario();
+                }
+                else if (stream.match(/# Report ID: \d+/)) {
+                    return style.LINK;
                 }
                 else {
                     stream.next();

@@ -151,6 +151,25 @@ module.exports = function (grunt) {
             ])
         },
 
+        sass: {
+            dist: {
+                files: {
+                    '<%= yeoman.app %>/app.css': '<%= yeoman.app %>/app.scss'
+                }
+            }
+        },
+
+        sass_globbing: {
+            dist: {
+                files: {
+                    '<%= yeoman.app %>/_imports.scss': [
+                        'app/components/colors/*.scss',
+                        'app/{components,editor,landing,monitor,screenshot,set}/**/*.scss'
+                    ]
+                }
+            }
+        },
+
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -188,7 +207,6 @@ module.exports = function (grunt) {
                 ignorePath: '<%= yeoman.app %>/'
             }
         },
-
 
         // Renames files for browser caching purposes
         rev: {
@@ -611,12 +629,17 @@ module.exports = function (grunt) {
     grunt.registerTask('config', [
         'ngconstant:build',
         'traceur',
-        'fileblocks'
+        'fileblocks',
+        'css'
     ]);
 
     grunt.registerTask('ci', [
-        'traceur',
-        'fileblocks',
+        'config',
         'karma:ci',
+    ]);
+
+    grunt.registerTask('css', [
+        'sass_globbing:dist',
+        'sass:dist'
     ]);
 };

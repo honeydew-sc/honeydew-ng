@@ -27,6 +27,17 @@ $app->group('/report', function () use ($app, $setsDir) {
 
         echo successMessage(array('report' => $res));
     });
+
+    $app->get('/:id', function ($id) use ($app) {
+        $pdo = hdewdb_connect();
+        $sth = $pdo->prepare('SELECT * from report where id = ?');
+
+        $sth->execute(array($id));
+
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        echo successMessage($res[0]);
+    });
 });
 
 ?>

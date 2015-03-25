@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             // configurable paths
             app: 'app',
             dist: 'dist',
-            folders: '{components,editor,landing,monitor,screenshot,set}'
+            folders: '{components,editor,landing,monitor,report,screenshot,set}'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',
-                    '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.js'
+                    '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js'
                 ],
                 tasks: ['newer:jshint:all'],
                 options: {
@@ -152,8 +152,8 @@ module.exports = function (grunt) {
             },
             all: grunt.file.expand([
                 '<%= yeoman.app %>/app.js',
-                '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.js',
-                '!<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*_test.js',
+                '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
+                '!<%= yeoman.app %>/<%= yeoman.folders %>/**/*_test.js',
                 'Gruntfile.js'
             ])
         },
@@ -171,7 +171,8 @@ module.exports = function (grunt) {
                 files: {
                     '<%= yeoman.app %>/_imports.scss': [
                         'app/components/colors/*.scss',
-                        'app/{components,editor,landing,monitor,screenshot,set}/**/*.scss'
+                        'app/{components,editor,landing,monitor,screenshot,set}/**/*.scss',
+                        'app/<%= yeoman.folders %>/**/*.scss'
                     ]
                 }
             }

@@ -57,6 +57,7 @@ module.exports = function(config) {
             'app/monitor/**/*.js',
             'app/set/**/*.js',
             'app/screenshot/**/*.js',
+            'app/report/**/*.js',
 
             'app/components/**/*.js',
 

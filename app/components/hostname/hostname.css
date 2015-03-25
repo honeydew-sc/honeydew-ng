@@ -29,3 +29,12 @@
     border-color: #080808;
     color: #999;
 }
+
+.navbar-inverse .btn.btn-default .caret {
+    border-top-color: #999;
+}
+
+.navbar-inverse ul.dropdown-menu {
+    background-color: #222;
+    border-color: #080808;
+}

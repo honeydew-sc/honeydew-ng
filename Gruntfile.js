@@ -43,6 +43,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: [ 'newer:fileblocks' ]
             },
+            css: {
+                files: [ '<%= yeoman.app %>/**/*.scss' ],
+                tasks: [
+                    'sass_globbing',
+                    'sass'
+                ]
+            },
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',

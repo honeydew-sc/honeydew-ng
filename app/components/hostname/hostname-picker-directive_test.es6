@@ -4,6 +4,7 @@ describe('HostnamePickerDirective', function () {
         APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));
+    beforeEach(module('tpl'));
 
     beforeEach(inject(function ($rootScope, _$compile_, _hostname_) {
         scope = $rootScope.$new();
@@ -14,8 +15,8 @@ describe('HostnamePickerDirective', function () {
         var tpl = '<hostname-picker></hostname-picker>';
         element = angular.element(tpl);
         var elm = $compile(element)(scope);
-        ctrl = element.controller('hostnamePicker');
         scope.$digest();
+        ctrl = element.controller('hostnamePicker');
         hostValue = element.find('.hostname');
     }));
 

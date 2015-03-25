@@ -4,6 +4,7 @@ describe('hostnameService', function () {
         APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));
+    beforeEach(module('tpl'));
 
     beforeEach(inject(function (_hostname_, _$rootScope_, $compile) {
         hostname = _hostname_;
@@ -12,6 +13,7 @@ describe('hostnameService', function () {
         var tpl = '<hostname-picker></hostname-picker>';
         var element = angular.element(tpl);
         var elm = $compile(element)(scope);
+        scope.$digest();
         ctrl = element.controller('hostnamePicker');
     }));
 

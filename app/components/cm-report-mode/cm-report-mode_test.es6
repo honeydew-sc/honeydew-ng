@@ -34,7 +34,7 @@ User: 1new-email-address@mailinator.com
 
 End Date: 1427121879`;
 
-    describe('Headers:', () => {
+    describe('Parsing: ', () => {
         var headers = [
             'Start Date:',
             'Host:',
@@ -54,9 +54,7 @@ End Date: 1427121879`;
                 expectClass(feature, header , cmReportMode.HEADER);
             });
         });
-    });
 
-    describe('Rules:', () => {
         it('should parse a passing rule', () => {
             var rule = '# (OK)  (100)   Given I am on the / page (2.00 secs)';
             expectClass(rule, '# ', cmReportMode.SUCCESS);
@@ -70,9 +68,7 @@ End Date: 1427121879`;
             expectClass(rule, '(ER)', cmReportMode.FAILURE);
             expectClass(rule, '(100)', cmReportMode.FAILURE);
         });
-    });
 
-    describe('Scenarios: ', () => {
         it('should parse a successful scenario ending', () => {
             var line = '# Success';
             expectClass(line, line, cmReportMode.successfulScenario());
@@ -82,12 +78,28 @@ End Date: 1427121879`;
             var line = '# Failure';
             expectClass(line, line, cmReportMode.failedScenario());
         });
+
+        it('should make report IDs clickable', () => {
+            var line = '# Report ID: 44';
+            expectClass(line, 'Report ID', cmReportMode.LINK);
+            expectClass(line, '44', cmReportMode.LINK);
+        });
     });
 
-    it('should make report IDs clickable', () => {
-        var line = '# Report ID: 44';
-        expectClass(line, 'Report ID', cmReportMode.LINK);
-        expectClass(line, '44', cmReportMode.LINK);
+    describe('Syntax highlighting:', () => {
+        it('should highlight new messages before outputting them', () => {
+            var success = '# (OK)  (100)   Given';
+            var expectedHighlighting = '<span class="success"># (OK)  (100)</span>   Given';
+
+            expect(cmReportMode.highlight(success))
+                .toBe(expectedHighlighting);
+        });
+
+        it('should make links clickable', () => {
+
+            expect(cmReportMode.highlight( '# Report ID: 44' ))
+                .toContain( '<a href="/report/44">44</a>' );
+        });
     });
 
 

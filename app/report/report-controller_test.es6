@@ -34,7 +34,8 @@ describe('ReportCtrl', function () {
             .respond({ report: '# Success' });
         httpMock.flush();
 
-        expect(ReportCtrl.output).toBe( '<span class="success"># Success</span>' );
+        expect(ReportCtrl.output).toContain( '# Success' );
+        expect(ReportCtrl.output).toMatch( /<span class=".*<\/span>/ );
 
     });
 });

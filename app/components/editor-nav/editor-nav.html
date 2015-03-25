@@ -35,25 +35,28 @@
 
       <job-options></job-options>
 
-      <!-- Split button -->
-      <div class="elsewhere btn-group pull-right">
-        <button type="button" class="btn btn-bland" ng-click="go('/')">Home</button>
-        <button type="button" class="btn btn-bland" ng-click="go('/old.php')">Ye Olde</button>
-        <button type="button" class="btn btn-bland dropdown-toggle" data-toggle="dropdown">
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a target="_blank" ng-href="{{ base }}/dashboard/index.html">Dashboard</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/keywords/index.html">Keywords</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/kabocha/index.php">Kabocha</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/#/monitor">Monitor</a></li>
-          <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
-          <li><a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">Queues</a></li>
-          <li class="divider"></li>
-          <li class="disabled"><a>Reports</a></li>
-        </ul>
-      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/#/">Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/old.php">Ye Olde</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/dashboard/index.html">Dashboard</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/keywords/index.html">Keywords</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/kabocha/index.php">Kabocha</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/#/monitor">Monitor</a></li>
+            <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
+            <li><a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">Queues</a></li>
+            <li class="divider"></li>
+            <li class="disabled"><a>Reports</a></li>
+          </ul>
+        </li>
+      </ul>
+
     </div>
   </div><!-- /.container-fluid -->
 </nav>

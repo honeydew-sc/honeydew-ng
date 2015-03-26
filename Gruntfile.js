@@ -620,6 +620,19 @@ module.exports = function (grunt) {
         'shell:deployBack'
     ]);
 
+    grunt.registerTask('deploy', [
+        'build',
+        'karma:unit',
+        'shell:deployFront',
+        'fixPermissions',
+        'deployBack'
+    ]);
+
+    grunt.registerTask('deployBack', [
+        'shell:phpTests',
+        'shell:deployBack'
+    ]);
+
     grunt.registerTask('fixPermissions', [
         'shell:fixPermissions'
     ]);

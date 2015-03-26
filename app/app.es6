@@ -85,6 +85,13 @@ angular.module('honeydew', [
                     $rootScope.title = 'HD Monitors';
                 }]
             })
+            .state('report', {
+                url: '/report/:report',
+                templateUrl: 'report/report.html',
+                onEnter: ['$rootScope', function ($rootScope) {
+                    $rootScope.title = 'HD Report';
+                }]
+            })
             .state('screenshot', {
                 url: '/screenshot/:screenshot',
                 templateUrl: 'screenshot/screenshot.html',

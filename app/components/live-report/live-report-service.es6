@@ -40,7 +40,7 @@ angular.module('honeydew')
 
         service.pusherListener = function (item) {
             if (service.placeHolder) {
-                service.output = highlightLine(item);
+                service.output = cmReportMode.highlight(item);
                 service.placeHolder = false;
             }
             else {
@@ -54,26 +54,8 @@ angular.module('honeydew')
                     }).join("\n");
                 }
 
-                service.output += highlightLine(item);
+                service.output += cmReportMode.highlight(item);
             }
-        };
-
-        var highlightLine = line => {
-            var elem = '';
-            var ret = CodeMirror.runMode(line, 'report', (token, style) => {
-                if (style) {
-                    elem += '<span class="' + style + '">' + token + '</span>';
-
-                    if (style === 'failure') {
-                        $rootScope.$broadcast('report:failure');
-                    }
-                }
-                else {
-                    elem += token;
-                }
-            });
-
-            return elem;
         };
 
         service.tail = function (channel) {

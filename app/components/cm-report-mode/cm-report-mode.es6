@@ -1,9 +1,10 @@
-function cmReportModeService (preambleOptions) {
+function cmReportModeService ($rootScope, preambleOptions) {
     var style = {
         HEADER: 'cm-keyword',
         SUCCESS: 'success',
         FAILURE: 'failure',
         SCENARIO: 'scenario',
+        LINK: 'link',
 
         successfulScenario () {
             return this.SUCCESS + ' ' + this.SCENARIO;
@@ -11,6 +12,32 @@ function cmReportModeService (preambleOptions) {
 
         failedScenario () {
             return this.FAILURE + ' ' + this.SCENARIO;
+        },
+
+        highlight (line) {
+            var elem = '';
+            var ret = CodeMirror.runMode(line, 'report', (token, style) => {
+                if (style) {
+                    var outputToken;
+                    if (style === 'link') {
+                        outputToken = token.replace(/(\d+)/, '<a href="/report/$1">$1</a>');
+                    }
+                    else {
+                        outputToken = token;
+                    }
+
+                    elem += '<span class="' + style + '">' + outputToken + '</span>';
+
+                    if (style === 'failure') {
+                        $rootScope.$broadcast('report:failure');
+                    }
+                }
+                else {
+                    elem += token;
+                }
+            });
+
+            return elem;
         }
     };
 
@@ -46,6 +73,9 @@ function cmReportModeService (preambleOptions) {
                 }
                 else if (stream.match(/# Failure/)) {
                     return style.failedScenario();
+                }
+                else if (stream.match(/# Report ID: \d+/)) {
+                    return style.LINK;
                 }
                 else {
                     stream.next();

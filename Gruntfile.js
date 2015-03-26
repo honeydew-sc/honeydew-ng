@@ -486,16 +486,18 @@ module.exports = function (grunt) {
                 command: 'find backend/tests -name "*_tests.php" | xargs -I{} php {}'
             },
 
-                options: {
-                    stdout: true
-                },
-            },
-
             fixPermissions: {
                 options: {
                     stdout: true
                 },
-                command: 'ssh honeydew "umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \; &"'
+                command: 'ssh honeydew "perl /opt/honeydew/bin/parsePhrases.pl && umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \;"'
+            },
+
+            showPermissions: {
+                options: {
+                    stdout: true
+                },
+                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec ls -al{} \;"'
             },
 
             deployBack: {
@@ -657,14 +659,14 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('fixPermissions', [
-        'shell:fixPermissions'
+        'shell:fixPermissions',
+        'shell:showPermissions'
     ]);
 
     grunt.registerTask('hostname', [
         'concat:hostnameJs',
         'concat:hostnameCss',
         'ngAnnotate',
-        // 'uglify:hostname',
         'cssmin:hostname',
         'shell:copyDev'
     ]);

@@ -20,7 +20,7 @@ function cmReportModeService ($rootScope, preambleOptions) {
                 if (style) {
                     var outputToken;
                     if (style === 'link') {
-                        outputToken = token.replace(/(\d+)/, '<a href="/report/$1">$1</a>');
+                        outputToken = token.replace(/(\d+)/, '<a href="/#/report/$1">$1</a>');
                     }
                     else {
                         outputToken = token;
@@ -74,7 +74,7 @@ function cmReportModeService ($rootScope, preambleOptions) {
                 else if (stream.match(/# Failure/)) {
                     return style.failedScenario();
                 }
-                else if (stream.match(/# Report ID: \d+/)) {
+                else if (stream.match(/Report ID: \d+/)) {
                     return style.LINK;
                 }
                 else {

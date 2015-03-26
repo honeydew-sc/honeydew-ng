@@ -80,7 +80,7 @@ End Date: 1427121879`;
         });
 
         it('should make report IDs clickable', () => {
-            var line = '# Report ID: 44';
+            var line = 'Report ID: 44';
             expectClass(line, 'Report ID', cmReportMode.LINK);
             expectClass(line, '44', cmReportMode.LINK);
         });
@@ -96,9 +96,8 @@ End Date: 1427121879`;
         });
 
         it('should make links clickable', () => {
-
-            expect(cmReportMode.highlight( '# Report ID: 44' ))
-                .toContain( '<a href="/report/44">44</a>' );
+            expect(cmReportMode.highlight( 'Report ID: 44' ))
+                .toContain( '<a href="/#/report/44">44</a>' );
         });
     });
 

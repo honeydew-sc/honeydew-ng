@@ -574,8 +574,7 @@ module.exports = function (grunt) {
                 options: {
                     src: '<%= yeoman.dist %>/',
                     dest: '/opt/honeydew-ui/htdocs/',
-                    host: 'honeydew@honeydew',
-                    delete: true
+                    host: 'honeydew@honeydew'
                 }
             }
         }

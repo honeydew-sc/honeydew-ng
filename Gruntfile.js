@@ -488,16 +488,18 @@ module.exports = function (grunt) {
 
             fixPermissions: {
                 options: {
-                    stdout: true
+                    stdout: true,
+                    stderr: true
                 },
-                command: 'ssh honeydew "perl /opt/honeydew/bin/parsePhrases.pl && umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec chmod 0666 {} \;"'
+                command: 'ssh honeydew "perl /opt/honeydew/bin/parsePhrases.pl && umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} chmod 0666 {} \;"'
             },
 
             showPermissions: {
                 options: {
-                    stdout: true
+                    stdout: true,
+                    stderr: true
                 },
-                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f -exec ls -al{} \;"'
+                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} ls -al {} \;"'
             },
 
             deployBack: {

@@ -1,4 +1,6 @@
-.report .CodeMirror {
+.single-report.report .CodeMirror pre {
     height: 100vh;
-    padding: 1vw;
+    padding: 1%;
+    width: 80vw;
+    word-wrap: break-word;
 }

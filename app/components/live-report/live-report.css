@@ -1,3 +1,5 @@
-div.CodeMirror.live-report {
+div.CodeMirror.live-report pre {
     overflow: visible;
+    width: 100%;
+    word-wrap: break-word;
 }

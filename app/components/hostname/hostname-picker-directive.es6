@@ -1,9 +1,17 @@
 'use strict';
 
 angular.module('sc.hostname')
-    .directive('hostnamePicker', function ( hostname ) {
+    .directive('hostnamePicker', function ( $location, hostname ) {
         return {
-            templateUrl: 'components/hostname/hostname.html',
+            templateUrl: () => {
+                var url = 'components/hostname/hostname.html';
+                if ( $location.$$absUrl.match(/dashboard\/index.html/) ) {
+                    return '/' + url;
+                }
+                else {
+                    return url;
+                }
+            },
             replace: true,
             scope: true,
             restrict: 'E',
@@ -19,6 +27,7 @@ angular.module('sc.hostname')
                     }
                 };
 
+                $scope.$emit('hostname:ready');
             },
             controllerAs: 'Host'
         };

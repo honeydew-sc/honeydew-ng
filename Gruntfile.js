@@ -580,6 +580,10 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('default', [
+        'serve'
+    ]);
+
     grunt.registerTask('e2e', [
         'shell:honeydew'
     ]);

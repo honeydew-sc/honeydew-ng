@@ -13,3 +13,4 @@ node_modules
 /app/landing/**/*.js
 /app/app.css
 /app/app.css.map
+/backend/rest-routes/sources/phrases.json

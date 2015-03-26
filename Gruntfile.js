@@ -486,12 +486,9 @@ module.exports = function (grunt) {
                 command: 'find backend/tests -name "*_tests.php" | xargs -I{} php {}'
             },
 
-
-            deployFront: {
                 options: {
                     stdout: true
                 },
-                command: 'rsync -avzh <%= yeoman.dist %>/ honeydew@honeydew:/opt/honeydew-ui/htdocs/'
             },
 
             fixPermissions: {
@@ -552,6 +549,31 @@ module.exports = function (grunt) {
                 },
                 options: {
                     removeFiles: true
+                }
+            }
+        },
+
+        rsync: {
+            options: {
+                args: [
+                    '--verbose',
+                    '--archive',
+                    '--human-readable',
+                    '--compress'
+                ],
+                exclude: [
+                    '.git*'
+                    ,'*.scss'
+                    ,'node_modules'
+                ],
+                recursive: true
+            },
+            prod: {
+                options: {
+                    src: '<%= yeoman.dist %>/',
+                    dest: '/opt/honeydew-ui/htdocs/',
+                    host: 'honeydew@honeydew',
+                    delete: true
                 }
             }
         }
@@ -616,7 +638,7 @@ module.exports = function (grunt) {
         'build',
         'karma:unit',
         'shell:phpTests',
-        'shell:deployFront',
+        'rsync:prod',
         'fixPermissions',
         'shell:deployBack'
     ]);
@@ -624,7 +646,7 @@ module.exports = function (grunt) {
     grunt.registerTask('deploy', [
         'build',
         'karma:unit',
-        'shell:deployFront',
+        'rsync:prod',
         'fixPermissions',
         'deployBack'
     ]);

@@ -25,6 +25,24 @@
             ng-change="Settings.redrawPage()"
             >
     </select>
+
+    <label class="control-label">Nav theme: </label><br />
+    <div class="btn-group">
+      <label class="btn btn-default"
+             ng-model="Settings.$storage.settings.navClass"
+             btn-radio=""
+             uncheckable
+             >
+        Default
+      </label>
+      <label class="btn btn-default btn-inverse"
+             ng-model="Settings.$storage.settings.navClass"
+             btn-radio="'navbar-inverse'"
+             uncheckable
+             >
+        Inverse
+      </label>
+    </div>
   </div>
 
   <div class="form-group">

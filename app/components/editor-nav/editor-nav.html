@@ -1,26 +1,22 @@
-<nav class="editor-nav navbar navbar-default" role="navigation">
+<nav class="editor-nav navbar navbar-default {{ settings.navClass }}" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header navbar-form">
-      <button
-        class="btn btn-bland"
-        ng-click="tree.toggleTree()"
-        ng-show="!tree.collapse">
-        <i class="fa fa-chevron-left"></i>
-      </button>
-      <button
-        class="btn btn-bland"
-        ng-click="tree.toggleTree()"
-        ng-show="tree.collapse">
-        <i class="fa fa-chevron-right"></i>
-      </button>
-    </div>
+    <ul class="nav navbar-nav navbar-left">
+      <li ng-if="!tree.collapse">
+        <a ng-click="tree.toggleTree()">
+          <i class="fa fa-chevron-left"></i>
+        </a>
+      </li>
+      <li ng-if="tree.collapse">
+        <a ng-click="tree.toggleTree()">
+          <i class="fa fa-chevron-right"></i>
+        </a>
+      </li>
+    </ul>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div>
       <ul class="nav navbar-nav">
-        <!-- <li class="active"><a href="#">Link</a></li> -->
-        <!-- <li><a href="#">Link</a></li> -->
         <li class="dropdown file-nav-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-show="doc.isDirty()" class="dirty">*</span>File <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
@@ -39,25 +35,28 @@
 
       <job-options></job-options>
 
-      <!-- Split button -->
-      <div class="elsewhere btn-group pull-right">
-        <button type="button" class="btn btn-bland" ng-click="go('/')">Home</button>
-        <button type="button" class="btn btn-bland" ng-click="go('/old.php')">Ye Olde</button>
-        <button type="button" class="btn btn-bland dropdown-toggle" data-toggle="dropdown">
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a target="_blank" ng-href="{{ base }}/dashboard/index.html">Dashboard</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/keywords/index.html">Keywords</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/kabocha/index.php">Kabocha</a></li>
-          <li><a target="_blank" ng-href="{{ base }}/#/monitor">Monitor</a></li>
-          <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
-          <li><a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">Queues</a></li>
-          <li class="divider"></li>
-          <li class="disabled"><a>Reports</a></li>
-        </ul>
-      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/#/">Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/old.php">Ye Olde</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/dashboard/index.html">Dashboard</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/keywords/index.html">Keywords</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/kabocha/index.php">Kabocha</a></li>
+            <li><a target="_blank" ng-href="{{ ::base }}/#/monitor">Monitor</a></li>
+            <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
+            <li><a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">Queues</a></li>
+            <li class="divider"></li>
+            <li class="disabled"><a>Reports</a></li>
+          </ul>
+        </li>
+      </ul>
+
     </div>
   </div><!-- /.container-fluid -->
 </nav>

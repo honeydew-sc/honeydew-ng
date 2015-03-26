@@ -1,13 +1,13 @@
-<div class="navbar nav-stacked east-panel navbar-default" role="navigation">
+<div class="navbar nav-stacked east-panel navbar-default {{ settings.navClass }}" role="navigation">
   <nav class="">
     <ul class="navbar-nav nav">
       <li class="sidebar-nav" ng-repeat="pane in panes.panes">
-        <a class="pane-icon {{pane.name}}-pane {{report.failure}}"
+        <a class="pane-icon {{::pane.name}}-pane {{report.failure}}"
            ng-class="panes.activePane == pane.name ? 'active' : ''"
-           popover="{{pane.tooltip}}"
+           popover="{{::pane.tooltip}}"
            popover-placement="left"
            popover-trigger="mouseenter"
-           ng-click="togglePaneWithScope(pane)"> <i class="fa {{pane.icon}}" > </i>
+           ng-click="togglePaneWithScope(pane)"> <i class="fa {{::pane.icon}}" > </i>
         </a>
       </li>
     </ul>

@@ -1,0 +1,9 @@
+.live-report {
+    span.success {
+        color: $green;
+    }
+
+    span.failure {
+        color: $red;
+    }
+}

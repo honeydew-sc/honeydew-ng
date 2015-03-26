@@ -1,0 +1,17 @@
+$inverse-border: #080808;
+
+.select2-container.set-select {
+    width: 100%;
+}
+
+.navbar-inverse job-options select, .navbar-inverse job-options input {
+    background-color: #222;
+    border-color: $inverse-border;
+    color: #999;
+}
+
+.navbar-inverse job-options button.btn.btn-hdew {
+    background-color: #222;
+    border-color: $inverse-border;
+    color: $olive;
+}

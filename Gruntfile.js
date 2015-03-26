@@ -22,7 +22,8 @@ module.exports = function (grunt) {
         yeoman: {
             // configurable paths
             app: 'app',
-            dist: 'dist'
+            dist: 'dist',
+            folders: '{components,editor,landing,monitor,screenshot,set}'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -42,6 +43,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: [ 'newer:fileblocks' ]
             },
+            css: {
+                files: [ '<%= yeoman.app %>/**/*.scss' ],
+                tasks: [
+                    'sass_globbing',
+                    'sass'
+                ]
+            },
             js: {
                 files: [
                     '<%= yeoman.app %>/app.js',
@@ -60,7 +68,8 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{components,editor,landing,monitor,screenshot,set}/**/*.{js,html,css}',
+                    '<%= yeoman.app %>/app.css',
+                    '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.{js,html,css,scss}',
                     '<%= yeoman.app %>/index.html',
                     '.tmp/styles/*.css',
                     '.tmp/styles/**/*.css'
@@ -149,6 +158,25 @@ module.exports = function (grunt) {
             ])
         },
 
+        sass: {
+            dist: {
+                files: {
+                    '<%= yeoman.app %>/app.css': '<%= yeoman.app %>/app.scss'
+                }
+            }
+        },
+
+        sass_globbing: {
+            dist: {
+                files: {
+                    '<%= yeoman.app %>/_imports.scss': [
+                        'app/components/colors/*.scss',
+                        'app/{components,editor,landing,monitor,screenshot,set}/**/*.scss'
+                    ]
+                }
+            }
+        },
+
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -186,7 +214,6 @@ module.exports = function (grunt) {
                 ignorePath: '<%= yeoman.app %>/'
             }
         },
-
 
         // Renames files for browser caching purposes
         rev: {
@@ -609,12 +636,17 @@ module.exports = function (grunt) {
     grunt.registerTask('config', [
         'ngconstant:build',
         'traceur',
-        'fileblocks'
+        'fileblocks',
+        'css'
     ]);
 
     grunt.registerTask('ci', [
-        'traceur',
-        'fileblocks',
+        'config',
         'karma:ci',
+    ]);
+
+    grunt.registerTask('css', [
+        'sass_globbing:dist',
+        'sass:dist'
     ]);
 };

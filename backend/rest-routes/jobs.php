@@ -88,7 +88,15 @@ $app->group('/jobs', function () use ($app) {
 
     function getFailuresForSet($setId) {
         $pdo = hdewdb_connect();
-        $sth = $pdo->prepare("SELECT r.id, r.browser, r.host, r.featureFile, u.name FROM report r JOIN user u ON r.userId = u.id WHERE setRunId = ? AND status != \"success\"");
+        $sth = $pdo->prepare('
+SELECT r.id, r.browser, r.host, r.featureFile, u.name
+FROM report r
+JOIN user u
+ON r.userId = u.id
+WHERE r.setRunId = ?
+AND r.status != "success"
+AND r.status != "bugged"
+');
         $sth->execute(array($setId));
         $res = $sth->fetchAll(PDO::FETCH_FUNC, function ($id, $browser, $host, $file, $name) {
             $job = new HoneydewJob(array(

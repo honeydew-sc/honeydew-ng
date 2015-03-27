@@ -59,7 +59,7 @@ angular.module('honeydew')
 
                     hasWebdriver(self.$storage.server).then( res => {
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
-                            let job = createJob(self.$storage.browser, self.$storage.server);
+                            var job = createJob(self.$storage.browser, self.$storage.server);
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');
                             return job.$execute();
@@ -115,13 +115,13 @@ angular.module('honeydew')
                 var hasWebdriver = (server) => {
                     if ( isSaucelabs() || isMobile() ) {
                         // TODO: we're just assume Saucelabs is up
-                        let deferred = $q.defer();
+                        var deferred = $q.defer();
                         deferred.resolve({webdriverStatus: true});
 
                         return deferred.promise;
                     }
                     else {
-                        let statusPromise = BackgroundStatus.get({
+                        var statusPromise = BackgroundStatus.get({
                             status: 'webdriver',
                             local: getLocalIp(server)
                         }, res => {
@@ -140,12 +140,12 @@ angular.module('honeydew')
                 };
 
                 var constructMonitor = (browser, server) => {
-                    let set = self.set.name,
+                    var set = self.set.name,
                         host = hostname.host,
                         monitor = { set, host, browser };
 
                     if (!isSaucelabs()) {
-                        let prefix = server.split(': ').shift();
+                        var prefix = server.split(': ').shift();
                         monitor.browser = `${ prefix } ${browser} Local`;
                     }
 

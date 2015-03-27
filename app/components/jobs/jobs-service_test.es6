@@ -1,4 +1,4 @@
-ddescribe('JobsServiceClass', function () {
+describe('JobsServiceClass', function () {
     var Jobs,
         httpMock;
     beforeEach(module('honeydew'));
@@ -32,7 +32,7 @@ ddescribe('JobsServiceClass', function () {
         expect(job.browser[0]).toBe('not saucelabs Local');
     });
 
-    iit('should put a local server IP prop on local jobs', () => {
+    it('should put a local server IP prop on local jobs', () => {
         var job = new Jobs({
             browser: 'Chrome',
             server: 'AB: 1.2.3.4'

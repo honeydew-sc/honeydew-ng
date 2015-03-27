@@ -1,37 +1,10 @@
 angular.module('honeydew')
-    .service('Jobs', function ($resource, $location) {
+    .service('Jobs', function ($resource, $location, $localStorage) {
         var backendJob = $resource('/rest.php/jobs', null, {
             'execute': {
                 method: 'POST'
             }
         });
-
-        var browserPrefix = server => {
-            // The local servers are a two letter abbrevation, a
-            // colon, and then the IP of the local server. Running
-            // jobs locally is just 'Localhost' and running on
-            // Saucelabs is Saucelabs. We want to prefix the
-            // abbreviation of the server to the browser so the user
-            // can see it in reports.
-            var matches = server.match(/^(..): /);
-            if ( matches ) {
-                return matches[1] + ' ';
-            }
-            else {
-                return '';
-            }
-        };
-
-        var browserSuffix = server => {
-            if (! isSaucelabs(server) ) {
-                return ' Local';
-            }
-            else {
-                return '';
-            }
-        };
-
-        var isSaucelabs = server => server === 'Saucelabs';
 
         class Job {
             constructor( properties ) {
@@ -39,19 +12,55 @@ angular.module('honeydew')
                     this[prop] = properties[prop];
                 }
 
-                // Browser is passed as an array because the backend
-                // knows how to handle more than once browser at once.
-                this.browser = [
-                    browserPrefix(this.server)
-                        + this.browser
-                        + browserSuffix(this.server)
-                ];
+                if ( ! this._isSaucelabs() ) {
+                    this.local = this._wdServerAddress();
+                }
+
+                this.browser = this._decoratedBrowser();
 
                 this.payload = new backendJob( this );
             }
 
-            $execute () {
+            $execute() {
                 this.payload.$execute();
+            }
+
+            _decoratedBrowser() {
+                var b = [
+                    this._serverPrefix(),
+                    this.browser,
+                    this._browserSuffix()
+                ].join(' ');
+
+                // Browser is passed as an array because the backend
+                // knows how to handle more than once browser at once.
+                return [ b.trim() ];
+            }
+
+            _isSaucelabs() {
+                return this.server === 'Saucelabs';
+            }
+
+            _browserSuffix() {
+                return this._isSaucelabs() ? '' : 'Local';
+            }
+
+            _serverPrefix() {
+                var matches = this.server.match(/^(..): (.*)/);
+                return matches ? matches[1] : '';
+            }
+
+            _wdServerAddress() {
+                $localStorage.settings = $localStorage.settings || {};
+                if ( this.server === 'Localhost' && 'wdAddress' in $localStorage.settings){
+                    return $localStorage.settings.wdAddress;
+                }
+                else {
+                    return this.server.split(' ').pop();
+                }
+
+                var matches = this.server.match(/^(..): (.*)/);
+                return matches ? matches[2] : '';
             }
         }
 

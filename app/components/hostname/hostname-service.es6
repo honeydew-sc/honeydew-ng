@@ -18,6 +18,7 @@ angular.module('sc.hostname')
                     'kms',
                     'kms2',
                     'mservices',
+                    'preview',
                     'stage',
                     'prod'
                 ],

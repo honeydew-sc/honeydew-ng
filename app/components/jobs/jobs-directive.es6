@@ -96,18 +96,8 @@ angular.module('honeydew')
                         job     = { file, host, channel, server, browser };
 
                     if ( !isSaucelabs() ) {
-                        job.browser += ' Local';
                         job.local = getLocalIp(server);
-
-                        // append the server prefix to the browser
-                        var prefix = server.split(': ').shift();
-                        if (prefix.length === 2) {
-                            job.browser = [ prefix, job.browser ].join(' ');
-                        }
                     }
-
-                    // The backend expects an array of browser names
-                    job.browser = [ job.browser ];
 
                     return new Jobs(job);
                 };

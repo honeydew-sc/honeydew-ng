@@ -396,18 +396,18 @@ module.exports = function (grunt) {
             unit: {
                 configFile: 'karma.conf.js',
                 singleRun: true,
-                browsers: ['PhantomJS']
+                browsers: ['Chrome']
             },
             ci: {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
                 reporters: 'dots',
-                browsers: ['PhantomJS']
+                browsers: ['Chrome']
             },
             travis: {
                 configFile: 'karma.conf.js',
                 singleRun: true,
-                browsers: ['PhantomJS']
+                browsers: ['Chrome']
             }
         },
 

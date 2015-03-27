@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('liveReport', function ($rootScope, Pusher, randomString, $timeout, alerts, cmReportMode) {
         var timeout;

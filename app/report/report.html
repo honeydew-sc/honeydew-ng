@@ -1,5 +1,10 @@
-<div ng-class="::Report.theme" class="single-report report" ng-controller="ReportCtrl as Report">
+<div ng-controller="ReportCtrl as Report" ng-class="::Report.theme" class="single-report report" >
   <div class="CodeMirror live-report">
-    <pre copy-style=".CodeMirror | report"  ng-bind-html="Report.output"></pre>
+    <div class="clearfix" ng-class="::Report.navClass">
+      <form class="navbar-form navbar-left" role="search">
+        <button ng-click="Report.replaceReportInSet()" class="btn btn-default">Rerun & Replace</button>
+      </form>
+    </div>
+    <pre copy-style=".CodeMirror | report"  ng-bind-html="Report.result.output"></pre>
   </div>
 </div>

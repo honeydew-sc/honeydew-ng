@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Monitor, Tree) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Monitor, Tree) {
         return {
             scope: true,
             templateUrl: 'components/jobs/jobs.html',
@@ -76,9 +76,9 @@ angular.module('honeydew')
                 };
 
                 var getLocalIp = serverName => {
-                    $localStorage.settings = $localStorage.settings || {};
-                    if ( serverName === 'Localhost' && 'wdAddress' in $localStorage.settings){
-                        return $localStorage.settings.wdAddress;
+                    $sessionStorage.settings = $sessionStorage.settings || {};
+                    if ( serverName === 'Localhost' && 'wdAddress' in $sessionStorage.settings){
+                        return $sessionStorage.settings.wdAddress;
                     }
                     else {
                         return serverName.split(' ').pop();

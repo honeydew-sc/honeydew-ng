@@ -8,7 +8,6 @@ describe('Jobs directive', function () {
         httpMock,
         location,
         liveReport,
-        localStorage,
         availableBrowsers,
         browser = 'Chrome',
         server = 'Localhost';
@@ -18,7 +17,6 @@ describe('Jobs directive', function () {
 
     beforeEach(inject( function ( $compile,
                            $rootScope,
-                           $localStorage,
                            $sessionStorage,
                            $httpBackend,
                            $location,
@@ -32,9 +30,8 @@ describe('Jobs directive', function () {
         httpMock = $httpBackend;
         hostname = _hostname_;
         liveReport = _liveReport_;
-        localStorage = $localStorage;
-        localStorage.settings = {};
         storage = $sessionStorage;
+        storage.settings = {};
         availableBrowsers = _availableBrowsers_;
 
         hostname.env = 'prod';
@@ -113,7 +110,7 @@ describe('Jobs directive', function () {
 
     it('should use the wdAddress for localhost when present', () => {
         var local = '1.1.1.1';
-        localStorage.settings = { wdAddress: local };
+        storage.settings = { wdAddress: local };
 
         spyOn(location, 'path').and.returnValue('/test.feature');
         spyOn(liveReport, 'switchChannel').and.returnValue('channel');
@@ -126,7 +123,7 @@ describe('Jobs directive', function () {
             channel: "channel",
             server: "Localhost",
             browser: ["Chrome Local"],
-            local: "1.1.1.1"
+            local
         })
             .respond({});
         elm.find('#execute').click();

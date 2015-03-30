@@ -8,15 +8,15 @@ describe('ManualAddressCtrl', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $localStorage) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $sessionStorage) {
         scope = $rootScope.$new();
-        storage = $localStorage;
+        storage = $sessionStorage;
         storage.settings = {};
         httpMock = $httpBackend;
 
         ManualAddressCtrl = $controller('ManualAddressCtrl', {
             $scope: scope,
-            $localStorage: storage
+            $sessionStorage: storage
         });
 
         httpMock.expectGET('/rest.php/status/webdriver').respond({

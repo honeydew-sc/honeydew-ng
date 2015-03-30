@@ -10,11 +10,12 @@ describe('ReportCtrl', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, _liveReport_) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, _liveReport_, $sessionStorage) {
         location = $location;
         scope = $rootScope.$new();
         httpMock = $httpBackend;
         liveReport = _liveReport_;
+        delete $sessionStorage.settings;
 
         stateParams = {
             report: 1
@@ -75,7 +76,7 @@ describe('ReportCtrl', function () {
             channel,
             reportId,
             server: "Localhost",
-            local: "3.3.3.3"
+            local: "Localhost"
         })
             .respond({ contents: 'success' });
         ReportCtrl.replaceReportInSet();

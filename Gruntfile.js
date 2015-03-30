@@ -185,6 +185,7 @@ module.exports = function (grunt) {
                     dot: true,
                     src: [
                         '.tmp',
+                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.{js,map}',
                         '<%= yeoman.dist %>/*',
                         '!<%= yeoman.dist %>/.git*'
                     ]

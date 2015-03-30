@@ -1,5 +1,5 @@
 angular.module('honeydew')
-    .service('Jobs', function ($resource, $location, $localStorage, hostname, liveReport) {
+    .service('Jobs', function ($resource, $location, $sessionStorage, hostname, liveReport) {
         class Job {
             constructor( properties ) {
                 for (var prop in properties) {
@@ -48,9 +48,9 @@ angular.module('honeydew')
             }
 
             _wdServerAddress() {
-                $localStorage.settings = $localStorage.settings || {};
-                if ( this.server === 'Localhost' && 'wdAddress' in $localStorage.settings){
-                    return $localStorage.settings.wdAddress;
+                $sessionStorage.settings = $sessionStorage.settings || {};
+                if ( this.server === 'Localhost' && 'wdAddress' in $sessionStorage.settings){
+                    return $sessionStorage.settings.wdAddress;
                 }
                 else {
                     return this.server.split(' ').pop();
@@ -70,6 +70,4 @@ angular.module('honeydew')
         }
 
         return Job;
-
-
     });

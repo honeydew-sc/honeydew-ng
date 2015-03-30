@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ReportCtrl', function ($stateParams, $localStorage, Report, cmReportMode) {
+    .controller('ReportCtrl', function ($stateParams, $localStorage, BackgroundStatus, cmReportMode, liveReport, HoneydewJob, Report) {
         var headers = {
             startDate: 'Start Date',
             host: 'Host',
@@ -25,9 +25,27 @@ angular.module('honeydew')
                     'End Date ' + res.endDate
                 ]).join("\n");
 
-                this.output = cmReportMode.highlight(report);
+                this.result = {
+                    output: cmReportMode.highlight(report)
+                };
                 this.record = res;
             });
 
         this.theme = 'cm-s-' + $localStorage.settings.theme;
+        this.navClass = $localStorage.settings.navClass;
+
+
+        this.replaceReportInSet = () => {
+            var job = new HoneydewJob({
+                browser: this.record.browser,
+                file: this.record.featureFile,
+                host: this.record.host,
+                userId: this.record.userId,
+                reportId: this.record.id,
+                channel: liveReport.switchChannel()
+            });
+
+            this.result = liveReport;
+            job.$execute();
+        };
     });

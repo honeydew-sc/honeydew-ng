@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('jobOptions', function (availableBrowsers, $localStorage, $sessionStorage, $location, Monitor, Tree) {
+    .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Monitor, Tree) {
         return {
             scope: true,
             templateUrl: 'components/jobs/jobs.html',
             restrict: 'E',
-            controller: function ($scope, $q, Jobs, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
+            controller: function ($scope, $q, HoneydewJob, alerts, panes, filetree, hostname, BackgroundStatus, liveReport) {
                 var self = this;
                 self.$scope = $scope;
 
@@ -59,7 +59,7 @@ angular.module('honeydew')
 
                     hasWebdriver(self.$storage.server).then( res => {
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
-                            let job = createJob(self.$storage.browser, self.$storage.server);
+                            var job = new HoneydewJob({ browser: self.$storage.browser, server: self.$storage.server });
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');
                             return job.$execute();
@@ -76,9 +76,9 @@ angular.module('honeydew')
                 };
 
                 var getLocalIp = serverName => {
-                    $localStorage.settings = $localStorage.settings || {};
-                    if ( serverName === 'Localhost' && 'wdAddress' in $localStorage.settings){
-                        return $localStorage.settings.wdAddress;
+                    $sessionStorage.settings = $sessionStorage.settings || {};
+                    if ( serverName === 'Localhost' && 'wdAddress' in $sessionStorage.settings){
+                        return $sessionStorage.settings.wdAddress;
                     }
                     else {
                         return serverName.split(' ').pop();
@@ -89,39 +89,16 @@ angular.module('honeydew')
 
                 var isMobile = () => self.$storage.browser.match(/Mobile/i);
 
-                var createJob = (browser, server) => {
-                    var file    = $location.path().substr(1),
-                        host    = hostname.host,
-                        channel = liveReport.switchChannel(),
-                        job     = { file, host, channel, server, browser };
-
-                    if ( !isSaucelabs() ) {
-                        job.browser += ' Local';
-                        job.local = getLocalIp(server);
-
-                        // append the server prefix to the browser
-                        var prefix = server.split(': ').shift();
-                        if (prefix.length === 2) {
-                            job.browser = [ prefix, job.browser ].join(' ');
-                        }
-                    }
-
-                    // The backend expects an array of browser names
-                    job.browser = [ job.browser ];
-
-                    return new Jobs(job);
-                };
-
                 var hasWebdriver = (server) => {
                     if ( isSaucelabs() || isMobile() ) {
                         // TODO: we're just assume Saucelabs is up
-                        let deferred = $q.defer();
+                        var deferred = $q.defer();
                         deferred.resolve({webdriverStatus: true});
 
                         return deferred.promise;
                     }
                     else {
-                        let statusPromise = BackgroundStatus.get({
+                        var statusPromise = BackgroundStatus.get({
                             status: 'webdriver',
                             local: getLocalIp(server)
                         }, res => {
@@ -140,12 +117,12 @@ angular.module('honeydew')
                 };
 
                 var constructMonitor = (browser, server) => {
-                    let set = self.set.name,
+                    var set = self.set.name,
                         host = hostname.host,
                         monitor = { set, host, browser };
 
                     if (!isSaucelabs()) {
-                        let prefix = server.split(': ').shift();
+                        var prefix = server.split(': ').shift();
                         monitor.browser = `${ prefix } ${browser} Local`;
                     }
 

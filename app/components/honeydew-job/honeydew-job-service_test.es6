@@ -2,12 +2,14 @@ describe('HoneydewJobServiceClass', function () {
     var HoneydewJob,
         location,
         hostname,
-        httpMock;
+        httpMock,
+        localConfig;
     beforeEach(module('honeydew'));
-    beforeEach(inject( function ( _HoneydewJob_, _$location_, _hostname_, $httpBackend) {
+    beforeEach(inject( function ( _HoneydewJob_, _$location_, $httpBackend, _hostname_, _localConfig_) {
         HoneydewJob = _HoneydewJob_;
         location = _$location_;
         hostname = _hostname_;
+        localConfig = _localConfig_;
     }));
 
     it('should accept values for all options in the constructor', () => {
@@ -94,6 +96,23 @@ describe('HoneydewJobServiceClass', function () {
         });
         expect(chan.channel).toBeDefined();
         expect(chan.channel).toMatch(/private-.*/);
+    });
+
+    it('should extract a server from the browser', () => {
+        localConfig.test_ab = '1.1.1.1';
+
+        var noServer = new HoneydewJob({
+            browser: 'AB Chrome Local'
+        });
+        expect(noServer.server).toBe('AB 1.1.1.1');
+        expect(noServer.local).toBe('1.1.1.1');
+    });
+
+    it('should default to localhost if the browser does not match a server', () => {
+        var local = new HoneydewJob({
+            browser: 'Chrome Local'
+        });
+        expect(local.server).toBe('Localhost');
     });
 
 });

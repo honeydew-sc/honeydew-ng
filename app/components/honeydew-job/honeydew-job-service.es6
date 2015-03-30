@@ -1,5 +1,5 @@
 angular.module('honeydew')
-    .service('HoneydewJob', function ($resource, $location, $sessionStorage, hostname, liveReport) {
+    .service('HoneydewJob', function ($resource, $location, $sessionStorage, localConfig, hostname, liveReport) {
         class HoneydewJob {
             constructor( properties ) {
                 for (var prop in properties) {
@@ -9,6 +9,7 @@ angular.module('honeydew')
                 this.file = this.file || $location.path().substr(1);
                 this.host = this.host || hostname.host;
                 this.channel = this.channel || liveReport.switchChannel();
+                this.server = this.server || HoneydewJob.browserToServer(this.browser);
 
                 this.browser = this._decoratedBrowser();
                 if ( ! this._isSaucelabs() ) {
@@ -58,6 +59,20 @@ angular.module('honeydew')
 
                 var matches = this.server.match(/^(..): (.*)/);
                 return matches ? matches[2] : '';
+            }
+
+            static browserToServer( browser ) {
+                var prefix = browser.slice(0, 2);
+                var server = Object.keys(localConfig).filter( it => {
+                    return it.slice(-2).toLowerCase() === browser.slice(0,2).toLowerCase();
+                })[0];
+
+                if ( server ) {
+                    return [ prefix, localConfig[server] ].join(' ');
+                }
+                else {
+                    return 'Localhost';
+                }
             }
 
             static backend() {

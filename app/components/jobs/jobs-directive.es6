@@ -59,7 +59,7 @@ angular.module('honeydew')
 
                     hasWebdriver(self.$storage.server).then( res => {
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
-                            var job = createJob(self.$storage.browser, self.$storage.server);
+                            var job = new Jobs({ browser: self.$storage.browser, server: self.$storage.server });
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');
                             return job.$execute();
@@ -88,19 +88,6 @@ angular.module('honeydew')
                 var isSaucelabs = () => self.$storage.server === 'Saucelabs';
 
                 var isMobile = () => self.$storage.browser.match(/Mobile/i);
-
-                var createJob = (browser, server) => {
-                    var file    = $location.path().substr(1),
-                        host    = hostname.host,
-                        channel = liveReport.switchChannel(),
-                        job     = { file, host, channel, server, browser };
-
-                    if ( !isSaucelabs() ) {
-                        job.local = getLocalIp(server);
-                    }
-
-                    return new Jobs(job);
-                };
 
                 var hasWebdriver = (server) => {
                     if ( isSaucelabs() || isMobile() ) {

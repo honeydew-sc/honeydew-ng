@@ -1,11 +1,11 @@
-function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
+function ManualAddressCtrl ( $sessionStorage, BackgroundStatus ) {
     this.status = 'loading';
     this.addressFromServer = '';
 
     var getAddressFromServer = () => {
         BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
             this.status = res.webdriverStatus;
-            this.addressFromServer = $localStorage.settings.wdAddress = res.serverAddress;
+            this.addressFromServer = $sessionStorage.settings.wdAddress = res.serverAddress;
         });
     };
 
@@ -22,9 +22,9 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     };
 
     // handle the new user case
-    $localStorage.settings = $localStorage.settings || {};
-    if ( $localStorage.settings.hasOwnProperty('wdAddress') ) {
-        updateServerStatus( $localStorage.settings.wdAddress );
+    $sessionStorage.settings = $sessionStorage.settings || {};
+    if ( $sessionStorage.settings.hasOwnProperty('wdAddress') ) {
+        updateServerStatus( $sessionStorage.settings.wdAddress );
     }
     else {
         getAddressFromServer();
@@ -33,10 +33,10 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     this.address = newAddress => {
         if ( angular.isDefined( newAddress ) ) {
             updateServerStatus( newAddress );
-            return ( $localStorage.settings.wdAddress = newAddress );
+            return ( $sessionStorage.settings.wdAddress = newAddress );
         }
-        else if ( angular.isDefined( $localStorage.settings.wdAddress ) ) {
-            return $localStorage.settings.wdAddress;
+        else if ( angular.isDefined( $sessionStorage.settings.wdAddress ) ) {
+            return $sessionStorage.settings.wdAddress;
         }
         else {
             return this.addressFromServer;
@@ -44,7 +44,7 @@ function ManualAddressCtrl ( $localStorage, BackgroundStatus ) {
     };
 
     this.reset = () => {
-        delete $localStorage.settings.wdAddress;
+        delete $sessionStorage.settings.wdAddress;
         updateServerStatus( getAddressFromServer() );
     };
 }

@@ -18,10 +18,10 @@ describe('BackgroundStatus directive', () => {
 
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope, $httpBackend, $localStorage) => {
+    beforeEach(inject( ($compile, $rootScope, $httpBackend, $sessionStorage) => {
         scope = $rootScope;
         compile = $compile;
-        storage = $localStorage;
+        storage = $sessionStorage;
         httpMock = $httpBackend;
 
         storage.settings = {};

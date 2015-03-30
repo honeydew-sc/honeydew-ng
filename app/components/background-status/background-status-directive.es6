@@ -1,11 +1,11 @@
-function backgroundStatusDirectiveController ($localStorage, BackgroundStatus, localConfig, manualAddressService) {
+function backgroundStatusDirectiveController ($sessionStorage, BackgroundStatus, localConfig, manualAddressService) {
     this.list = [];
 
     var queryOpts = () => {
-        $localStorage.settings = $localStorage.settings || { };
+        $sessionStorage.settings = $sessionStorage.settings || { };
 
-        if ( 'wdAddress' in $localStorage.settings ) {
-            return { local: $localStorage.settings.wdAddress };
+        if ( 'wdAddress' in $sessionStorage.settings ) {
+            return { local: $sessionStorage.settings.wdAddress };
         }
         else {
             return null;

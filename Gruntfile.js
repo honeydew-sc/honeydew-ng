@@ -407,7 +407,7 @@ module.exports = function (grunt) {
             travis: {
                 configFile: 'karma.conf.js',
                 singleRun: true,
-                browsers: ['Chrome']
+                browsers: ['Chrome_travis_ci']
             }
         },
 

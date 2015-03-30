@@ -25,25 +25,27 @@ angular.module('honeydew')
                     'End Date ' + res.endDate
                 ]).join("\n");
 
-                this.output = cmReportMode.highlight(report);
+                this.result = {
+                    output: cmReportMode.highlight(report)
+                };
                 this.record = res;
             });
 
         this.theme = 'cm-s-' + $localStorage.settings.theme;
+        this.navClass = $localStorage.settings.navClass;
 
 
         this.replaceReportInSet = () => {
             var job = new HoneydewJob({
                 browser: this.record.browser,
-                reportId: this.record.id,
+                file: this.record.featureFile,
                 host: this.record.host,
                 userId: this.record.userId,
+                reportId: this.record.id,
                 channel: liveReport.switchChannel()
             });
-            job.$execute();
 
-            // job.$execute.then( res => {
-            //     this.output = liveReport.output;
-            // });
+            this.result = liveReport;
+            job.$execute();
         };
     });

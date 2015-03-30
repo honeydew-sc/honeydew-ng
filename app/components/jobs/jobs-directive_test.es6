@@ -1,4 +1,4 @@
-describe('Jobs directive', function () {
+describe('HoneydewJob directive', function () {
     'use strict';
     var elm,
         scope,
@@ -215,7 +215,7 @@ describe('Jobs directive', function () {
     });
 });
 
-describe('Jobs directive for sets page', () => {
+describe('HoneydewJob directive for sets page', () => {
     var elm,
         scope,
         storage,

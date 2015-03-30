@@ -1,6 +1,6 @@
 angular.module('honeydew')
-    .service('Jobs', function ($resource, $location, $sessionStorage, hostname, liveReport) {
-        class Job {
+    .service('HoneydewJob', function ($resource, $location, $sessionStorage, hostname, liveReport) {
+        class HoneydewJob {
             constructor( properties ) {
                 for (var prop in properties) {
                     this[prop] = properties[prop];
@@ -15,7 +15,7 @@ angular.module('honeydew')
                     this.local = this._wdServerAddress();
                 }
 
-                this.payload = new (Job.backend())( this );
+                this.payload = new (HoneydewJob.backend())( this );
             }
 
             $execute() {
@@ -69,5 +69,5 @@ angular.module('honeydew')
             }
         }
 
-        return Job;
+        return HoneydewJob;
     });

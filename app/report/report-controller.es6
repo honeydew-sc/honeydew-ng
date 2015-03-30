@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ReportCtrl', function ($stateParams, $localStorage, BackgroundStatus, cmReportMode, liveReport, Jobs, Report) {
+    .controller('ReportCtrl', function ($stateParams, $localStorage, BackgroundStatus, cmReportMode, liveReport, HoneydewJob, Report) {
         var headers = {
             startDate: 'Start Date',
             host: 'Host',
@@ -33,7 +33,7 @@ angular.module('honeydew')
 
 
         this.replaceReportInSet = () => {
-            var job = new Jobs({
+            var job = new HoneydewJob({
                 browser: this.record.browser,
                 reportId: this.record.id,
                 host: this.record.host,

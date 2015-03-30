@@ -1,11 +1,11 @@
-describe('JobsServiceClass', function () {
-    var Jobs,
+describe('HoneydewJobServiceClass', function () {
+    var HoneydewJob,
         location,
         hostname,
         httpMock;
     beforeEach(module('honeydew'));
-    beforeEach(inject( function ( _Jobs_, _$location_, _hostname_, $httpBackend) {
-        Jobs = _Jobs_;
+    beforeEach(inject( function ( _HoneydewJob_, _$location_, _hostname_, $httpBackend) {
+        HoneydewJob = _HoneydewJob_;
         location = _$location_;
         hostname = _hostname_;
     }));
@@ -18,7 +18,7 @@ describe('JobsServiceClass', function () {
             browser: 'b',
             server: 's'
         };
-        var job = new Jobs(props);
+        var job = new HoneydewJob(props);
 
         for (var key in props) {
             expect(job.key).toBe(props.key);
@@ -26,7 +26,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should not change browser for Localhost jobs', () => {
-        var job = new Jobs({
+        var job = new HoneydewJob({
             browser: 'browser',
             server: 'Localhost'
         });
@@ -35,7 +35,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should prefix browser name with local server', () => {
-        var job = new Jobs({
+        var job = new HoneydewJob({
             browser: 'end',
             server: 'AA: test'
         });
@@ -44,7 +44,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should suffix local when jobs are not saucelabs', () => {
-        var job = new Jobs({
+        var job = new HoneydewJob({
             browser: 'not saucelabs',
             server: 'not saucelabs'
         });
@@ -52,7 +52,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should put a local server IP prop on local jobs', () => {
-        var job = new Jobs({
+        var job = new HoneydewJob({
             browser: 'Chrome',
             server: 'AB: 1.2.3.4'
         });
@@ -61,7 +61,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should set up saucelabs jobs correctly', () => {
-        var sauce = new Jobs({
+        var sauce = new HoneydewJob({
             browser: 'Chrome',
             server: 'Saucelabs'
         });
@@ -71,7 +71,7 @@ describe('JobsServiceClass', function () {
 
     it('should get a default file from the location', () => {
         spyOn(location, 'path').and.returnValue('/location');
-        var job = new Jobs({
+        var job = new HoneydewJob({
             browser: 'nix',
             server: 'nix'
         });
@@ -80,7 +80,7 @@ describe('JobsServiceClass', function () {
 
     it('should handle the hostname properly', () => {
         hostname.host = 'hostless';
-        var hostless = new Jobs({
+        var hostless = new HoneydewJob({
             browser: 'nix',
             server: 'nix'
         });
@@ -88,7 +88,7 @@ describe('JobsServiceClass', function () {
     });
 
     it('should switch to a new channel', () => {
-        var chan = new Jobs({
+        var chan = new HoneydewJob({
             browser: 'nix',
             server: 'nix'
         });

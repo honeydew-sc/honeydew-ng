@@ -38,4 +38,31 @@ describe('ReportCtrl', function () {
         expect(ReportCtrl.output).toMatch( /<span class=".*<\/span>/ );
 
     });
+
+    // it('should start a replacement job', () => {
+    //     httpMock.expectGET('/rest.php/report/1')
+    //         .respond({
+    //             browser: "Chrome Local",
+    //             buildNumber: "4.17.5.20150325-1955",
+    //             endDate: "2015-03-27 15:22:16",
+    //             featureFile: "/test/dan.feature",
+    //             host: "https://www.sharecare.com",
+    //             id: "49",
+    //             jobId: "da47b651-7fae-4329-a1aa-a9c06747e33d",
+    //             project: "sharecare",
+    //             result: "result",
+    //             setRunId: null,
+    //             startDate: "2015-03-27 15:22:09",
+    //             status: "failure",
+    //             success: "true",
+    //             userId: "5"
+    //         });
+    //     httpMock.flush();
+
+    //     httpMock.expectPOST('/rest.php/jobs', {})
+    //         .respond({ contents: 'success' });
+    //     ReportCtrl.replaceReportInSet();
+    //     httpMock.flush();
+    // })
+    ;
 });

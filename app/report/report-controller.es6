@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ReportCtrl', function ($stateParams, $localStorage, Report, cmReportMode) {
+    .controller('ReportCtrl', function ($stateParams, $localStorage, BackgroundStatus, cmReportMode, liveReport, Jobs, Report) {
         var headers = {
             startDate: 'Start Date',
             host: 'Host',
@@ -30,4 +30,20 @@ angular.module('honeydew')
             });
 
         this.theme = 'cm-s-' + $localStorage.settings.theme;
+
+
+        this.replaceReportInSet = () => {
+            var job = new Jobs({
+                browser: this.record.browser,
+                reportId: this.record.id,
+                host: this.record.host,
+                userId: this.record.userId,
+                channel: liveReport.switchChannel()
+            });
+            job.$execute();
+
+            // job.$execute.then( res => {
+            //     this.output = liveReport.output;
+            // });
+        };
     });

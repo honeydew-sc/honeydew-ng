@@ -1,4 +1,4 @@
-function backgroundStatusDirectiveController ($sessionStorage, BackgroundStatus, localConfig, manualAddressService) {
+function backgroundStatusDirectiveController ($sessionStorage, BackgroundStatus, localConfig, manualAddress) {
     this.list = [];
 
     var queryOpts = () => {
@@ -42,7 +42,7 @@ function backgroundStatusDirectiveController ($sessionStorage, BackgroundStatus,
     };
 
     this.popAddressModal = () => {
-        manualAddressService.popModal();
+        manualAddress.popModal();
     };
 }
 

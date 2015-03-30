@@ -1,18 +1,18 @@
-describe('manualAddressService', function () {
+describe('manualAddress', function () {
     'use strict';
 
-    var manualAddressService;
+    var manualAddress;
     beforeEach(module('honeydew'));
-    beforeEach(inject(function (_manualAddressService_) {
-        manualAddressService = _manualAddressService_;
+    beforeEach(inject(function (_manualAddress_) {
+        manualAddress = _manualAddress_;
     }));
 
     it('should be defined', () => {
-        expect(manualAddressService).toBeDefined();
+        expect(manualAddress).toBeDefined();
     });
 
     it('should pop a modal', () => {
-        expect(manualAddressService.popModal).toBeDefined();
+        expect(manualAddress.popModal).toBeDefined();
     });
 
 });

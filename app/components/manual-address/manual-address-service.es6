@@ -1,5 +1,5 @@
 angular.module('honeydew')
-    .service('manualAddressService', function ($modal) {
+    .service('manualAddress', function ($modal) {
         var service = {
             popModal() {
                 var modal = $modal.open({

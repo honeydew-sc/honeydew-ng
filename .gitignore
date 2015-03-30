@@ -14,3 +14,4 @@ node_modules
 /app/app.js
 /app/app.css
 /app/app.css.map
+*.es6.map

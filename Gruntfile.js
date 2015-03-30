@@ -514,7 +514,7 @@ module.exports = function (grunt) {
 
         traceur: {
             options: {
-                'arrow-functions': true,
+                sourceMaps: 'inline',
                 modules: 'inline'
             },
             custom: {

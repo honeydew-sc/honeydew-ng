@@ -20,7 +20,7 @@ angular.module('honeydew')
             }
 
             $execute() {
-                this.payload.$execute();
+                return this.payload.$execute();
             }
 
             _decoratedBrowser() {
@@ -40,7 +40,17 @@ angular.module('honeydew')
             }
 
             _browserSuffix() {
-                return this._isSaucelabs() ? '' : 'Local';
+                if ( this._isSaucelabs() ) {
+                    return '';
+                }
+                else {
+                    if ( this.browser.match(/Local\s*$/) ){
+                        return '';
+                    }
+                    else {
+                        return 'Local';
+                    }
+                }
             }
 
             _serverPrefix() {

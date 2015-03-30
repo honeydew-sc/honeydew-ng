@@ -45,12 +45,18 @@ describe('HoneydewJobServiceClass', function () {
         expect(job.browser[0]).toContain( 'AA end' );
     });
 
-    it('should suffix local when jobs are not saucelabs', () => {
+    it('should smartly suffix local when jobs are not saucelabs', () => {
         var job = new HoneydewJob({
             browser: 'not saucelabs',
             server: 'not saucelabs'
         });
         expect(job.browser[0]).toBe('not saucelabs Local');
+
+        var local = new HoneydewJob({
+            browser: 'Chrome Local',
+            server: 'not saucelabs'
+        });
+        expect(local.browser[0]).toBe('Chrome Local');
     });
 
     it('should put a local server IP prop on local jobs', () => {

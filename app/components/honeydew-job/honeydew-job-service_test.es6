@@ -10,6 +10,7 @@ describe('HoneydewJobServiceClass', function () {
         location = _$location_;
         hostname = _hostname_;
         localConfig = _localConfig_;
+        httpMock = $httpBackend;
     }));
 
     it('should accept values for all options in the constructor', () => {
@@ -119,6 +120,27 @@ describe('HoneydewJobServiceClass', function () {
             browser: 'Chrome Local'
         });
         expect(local.server).toBe('Localhost');
+    });
+
+    it('should return a promise when executing', () => {
+        var props = {
+            file: 'f',
+            host: 'h',
+            channel: 'c',
+            browser: 'b',
+            server: 's',
+            local: 's'
+        };
+        var job = new HoneydewJob(props);
+
+        props.browser = [ props.browser + ' Local'];
+        httpMock.expectPOST( '/rest.php/jobs', props )
+            .respond({});
+        var p = job.$execute();
+        httpMock.flush();
+        expect(p.then).toBeDefined();
+        expect(p.catch).toBeDefined();
+        expect(p.finally).toBeDefined();
     });
 
 });

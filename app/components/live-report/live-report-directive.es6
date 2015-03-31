@@ -11,7 +11,10 @@ angular.module('honeydew')
     });
 
 var LiveReportDirectiveCtrl = function ($localStorage, liveReport) {
-    this.theme = $localStorage.settings.theme;;
+    if (!('settings' in $localStorage)) {
+        $localStorage.settings = {};
+    }
+    this.theme = $localStorage.settings.theme || '';
     this.report = liveReport;
 
     if (liveReport.registered === false && liveReport.channel !== '') {

@@ -19,11 +19,23 @@ class reportTests extends UnitTestCase {
         $this->assertEqual($wd_status->{'remote_server_address'}, '127.0.0.1');
     }
 
+    function testProxyStatus() {
+        $res = \Httpful\Request::get($this->baseUrl)->send();
+        $this->assertEqual($res->body[0]->{'name'}, 'proxy');
+    }
+
     function testLocalManual() {
         $res = \Httpful\Request::get($this->baseUrl . '?local=1.2.3.4')->send();
         $wd_status = $res->body[1];
         $this->assertEqual($wd_status->{'remote_server_address'}, '1.2.3.4');
     }
+
+    function testBrowsermobStatus() {
+        $res = \Httpful\Request::get($this->baseUrl . '/proxy')->send();
+        $this->assertEqual( $res->body->{'name'}, 'proxy' );
+        $this->assertEqual( $res->body->{'success'}, true );
+    }
+
 }
 
 ?>

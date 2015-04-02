@@ -7,8 +7,8 @@ $app->group('/status', function () use ($app) {
         echo json_encode(
             array(
                 array(
-                    'name' => 'browsermob',
-                    'status' => browsermobStatus()
+                    'name' => 'proxy',
+                    'status' => proxyStatus()
                 ),
                 array(
                     'name' => 'your webdriver',
@@ -22,6 +22,13 @@ $app->group('/status', function () use ($app) {
         echo successMessage(array(
             'name' => 'saucelabs',
             'status' => sauceTunnelStatus()
+        ));
+    });
+
+    $app->get('/proxy', function () use ($app) {
+        echo successMessage(array(
+            'name' => 'proxy',
+            'status' => proxyStatus()
         ));
     });
 
@@ -67,10 +74,15 @@ $app->group('/status', function () use ($app) {
         return @$res[0];
     }
 
-    function browsermobStatus() {
-        $command = 'ps aux | grep [b]rowsermob | awk \'{print $2}\'';
-        exec($command, $output);
-        return @$output[0];
+    function proxyStatus() {
+        $settings = readInConfSettings();
+
+        $addr = $settings['proxy_server_addr'];
+        $port = $settings['proxy_server_port'];
+
+        $sock = @fsockopen( $addr, $port, $errno, $errstr, 5);
+
+        return is_resource($sock);
     }
 
     function localWebdriverStatus($local = '127.0.0.1') {

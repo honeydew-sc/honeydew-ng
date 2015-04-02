@@ -89,8 +89,18 @@ directive, etc) appended to the name: `filetree-service.js` and
    `this`, and makes your html more explicit, especially when nesting
    controllers and dealing with inherited properties in nested scopes.
 
-3. modularize! when applicable, make your new component part of its
+2. modularize! when applicable, make your new component part of its
    own module. Currently in progress:
 
        * sc.cmmodes - this should have all of the CodeMirror modes in
          it, but it currently only has reportMode
+
+3. `Start using Settings module` - currently, many of the settings
+   talk directly to `$localStorage` and `$sessionStorage`. That's
+   unhelpful because we're planning to switch out our dependency on
+   the ngStorage module sometime in the future due to poor support and
+   bad performance. Before we do that, we need to switch all direct
+   uses over to the new Settings class in
+   [app/components/settings/settings-service.es6][settings].
+
+[settings]: app/components/settings/settings-service.es6

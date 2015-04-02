@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ReportCtrl', function ($stateParams, $localStorage, BackgroundStatus, cmReportMode, liveReport, HoneydewJob, Report) {
+    .controller('ReportCtrl', function ($stateParams, Settings, BackgroundStatus, cmReportMode, liveReport, HoneydewJob, Report) {
         var headers = {
             startDate: 'Start Date',
             host: 'Host',
@@ -31,8 +31,8 @@ angular.module('honeydew')
                 this.record = res;
             });
 
-        this.theme = 'cm-s-' + $localStorage.settings.theme;
-        this.navClass = $localStorage.settings.navClass;
+        this.theme = 'cm-s-' + Settings.get('theme');
+        this.navClass = Settings.get('navClass');
 
 
         this.replaceReportInSet = () => {

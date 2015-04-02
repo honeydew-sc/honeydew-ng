@@ -17,7 +17,8 @@ angular.module('honeydew', [
     'config',
     'sc.constants',
     'sc.hostname',
-    'sc.cmmodes'
+    'sc.cmmodes',
+    'sc.settings'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         (function setLocationFromURL() {

@@ -30,4 +30,4 @@ class Settings {
 }
 
 
-angular.module('honeydew').service('Settings', Settings);
+angular.module('sc.settings', [ 'ngStorage' ]).service('Settings', Settings);

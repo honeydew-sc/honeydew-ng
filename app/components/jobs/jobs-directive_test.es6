@@ -4,6 +4,7 @@ describe('HoneydewJob directive', function () {
         scope,
         compile,
         storage,
+        Settings,
         hostname,
         httpMock,
         location,
@@ -20,6 +21,7 @@ describe('HoneydewJob directive', function () {
                            $sessionStorage,
                            $httpBackend,
                            $location,
+                           _Settings_,
                            _hostname_,
                            _liveReport_,
                            _availableBrowsers_) {
@@ -28,6 +30,7 @@ describe('HoneydewJob directive', function () {
         compile = $compile;
         location = $location;
         httpMock = $httpBackend;
+        Settings = _Settings_;
         hostname = _hostname_;
         liveReport = _liveReport_;
         storage = $sessionStorage;
@@ -110,7 +113,7 @@ describe('HoneydewJob directive', function () {
 
     it('should use the wdAddress for localhost when present', () => {
         var local = '1.1.1.1';
-        storage.settings = { wdAddress: local };
+        Settings.set('wdAddress', local);
 
         spyOn(location, 'path').and.returnValue('/test.feature');
         spyOn(liveReport, 'switchChannel').and.returnValue('channel');

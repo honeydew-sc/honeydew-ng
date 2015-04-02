@@ -10,12 +10,12 @@ describe('ReportCtrl', function () {
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, _liveReport_, $sessionStorage) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, _liveReport_, Settings) {
         location = $location;
         scope = $rootScope.$new();
         httpMock = $httpBackend;
         liveReport = _liveReport_;
-        delete $sessionStorage.settings;
+        Settings.reset();
 
         stateParams = {
             report: 1

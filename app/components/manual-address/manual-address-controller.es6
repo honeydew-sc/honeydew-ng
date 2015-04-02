@@ -1,11 +1,12 @@
-function ManualAddressCtrl ( $sessionStorage, BackgroundStatus ) {
+function ManualAddressCtrl ( Settings, BackgroundStatus ) {
     this.status = 'loading';
     this.addressFromServer = '';
 
     var getAddressFromServer = () => {
         BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
             this.status = res.webdriverStatus;
-            this.addressFromServer = $sessionStorage.settings.wdAddress = res.serverAddress;
+            this.addressFromServer = res.serverAddress;
+            Settings.set('wdAddress', res.serverAddress);
         });
     };
 
@@ -21,32 +22,35 @@ function ManualAddressCtrl ( $sessionStorage, BackgroundStatus ) {
         });
     };
 
-    // handle the new user case
-    $sessionStorage.settings = $sessionStorage.settings || {};
-    if ( $sessionStorage.settings.hasOwnProperty('wdAddress') ) {
-        updateServerStatus( $sessionStorage.settings.wdAddress );
-    }
-    else {
-        getAddressFromServer();
-    }
-
     this.address = newAddress => {
         if ( angular.isDefined( newAddress ) ) {
             updateServerStatus( newAddress );
-            return ( $sessionStorage.settings.wdAddress = newAddress );
-        }
-        else if ( angular.isDefined( $sessionStorage.settings.wdAddress ) ) {
-            return $sessionStorage.settings.wdAddress;
+            Settings.set('wdAddress', newAddress);
+            return newAddress;
         }
         else {
-            return this.addressFromServer;
+            var storedAddr = Settings.get('wdAddress');
+            if ( storedAddr ) {
+                return storedAddr;
+            }
+            else {
+                return this.addressFromServer;
+            }
         }
     };
 
     this.reset = () => {
-        delete $sessionStorage.settings.wdAddress;
+        Settings.delete('wdAddress');
         updateServerStatus( getAddressFromServer() );
     };
+
+    var storedAddr = Settings.get('wdAddress');
+    if ( storedAddr ) {
+        updateServerStatus( storedAddr );
+    }
+    else {
+        getAddressFromServer();
+    }
 }
 
 angular.module('honeydew').controller('ManualAddressCtrl', ManualAddressCtrl);

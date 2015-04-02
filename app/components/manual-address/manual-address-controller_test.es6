@@ -2,21 +2,21 @@
 
 describe('ManualAddressCtrl', function () {
     var scope,
-        storage,
+        Settings,
         httpMock,
         ManualAddressCtrl;
 
     beforeEach(module('honeydew'));
 
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $sessionStorage) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, _Settings_) {
         scope = $rootScope.$new();
-        storage = $sessionStorage;
-        storage.settings = {};
+        Settings = _Settings_;
+        Settings.delete('wdAddress');
         httpMock = $httpBackend;
 
         ManualAddressCtrl = $controller('ManualAddressCtrl', {
             $scope: scope,
-            $sessionStorage: storage
+            Settings: Settings
         });
 
         httpMock.expectGET('/rest.php/status/webdriver').respond({
@@ -31,21 +31,26 @@ describe('ManualAddressCtrl', function () {
         expect(ManualAddressCtrl.address()).toBe('1.1.1.1');
     });
 
-    it('should let localStorage override the server value', () => {
-        storage.settings = { wdAddress: '2.2.2.2' };
+    it('should let Settings override the server value', () => {
+        Settings.set('wdAddress',  '2.2.2.2');
         expect(ManualAddressCtrl.address()).toBe('2.2.2.2');
     });
 
-    it('should update itself when localStorage changes', () => {
-        storage.settings = { wdAddress: '2.2.2.2' };
+    it('should update itself when Settings changes', () => {
+        Settings.set('wdAddress', '2.2.2.2' );
         expect(ManualAddressCtrl.address()).toBe('2.2.2.2');
 
-        storage.settings = { wdAddress: '3.3.3.3' };
+        Settings.set('wdAddress', '3.3.3.3' );
         expect(ManualAddressCtrl.address()).toBe('3.3.3.3');
     });
 
     it('should clear the stored value when requested', () => {
         ManualAddressCtrl.reset();
         expect(ManualAddressCtrl.address()).toBe('1.1.1.1');
+    });
+
+    it('should set the new address manually', () => {
+        ManualAddressCtrl.address('1.2.3.4');
+        expect(ManualAddressCtrl.address()).toBe('1.2.3.4');
     });
 });

@@ -59,7 +59,10 @@ angular.module('honeydew')
 
                     hasWebdriver(self.$storage.server).then( res => {
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
-                            var job = new HoneydewJob({ browser: self.$storage.browser, server: self.$storage.server });
+                            var job = new HoneydewJob({
+                                browser: self.$storage.browser,
+                                server: self.$storage.server
+                            });
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');
                             return job.$execute();

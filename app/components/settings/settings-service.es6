@@ -25,9 +25,8 @@ class Settings {
     }
 
     reset () {
-        this.local.$reset();
+        this.local.settings = {};
     }
 }
-
 
 angular.module('sc.settings', [ 'ngStorage' ]).service('Settings', Settings);

@@ -75,16 +75,6 @@ angular.module('honeydew')
                     $scope.$emit('monitor:create', monitor);
                 };
 
-                var getLocalIp = serverName => {
-                    $sessionStorage.settings = $sessionStorage.settings || {};
-                    if ( serverName === 'Localhost' && 'wdAddress' in $sessionStorage.settings){
-                        return $sessionStorage.settings.wdAddress;
-                    }
-                    else {
-                        return serverName.split(' ').pop();
-                    }
-                };
-
                 var isSaucelabs = () => self.$storage.server === 'Saucelabs';
 
                 var isMobile = () => self.$storage.browser.match(/Mobile/i);
@@ -100,7 +90,7 @@ angular.module('honeydew')
                     else {
                         var statusPromise = BackgroundStatus.get({
                             status: 'webdriver',
-                            local: getLocalIp(server)
+                            local: HoneydewJob.wdServerAddress(server)
                         }, res => {
                             if (!res.webdriverStatus) {
                                 alerts.addAlert({

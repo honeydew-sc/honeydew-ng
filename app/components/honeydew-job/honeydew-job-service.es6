@@ -1,5 +1,5 @@
 angular.module('honeydew')
-    .service('HoneydewJob', function ($resource, $location, $sessionStorage, localConfig, hostname, liveReport) {
+    .service('HoneydewJob', function ($resource, $location, Settings, localConfig, hostname, liveReport) {
         class HoneydewJob {
             constructor( properties ) {
                 for (var prop in properties) {
@@ -9,11 +9,11 @@ angular.module('honeydew')
                 this.file = this.file || $location.path().substr(1);
                 this.host = this.host || hostname.host;
                 this.channel = this.channel || liveReport.switchChannel();
-                this.server = this.server || HoneydewJob.browserToServer(this.browser);
+                this.server = this.server || HoneydewJob.browserToServer( this.browser );
 
                 this.browser = this._decoratedBrowser();
                 if ( ! this._isSaucelabs() ) {
-                    this.local = this._wdServerAddress();
+                    this.local = HoneydewJob.wdServerAddress( this.server );
                 }
 
                 this.payload = new (HoneydewJob.backend())( this );
@@ -58,17 +58,14 @@ angular.module('honeydew')
                 return matches ? matches[1] : '';
             }
 
-            _wdServerAddress() {
-                $sessionStorage.settings = $sessionStorage.settings || {};
-                if ( this.server === 'Localhost' && 'wdAddress' in $sessionStorage.settings){
-                    return $sessionStorage.settings.wdAddress;
+            static wdServerAddress ( server ) {
+                var storedAddr = Settings.get('wdAddress');
+                if (server === 'Localhost' && storedAddr ) {
+                    return storedAddr;
                 }
                 else {
-                    return this.server.split(' ').pop();
+                    return server.split(' ').pop();
                 }
-
-                var matches = this.server.match(/^(..): (.*)/);
-                return matches ? matches[2] : '';
             }
 
             static browserToServer( browser ) {

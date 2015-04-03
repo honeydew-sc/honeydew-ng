@@ -1,15 +1,11 @@
-function backgroundStatusDirectiveController ($sessionStorage, BackgroundStatus, localConfig, manualAddress) {
+function backgroundStatusDirectiveController (Settings, BackgroundStatus, localConfig, manualAddress) {
     this.list = [];
 
     var queryOpts = () => {
-        $sessionStorage.settings = $sessionStorage.settings || { };
-
-        if ( 'wdAddress' in $sessionStorage.settings ) {
-            return { local: $sessionStorage.settings.wdAddress };
-        }
-        else {
-            return null;
-        };
+        var storedAddr = Settings.get('wdAddress');
+        return storedAddr
+            ? { local: storedAddr }
+            : false;
     };
 
     (function getSauceTunnelStatus(ctrl) {

@@ -5,7 +5,7 @@ describe('BackgroundStatus directive', () => {
         scope,
         Status,
         compile,
-        storage,
+        Settings,
         httpMock;
 
     var config = {
@@ -18,14 +18,17 @@ describe('BackgroundStatus directive', () => {
 
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope, $httpBackend, $sessionStorage) => {
+    beforeEach(inject( ($compile, $rootScope, $httpBackend, _Settings_) => {
         scope = $rootScope;
         compile = $compile;
-        storage = $sessionStorage;
+        Settings = _Settings_;
+        Settings.reset();
         httpMock = $httpBackend;
-
-        storage.settings = {};
     }));
+
+    afterEach( () => {
+        Settings.reset();
+    });
 
     var setupLocalStatuses = (localRes, storage) => {
         elm = angular.element('<background-status></background-status>');
@@ -76,7 +79,7 @@ describe('BackgroundStatus directive', () => {
     });
 
     it('should use the local wdAddress when available', () => {
-        storage.settings.wdAddress = '3.3.3.3';
+        Settings.set('wdAddress', '3.3.3.3');
         setupLocalStatuses({
             name: 'a',
             webdriverStatus: false

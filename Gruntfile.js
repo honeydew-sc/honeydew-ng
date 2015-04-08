@@ -647,8 +647,8 @@ module.exports = function (grunt) {
         'karma:unit',
         'shell:phpTests',
         'rsync:prod',
-        'fixPermissions',
-        'shell:deployBack'
+        'shell:deployBack',
+        'fixPermissions'
     ]);
 
     grunt.registerTask('deploy', [

@@ -1,5 +1,8 @@
 <div ng-class="'cm-s-' + ReportPane.theme">
   <div class="CodeMirror live-report">
-    <pre copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
+    <div class="tail">
+      <input type="checkbox" class="stick" ng-model="ReportPane.report.stickToBottom">
+    </div>
+    <pre id="report" copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
   </div>
 </div>

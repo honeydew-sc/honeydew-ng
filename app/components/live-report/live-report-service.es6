@@ -1,11 +1,11 @@
 angular.module('honeydew')
-    .service('liveReport', function ($rootScope, Pusher, randomString, $timeout, alerts, cmReportMode) {
+    .service('liveReport', function ($rootScope, $timeout, Pusher, randomString, alerts, cmReportMode) {
         var timeout;
         var service =  {
             oldChannel: null,
             channel: null,
             pusherChannel: null,
-            output: 'There\'s nothing to see here yet; try executing a feature! :)',
+            output: 'There\'s nothing to see here yet; try executing a feature! :)' + "\n\n",
             placeHolder: true,
             registered: false,
             events: {
@@ -19,7 +19,8 @@ angular.module('honeydew')
                     type: 'info',
                     msg: 'Your test has reached a breakpoint :D Use "Alt+Enter" to send new rules to the browser, and "Alt+Esc" to resume the test. You can also try out bare CSS selectors to highlight them!'
                 }
-            }
+            },
+            stickToBottom: false
         };
 
         service.switchChannel = function (channel) {
@@ -36,7 +37,8 @@ angular.module('honeydew')
             }
         };
 
-        service.pusherListener = function (item) {
+
+        service.pusherListener = item => {
             if (service.placeHolder) {
                 service.output = cmReportMode.highlight(item);
                 service.placeHolder = false;
@@ -53,6 +55,11 @@ angular.module('honeydew')
                 }
 
                 service.output += cmReportMode.highlight(item);
+
+                var bottom = document.getElementById('report');
+                if (service.stickToBottom) {
+                    bottom.scrollIntoView(false);
+                }
             }
         };
 

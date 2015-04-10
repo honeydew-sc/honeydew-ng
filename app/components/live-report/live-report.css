@@ -3,3 +3,11 @@ div.CodeMirror.live-report pre {
     width: 100%;
     word-wrap: break-word;
 }
+
+.live-report .tail {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 5px 5px 0 0;
+    z-index: 99;
+}

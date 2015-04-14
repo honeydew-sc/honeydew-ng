@@ -6,6 +6,7 @@ angular.module('honeydew')
             channel: null,
             pusherChannel: null,
             output: 'There\'s nothing to see here yet; try executing a feature! :)',
+            current: '',
             placeHolder: true,
             registered: false,
             events: {
@@ -38,20 +39,17 @@ angular.module('honeydew')
 
         service.pusherListener = function (item) {
             if (service.placeHolder) {
-                service.output = cmReportMode.highlight(item);
+                // Need to wipe the output if we're displaying a place
+                // holder.
+                service.output = '';
                 service.placeHolder = false;
             }
-            else {
-                // only remove in-progress rules if the new line is a
-                // completed rule. some lines generate multiple lines
-                // of output that are not new rules, like the 'url
-                // should match' rule
-                if (item.indexOf('# (') === 0) {
-                    service.output = service.output.split("\n").filter(function (line) {
-                        return line.indexOf('####') !== 0;
-                    }).join("\n");
-                }
 
+            if (/^####/.test( item )) {
+                service.current += item;
+            }
+            else {
+                service.current = '';
                 service.output += cmReportMode.highlight(item);
             }
         };

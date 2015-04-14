@@ -62,6 +62,35 @@ describe('LiveReportService', function () {
         expect(liveReportService.output).toBe(rule + rule);
     });
 
+    it('should append new current-rules to the current prop', () => {
+        var current = `#### ${rule}`;
+        liveReportService.pusherListener(current);
+        expect(liveReportService.current).toContain(current);
+        expect(liveReportService.output).not.toContain(current);
+
+        liveReportService.pusherListener(current);
+        expect(liveReportService.current).toBe(current + current);
+    });
+
+    it('should clear the current rules when a log rule comes in', () => {
+        var current = `#### ${rule}`;
+        liveReportService.pusherListener(current);
+        liveReportService.pusherListener(rule);
+
+        expect(liveReportService.current).toBe('');
+        expect(liveReportService.output).toBe(rule);
+    });
+
+    it('should keep track current and output simultaneously', () => {
+        var current = `#### ${rule}`;
+        liveReportService.pusherListener(current);
+        liveReportService.pusherListener(rule);
+        liveReportService.pusherListener(current);
+
+        expect(liveReportService.current).toBe(current);
+        expect(liveReportService.output).toBe(rule);
+    });
+
     it('should broadcast an event about a failed test', () => {
         var failed = '# (ER)  (100)   Given',
             emits = 0;

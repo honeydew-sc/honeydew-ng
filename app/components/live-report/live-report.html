@@ -1,5 +1,9 @@
-<div ng-class="'cm-s-' + ReportPane.theme">
-  <div class="CodeMirror live-report">
-    <pre copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
+<div ng-class="'cm-s-' + ReportPane.theme" copy-style=".CodeMirror">
+  <div class="CodeMirror live-report" copy-style=".CodeMirror">
+
+    <pre class="live-report" copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
+
+    <pre class="live-report current">{{ ReportPane.report.current }}</pre>
+
   </div>
 </div>

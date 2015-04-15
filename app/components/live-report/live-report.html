@@ -1,9 +1,8 @@
 <div ng-class="'cm-s-' + ReportPane.theme" copy-style=".CodeMirror">
   <div class="CodeMirror live-report" copy-style=".CodeMirror">
 
-    <pre class="live-report" copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
-
-    <pre class="live-report current">{{ ReportPane.report.current }}</pre>
+    <pre class="live-report" copy-style=".CodeMirror"><span ng-repeat="item in ReportPane.report.output track by $index"><span ng-bind-html="::item"></span></span>
+{{ ReportPane.report.current }}</pre>
 
   </div>
 </div>

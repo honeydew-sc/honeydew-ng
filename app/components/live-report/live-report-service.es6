@@ -5,7 +5,9 @@ angular.module('honeydew')
             oldChannel: null,
             channel: null,
             pusherChannel: null,
-            output: 'There\'s nothing to see here yet; try executing a feature! :)',
+            output: [
+                'There\'s nothing to see here yet; try executing a feature! :)'
+            ],
             current: '',
             placeHolder: true,
             registered: false,
@@ -41,7 +43,7 @@ angular.module('honeydew')
             if (service.placeHolder) {
                 // Need to wipe the output if we're displaying a place
                 // holder.
-                service.output = '';
+                service.output = [];
                 service.placeHolder = false;
             }
 
@@ -50,7 +52,7 @@ angular.module('honeydew')
             }
             else {
                 service.current = '';
-                service.output += cmReportMode.highlight(item);
+                service.output.push(cmReportMode.highlight(item));
             }
         };
 
@@ -61,7 +63,7 @@ angular.module('honeydew')
             }
 
             // need a placeholder while the job starts
-            service.output = 'Loading...' + "\n";
+            service.output = ['Loading...', ''];
             service.placeHolder = true;
 
             // we don't have a slick way of knowing when to close the

@@ -1,7 +1,6 @@
 <?php
 
 $app->group('/jobs', function () use ($app) {
-    require_once('HoneydewJob.php');
 
     $app->post('/', function () use ($app) {
         $jobData = (array) json_decode($app->request()->getBody());

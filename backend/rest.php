@@ -10,6 +10,7 @@ $app->contentType('application/json');
 
 require 'rest-routes/autocomplete-sources.php';
 require 'rest-routes/files.php';
+require_once 'rest-routes/job/HoneydewJob.php';
 require 'rest-routes/jobs.php';
 require 'rest-routes/monitor.php';
 require 'rest-routes/pusher.php';

@@ -62,6 +62,18 @@ describe('LiveReportService', function () {
         expect(liveReportService.output).toBe(rule + rule);
     });
 
+    it('should emit the new data for listeners to append', () => {
+        var tested = 0;
+        rootScope.$on('report:append', (event, data) => {
+            tested++;
+            expect(event.name).toBe('report:append');
+            expect(data).toBe(rule);
+        });
+
+        liveReportService.pusherListener(rule);
+        expect(tested).toBe(1);
+    });
+
     it('should append new current-rules to the current prop', () => {
         var current = `#### ${rule}`;
         liveReportService.pusherListener(current);

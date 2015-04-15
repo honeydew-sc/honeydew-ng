@@ -50,7 +50,9 @@ angular.module('honeydew')
             }
             else {
                 service.current = '';
-                service.output += cmReportMode.highlight(item);
+                var newLine = cmReportMode.highlight(item);
+                service.output += newLine;
+                $rootScope.$broadcast('report:append', newLine);
             }
         };
 

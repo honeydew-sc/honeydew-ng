@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/gempesaw/honeydew-ng.png?branch=master)](https://travis-ci.org/gempesaw/honeydew-ng)
 
 The `bower` and `composer` dependencies are checked in to the repo, so
-you shouldn't have to `bower install` or `composer
-install`. So, just
+you shouldn't have to `bower install` or `composer install`. So, try
 
 ```bash
 $ npm install
@@ -30,14 +29,15 @@ LoadModule php5_module libexec/apache2/libphp5.so
 
 if necessary; then `sudo apachectl start`.
 
-The default folder served by Apache is
-`/Library/WebServer/Documents`, so you could symlink the necessary
-files if you wanted (assuming your `httpd.conf` has FollowSymLinks set
-for that directory).
+The default folder served by Apache is `/Library/WebServer/Documents`,
+so you could symlink the necessary files if you wanted (assuming your
+`httpd.conf` has FollowSymLinks set for that directory). Run these
+commands from the `ng` directory such that there is a `backend` folder
+in your directory.
 
 ```bash
-$ ln -s backend/rest-routes /Library/WebServer/Documents/rest-routes
-$ ln -s backend/rest.php /Library/WebServer/Documents/rest.php
+$ sudo ln -s $(pwd)/backend/rest-routes /Library/WebServer/Documents/rest-routes
+$ sudo ln -s $(pwd)/backend/rest.php /Library/WebServer/Documents/rest.php
 ```
 
 [uncomment]: http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-9-mavericks/
@@ -46,9 +46,7 @@ $ ln -s backend/rest.php /Library/WebServer/Documents/rest.php
 
 Configuration is copied out of the `/opt/honeydew/honeydew.ini` file
 via the `ngconstant:build` task into app/config.js. Empty copies of
-`app/config.js` are kept in the module via git's `update-index`:
-
-    $ git update-index --assume-unchanged app/config.js
+`app/config.js` are kept in the module via git's `update-index`.
 
 ## usage gotchas
 

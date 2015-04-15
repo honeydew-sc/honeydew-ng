@@ -651,14 +651,6 @@ module.exports = function (grunt) {
         'fixPermissions'
     ]);
 
-    grunt.registerTask('deploy', [
-        'build',
-        'karma:unit',
-        'rsync:prod',
-        'fixPermissions',
-        'deployBack'
-    ]);
-
     grunt.registerTask('deployBack', [
         'shell:phpTests',
         'shell:deployBack'

@@ -1,7 +1,7 @@
 <div ng-class="'cm-s-' + ReportPane.theme" copy-style=".CodeMirror">
   <div class="CodeMirror live-report" copy-style=".CodeMirror">
 
-    <pre class="live-report" copy-style=".CodeMirror" ng-bind-html="ReportPane.report.output"></pre>
+    <pre class="live-report" copy-style=".CodeMirror" sc-bind-html-append="report:append"></pre>
 
     <pre class="live-report current">{{ ReportPane.report.current }}</pre>
 

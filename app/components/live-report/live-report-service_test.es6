@@ -56,10 +56,10 @@ describe('LiveReportService', function () {
 
     it('should append new messages to the output', function () {
         liveReportService.pusherListener(rule);
-        expect(liveReportService.output).toBe(rule);
+        expect(liveReportService.output[0]).toBe(rule);
 
         liveReportService.pusherListener(rule);
-        expect(liveReportService.output).toBe(rule + rule);
+        expect(liveReportService.output[1]).toBe(rule);
     });
 
     it('should append new current-rules to the current prop', () => {
@@ -78,7 +78,7 @@ describe('LiveReportService', function () {
         liveReportService.pusherListener(rule);
 
         expect(liveReportService.current).toBe('');
-        expect(liveReportService.output).toBe(rule);
+        expect(liveReportService.output[0]).toBe(rule);
     });
 
     it('should keep track current and output simultaneously', () => {
@@ -88,7 +88,7 @@ describe('LiveReportService', function () {
         liveReportService.pusherListener(current);
 
         expect(liveReportService.current).toBe(current);
-        expect(liveReportService.output).toBe(rule);
+        expect(liveReportService.output[0]).toBe(rule);
     });
 
     it('should broadcast an event about a failed test', () => {

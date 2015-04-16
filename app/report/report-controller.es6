@@ -26,7 +26,7 @@ angular.module('honeydew')
                 ]).join("\n");
 
                 this.result = {
-                    output: cmReportMode.highlight(report)
+                    output: cmReportMode.highlight(report).split("\n").map( it => it + "\n")
                 };
                 this.record = res;
             });

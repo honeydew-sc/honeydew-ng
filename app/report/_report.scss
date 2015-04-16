@@ -4,6 +4,10 @@
     word-wrap: break-word;
 }
 
+.single-report.report {
+    min-height: 100vh;
+}
+
 .single-report .navbar-form button.btn.btn-default {
     border: solid 1px $gray;
 }

@@ -5,6 +5,7 @@
         <button ng-click="Report.replaceReportInSet()" class="btn btn-default">Rerun & Replace</button>
       </form>
     </div>
-    <pre copy-style=".CodeMirror | report"  ng-bind-html="Report.result.output"></pre>
+    <pre><span ng-repeat="item in Report.result.output track by $index"><span ng-bind-html="::item"></span></span>{{ Report.result.current }}<span></pre>
+
   </div>
 </div>

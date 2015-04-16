@@ -31,7 +31,7 @@ describe('ReportCtrl', function () {
         httpMock.expectGET('/rest.php/report/1')
             .respond({ result: 'contents' });
         httpMock.flush();
-        expect(ReportCtrl.result.output).toContain( 'contents' );
+        expect(ReportCtrl.result.output.join('')).toContain( 'contents' );
     });
 
     it('should highlight the output accordingly', () => {
@@ -39,8 +39,8 @@ describe('ReportCtrl', function () {
             .respond({ result: '# Success' });
         httpMock.flush();
 
-        expect(ReportCtrl.result.output).toContain( '# Success' );
-        expect(ReportCtrl.result.output).toMatch( /<span class=".*<\/span>/ );
+        expect(ReportCtrl.result.output.join('')).toContain( '# Success' );
+        expect(ReportCtrl.result.output[0]).toMatch( /<span class=".*<\/span>/ );
 
     });
 

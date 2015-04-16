@@ -2,27 +2,8 @@
   <div ng-if="Manual.status === 'loading'">
     One second, checking if your server is up...
   </div>
-  <div ng-if="Manual.status === true">
-    Looks like everything is okay! Your webdriver server at <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">{{Manual.address()}}:4444</a> is up and running! Great job!
-
-    <div class="divider">
-    </div>
-  </div>
-  <div ng-if="Manual.status === false">
-    <p>Hey, looks like your <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">webdriver server</a> isn't running. Double check that it's on - to start it, open a console or a terminal and try</p>
-
-    <p>
-      <code>
-        > webdriver-manager start
-      </code>
-    </p>
-
-    <p>Also, let's double check your IP. Is this your IP address below? If not, go ahead and correct it!</p>
-    <div class="divider">
-    </div>
-  </div>
   <div>
-    <p>You can <a href="" ng-click="Manual.reset()">reset it, trusting Honeydew</a> to figure it out for you, or you can set it yourself!</p>
+    <p>Let's double check your IP. Is this your IP address below? If not, go ahead and correct it!. You can <a href="" ng-click="Manual.reset()">reset it, trusting Honeydew</a> to figure it out for you, or you can set it yourself!</p>
 
     <form class="form-horizontal" role="form">
       <label for="manual">IP Address:
@@ -31,11 +12,29 @@
       </label>
       <span ng-if="Manual.checking">Checking {{Manual.address()}}...</span>
     </form>
+  </div>
 
+  <div class="divider"></div>
 
-    <div class="divider">
+  <div class="status-message">
+    <div ng-if="Manual.status === true">
+      Looks like everything is okay! Your webdriver server at <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">{{Manual.address()}}:4444</a> is up and running! Great job!
     </div>
+    <div ng-if="Manual.status === false">
+      <p>Hey, looks like your <a target="_blank" href="http://{{Manual.address()}}:4444/wd/hub">webdriver server</a> isn't running. Double check that it's on - to start it, open a console or a terminal and try</p>
 
+      <p>
+        <code>
+          > webdriver-manager start
+        </code>
+      </p>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
     <p>To find your ip, you can open a command window or the terminal and try</p>
 
     <ul>

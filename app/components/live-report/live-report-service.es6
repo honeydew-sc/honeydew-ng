@@ -62,7 +62,8 @@ angular.module('honeydew')
             }
 
             // need a placeholder while the job starts
-            service.output = ['Loading...', ''];
+            service.output = [];
+            service.current = '#### Loading...';
             service.placeHolder = true;
 
             // we don't have a slick way of knowing when to close the

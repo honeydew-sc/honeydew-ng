@@ -302,7 +302,7 @@ module.exports = function (grunt) {
             hostname: {
                 files: [{
                     src: '<%= yeoman.dist %>/scripts/sc.hostname.js',
-                    dest: '<%= yeoman.dist %>/scripts/sc.hostname.js'
+                    dest: '<%= yeoman.dist %>/scripts/sc.hostname.annotate.js'
                 }]
             }
         },
@@ -375,7 +375,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/components/hostname/*.js',
                     '!<%= yeoman.app %>/components/hostname/*_test.js'
                 ],
-                dest: '<%= yeoman.dist %>/concat/scripts/sc.hostname.js'
+                dest: '<%= yeoman.dist %>/scripts/sc.hostname.js'
             },
             hostnameCss: {
                 src: '<%= yeoman.app %>/components/hostname/*.css',
@@ -385,7 +385,7 @@ module.exports = function (grunt) {
 
         uglify: {
             hostname: {
-                src: '<%= yeoman.dist %>/scripts/sc.hostname.js',
+                src: '<%= yeoman.dist %>/scripts/sc.hostname.annotate.js',
                 dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
             }
         },

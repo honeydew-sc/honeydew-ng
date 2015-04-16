@@ -17,7 +17,6 @@ angular.module('sc.hostname')
                     'jd2',
                     'kms',
                     'kms2',
-                    'sg',
                     'mservices',
                     'preview',
                     'stage',

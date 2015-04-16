@@ -298,6 +298,12 @@ module.exports = function (grunt) {
                     src: '*.js',
                     dest: '.tmp/concat/scripts'
                 }]
+            },
+            hostname: {
+                files: [{
+                    src: '<%= yeoman.dist %>/scripts/sc.hostname.js',
+                    dest: '<%= yeoman.dist %>/scripts/sc.hostname.js'
+                }]
             }
         },
 
@@ -369,8 +375,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/components/hostname/*.js',
                     '!<%= yeoman.app %>/components/hostname/*_test.js'
                 ],
-                dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
-                // dest: '.tmp/concat/scripts/hostname.js'
+                dest: '<%= yeoman.dist %>/concat/scripts/sc.hostname.js'
             },
             hostnameCss: {
                 src: '<%= yeoman.app %>/components/hostname/*.css',
@@ -380,7 +385,7 @@ module.exports = function (grunt) {
 
         uglify: {
             hostname: {
-                src: '.tmp/concat/scripts/hostname.js',
+                src: '<%= yeoman.dist %>/scripts/sc.hostname.js',
                 dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
             }
         },
@@ -664,8 +669,9 @@ module.exports = function (grunt) {
     grunt.registerTask('hostname', [
         'concat:hostnameJs',
         'concat:hostnameCss',
-        'ngAnnotate',
+        'ngAnnotate:hostname',
         'cssmin:hostname',
+        'uglify:hostname',
         'shell:copyDev'
     ]);
 

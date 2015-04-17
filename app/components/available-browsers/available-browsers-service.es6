@@ -36,7 +36,7 @@ angular.module('honeydew')
             // We don't want to set up monitors to run against
             // Localhost, as we have no idea what that means in the
             // middle of the night.
-            if (url.match(/\/monitor/)) {
+            if (url.match(/^#\/monitor/)) {
                 service.servers.shift();
             }
             return service.servers;

@@ -24,9 +24,13 @@ describe('availableBrowsersService', () => {
     });
 
     it('should not let monitor users see localhost', () => {
-        spyOn($location, 'path').and.returnValue('something/monitor/something');
+        var pathSpy = spyOn($location, 'path');
+        pathSpy.and.returnValue('something/monitor/something');
         var servers = availableBrowsers.getServers();
+        expect(servers).toContain('Localhost');
 
-        expect(servers).not.toContain('Localhost');
+        pathSpy.and.returnValue('#/monitor');
+        expect(availableBrowsers.getServers()).not.toContain('Localhost');
+
     });
 });

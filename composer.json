@@ -1,1 +1,19 @@
-backend/composer.json
+{
+    "name": "gempesaw/honeydew-rest-backend",
+    "description": "The ReSTful backend to the HD AngularJS rewrite",
+    "require": {
+        "slim/slim": "*"
+    },
+    "require-dev": {
+        "nategood/httpful": "*",
+        "simpletest/simpletest": "dev-master",
+        "heroku/heroku-buildpack-php": "~67.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Gempesaw",
+            "email": "gempesaw@gmail.com"
+        }
+    ]
+}

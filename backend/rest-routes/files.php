@@ -154,13 +154,15 @@ $app->group('/files', function () use ($app) {
 
         $message = '"' . $username  . ' ' . $msg . '"';
         $command = "sh /opt/honeydew-ui/user-push.sh " . $filename . " " . $message;
-        $output = $command;
+        $ret = $command;
 
         if (isProduction()) {
             exec($command, $output);
         }
 
-        return $output;
+        $ret .= "\n" . $output;
+
+        return $ret;
     }
 
     function refreshSet( $setName ) {

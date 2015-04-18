@@ -447,22 +447,41 @@ module.exports = function (grunt) {
                 dest: 'app/config.js',
                 constants: function () {
                     var prefix, ret = {};
-                    grunt.file.read('/opt/honeydew/honeydew.ini')
-                        .split(/\n/)
-                        .filter(function (it) {
-                            return it !== '';
-                        }).forEach(function (line) {
-                            if (line.indexOf('[') !== -1) {
-                                prefix = line.slice(1, -1) + 'Config';
-                                ret[prefix] = {};
-                            }
-                            else {
-                                var data = line.split('=');
-                                ret[prefix][data[0]] = data[1];
-                            }
-                        });
+                    var defaultConfig = '/opt/honeydew/honeydew.ini';
+                    if (grunt.file.exists(defaultConfig)) {
+                        grunt.file.read(defaultConfig)
+                            .split(/\n/)
+                            .filter(function (it) {
+                                return it !== '';
+                            }).forEach(function (line) {
+                                if (line.indexOf('[') !== -1) {
+                                    prefix = line.slice(1, -1) + 'Config';
+                                    ret[prefix] = {};
+                                }
+                                else {
+                                    var data = line.split('=');
+                                    ret[prefix][data[0]] = data[1];
+                                }
+                            });
 
-                    return ret;
+                        return ret;
+                    }
+                    else {
+                        return {
+                            AccountsConfig: {},
+                            mysqlConfig: {},
+                            pusherConfig: {},
+                            androidConfig: {},
+                            localConfig: {},
+                            lockerboxConfig: {},
+                            proxyConfig: {},
+                            iosConfig: {},
+                            redisConfig: {},
+                            flagsConfig: {},
+                            awsConfig: {},
+                            dotmilConfig: {}
+                        };
+                    }
                 }
             },
             build: {}

@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/honeydew-sc/honeydew-ng.svg?branch=master)](https://travis-ci.org/honeydew-sc/honeydew-ng)
 
 We use [`composer`] to manage our backend dependencies, [`npm`] to
-manage our frontend build dependencies, and bower to manage the front
+manage our frontend build dependencies, and [`bower`] to manage the front
 end deps that get loaded in the browser. We've made a few changes to
 our bower dependencies, so they're checked in, but you'll need to
 manually install the `composer` and `npm` deps before using `grunt` to
@@ -11,6 +11,7 @@ start up the app:
 
 [`composer`]: https://getcomposer.org/
 [`npm`]: https://www.npmjs.com/
+[`bower`]: http://bower.io/
 
 ```bash
 $ composer install

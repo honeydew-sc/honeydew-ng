@@ -1,6 +1,6 @@
 # honeydew-ng #
 
-[![Build Status](https://travis-ci.org/gempesaw/honeydew-ng.png?branch=master)](https://travis-ci.org/gempesaw/honeydew-ng)
+[![Build Status](https://travis-ci.org/honeydew-sc/honeydew-ng.svg?branch=master)](https://travis-ci.org/honeydew-sc/honeydew-ng)
 
 We use [`composer`] to manage our backend dependencies, [`npm`] to
 manage our frontend build dependencies, and bower to manage the front

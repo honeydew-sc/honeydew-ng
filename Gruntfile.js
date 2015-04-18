@@ -495,7 +495,15 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command: 'cp -R <%= yeoman.dist %>/* /opt/honeydew-ui/htdocs/'
+                command: function () {
+                    if (grunt.file.exists('/opt/honeydew-ui/htdocs')) {
+                        return 'cp -R <%= yeoman.dist %>/* /opt/honeydew-ui/htdocs/';
+                    }
+                    else {
+                        return '';
+                    }
+
+                }
             },
 
             honeydew: {

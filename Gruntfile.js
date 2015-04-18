@@ -23,6 +23,8 @@ module.exports = function (grunt) {
             // configurable paths
             app: 'app',
             dist: 'dist',
+            heroku: 'heroku',
+            backend: 'backend',
             folders: '{components,editor,landing,monitor,report,screenshot,set}'
         },
 
@@ -189,6 +191,13 @@ module.exports = function (grunt) {
                         '<%= yeoman.dist %>/*',
                         '!<%= yeoman.dist %>/.git*'
                     ]
+                }]
+            },
+            heroku: {
+                files: [{
+                    dot: true,
+                    cwd: '<%= yeoman.heroku %>',
+                    src: ['**/*']
                 }]
             },
             server: '.tmp'
@@ -362,6 +371,21 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            heroku: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.dist %>',
+                    dest: '<%= yeoman.heroku %>',
+                    src: ['**/*']
+                }, {
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.backend %>',
+                    dest: '<%= yeoman.heroku %>',
+                    src: ['**/*']
+                }]
             }
         },
 
@@ -690,5 +714,10 @@ module.exports = function (grunt) {
     grunt.registerTask('css', [
         'sass_globbing:dist',
         'sass:dist'
+    ]);
+
+    grunt.registerTask('heroku:production', [
+        'build',
+        'copy:heroku'
     ]);
 };

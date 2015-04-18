@@ -18,3 +18,4 @@ node_modules
 .tern*
 /backend/vendor/
 /vendor/
+/heroku/

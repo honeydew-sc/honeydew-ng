@@ -1,8 +1,5 @@
 <?php
 require 'vendor/autoload.php';
-if (!class_exists('S3')) {
-    require 'vendor/tpyo/amazon-s3-php-class/S3.php';
-}
 require 'hdewdb_connect.php';
 
 $app = new \Slim\Slim();
@@ -17,7 +14,6 @@ require 'rest-routes/pusher.php';
 require 'rest-routes/status.php';
 require 'rest-routes/report.php';
 require 'rest-routes/tree.php';
-require 'rest-routes/upload.php';
 require 'rest-routes/user.php';
 
 $app->run();

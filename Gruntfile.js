@@ -735,7 +735,7 @@ module.exports = function (grunt) {
         'sass:dist'
     ]);
 
-    grunt.registerTask('heroku:production', [
+    grunt.registerTask('heroku', [
         'build',
         'copy:heroku'
     ]);

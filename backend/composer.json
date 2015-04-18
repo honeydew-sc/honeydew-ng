@@ -6,7 +6,8 @@
     },
     "require-dev": {
         "nategood/httpful": "*",
-        "simpletest/simpletest": "dev-master"
+        "simpletest/simpletest": "dev-master",
+        "heroku/heroku-buildpack-php": "~67.0"
     },
     "license": "MIT",
     "authors": [

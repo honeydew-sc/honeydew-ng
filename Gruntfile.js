@@ -23,6 +23,8 @@ module.exports = function (grunt) {
             // configurable paths
             app: 'app',
             dist: 'dist',
+            heroku: 'heroku',
+            backend: 'backend',
             folders: '{components,editor,landing,monitor,report,screenshot,set}'
         },
 
@@ -189,6 +191,13 @@ module.exports = function (grunt) {
                         '<%= yeoman.dist %>/*',
                         '!<%= yeoman.dist %>/.git*'
                     ]
+                }]
+            },
+            heroku: {
+                files: [{
+                    dot: true,
+                    cwd: '<%= yeoman.heroku %>',
+                    src: ['**/*']
                 }]
             },
             server: '.tmp'
@@ -362,6 +371,21 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            heroku: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.dist %>',
+                    dest: '<%= yeoman.heroku %>',
+                    src: ['**/*']
+                }, {
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.backend %>',
+                    dest: '<%= yeoman.heroku %>',
+                    src: ['**/*']
+                }]
             }
         },
 
@@ -423,22 +447,41 @@ module.exports = function (grunt) {
                 dest: 'app/config.js',
                 constants: function () {
                     var prefix, ret = {};
-                    grunt.file.read('/opt/honeydew/honeydew.ini')
-                        .split(/\n/)
-                        .filter(function (it) {
-                            return it !== '';
-                        }).forEach(function (line) {
-                            if (line.indexOf('[') !== -1) {
-                                prefix = line.slice(1, -1) + 'Config';
-                                ret[prefix] = {};
-                            }
-                            else {
-                                var data = line.split('=');
-                                ret[prefix][data[0]] = data[1];
-                            }
-                        });
+                    var defaultConfig = '/opt/honeydew/honeydew.ini';
+                    if (grunt.file.exists(defaultConfig)) {
+                        grunt.file.read(defaultConfig)
+                            .split(/\n/)
+                            .filter(function (it) {
+                                return it !== '';
+                            }).forEach(function (line) {
+                                if (line.indexOf('[') !== -1) {
+                                    prefix = line.slice(1, -1) + 'Config';
+                                    ret[prefix] = {};
+                                }
+                                else {
+                                    var data = line.split('=');
+                                    ret[prefix][data[0]] = data[1];
+                                }
+                            });
 
-                    return ret;
+                        return ret;
+                    }
+                    else {
+                        return {
+                            AccountsConfig: {},
+                            mysqlConfig: {},
+                            pusherConfig: {},
+                            androidConfig: {},
+                            localConfig: {},
+                            lockerboxConfig: {},
+                            proxyConfig: {},
+                            iosConfig: {},
+                            redisConfig: {},
+                            flagsConfig: {},
+                            awsConfig: {},
+                            dotmilConfig: {}
+                        };
+                    }
                 }
             },
             build: {}
@@ -452,7 +495,15 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command: 'cp -R <%= yeoman.dist %>/* /opt/honeydew-ui/htdocs/'
+                command: function () {
+                    if (grunt.file.exists('/opt/honeydew-ui/htdocs')) {
+                        return 'cp -R <%= yeoman.dist %>/* /opt/honeydew-ui/htdocs/';
+                    }
+                    else {
+                        return '';
+                    }
+
+                }
             },
 
             honeydew: {
@@ -690,5 +741,10 @@ module.exports = function (grunt) {
     grunt.registerTask('css', [
         'sass_globbing:dist',
         'sass:dist'
+    ]);
+
+    grunt.registerTask('heroku', [
+        'build',
+        'copy:heroku'
     ]);
 };

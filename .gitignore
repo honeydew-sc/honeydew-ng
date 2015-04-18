@@ -16,3 +16,6 @@ node_modules
 /app/app.css.map
 *.es6.map
 .tern*
+/backend/vendor/
+/vendor/
+/heroku/

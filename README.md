@@ -2,10 +2,18 @@
 
 [![Build Status](https://travis-ci.org/gempesaw/honeydew-ng.png?branch=master)](https://travis-ci.org/gempesaw/honeydew-ng)
 
-The `bower` and `composer` dependencies are checked in to the repo, so
-you shouldn't have to `bower install` or `composer install`. So, try
+We use [`composer`] to manage our backend dependencies, [`npm`] to
+manage our frontend build dependencies, and bower to manage the front
+end deps that get loaded in the browser. We've made a few changes to
+our bower dependencies, so they're checked in, but you'll need to
+manually install the `composer` and `npm` deps before using `grunt` to
+start up the app:
+
+[`composer`]: https://getcomposer.org/
+[`npm`]: https://www.npmjs.com/
 
 ```bash
+$ composer install
 $ npm install
 $ grunt serve
 ```

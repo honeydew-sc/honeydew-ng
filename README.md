@@ -67,6 +67,21 @@ to
 
 ## contributing
 
+### grunt tasks of interest
+
+- `grunt serve` - This will build the app, open it in your browser,
+  and watch the repository files for changes
+
+- `grunt ci` - This will run the unit tests with karma and watch the
+  generated javascript files for changes. This task needs to be
+  updated to watch the .es6 files instead of the generated js files,
+  though. You'll probably want to run this while developing to make
+  sure you haven't broken any tests.
+
+- `grunt config` - This will generate a configuration file from
+  `/opt/honeydew/honeydew.ini`. If the file is missing, it will create
+  an empty config file that will enable the app to run.
+
 ### style & organization
 
 For the most part, attempt to conform to

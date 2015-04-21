@@ -743,6 +743,10 @@ module.exports = function (grunt) {
         'sass:dist'
     ]);
 
+    grunt.registerTask('backendTests', [
+        'shell:phpTests'
+    ]);
+
     grunt.registerTask('heroku', [
         'build',
         'copy:heroku'

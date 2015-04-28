@@ -6,12 +6,6 @@ angular.module('honeydew')
             monitors = [];
         $scope.monitors = monitors;
 
-        $scope.create = function(newMonitor) {
-            if ($scope.isMonitorUnique(newMonitor)) {
-                newMonitor.$save( function ( res ) {
-                    $scope.monitors.push(res);
-                }).catch( alerts.catcher );
-            }
         self.queried = false;
         self.query = function () {
             var query = Monitor.query( forceRedraw );
@@ -23,7 +17,6 @@ angular.module('honeydew')
             return query.$promise.then( () => self.queried = true );
         };
 
-        $scope.delete = function(row) {
         function forceRedraw () {
             $timeout( () => {
                 $(window).resize();
@@ -31,11 +24,12 @@ angular.module('honeydew')
             });
         }
 
+        self.delete = function ( row ) {
             var targetId = row.entity.id;
             Monitor.delete( { id: targetId }, function (res) {
-                angular.forEach($scope.monitors, function (monitor, index) {
+                angular.forEach(monitors, function (monitor, index) {
                     if ( monitor.id === targetId ) {
-                        $scope.monitors.splice(index, 1);
+                        monitors.splice(index, 1);
                     }
                 });
             });
@@ -81,10 +75,16 @@ angular.module('honeydew')
         });
 
         $scope.$on('monitor:create', (event, monitor) => {
-            $scope.create(monitor);
+            self.create(monitor);
         });
 
-        $scope.query();
+        function create ( newMonitor ) {
+            if (self.isMonitorUnique(newMonitor)) {
+                newMonitor.$save( function ( res ) {
+                    monitors.push(res);
+                }).catch( alerts.catcher );
+            }
+        };
 
         $scope.filterOptions = {
             filterText: ''

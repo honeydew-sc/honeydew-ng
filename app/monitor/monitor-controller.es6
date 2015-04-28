@@ -90,7 +90,20 @@ angular.module('honeydew')
             filterText: ''
         };
 
-        $scope.gridOptions = {
+        // wait for user to search for something
+        var cancelUserQueries = $scope.$watch(
+            () => self.filterOptions.filterText,
+            userInitializesQuery
+        );
+        function userInitializesQuery (newValue, oldValue) {
+            var QUERY_LENGTH = 2;
+            if (newValue.length > QUERY_LENGTH) {
+                cancelUserQueries();
+                self.query();
+            }
+        }
+
+        self.gridOptions = {
             data: 'monitors',
             columnDefs: [{
                 field: 'on',
@@ -121,7 +134,7 @@ angular.module('honeydew')
                 directions: ['asc']
             },
             multiSelect: false,
-            filterOptions: $scope.filterOptions,
+            filterOptions: self.filterOptions,
             showGroupPanel: true,
             jqueryUIDraggable: true,
             enableCellSelection: true,

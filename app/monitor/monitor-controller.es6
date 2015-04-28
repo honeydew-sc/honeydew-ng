@@ -109,7 +109,7 @@ angular.module('honeydew')
                 field: 'on',
                 displayName: 'On',
                 width: 30,
-                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="toggleEnabled(row)"/></div>',
+                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="Monitor.toggleEnabled(row)"/></div>',
                 enableCellEdit: false
             }, {
                 field:'set',
@@ -126,7 +126,7 @@ angular.module('honeydew')
             }, {
                 field:'',
                 width: 40,
-                cellTemplate: '<button class="btn btn-mini btn-danger" ng-click="delete(row)"><i class="fa fa-trash-o"></i></button>'
+                cellTemplate: '<button class="btn btn-mini btn-danger" ng-click="Monitor.delete(row)"><i class="fa fa-trash-o"></i></button>'
             }],
             enableSorting: true,
             sortInfo: {

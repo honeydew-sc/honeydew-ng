@@ -44,23 +44,6 @@ angular.module('honeydew')
             });
         };
 
-        $scope.isMonitorUnique = function (newMonitor) {
-            var isDuplicated = $scope.monitors.some(function ( element ) {
-                return newMonitor.set === element.set &&
-                    newMonitor.host === element.host &&
-                    newMonitor.browser === element.browser;
-            });
-
-            if (isDuplicated) {
-                alerts.addAlert({
-                    msg: 'Sorry, that monitor (' + newMonitor.set + ' on ' + newMonitor.host + ' in ' + newMonitor.browser + ') already exists. Maybe you want to edit it?',
-                    type: 'warning'
-                }, 7500);
-            }
-
-            return !isDuplicated;
-        };
-
         $scope.$on('ngGridEventStartCellEdit', function(evt){
             self.currentEdit = angular.copy(evt.targetScope.row.entity);
         });
@@ -86,7 +69,24 @@ angular.module('honeydew')
             }
         };
 
-        $scope.filterOptions = {
+        function isMonitorUnique ( newMonitor ) {
+            var isDuplicated = monitors.some(function ( element ) {
+                return newMonitor.set === element.set &&
+                    newMonitor.host === element.host &&
+                    newMonitor.browser === element.browser;
+            });
+
+            if (isDuplicated) {
+                alerts.addAlert({
+                    msg: 'Sorry, that monitor (' + newMonitor.set + ' on ' + newMonitor.host + ' in ' + newMonitor.browser + ') already exists. Maybe you want to edit it?',
+                    type: 'warning'
+                }, 7500);
+            }
+
+            return !isDuplicated;
+        };
+
+        self.filterOptions = {
             filterText: ''
         };
 

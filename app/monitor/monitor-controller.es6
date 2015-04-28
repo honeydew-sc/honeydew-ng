@@ -10,6 +10,9 @@ angular.module('honeydew')
                 });
             });
         };
+        var self = this,
+            monitors = [];
+        $scope.monitors = monitors;
 
         $scope.create = function(newMonitor) {
             if ($scope.isMonitorUnique(newMonitor)) {

@@ -2,45 +2,68 @@
 
 angular.module('honeydew')
     .controller('MonitorCtrl', function ($scope, $timeout, Monitor, alerts) {
-        $scope.query = function () {
-            $scope.monitors = Monitor.query( function ( u ) {
-                $timeout(function () {
-                    $(window).resize();
-                    $(window).resize();
-                });
-            });
+        var self = this,
+            monitors = [];
+        $scope.monitors = monitors;
+
+        self.queried = false;
+        self.query = function () {
+            var query = Monitor.query( forceRedraw );
+
+            // couldn't figure out how to use gridOptions for monitors on
+            // self instead of $scope, so.
+            $scope.monitors = monitors = query;
+
+            return query.$promise.then( () => self.queried = true );
         };
 
-        $scope.create = function(newMonitor) {
-            if ($scope.isMonitorUnique(newMonitor)) {
-                newMonitor.$save( function ( res ) {
-                    $scope.monitors.push(res);
-                }).catch( alerts.catcher );
-            }
-        };
-
-        $scope.delete = function(row) {
+        self.delete = function ( row ) {
             var targetId = row.entity.id;
             Monitor.delete( { id: targetId }, function (res) {
-                angular.forEach($scope.monitors, function (monitor, index) {
+                angular.forEach(monitors, function (monitor, index) {
                     if ( monitor.id === targetId ) {
-                        $scope.monitors.splice(index, 1);
+                        monitors.splice(index, 1);
                     }
                 });
             });
         };
 
-        $scope.toggleEnabled = function(row) {
+        self.toggleEnabled = function(row) {
             var id = row.entity.id;
-            angular.forEach($scope.monitors, function ( monitor, index ) {
+            angular.forEach(monitors, function ( monitor, index ) {
                 if (monitor.id === id) {
                     monitor.$save({ id: id});
                 }
             });
         };
 
-        $scope.isMonitorUnique = function (newMonitor) {
-            var isDuplicated = $scope.monitors.some(function ( element ) {
+        $scope.$on('ngGridEventStartCellEdit', function(evt){
+            self.currentEdit = angular.copy(evt.targetScope.row.entity);
+        });
+
+        $scope.$on('ngGridEventEndCellEdit', function(evt){
+            var monitor = evt.targetScope.row.entity;
+
+            monitor.$save().catch( function (res) {
+                alerts.addAlert(res);
+                monitor.host = self.currentEdit.host;
+            });
+        });
+
+        $scope.$on('monitor:create', (event, monitor) => {
+            self.create(monitor);
+        });
+
+        function create ( newMonitor ) {
+            if (self.isMonitorUnique(newMonitor)) {
+                newMonitor.$save( function ( res ) {
+                    monitors.push(res);
+                }).catch( alerts.catcher );
+            }
+        };
+
+        function isMonitorUnique ( newMonitor ) {
+            var isDuplicated = monitors.some(function ( element ) {
                 return newMonitor.set === element.set &&
                     newMonitor.host === element.host &&
                     newMonitor.browser === element.browser;
@@ -56,36 +79,44 @@ angular.module('honeydew')
             return !isDuplicated;
         };
 
-        $scope.$on('ngGridEventStartCellEdit', function(evt){
-            $scope.currentEdit = angular.copy(evt.targetScope.row.entity);
-        });
-
-        $scope.$on('ngGridEventEndCellEdit', function(evt){
-            var monitor = evt.targetScope.row.entity;
-
-            monitor.$save().catch( function (res) {
-                alerts.addAlert(res);
-                monitor.host = $scope.currentEdit.host;
-            });
-        });
-
-        $scope.$on('monitor:create', (event, monitor) => {
-            $scope.create(monitor);
-        });
-
-        $scope.query();
-
-        $scope.filterOptions = {
+        self.filterOptions = {
             filterText: ''
         };
 
-        $scope.gridOptions = {
+        // wait for user to search for something
+        var cancelUserQueries = $scope.$watch(
+            () => self.filterOptions.filterText,
+            userInitializesQuery
+        );
+        function userInitializesQuery (newValue, oldValue) {
+            var QUERY_LENGTH = 1;
+            if (newValue.length > QUERY_LENGTH) {
+                cancelUserQueries();
+                self.query();
+            }
+        }
+
+        // Working around redraw bug: in the case where the user's
+        // search query doesn't render anything, the forced redraw
+        // won't do anything. So, we need to watch the search query
+        // and just keep redrawing the view to make sure that we
+        // eventually resize to trigger that redraw.
+        $scope.$watch(() => self.filterOptions.filterText, forceRedraw);
+
+        function forceRedraw () {
+            $timeout( () => {
+                $(window).resize();
+                $(window).resize();
+            });
+        }
+
+        self.gridOptions = {
             data: 'monitors',
             columnDefs: [{
                 field: 'on',
                 displayName: 'On',
                 width: 30,
-                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="toggleEnabled(row)"/></div>',
+                cellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-model="COL_FIELD" ng-change="Monitor.toggleEnabled(row)"/></div>',
                 enableCellEdit: false
             }, {
                 field:'set',
@@ -102,7 +133,7 @@ angular.module('honeydew')
             }, {
                 field:'',
                 width: 40,
-                cellTemplate: '<button class="btn btn-mini btn-danger" ng-click="delete(row)"><i class="fa fa-trash-o"></i></button>'
+                cellTemplate: '<button class="btn btn-mini btn-danger" ng-click="Monitor.delete(row)"><i class="fa fa-trash-o"></i></button>'
             }],
             enableSorting: true,
             sortInfo: {
@@ -110,7 +141,7 @@ angular.module('honeydew')
                 directions: ['asc']
             },
             multiSelect: false,
-            filterOptions: $scope.filterOptions,
+            filterOptions: self.filterOptions,
             showGroupPanel: true,
             jqueryUIDraggable: true,
             enableCellSelection: true,

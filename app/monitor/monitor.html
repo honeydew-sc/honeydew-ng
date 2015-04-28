@@ -1,10 +1,17 @@
-<div class="monitor-container container">
+<div class="monitor-container container" ng-controller="MonitorCtrl as Monitor">
   <job-options class="row"></job-options>
 
   <div class="row">
     <strong>Filter:</strong>
-    <input type="text" ng-model="filterOptions.filterText" placeholder="Also filters the set list" id="filter"/>
+    <input type="text"
+           ng-model="Monitor.filterOptions.filterText"
+           placeholder="Please search for something"
+           ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
+           id="filter"/>
+
+    <span ng-if="!Monitor.queried"><---To avoid slow page loads, we delay populating the chart until you search.</span>
   </div>
 
-  <div class="gridStyle" ng-grid="gridOptions"></div>
+
+  <div class="gridStyle" ng-grid="Monitor.gridOptions"></div>
 </div>

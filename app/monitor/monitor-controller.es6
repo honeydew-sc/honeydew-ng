@@ -35,9 +35,9 @@ angular.module('honeydew')
             });
         };
 
-        $scope.toggleEnabled = function(row) {
+        self.toggleEnabled = function(row) {
             var id = row.entity.id;
-            angular.forEach($scope.monitors, function ( monitor, index ) {
+            angular.forEach(monitors, function ( monitor, index ) {
                 if (monitor.id === id) {
                     monitor.$save({ id: id});
                 }
@@ -62,7 +62,7 @@ angular.module('honeydew')
         };
 
         $scope.$on('ngGridEventStartCellEdit', function(evt){
-            $scope.currentEdit = angular.copy(evt.targetScope.row.entity);
+            self.currentEdit = angular.copy(evt.targetScope.row.entity);
         });
 
         $scope.$on('ngGridEventEndCellEdit', function(evt){
@@ -70,7 +70,7 @@ angular.module('honeydew')
 
             monitor.$save().catch( function (res) {
                 alerts.addAlert(res);
-                monitor.host = $scope.currentEdit.host;
+                monitor.host = self.currentEdit.host;
             });
         });
 

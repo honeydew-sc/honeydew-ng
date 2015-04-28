@@ -24,6 +24,13 @@ angular.module('honeydew')
         };
 
         $scope.delete = function(row) {
+        function forceRedraw () {
+            $timeout( () => {
+                $(window).resize();
+                $(window).resize();
+            });
+        }
+
             var targetId = row.entity.id;
             Monitor.delete( { id: targetId }, function (res) {
                 angular.forEach($scope.monitors, function (monitor, index) {

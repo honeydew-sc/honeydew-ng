@@ -2,14 +2,6 @@
 
 angular.module('honeydew')
     .controller('MonitorCtrl', function ($scope, $timeout, Monitor, alerts) {
-        $scope.query = function () {
-            $scope.monitors = Monitor.query( function ( u ) {
-                $timeout(function () {
-                    $(window).resize();
-                    $(window).resize();
-                });
-            });
-        };
         var self = this,
             monitors = [];
         $scope.monitors = monitors;
@@ -20,6 +12,15 @@ angular.module('honeydew')
                     $scope.monitors.push(res);
                 }).catch( alerts.catcher );
             }
+        self.queried = false;
+        self.query = function () {
+            var query = Monitor.query( forceRedraw );
+
+            // couldn't figure out how to use gridOptions for monitors on
+            // self instead of $scope, so.
+            $scope.monitors = monitors = query;
+
+            return query.$promise.then( () => self.queried = true );
         };
 
         $scope.delete = function(row) {

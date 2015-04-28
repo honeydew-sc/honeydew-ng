@@ -17,13 +17,6 @@ angular.module('honeydew')
             return query.$promise.then( () => self.queried = true );
         };
 
-        function forceRedraw () {
-            $timeout( () => {
-                $(window).resize();
-                $(window).resize();
-            });
-        }
-
         self.delete = function ( row ) {
             var targetId = row.entity.id;
             Monitor.delete( { id: targetId }, function (res) {
@@ -96,11 +89,25 @@ angular.module('honeydew')
             userInitializesQuery
         );
         function userInitializesQuery (newValue, oldValue) {
-            var QUERY_LENGTH = 2;
+            var QUERY_LENGTH = 1;
             if (newValue.length > QUERY_LENGTH) {
                 cancelUserQueries();
                 self.query();
             }
+        }
+
+        // Working around redraw bug: in the case where the user's
+        // search query doesn't render anything, the forced redraw
+        // won't do anything. So, we need to watch the search query
+        // and just keep redrawing the view to make sure that we
+        // eventually resize to trigger that redraw.
+        $scope.$watch(() => self.filterOptions.filterText, forceRedraw);
+
+        function forceRedraw () {
+            $timeout( () => {
+                $(window).resize();
+                $(window).resize();
+            });
         }
 
         self.gridOptions = {

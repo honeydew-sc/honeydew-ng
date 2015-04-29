@@ -6,11 +6,10 @@
                id="set"
                class="set-select span-one-third"
                ng-model="job.set.name"
-               theme="select2"
-               search-enabled="false">
+               theme="select2">
       <ui-select-match placeholder="Choose a set...">{{ job.set.name }}</ui-select-match>
-      <ui-select-choices repeat="set in job.setList | filter: filterOptions.filterText" >
-        {{ set }}
+      <ui-select-choices repeat="set in job.setList | filter: $select.search" >
+        <span ng-bind-html="set | highlight: $select.search"></span>
       </ui-select-choices>
     </ui-select>
   </div>

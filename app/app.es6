@@ -54,6 +54,12 @@ angular.module('honeydew', [
                 }
             }];
 
+        function setTitle(title) {
+            return ['$rootScope', function ($rootScope) {
+                $rootScope.title = 'HD ' + title;
+            }];
+        }
+
         $stateProvider
             .state('editor', {
                 abstract: true,
@@ -82,24 +88,18 @@ angular.module('honeydew', [
                 url: '/monitor',
                 templateUrl: 'monitor/monitor.html',
                 controller: 'MonitorCtrl',
-                onEnter: ['$rootScope', function ($rootScope) {
-                    $rootScope.title = 'HD Monitors';
-                }]
+                onEnter: setTitle('Monitors')
             })
             .state('report', {
                 url: '/report/:report',
                 templateUrl: 'report/report.html',
-                onEnter: ['$rootScope', function ($rootScope) {
-                    $rootScope.title = 'HD Report';
-                }]
+                onEnter: setTitle('Report')
             })
             .state('screenshot', {
                 url: '/screenshot/:screenshot',
                 templateUrl: 'screenshot/screenshot.html',
                 controller: 'ScreenshotCtrl',
-                onEnter: ['$rootScope', function ($rootScope) {
-                    $rootScope.title = 'HD Screenshots';
-                }]
+                onEnter: setTitle('Screenshots')
             });
     })
     .config(function(pusherConfig, PusherServiceProvider) {

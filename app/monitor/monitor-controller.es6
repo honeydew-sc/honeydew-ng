@@ -51,11 +51,11 @@ angular.module('honeydew')
         });
 
         $scope.$on('monitor:create', (event, monitor) => {
-            self.create(monitor);
+            create(monitor);
         });
 
         function create ( newMonitor ) {
-            if (self.isMonitorUnique(newMonitor)) {
+            if ( isMonitorUnique(newMonitor) ) {
                 newMonitor.$save( function ( res ) {
                     monitors.push(res);
                 }).catch( alerts.catcher );

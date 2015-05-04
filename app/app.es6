@@ -100,6 +100,12 @@ angular.module('honeydew', [
                 templateUrl: 'screenshot/screenshot.html',
                 controller: 'ScreenshotCtrl',
                 onEnter: setTitle('Screenshots')
+            })
+            .state('status', {
+                url: '/status',
+                templateUrl: 'status/status.html',
+                controller: 'StatusController',
+                onEnter: setTitle('Environment Statuses')
             });
     })
     .config(function(pusherConfig, PusherServiceProvider) {

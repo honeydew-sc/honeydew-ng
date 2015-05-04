@@ -31,17 +31,33 @@ angular.module('honeydew')
             return this.oldSets;
         };
 
-        Files.prototype.copy = function ( destination ) {
+        Files.prototype.copy = function ( destination, contents ) {
             var self = this;
+            contents = contents || self.contents;
 
             return Files.save({
                 file: Files.encode(destination),
-                contents: self.contents
+                contents: contents
             }, function ( res ) {
                 $location.path(destination);
                 filetree.addLeaf(destination);
             }, alerts.catcher).$promise;
         };
+
+        Files.prototype.tmpCopy = function ( destination ) {
+            destination = destination || getTempFilename();
+
+            let contents = this.contents.split("\n")
+                    .filter( line => !line.match(/^(?:Set:|Email:)/g) )
+                    .join("\n");
+
+            return this.copy( destination, contents );
+        };
+
+        function getTempFilename() {
+            var time = new Date().getTime();
+            return 'features/test/tmp/' + time + '.feature';
+        }
 
         Files.prototype.delete = function () {
             var self = this;

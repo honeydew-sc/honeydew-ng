@@ -35,10 +35,7 @@ angular.module('honeydew')
 
                 scope.open = function ( action ) {
                     if (action === 'CopyTemp') {
-                        var temp = new Date().getTime();
-                        temp = 'features/test/tmp/' + temp + '.feature';
-
-                        scope.file.copy(temp);
+                        scope.file.tmpCopy();
                     }
                     else {
                         var todo = scope.fileActions[action];

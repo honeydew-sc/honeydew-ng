@@ -32,12 +32,12 @@ describe('filesFactory', function () {
 
         // We double encode them because we don't have .htaccess
         // permissions to set AllowEncodedSlashes to true
-        destination = Files.encode(Files.encode(destination));
-        httpMock.expectPOST(backend + destination).respond({
+        var destinationUrl = Files.encode(Files.encode(destination));
+        httpMock.expectPOST(backend + destinationUrl).respond({
             success: 'true',
             contents: contents
         });
-        file.copy('features/fake2.feature');
+        file.copy(destination);
         httpMock.flush();
 
         return file;
@@ -72,5 +72,26 @@ describe('filesFactory', function () {
         httpMock.flush();
 
         expect(filetree.deleteLeaf).toHaveBeenCalled();
+    });
+
+    it('should make temporary copies without set or email', () => {
+        let contents = `Feature: fake
+Set: something
+Email: something
+preserved`,
+            strippedContents = `Feature: fake
+preserved`,
+            file = 'feature/source.feature',
+            dest = 'features/temp.feature';
+
+        let source = new Files({ file, contents });
+
+        httpMock.expectPOST(backend + Files.encode(Files.encode(dest)), {
+            file: Files.encode(dest),
+            contents: strippedContents
+        }).respond({success: 'true', strippedContents});
+        var tmp = source.tmpCopy( dest );
+        httpMock.flush();
+
     });
 });

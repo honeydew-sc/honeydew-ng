@@ -654,6 +654,9 @@ module.exports = function (grunt) {
         else {
             grunt.task.run([
                 'config',
+                'traceur',
+                'fileblocks',
+                'css',
                 'clean:server',
                 'configureProxies:server',
                 'bower-install',
@@ -728,9 +731,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('config', [
         'ngconstant:build',
-        'traceur',
-        'fileblocks',
-        'css'
     ]);
 
     grunt.registerTask('ci', [

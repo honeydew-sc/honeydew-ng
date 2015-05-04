@@ -10,7 +10,7 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'traceur'],
 
         preprocessors: {
-            '**/*_test.es6.js': ['traceur'],
+            '**/*.es6': ['traceur'],
             '**/*.html': ['ng-html2js']
         },
 
@@ -18,6 +18,9 @@ module.exports = function(config) {
             options: {
                 'arrow-functions': true,
                 modules: 'inline'
+            },
+            transformPath: function ( path ) {
+                return path.replace(/\.es6$/, '.karma.js');
             }
         },
 
@@ -47,19 +50,16 @@ module.exports = function(config) {
             'app/bower_components/angular-ui-select/dist/select.js',
 
             // our scripts
+            'app/config_test.js',
 
             // load components first so module dependencies are available
-            'app/config_test.js',
-            'app/components/**/*-app.js',
+            'app/components/**/*-app.es6',
 
-            'app/app.js',
-            'app/editor/**/*.js',
-            'app/monitor/**/*.js',
-            'app/set/**/*.js',
-            'app/screenshot/**/*.js',
-            'app/report/**/*.js',
+            // load the main honeydew app so components can see it
+            'app/app.es6',
 
-            'app/components/**/*.js',
+            'app/components/**/*.es6',
+            'app/**/*.es6',
 
             // let karma see our templates for pre-processing
             'app/components/**/*.html',
@@ -67,7 +67,7 @@ module.exports = function(config) {
         ],
 
         // list of files / patterns to exclude
-        exclude: [ '**/*.es6' ],
+        exclude: [ ],
 
         // web server port
         port: 7979,

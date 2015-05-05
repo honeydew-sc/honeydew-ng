@@ -17,23 +17,32 @@ class EnvStatus {
         this.apps = [ 'SC', 'HCA' ];
     }
 
-    query () {
+    query ( envFilter ) {
         let promises = [],
             env = 'prod';
+
+        envFilter = envFilter || ( env => {
+            return env === 'prod' || env === 'stage';
+        });
+
         this.statuses = this.statuses || {};
 
         this.apps.forEach( app => {
-            let p = this.backend.get({
-                app: app,
-                env: env,
-                check: this.Environment.getHealthcheckUrl( app, env )
-            }).$promise;
+            let envs = this.envs[app].filter( envFilter );
 
-            p.then( res => {
-                this.statuses[app] = res;
+            envs.forEach( env => {
+                let p = this.backend.get({
+                    app: app,
+                    env: env,
+                    check: this.Environment.getHealthcheckUrl( app, env )
+                }).$promise;
+
+                p.then( res => {
+                    this.statuses[`${app}, ${env}`] = res;
+                });
+
+                promises.push(p);
             });
-
-            promises.push(p);
         });
 
         return this.q.all(promises);

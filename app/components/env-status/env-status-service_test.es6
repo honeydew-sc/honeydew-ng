@@ -25,7 +25,7 @@ describe('EnvStatus', function () {
         });
 
         // kick off the requests...
-        EnvStatus.query();
+        EnvStatus.query( env => env === 'prod' );
         // and resolve the promises
         httpMock.flush();
 
@@ -51,8 +51,7 @@ describe('EnvStatus', function () {
     }
 
     it('should get production statuses and summaries', () => {
-        EnvStatus.apps.map( app => {
-            expect(statuses[app].healthcheck.summary).toBe(true);
-        });
+        expect(statuses['SC, prod'].healthcheck.summary).toBe(true);
+        expect(statuses['DROZ, prod'].healthcheck.summary).toBe(true);
     });
 });

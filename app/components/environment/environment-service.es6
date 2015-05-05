@@ -78,7 +78,7 @@ class Environment {
     }
 
     getHealthcheckUrl ( app, env ) {
-        let url = this.getStandardUrl( app, env );
+        let url = this.getEnvUrl( app, env );
 
         url = url.replace(/https:\/\//, 'http://');
         url += '/healthcheck';

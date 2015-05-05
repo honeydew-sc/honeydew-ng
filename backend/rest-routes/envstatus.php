@@ -31,7 +31,9 @@ $app->group('/envstatus', function () use ($app) {
     }
 
     function canConnect ( $domain ) {
-        $connection = fsockopen($domain, 80, $errno, $errstr, 10);
+        /* we'll need to fiddle with this timeout time, as 1 second
+        might be too slow... */
+        $connection = @fsockopen($domain, 80, $errno, $errstr, 1);
 
         return is_resource($connection);
     }

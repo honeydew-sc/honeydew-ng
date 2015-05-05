@@ -1,3 +1,13 @@
+<a name="2.0.11"></a>
+## 2.0.12 *(2014-08-04)*
+
+* Merged all outstanding 2.x PRs in advance of 3.0 beta release.
+
+<a name="2.0.11"></a>
+## 2.0.11 *(2014-04-29)*
+
+* Fix filtering bug introduced by #513 (7d6eaeef5c, #1152, #1153).
+
 <a name="2.0.10"></a>
 ## 2.0.10 *(2014-04-25)*
 

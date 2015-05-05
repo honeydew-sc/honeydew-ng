@@ -15,7 +15,7 @@
     "angular-bootstrap": "~0.10.0",
     "ngstorage": "~0.3.0",
     "font-awesome": "~4.0.3",
-    "ng-grid": "~2.0.7",
+    "ng-grid": "~2.0.14",
     "angular-pusher": "~0.0.7",
     "codemirror": "~5.1.0",
     "angular-tree-control": "~0.2.7",

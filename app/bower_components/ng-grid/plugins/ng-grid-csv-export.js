@@ -10,6 +10,12 @@ function ngGridCsvExportPlugin (opts) {
     self.grid = null;
     self.scope = null;
     self.services = null;
+    
+    opts = opts || {};
+    opts.containerPanel = opts.containerPanel || '.ngFooterPanel';
+    opts.linkClass = opts.linkCss || 'csv-data-link-span'; 
+    opts.linkLabel = opts.linkLabel || 'CSV Export';
+    opts.fileName = opts.fileName || 'Export.csv';
 
     self.init = function(scope, grid, services) {
         self.grid = grid;
@@ -17,14 +23,6 @@ function ngGridCsvExportPlugin (opts) {
         self.services = services;
 
         function showDs() {
-            var keys = [];
-            for (var f in grid.config.columnDefs) { 
-                if (grid.config.columnDefs.hasOwnProperty(f))
-                {   
-                    keys.push(grid.config.columnDefs[f].field);
-                }   
-            }   
-            var csvData = '';
             function csvStringify(str) {
                 if (str == null) { // we want to catch anything null-ish, hence just == not ===
                     return '';
@@ -41,17 +39,34 @@ function ngGridCsvExportPlugin (opts) {
 
                 return JSON.stringify(str).replace(/"/g,'""');
             }
+
+            var keys = [];
+            var csvData = '';
+            for (var f in grid.config.columnDefs) { 
+                if (grid.config.columnDefs.hasOwnProperty(f))
+                {   
+                    keys.push(grid.config.columnDefs[f].field);
+                    csvData += '"' ;
+                    if(typeof grid.config.columnDefs[f].displayName !== 'undefined'){/** moved to reduce looping and capture the display name if it exists**/
+                        csvData += csvStringify(grid.config.columnDefs[f].displayName);
+                    }
+                    else{
+                        csvData += csvStringify(grid.config.columnDefs[f].field);
+                    }
+                    csvData +=  '",';
+                }   
+            }   
+            
             function swapLastCommaForNewline(str) {
                 var newStr = str.substr(0,str.length - 1);
                 return newStr + "\n";
             }
-            for (var k in keys) {
-                csvData += '"' + csvStringify(keys[k]) + '",';
-            }
+            
             csvData = swapLastCommaForNewline(csvData);
             var gridData = grid.data;
             for (var gridRow in gridData) {
-                for ( k in keys) {
+                var rowData = '';
+                for ( var k in keys) {
                     var curCellRaw;
 
                     if (opts != null && opts.columnOverrides != null && opts.columnOverrides[keys[k]] != null) {
@@ -61,17 +76,17 @@ function ngGridCsvExportPlugin (opts) {
                         curCellRaw = self.services.UtilityService.evalProperty(gridData[gridRow], keys[k]);
                     }
 
-                    csvData += '"' + csvStringify(curCellRaw) + '",';
+                    rowData += '"' + csvStringify(curCellRaw) + '",';
                 }
-                csvData = swapLastCommaForNewline(csvData);
+                csvData += swapLastCommaForNewline(rowData);
             }
-            var fp = grid.$root.find(".ngFooterPanel");
-            var csvDataLinkPrevious = grid.$root.find('.ngFooterPanel .csv-data-link-span');
+            var fp = grid.$root.find(opts.containerPanel);
+            var csvDataLinkPrevious = grid.$root.find(opts.containerPanel + ' .' + opts.linkClass);
             if (csvDataLinkPrevious != null) {csvDataLinkPrevious.remove() ; }
-            var csvDataLinkHtml = "<span class=\"csv-data-link-span\">";
-            csvDataLinkHtml += "<br><a href=\"data:text/csv;charset=UTF-8,";
+            var csvDataLinkHtml = '<span class="' + opts.linkClass + '">';
+            csvDataLinkHtml += '<br><a href="data:text/csv;charset=UTF-8,';
             csvDataLinkHtml += encodeURIComponent(csvData);
-            csvDataLinkHtml += "\" download=\"Export.csv\">CSV Export</a></br></span>" ;
+            csvDataLinkHtml += '" download="' + opts.fileName + '">' + opts.linkLabel + '</a></br></span>' ;
             fp.append(csvDataLinkHtml);
         }
         setTimeout(showDs, 0);

@@ -39,4 +39,9 @@ describe('Environment', function () {
         let tmaUrl = Environment.getEnvUrl( 'TMA', 'prod' );
         expect(tmaUrl).toBe('fakeUrl');
     });
+
+    it('should construct a mobile environment', () => {
+        let mobileUrl = Environment.getEnvUrl( 'Mobile', 'Android' );
+        expect(mobileUrl).toBe('http://s.qa.origin.sharecare.com/honeydew/sc-android.apk');
+    });
 });

@@ -42,15 +42,22 @@ class Environment {
         if ( this._isArmyApp( app ) ) {
             return this.getArmyUrl( app, env );
         }
-        else {
-            let isProd = this._isProd( env );
-
-            let q = isProd ? '' : '.',
-                literalEnv = isProd ? '' : env,
-                protocol = this._isSharecare( app ) ? 'https://' : 'http://';
-
-            return protocol + 'www.' + literalEnv + q + this.apps[app];
+        else if ( this._isMobile( app ) ) {
+            return this.getMobileUrl( app, env );
         }
+        else {
+            return this.getStandardUrl( app, env );
+        }
+    }
+
+    getStandardUrl ( app, env ) {
+        let isProd = this._isProd( env );
+
+        let q = isProd ? '' : '.',
+            literalEnv = isProd ? '' : env,
+            protocol = this._isSharecare( app ) ? 'https://' : 'http://';
+
+        return protocol + 'www.' + literalEnv + q + this.apps[app];
     }
 
     // We want to keep the army URLs in the config.js file so that we
@@ -59,6 +66,19 @@ class Environment {
         let project = app.toLowerCase();
 
         return this.dotmilConfig[`${project}_${env}`];
+    }
+
+    getMobileUrl ( app, env ) {
+        let base = 'http://s.qa.origin.sharecare.com/honeydew/',
+            appEndpoint = this._isAndroid( env )
+                ? 'sc-android.apk'
+                : 'app.zip';
+
+        return base + appEndpoint;
+    }
+
+    _isMobile ( app ) {
+        return app === 'Mobile';
     }
 
     _isArmyApp ( env ) {
@@ -73,6 +93,10 @@ class Environment {
 
     _isSharecare ( app ) {
         return app === 'SC';
+    }
+
+    _isAndroid ( env ) {
+        return env === 'Android';
     }
 }
 

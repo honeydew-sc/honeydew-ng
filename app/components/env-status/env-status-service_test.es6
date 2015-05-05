@@ -10,10 +10,17 @@ describe('EnvStatus', function () {
         EnvStatus = _EnvStatus_;
         Environment = _Environment_;
 
-        EnvStatus.apps = [ 'SC', 'Army' ];
+        EnvStatus.apps = [ 'SC', 'DROZ' ];
 
         EnvStatus.apps.map( app => {
-            httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/prod`)
+            var env = 'prod';
+
+            // the ng-resource encoder doesn't encode ':', so we need to
+            // switch it back
+            var query = encodeURIComponent(Environment.getEnvUrl( app, env ))
+                    .replace(/%3A/, ':');
+
+            httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/${env}?check=${query}`)
                 .respond( mockStatus( app ) );
         });
 
@@ -44,7 +51,8 @@ describe('EnvStatus', function () {
     }
 
     it('should get production statuses and summaries', () => {
-        expect(statuses.SC.healthcheck.summary).toBe(true);
-        expect(statuses.Army.healthcheck.summary).toBe(true);
+        EnvStatus.apps.map( app => {
+            expect(statuses[app].healthcheck.summary).toBe(true);
+        });
     });
 });

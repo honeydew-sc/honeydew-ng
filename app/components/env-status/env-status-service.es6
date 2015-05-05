@@ -25,8 +25,8 @@ class EnvStatus {
         this.apps.forEach( app => {
             let p = this.backend.get({
                 app: app,
-                env: env// ,
-                // check: this.Environment.getEnvUrl( app, env )
+                env: env,
+                check: this.Environment.getEnvUrl( app, env )
             }).$promise;
 
             p.then( res => {

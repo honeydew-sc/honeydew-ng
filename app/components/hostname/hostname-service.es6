@@ -1,45 +1,17 @@
 'use strict';
 
 angular.module('sc.hostname')
-    .service('hostname', function (dotmilConfig, $rootScope, $localStorage) {
+    .service('hostname', function (dotmilConfig, $rootScope, $localStorage, Environment) {
         var store = $localStorage;
-        var defaultEnvs = ['qa', 'stage', 'prod' ];
-        var hostnameService = {
-            envs: {
-                SC: [
-                    'al',
-                    'al2',
-                    'cm',
-                    'cm2',
-                    'dw',
-                    'dw2',
-                    'jd',
-                    'jd2',
-                    'kms',
-                    'kms2',
-                    'sg',
-                    'mservices',
-                    'preview',
-                    'stage',
-                    'prod'
-                ],
-                DROZ: defaultEnvs,
-                DS: defaultEnvs,
-                HCA: defaultEnvs,
-                Mobile: ['iOS', 'Android'],
-                Army: ['dev', 'stage', 'test', 'prod'],
-                TMA: ['dev', 'stage', 'test', 'prod']
-            },
 
-            apps: {
-                SC: 'sharecare.com',
-                DROZ: 'doctoroz.com',
-                HCA: 'hca.sharecare.com',
-                DS: 'dailystrength.org',
-                Mobile: '',
-                Army: '',
-                TMA: ''
-            },
+        let apps = Environment.apps,
+            envs = Environment.envs;
+        envs.Mobile = [ 'iOS', 'Android' ];
+        apps.Mobile = '';
+
+        var hostnameService = {
+            envs: Environment.envs,
+            apps: Environment.apps,
 
             envOptions: [],
             appOptions: [],

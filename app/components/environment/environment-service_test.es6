@@ -44,4 +44,9 @@ describe('Environment', function () {
         let mobileUrl = Environment.getEnvUrl( 'Mobile', 'Android' );
         expect(mobileUrl).toBe('http://s.qa.origin.sharecare.com/honeydew/sc-android.apk');
     });
+
+    it('should construct a healthcheck', () => {
+        let healthcheck = Environment.getHealthcheckUrl( 'SC', 'prod' );
+        expect(healthcheck).toBe('http://www.sharecare.com/healthcheck');
+    });
 });

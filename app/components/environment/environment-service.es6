@@ -77,6 +77,15 @@ class Environment {
         return base + appEndpoint;
     }
 
+    getHealthcheckUrl ( app, env ) {
+        let url = this.getStandardUrl( app, env );
+
+        url = url.replace(/https:\/\//, 'http://');
+        url += '/healthcheck';
+
+        return url;
+    }
+
     _isMobile ( app ) {
         return app === 'Mobile';
     }

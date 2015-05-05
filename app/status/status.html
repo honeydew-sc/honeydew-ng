@@ -1,10 +1,10 @@
 <div ng-controller="StatusController as status">
-  <div ng-repeat="app in status.apps">
-    <ul>
-      <li>app name: {{ app }}</li>
-      <li>healthcheck: {{ status[app].healthcheck.summary }}</li>
-      <li>honeydew: {{ status[app].honeydew.summary }}</li>
-      <li>kabocha: {{ status[app].kabocha.summary }}</li>
 
+  <div ng-repeat="app in status.statuses">
+    <ul>
+      <li>app name: {{ app.name }}</li>
+      <li>healthcheck: {{ app.healthcheck.summary }}</li>
+    </ul>
   </div>
+
 </div>

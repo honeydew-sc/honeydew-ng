@@ -36,8 +36,12 @@ describe('EnvStatus', function () {
                 .respond( mockStatus( app ) );
         });
 
-        var statuses = EnvStatus.query();
+        // kick off the requests...
+        EnvStatus.query();
+        // and resolve the promises
         httpMock.flush();
+
+        var statuses = EnvStatus.statuses;
 
         expect(statuses.SC.healthcheck.summary).toBe(true);
         expect(statuses.Army.healthcheck.summary).toBe(true);

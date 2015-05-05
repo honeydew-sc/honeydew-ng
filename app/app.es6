@@ -104,7 +104,6 @@ angular.module('honeydew', [
             .state('status', {
                 url: '/status',
                 templateUrl: 'status/status.html',
-                controller: 'StatusController',
                 onEnter: setTitle('Environment Statuses')
             });
     })

@@ -20,23 +20,7 @@ angular.module('sc.hostname')
                 // when restoring from localStorage, we undefine the
                 // env to prevent from overwriting the stored value.
                 if (this.env) {
-
-                    // the mobile hostnames look different
-                    if (this.app === 'Mobile') {
-                        var base = 'http://s.qa.origin.sharecare.com/honeydew/';
-                        var app = this.env === 'Android' ? 'sc-android.apk' : 'app.zip';
-                        store.host = base + app;
-                    }
-                    else if (this.app === 'Army' || this.app === 'TMA') {
-                        store.host = dotmilConfig[this.app.toLowerCase() + '_' + this.env];
-                    }
-                    else {
-                        var q = this.env === 'prod' ? '' : '.';
-                        var literalEnv = this.env === 'prod' ? '' : this.env;
-                        var protocol = this.app === 'SC' ? 'https://' : 'http://';
-                        store.host = protocol + 'www.' + literalEnv + q + this.apps[this.app];
-                    }
-
+                    store.host = Environment.getEnvUrl( this.app, this.env );
                     this.host = store.host;
 
                     $rootScope.$broadcast('hostname:changed', this.host);

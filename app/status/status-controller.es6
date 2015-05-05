@@ -1,7 +1,15 @@
 class StatusController {
     constructor ( EnvStatus ) {
-        this.statuses = EnvStatus.query();
-        this.apps = Object.keys(this.statuses);
+        this.statuses = {};
+        this.apps = [];
+
+        EnvStatus.query().then( res => {
+            this.statuses = EnvStatus.statuses;
+
+            // Object.keys(this.statuses).map( name => {
+            //     this.statuses[name].name = name;
+            // });
+        });
     }
 }
 

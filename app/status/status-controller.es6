@@ -1,6 +1,7 @@
 class StatusController {
     constructor ( EnvStatus ) {
         this.statuses = EnvStatus.query();
+        this.apps = Object.keys(this.statuses);
     }
 }
 

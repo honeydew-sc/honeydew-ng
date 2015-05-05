@@ -16,7 +16,7 @@ module.exports = function(config) {
 
         traceurPreprocessor: {
             options: {
-                'arrow-functions': true,
+                sourceMaps: 'inline',
                 modules: 'inline'
             },
             transformPath: function ( path ) {

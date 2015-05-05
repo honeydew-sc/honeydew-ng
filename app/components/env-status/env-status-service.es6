@@ -14,7 +14,7 @@ class EnvStatus {
 
         // Eventually, we'll want to do all Apps. For now, just Sharecare.
         // this.apps = Object.keys(Environment.apps);
-        this.apps = [ 'SC', 'SC' ];
+        this.apps = [ 'SC', 'HCA' ];
     }
 
     query () {

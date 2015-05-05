@@ -57,8 +57,9 @@ module.exports = function(config) {
 
             // load the main honeydew app so components can see it
             'app/app.es6',
-
             'app/components/**/*.es6',
+
+            // get everything else
             'app/**/*.es6',
 
             // let karma see our templates for pre-processing

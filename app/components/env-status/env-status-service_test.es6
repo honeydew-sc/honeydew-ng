@@ -17,7 +17,7 @@ describe('EnvStatus', function () {
 
             // the ng-resource encoder doesn't encode ':', so we need to
             // switch it back
-            var query = encodeURIComponent(Environment.getEnvUrl( app, env ))
+            var query = encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
                     .replace(/%3A/, ':');
 
             httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/${env}?check=${query}`)

@@ -26,7 +26,7 @@ class EnvStatus {
             let p = this.backend.get({
                 app: app,
                 env: env,
-                check: this.Environment.getEnvUrl( app, env )
+                check: this.Environment.getHealthcheckUrl( app, env )
             }).$promise;
 
             p.then( res => {

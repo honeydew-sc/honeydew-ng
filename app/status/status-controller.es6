@@ -1,5 +1,5 @@
-function StatusController (HealthcheckStatus) {
-    // HealthcheckStatus.query();
+function StatusController (EnvStatus) {
+    // EnvStatus.query();
 }
 
 angular.module('honeydew')

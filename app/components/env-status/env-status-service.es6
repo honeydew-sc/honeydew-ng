@@ -1,27 +1,32 @@
-class HealthcheckStatus {
-    constructor ($resource, $http) {
-        this.backend = $resource( '/rest.php/envstatus/:env/:type', {
-            type: '@type',
+class EnvStatus {
+    constructor ($resource, $http, Environment) {
+        this.backend = $resource( '/rest.php/envstatus/app/:app/env/:env', {
+            app: '@app',
             env: '@env'
         });
         this.http = $http;
+
+        this.envs = Environment.envs;
+
+        // Eventually, we'll want to do all Apps. For now, just Sharecare.
+        // this.apps = Object.keys(Environment.apps);
+        this.apps = [ 'SC' ];
     }
 
     query () {
-        const envs  = [ 'stage', 'prod' ];
-
-        return envs.map( env => {
-            return {
-                [env]: this.backend.get({ type: 'healthcheck', env: env })
-                    .$promise.then( res => {
-                        console.log(res);
-                    })
-            };
+        let statuses = {};
+        this.apps.forEach( app => {
+            this.backend.get({ app: app, env: 'prod' })
+                .$promise.then( res => {
+                    statuses[app] = res;
+                });
         });
+
+        return statuses;
     }
 };
 
-HealthcheckStatus.$inject = [ '$resource', '$http' ];
+EnvStatus.$inject = [ '$resource', '$http', 'Environment' ];
 
 angular.module('honeydew')
-    .service('HealthcheckStatus', HealthcheckStatus);
+    .service('EnvStatus', EnvStatus);

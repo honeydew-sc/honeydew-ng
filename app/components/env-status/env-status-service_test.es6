@@ -1,32 +1,45 @@
-ddescribe('HealthcheckStatus', function () {
+describe('EnvStatus', function () {
     let httpMock,
-        mockHealthcheck,
-        HealthcheckStatus;
+        Environment,
+        EnvStatus;
 
 
     beforeEach(module('honeydew'));
-    beforeEach(inject(function ($httpBackend, _HealthcheckStatus_) {
+    beforeEach(inject(function ($httpBackend, _EnvStatus_, _Environment_) {
         httpMock = $httpBackend;
-        HealthcheckStatus = _HealthcheckStatus_;
+        EnvStatus = _EnvStatus_;
+        Environment = _Environment_;
+    }));
 
-        mockHealthcheck = {
-            stage: {
+    function mockStatus ( app ) {
+        return {
+            healthcheck: {
+                summary: true,
                 author: true,
                 webpub: true,
-                data: true,
+                data: true
+            },
+            honeydew: {
+                summary: true
+            },
+            kabocha: {
                 summary: true
             }
         };
-    }));
+    }
 
-    it('should exist', () => {
-        httpMock.expectGET('/rest.php/envstatus/stage/healthcheck')
-            .respond(mockHealthcheck);
-        httpMock.expectGET('/rest.php/envstatus/prod/healthcheck')
-            .respond(mockHealthcheck);
+    it('should get production statuses and summaries', () => {
+        EnvStatus.apps = [ 'SC', 'Army' ];
 
-        var ret = HealthcheckStatus.query();
-        console.log(ret);
+        EnvStatus.apps.map( app => {
+            httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/prod`)
+                .respond( mockStatus( app ) );
+        });
+
+        var statuses = EnvStatus.query();
         httpMock.flush();
+
+        expect(statuses.SC.healthcheck.summary).toBe(true);
+        expect(statuses.Army.healthcheck.summary).toBe(true);
     });
 });

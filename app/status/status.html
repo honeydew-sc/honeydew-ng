@@ -1,8 +1,8 @@
 <div ng-controller="StatusController as status">
 
-  <div ng-repeat="app in status.statuses">
+  <div ng-repeat="(name, app) in status.statuses">
     <ul>
-      <li>app name: {{ app.name }}</li>
+      <li>app name: {{ name }}</li>
       <li>healthcheck: {{ app.healthcheck.summary }}</li>
     </ul>
   </div>

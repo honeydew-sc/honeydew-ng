@@ -2,18 +2,15 @@
 $app->group('/envstatus', function () use ($app) {
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
+        $checkUrl = $app->request()->get('check');
         echo json_encode(array(
-            /* 'args' => "$appName, $env", */
-            'healthcheck' => healthcheck( $appName, $env )
+            'healthcheck' => healthcheck( $checkUrl )
         ));
     });
 
-    function healthcheck ( $app, $env ) {
-        $boxTypes = array( 'webpub' => 'www' );
+    function healthcheck ( $url ) {
         $results = array();
-        foreach ( array_keys($boxTypes) as $box ) {
-            $results[$box] = checkHealth( $boxTypes[$box], $app, $env );
-        }
+        $results['webpub'] = checkHealth( $url );
 
         $results['summary'] = array_reduce(
             array_keys( $results ), function ( $acc, $key ) use ( $results ) {
@@ -23,11 +20,9 @@ $app->group('/envstatus', function () use ($app) {
         return $results;
     }
 
-    function checkHealth ( $prefix, $app, $env ) {
-        $app = appToName( $app );
-        $domain = $prefix . '.' . $app . '.com';
-        if ( canConnect( $domain ) ) {
-            $headers = get_headers( 'http://' . $domain . '/healthcheck' );
+    function checkHealth ( $url ) {
+        if ( canConnect( urlToDomain( $url ) ) ) {
+            $headers = get_headers( $url );
             return !!preg_match( '/20\d/', $headers[0] );
         }
         else {
@@ -36,16 +31,13 @@ $app->group('/envstatus', function () use ($app) {
     }
 
     function canConnect ( $domain ) {
-        $connection = fsockopen($domain, 80, $errno, $errstr, 5);
+        $connection = fsockopen($domain, 80, $errno, $errstr, 10);
 
         return is_resource($connection);
     }
 
-    function appToName ( $app ) {
-        $appNames = array(
-            'SC' => 'sharecare'
-        );
-
-        return $appNames[$app];
+    function urlToDomain ( $url ) {
+        return preg_replace('/https?:\/\/(.*)\/.*/', "$1", $url);
     }
+
 });

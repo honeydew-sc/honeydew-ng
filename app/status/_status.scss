@@ -1,4 +1,11 @@
+$maxWidth: 850px;
 .envStatus {
     min-height: 100vh;
     background-color: #eee;
+
+    ul, table {
+        max-width: $maxWidth;
+        margin: auto auto;
+    }
+
 }

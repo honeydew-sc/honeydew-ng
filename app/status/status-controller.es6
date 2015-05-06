@@ -1,10 +1,5 @@
 class StatusController {
     constructor ( EnvStatus ) {
-        this.statuses = EnvStatus.statuses;
-        this.apps = [];
-
-        // populate the statuses!
-        EnvStatus.query( app => app === 'SC' );
     }
 }
 

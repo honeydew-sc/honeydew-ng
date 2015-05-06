@@ -17,31 +17,28 @@ describe('StatusController', function () {
 
         stateParams = {};
 
-        spyOn(EnvStatus, 'query').and.callFake( () => {
-            EnvStatus.statuses = {
-                SC: {
-                    healthcheck: { summary: true },
-                    honeydew: { summary: true }
-                }
+        EnvStatus.statuses = {};
+        EnvStatus.statuses['SC, prod'] = {
+                healthcheck: { summary: true },
+                honeydew: { summary: true }
             };
 
-            var deferred = $q.defer();
-            deferred.resolve({});
-            return deferred.promise;
-        });
+        spyOn(EnvStatus, 'query');
 
         StatusController = $controller('StatusController', {
             $scope: scope,
-            $stateParams: stateParams
+            EnvStatus: EnvStatus
         });
     }));
 
     it('should query the backend for statuses', () => {
-        scope.$apply();
+        expect(EnvStatus.query).toHaveBeenCalled();
+    });
 
-        expect(StatusController.statuses
-               .SC.healthcheck.summary).toBe(true);
-        expect(StatusController.statuses
-               .SC.honeydew.summary).toBe(true);
+    it('should make the statuses available on the vm', () => {
+        expect(StatusController.statuses['SC, prod']
+               .healthcheck.summary).toBe(true);
+        expect(StatusController.statuses['SC, prod']
+               .honeydew.summary).toBe(true);
     });
 });

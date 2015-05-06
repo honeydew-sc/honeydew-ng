@@ -1,8 +1,8 @@
 function EnvStatusController (EnvStatus) {
-    let appQuery = this.app || 'SC',
-        envQuery = this.env || 'prod';
+    let appQuery = new RegExp(this.app || 'SC'),
+        envQuery = new RegExp(this.env || '.*');
 
-    this.statuses = EnvStatus.query( app => app === appQuery, env => env === envQuery );
+    this.statuses = EnvStatus.query( app => appQuery.test(app), env => envQuery.test(env) );
     console.log(this.statuses);
 }
 

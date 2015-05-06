@@ -19,7 +19,7 @@ class EnvStatus {
         this.statuses = this.statuses || {};
     }
 
-    query ( appFilter = ( () => true ), envFilter = ( () => true ) ) {
+    query ( appFilter = () => true, envFilter = () => true ) {
         let promises = [],
             apps = this.apps.filter( appFilter );
 

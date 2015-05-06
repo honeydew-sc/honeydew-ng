@@ -25,7 +25,7 @@ describe('EnvStatus', function () {
         });
 
         // kick off the requests...
-        EnvStatus.query( env => env === 'prod' );
+        EnvStatus.query( () => true, env => env === 'prod' );
         // and resolve the promises
         httpMock.flush();
 

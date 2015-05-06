@@ -27,7 +27,6 @@ class EnvStatus {
         apps.forEach( app => {
             let envs = this.envs[app].filter( envFilter );
 
-
             envs.forEach( env => {
                 let key = `${app}, ${env}`;
 

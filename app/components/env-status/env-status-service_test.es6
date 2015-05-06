@@ -1,5 +1,6 @@
 describe('EnvStatus', function () {
-    let httpMock,
+    let results,
+        httpMock,
         statuses,
         EnvStatus,
         Environment;
@@ -25,7 +26,7 @@ describe('EnvStatus', function () {
         });
 
         // kick off the requests...
-        EnvStatus.query( () => true, env => env === 'prod' );
+        results = EnvStatus.query( () => true, env => env === 'prod' );
         // and resolve the promises
         httpMock.flush();
 
@@ -50,8 +51,30 @@ describe('EnvStatus', function () {
 
     }
 
-    it('should get production statuses and summaries', () => {
+    it('should cache all statuses and summaries', () => {
         expect(statuses['SC, prod'].healthcheck.summary).toBe(true);
         expect(statuses['DROZ, prod'].healthcheck.summary).toBe(true);
+    });
+
+    it('should return the results of a query', () => {
+        expect(results['SC, prod'].healthcheck.summary).toBe(true);
+        expect(results['DROZ, prod'].healthcheck.summary).toBe(true);
+    });
+
+    it('should make the $promise available ', () => {
+        expect(results.$promise).toBeDefined();
+        var resolved = results.$promise.$$state.status;
+        expect(resolved).toBe(1);
+    });
+
+    it('should filter out unwanted applications', () => {
+        let results = EnvStatus.query( app => app === 'SC', env => env === 'prod' );
+        expect(Object.keys(results)).toContain('SC, prod');
+    });
+
+    it('should filter out unwanted environments', () => {
+        let results = EnvStatus.query( undefined, env => env === 'stage' );
+        expect(Object.keys(results)).toContain('SC, stage');
+        expect(Object.keys(results)).toContain('DROZ, stage');
     });
 });

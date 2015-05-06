@@ -49,4 +49,9 @@ describe('Environment', function () {
         let healthcheck = Environment.getHealthcheckUrl( 'SC', 'prod' );
         expect(healthcheck).toBe('http://www.sharecare.com/healthcheck');
     });
+
+    it('should construct a droz healthcheck', () => {
+        let drozCheck = Environment.getHealthcheckUrl( 'DROZ', 'prod' );
+        expect(drozCheck).toBe('http://www.doctoroz.com/healthcheck.php');
+    });
 });

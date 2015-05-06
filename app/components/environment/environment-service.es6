@@ -82,6 +82,9 @@ class Environment {
 
         url = url.replace(/https:\/\//, 'http://');
         url += '/healthcheck';
+        if (this._isDroz(app) ) {
+            url += '.php';
+        }
 
         return url;
     }
@@ -102,6 +105,10 @@ class Environment {
 
     _isSharecare ( app ) {
         return app === 'SC';
+    }
+
+    _isDroz ( app ) {
+        return app === 'DROZ';
     }
 
     _isAndroid ( env ) {

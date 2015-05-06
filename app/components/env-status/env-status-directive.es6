@@ -2,8 +2,10 @@ function EnvStatusController (EnvStatus) {
     let appQuery = new RegExp(this.app || 'SC'),
         envQuery = new RegExp(this.env || '.*');
 
-    this.statuses = EnvStatus.query( app => appQuery.test(app), env => envQuery.test(env) );
-    console.log(this.statuses);
+    this.statuses = EnvStatus.query(
+        app => appQuery.test(app),
+        env => envQuery.test(env)
+    );
 }
 
 angular.module('honeydew')

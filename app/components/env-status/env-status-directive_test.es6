@@ -1,21 +1,26 @@
-ddescribe('EnvStatus directive', () => {
+describe('EnvStatus directive', () => {
     var elm,
+        elm2,
         ctrl,
         scope,
+        $compile,
         EnvStatus;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope, _EnvStatus_) => {
+    beforeEach(inject( (_$compile_, $rootScope, _EnvStatus_) => {
+        $compile = _$compile_;
         EnvStatus = _EnvStatus_;
-        // EnvStatus.statuses = {};
-        EnvStatus.statuses['SC, prod'] = {
-            healthcheck: { summary: true },
-            honeydew: { summary: true }
+
+        var mockStatuses = {
+            'SC, prod': {
+                healthcheck: { summary: true },
+                honeydew: { summary: true }
+            }
         };
 
-        spyOn(EnvStatus, 'query');
+        spyOn(EnvStatus, 'query').and.returnValue(mockStatuses);
 
         elm = angular.element('<env-status app="SC"></env-status>');
         scope = $rootScope;
@@ -55,7 +60,7 @@ ddescribe('EnvStatus directive', () => {
     });
 
     it('should make a red X for successful healthchecks', () => {
-        EnvStatus.statuses['SC, prod'].healthcheck.summary = false;
+        ctrl.statuses['SC, prod'].healthcheck.summary = false;
         scope.$digest();
 
         let successfulHealthcheck = elm.find('td.healthcheck span').attr('class');
@@ -63,7 +68,7 @@ ddescribe('EnvStatus directive', () => {
     });
 
     it('should make a red X for failed healthchecks', () => {
-        EnvStatus.statuses['SC, prod'].healthcheck.summary = false;
+        ctrl.statuses['SC, prod'].healthcheck.summary = false;
         scope.$digest();
 
         let successfulHealthcheck = elm.find('td.healthcheck span').attr('class');
@@ -71,10 +76,25 @@ ddescribe('EnvStatus directive', () => {
     });
 
     it('should make a silver X for pending healthchecks', () => {
-        EnvStatus.statuses['SC, prod'] = {};
+        ctrl.statuses['SC, prod'] = {};
         scope.$digest();
 
         let pendingHealthcheck = elm.find('td.healthcheck span').attr('class');
         expect(pendingHealthcheck).toMatch(/times.*silver/);
+    });
+
+    it('should allow for tables to have different data', () => {
+        let elm2 = angular.element('<env-status app="DROZ"></env-status>');
+        EnvStatus.query.and.returnValue({
+            'DROZ, prod': {
+                healthcheck: { summary: true },
+                honeydew: { summary: true }
+            }
+        });
+        $compile(elm2)(scope.$new());
+        scope.$digest();
+
+        expect(elm.find('table tbody tr').text()).toMatch(/SC/);
+        expect(elm2.find('table tbody tr').text()).toMatch(/DROZ/);
     });
 });

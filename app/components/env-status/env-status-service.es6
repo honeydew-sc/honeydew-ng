@@ -15,22 +15,20 @@ class EnvStatus {
         // Eventually, we'll want to do all Apps. For now, just Sharecare.
         // this.apps = Object.keys(Environment.apps);
         this.apps = [ 'SC', 'HCA' ];
-    }
-
-    query ( envFilter ) {
-        let promises = [],
-            env = 'prod';
-
-        envFilter = envFilter || ( env => {
-            return env === 'prod' || env === 'stage';
-        });
 
         this.statuses = this.statuses || {};
+    }
 
-        this.apps.forEach( app => {
+    query ( appFilter = ( () => true ), envFilter = ( () => true ) ) {
+        let promises = [],
+            apps = this.apps.filter( appFilter );
+
+        apps.forEach( app => {
             let envs = this.envs[app].filter( envFilter );
 
             envs.forEach( env => {
+                this.statuses[`${app}, ${env}`] = {};
+
                 let p = this.backend.get({
                     app: app,
                     env: env,

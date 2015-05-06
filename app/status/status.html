@@ -1,7 +1,11 @@
 <div ng-controller="StatusController as status" class="envStatus">
 
-  <env-status app="SC"></env-status>
+  <ul>
+    <li ng-repeat="app in status.apps">
+      <a ng-click="status.scroll( app )" ng-href="">{{ app }}</a>
+    </li>
+  </ul>
 
-  <env-status app="HCA"></env-status>
+  <env-status ng-repeat="app in status.apps" app="{{app}}"></env-status>
 
 </div>

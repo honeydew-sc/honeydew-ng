@@ -1,11 +1,22 @@
 $maxWidth: 850px;
+$bg: #eee;
+
 .envStatus {
     min-height: 100vh;
-    background-color: #eee;
+    background-color: $bg;
+
+    padding-top: 25px;
 
     ul, table {
         max-width: $maxWidth;
         margin: auto auto;
     }
 
+    nav.navbar {
+        background-color: $bg;
+
+        div.container {
+            max-width: $maxWidth;
+        }
+    }
 }

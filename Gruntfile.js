@@ -25,7 +25,7 @@ module.exports = function (grunt) {
             dist: 'dist',
             heroku: 'heroku',
             backend: 'backend',
-            folders: '{components,editor,landing,monitor,report,screenshot,set}'
+            folders: '{components,editor,landing,monitor,report,screenshot,set,status}'
         },
 
         // Watches files for changes and runs tasks based on the changed files

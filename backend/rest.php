@@ -6,6 +6,7 @@ $app = new \Slim\Slim();
 $app->contentType('application/json');
 
 require 'rest-routes/autocomplete-sources.php';
+require 'rest-routes/envstatus.php';
 require 'rest-routes/files.php';
 require_once 'rest-routes/job/HoneydewJob.php';
 require 'rest-routes/jobs.php';

@@ -1,41 +1,7 @@
-<div ng-controller="StatusController as status" class="envStatus table-responsive">
+<div ng-controller="StatusController as status" class="envStatus">
 
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>app</th>
-        <th>env</th>
-        <th>healthcheck</th>
-        <!-- <th>honeydew</th>
-        <th>kabocha</th> -->
-      </tr>
-    </thead>
-    <tbody>
+  <env-status app="SC"></env-status>
 
-      <tr ng-repeat="(name, app) in status.statuses">
-        <td>
-          <span>{{ ::name.split(',')[0] }}</span>
-        </td>
-        <td>
-          <span>{{ ::name.split(',')[1] }}</span>
-        </td>
-        <td>
-          <span class="fa fa-2x"
-                ng-class="{
-                'fa-check-circle green': app.healthcheck.summary === true,
-                'fa-times-circle red': app.healthcheck.summary === false,
-                'fa-times-circle silver': !app.hasOwnProperty('healthcheck')
-                }"
-                ></span>
-        </td>
-        <!-- <td>
-        <span>{{ app.honeydew.summary }}</span>
-        </td>
-        <td>
-        <span>{{ app.kabocha.summary }}</span>
-        </td> -->
-      </tr>
-    </tbody>
-  </table>
+  <env-status app="HCA"></env-status>
 
 </div>

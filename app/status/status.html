@@ -1,11 +1,15 @@
 <div ng-controller="StatusController as status" class="envStatus">
 
-  <ul>
-    <li ng-repeat="app in status.apps">
-      <a ng-click="status.scroll( app )" ng-href="">{{ app }}</a>
-    </li>
-  </ul>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container container-fluid">
+      <ul class="nav navbar-nav">
+        <li ng-repeat="app in ::status.apps">
+          <a ng-click="status.scroll( app )" ng-href="">{{ app }}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-  <env-status ng-repeat="app in status.apps" app="{{app}}"></env-status>
+  <env-status ng-repeat="app in ::status.apps" app="{{::app}}"></env-status>
 
 </div>

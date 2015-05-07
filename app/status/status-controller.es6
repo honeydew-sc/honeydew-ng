@@ -1,10 +1,6 @@
 class StatusController {
-    constructor ( $anchorScroll, $location, EnvStatus ) {
-        this.apps = [
-            'SC',
-            'DROZ',
-            'HCA'
-        ];
+    constructor ( $anchorScroll, $location, $stateParams, EnvStatus, Environment ) {
+        this.apps = Object.keys(Environment.apps);
 
         this.$location = $location;
         this.$anchorScroll = $anchorScroll;
@@ -17,7 +13,7 @@ class StatusController {
     }
 }
 
-StatusController.$inject = [ '$anchorScroll', '$location', 'EnvStatus' ];
+StatusController.$inject = [ '$anchorScroll', '$location', '$stateParams', 'EnvStatus', 'Environment' ];
 
 angular.module('honeydew')
     .controller('StatusController', StatusController);

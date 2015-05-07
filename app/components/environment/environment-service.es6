@@ -39,7 +39,7 @@ class Environment {
     }
 
     getEnvUrl ( app, env ) {
-        if ( this._isArmyApp( app ) ) {
+        if ( this._isArmy( app ) ) {
             return this.getArmyUrl( app, env );
         }
         else if ( this._isMobile( app ) ) {
@@ -78,25 +78,42 @@ class Environment {
     }
 
     getHealthcheckUrl ( app, env ) {
-        let url = this.getEnvUrl( app, env );
+        let url = this.getEnvUrl( app, env ) || '';
 
         url = url.replace(/https:\/\//, 'http://');
         url += '/healthcheck';
-        if (this._isDroz(app) ) {
+
+        if (this._isDroz( app ) ) {
             url += '.php';
         }
 
-        return url;
+        if (this._isArmy( app ) ) {
+            return this._armyHealthcheckPass( url );
+        }
+        else {
+            return url += '?details=true';
+        }
     }
 
     _isMobile ( app ) {
         return app === 'Mobile';
     }
 
-    _isArmyApp ( env ) {
+    _isArmy ( env ) {
         let lowerEnv = env.toLowerCase();
 
         return lowerEnv === 'army' || lowerEnv === 'tma';
+    }
+
+    _armyHealthcheckPass ( url ) {
+        let healthcheckKey = this.dotmilConfig['healthcheckKey'] || '';
+        let armyCheck = url
+                .replace('http', 'https')
+                .replace('//healthcheck', '/healthcheck')
+                + '?details=true'
+                + `&healthcheckKey=${healthcheckKey}`;
+
+        return armyCheck;
     }
 
     _isProd ( env ) {

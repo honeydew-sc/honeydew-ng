@@ -1,4 +1,4 @@
-<div class="env-status table-responsive">
+<div ng-attr-id="{{ EnvStatus.app }}" class="env-status table-responsive">
 
   <table class="table table-hover">
     <thead>
@@ -19,14 +19,34 @@
         <td class="env">
           <span>{{ ::name.split(',')[1] }}</span>
         </td>
-        <td class="healthcheck">
-          <span class="fa fa-2x"
-                ng-class="{
-                'fa-check-circle green': app.healthcheck.summary === true,
-                'fa-times-circle red': app.healthcheck.summary === false,
-                'fa-times-circle silver': !app.hasOwnProperty('healthcheck')
-                }"
-                ></span>
+        <td class="healthcheck dropdown">
+
+          <div class="dropdown">
+            <a ng-href="" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="fa fa-2x"
+                    ng-class="{
+                    'fa-check-circle green': app.healthcheck.summary === true,
+                    'fa-times-circle red': app.healthcheck.summary === false,
+                    'fa-times-circle silver': !app.hasOwnProperty('healthcheck')
+                    }"
+                    ></span>
+            </a>
+            <div class="dropdown-menu healthcheck-popover" role="menu">
+              healthchecks:
+              <ul>
+                <li>
+                  <a target="_blank" ng-href="{{ app.healthcheck.webpub.url }}">webpub</a>
+                  <span class="fa fa-2x"
+                        ng-class="{
+                        'fa-check-circle green': app.healthcheck.webpub === true,
+                        'fa-times-circle red': app.healthcheck.webpub === false,
+                        'fa-times-circle silver': !app.healthcheck.hasOwnProperty('webpub')
+                        }"
+                        ></span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </td>
         <!-- <td>
         <span>{{ app.honeydew.summary }}</span>

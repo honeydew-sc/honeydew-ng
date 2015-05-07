@@ -47,6 +47,16 @@ describe('Environment', function () {
 
     it('should construct a healthcheck', () => {
         let healthcheck = Environment.getHealthcheckUrl( 'SC', 'prod' );
-        expect(healthcheck).toBe('http://www.sharecare.com/healthcheck');
+        expect(healthcheck).toBe('http://www.sharecare.com/healthcheck?details=true');
+    });
+
+    it('should construct a droz healthcheck', () => {
+        let drozCheck = Environment.getHealthcheckUrl( 'DROZ', 'prod' );
+        expect(drozCheck).toBe('http://www.doctoroz.com/healthcheck.php?details=true');
+    });
+
+    it('should construct a droz healthcheck', () => {
+        let check = Environment.getHealthcheckUrl( 'Army', 'prod' );
+        expect(check).toBe('/healthcheck?details=true&healthcheckKey=');
     });
 });

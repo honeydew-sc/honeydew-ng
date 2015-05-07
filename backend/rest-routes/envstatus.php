@@ -34,10 +34,17 @@ $app->group('/envstatus', function () use ($app) {
         }
     }
 
-    function canConnect ( $domain ) {
-        /* we'll need to fiddle with this timeout time, as 1 second
-        might be too slow... */
-        $connection = @fsockopen($domain, 80, $errno, $errstr, 10);
+    function can_connect ( $url ) {
+        if ( strpos($url, 'https') === false ) {
+            $port = 80;
+        }
+        else {
+            $port = 443;
+        }
+
+        $timeout = 8;
+        $domain = url_to_domain( $url );
+        $connection = @fsockopen($domain, $port, $errno, $errstr, $timeout);
 
         return is_resource($connection);
     }

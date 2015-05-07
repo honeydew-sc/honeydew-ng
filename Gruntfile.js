@@ -393,11 +393,19 @@ module.exports = function (grunt) {
         concat: {
             hostnameJs: {
                 src: [
-                    '<%= yeoman.app %>/config.js',
+                    // external dependencies
+                    '<%= yeoman.app %>/bower_components/traceur-runtime/traceur-runtime.js',
                     '<%= yeoman.app %>/bower_components/ngstorage/ngStorage.min.js',
+
+                    // configuration module
+                    '<%= yeoman.app %>/config.js',
+                    '<%= yeoman.app %>/components/environment/*.js',
+                    '!<%= yeoman.app %>/components/environment/*_test.js',
+
+                    // hostname module
                     '<%= yeoman.app %>/components/hostname/sc-hostname-app.js',
                     '<%= yeoman.app %>/components/hostname/*.js',
-                    '!<%= yeoman.app %>/components/hostname/*_test.js'
+                    '!<%= yeoman.app %>/components/hostname/*_test.js',
                 ],
                 dest: '<%= yeoman.dist %>/scripts/sc.hostname.js'
             },

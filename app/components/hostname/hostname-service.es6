@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('sc.hostname')
     .service('hostname', function (dotmilConfig, $rootScope, $localStorage, Environment) {
         var store = $localStorage;

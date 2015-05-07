@@ -8,9 +8,15 @@ class reportTests extends UnitTestCase {
     protected $baseUrl = "http://127.0.0.1/rest.php/envstatus";
 
     function testHealthcheckStatus () {
-        $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2localhost%2F404')->send();
+        $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2Flocalhost%2F404')->send();
         $healthcheck = $res->body->healthcheck;
-        $this->assertFalse($healthcheck->{'webpub'});
+        $this->assertFalse($healthcheck->{'webpub'}->{'status'});
         $this->assertFalse($healthcheck->{'summary'});
+    }
+
+    function testStatusIncludesUrl() {
+        $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2Flocalhost%2F404')->send();
+        $healthcheck = $res->body->healthcheck;
+        $this->assertEqual($healthcheck->{'webpub'}->{'url'}, 'http://localhost/404');
     }
 }

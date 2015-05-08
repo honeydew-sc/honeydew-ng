@@ -87,7 +87,6 @@ angular.module('honeydew', [
             .state('monitor', {
                 url: '/monitor',
                 templateUrl: 'monitor/monitor.html',
-                controller: 'MonitorCtrl',
                 onEnter: setTitle('Monitors')
             })
             .state('report', {

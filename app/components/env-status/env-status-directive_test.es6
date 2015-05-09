@@ -43,7 +43,7 @@ describe('EnvStatus directive', () => {
 
     it('should have table headers ', () => {
         let headers = elm.find('table.table th').text();
-        expect(headers).toBe('appenvhealthcheck');
+        expect(headers).toBe('appenvhealthcheckhoneydew');
     });
 
     it('should properly split the name and env out', () => {

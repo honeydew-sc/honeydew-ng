@@ -6,8 +6,8 @@
         <th>app</th>
         <th>env</th>
         <th>healthcheck</th>
-        <!-- <th>honeydew</th>
-        <th>kabocha</th> -->
+        <th>honeydew</th>
+        <!-- <th>kabocha</th> -->
       </tr>
     </thead>
     <tbody>
@@ -48,10 +48,10 @@
             </div>
           </div>
         </td>
-        <!-- <td>
-        <span>{{ app.honeydew.summary }}</span>
-        </td>
         <td>
+          <span>{{ app.honeydew.success/app.honeydew.total*100 }}</span>
+        </td>
+        <!-- <td>
         <span>{{ app.kabocha.summary }}</span>
         </td> -->
       </tr>

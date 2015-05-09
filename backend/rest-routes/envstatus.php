@@ -1,10 +1,14 @@
 <?php
 $app->group('/envstatus', function () use ($app) {
+    require_once 'rest-routes/envstatus/lockerboxclient.php'; # provides getBuildOnEnv
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
         $checkUrl = $app->request()->get('check');
+        $build = getBuildOnEnv( $env, $appName );
+
         echo json_encode(array(
-            'healthcheck' => healthcheck( $checkUrl )
+            'healthcheck' => healthcheck( $checkUrl ),
+            'build' => array ( 'webpub' => $build ),
         ));
     });
 
@@ -12,7 +16,6 @@ $app->group('/envstatus', function () use ($app) {
         $results = array();
         $results['webpub'] = array(
             'status' => check_health( $url ),
-            'build' => '',
             'url' => $url
         );
 

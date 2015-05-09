@@ -48,8 +48,16 @@
             </div>
           </div>
         </td>
-        <td>
-          <span>{{ app.honeydew.success/app.honeydew.total*100 }}</span>
+        <td class="honeydew">
+          <a target="_blank" ng-href="{{ app.honeydew.url }}">
+          <span class="fa fa-2x"
+                    ng-class="{
+                    'fa-check-circle green': app.honeydew.summary === true,
+                    'fa-times-circle red': app.honeydew.summary === false,
+                    'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
+                    }"
+                ></span>
+          </a>
         </td>
         <!-- <td>
         <span>{{ app.kabocha.summary }}</span>

@@ -36,10 +36,10 @@
               <ul>
                 <li>
                   <a target="_blank" ng-href="{{ app.healthcheck.webpub.url }}">webpub</a>
-                  <span class="fa fa-2x"
+                  <span class="fa"
                         ng-class="{
-                        'fa-check-circle green': app.healthcheck.webpub === true,
-                        'fa-times-circle red': app.healthcheck.webpub === false,
+                        'fa-check-circle green': app.healthcheck.webpub.status === true,
+                        'fa-times-circle red': app.healthcheck.webpub.status === false,
                         'fa-times-circle silver': !app.healthcheck.hasOwnProperty('webpub')
                         }"
                         ></span>

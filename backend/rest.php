@@ -5,17 +5,17 @@ require 'hdewdb_connect.php';
 $app = new \Slim\Slim();
 $app->contentType('application/json');
 
-require 'rest-routes/autocomplete-sources.php';
-require 'rest-routes/envstatus.php';
-require 'rest-routes/files.php';
+require_once 'rest-routes/autocomplete-sources.php';
+require_once 'rest-routes/envstatus.php';
+require_once 'rest-routes/files.php';
 require_once 'rest-routes/job/HoneydewJob.php';
-require 'rest-routes/jobs.php';
-require 'rest-routes/monitor.php';
-require 'rest-routes/pusher.php';
-require 'rest-routes/status.php';
-require 'rest-routes/report.php';
-require 'rest-routes/tree.php';
-require 'rest-routes/user.php';
+require_once 'rest-routes/jobs.php';
+require_once 'rest-routes/monitor.php';
+require_once 'rest-routes/pusher.php';
+require_once 'rest-routes/status.php';
+require_once 'rest-routes/report.php';
+require_once 'rest-routes/tree.php';
+require_once 'rest-routes/user.php';
 
 $app->run();
 

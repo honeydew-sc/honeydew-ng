@@ -9,7 +9,7 @@ $app->group('/envstatus', function () use ($app) {
         echo json_encode(array(
             'healthcheck' => healthcheck( $checkUrl ),
             'build' => array ( 'webpub' => $build ),
-            'honeydew' => honeydew_status( $build )
+            'honeydew' => honeydew_status( $build, url_to_domain( $checkUrl ) )
         ));
     });
 
@@ -57,16 +57,20 @@ $app->group('/envstatus', function () use ($app) {
         return preg_replace('/https?:\/\/(.*)\/.*/', "$1", $url);
     }
 
-    function honeydew_status ( $build ) {
+    function honeydew_status ( $build, $url) {
+        $host = '%' . $url . '%';
         $sql = '
         SELECT COUNT( IF ( status != "failure", 1, NULL ) ) AS success,
         count(*) AS total
         FROM report
-        WHERE buildNumber = ?';
+        WHERE buildNumber = ?
+        AND setRunId IS NOT NULL
+        AND HOST like ?
+        AND endDate >= now() - INTERVAL 2 DAY';
 
         $pdo = hdewdb_connect();
         $query = $pdo->prepare($sql);
-        $query->execute( array( $build ) );
+        $query->execute( array( $build, $host ) );
         $status = $query->fetchAll(PDO::FETCH_ASSOC);
 
         /* returns { success: $count, total: $count } */

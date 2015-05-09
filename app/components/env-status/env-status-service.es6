@@ -36,6 +36,12 @@ class EnvStatus {
                 }).$promise;
 
                 p.then( res => {
+                    if ( res.hasOwnProperty('honeydew') && res.honeydew.total !== 0 ) {
+                        res.honeydew.summary = Math.round(
+                            res.honeydew.success / res.honeydew.total * 100
+                        );
+                    }
+
                     this.statuses[key] = results[key] = res;
                 });
 

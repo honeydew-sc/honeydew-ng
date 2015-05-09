@@ -18,11 +18,10 @@ describe('EnvStatus', function () {
 
             // the ng-resource encoder doesn't encode ':', so we need to
             // switch it back
-            var query = encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
-                    .replace(/%3A/, ':');
+            var query = mockedCheck( app, env );
 
             httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/${env}?check=${query}`)
-                .respond( mockStatus( app ) );
+                .respond( mockStatus() );
         });
 
         // kick off the requests...
@@ -33,7 +32,7 @@ describe('EnvStatus', function () {
         statuses = EnvStatus.statuses;
     }));
 
-    function mockStatus ( app ) {
+    function mockStatus ( honeydew = { success: 8, total: 10 } ) {
         return {
             healthcheck: {
                 summary: true,
@@ -41,14 +40,17 @@ describe('EnvStatus', function () {
                 webpub: true,
                 data: true
             },
-            honeydew: {
-                summary: true
-            },
-            kabocha: {
-                summary: true
-            }
+            honeydew// ,
+            // kabocha: {
+            //     summary: true
+            // }
         };
 
+    }
+
+    function mockedCheck ( app = 'SC', env = 'prod' ) {
+        return encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
+            .replace(/%3A/, ':');
     }
 
     it('should cache all statuses and summaries', () => {
@@ -77,4 +79,22 @@ describe('EnvStatus', function () {
         expect(Object.keys(results)).toContain('SC, stage');
         expect(Object.keys(results)).toContain('DROZ, stage');
     });
+
+    it('should calculate the honeydew summary', () => {
+        let status = results['SC, prod'];
+        expect(status.hasOwnProperty('honeydew')).toBe(true);
+        expect(status.honeydew.summary).toBe(80);
+    });
+
+    it('should not have a summary for an invalid honeydew db lookup', () => {
+        let query = mockedCheck( 'SC', 'al' );
+        httpMock.expectGET(`/rest.php/envstatus/app/SC/env/al?check=${query}`)
+            .respond( mockStatus( { success: 0, total: 0 } ) );
+        let results = EnvStatus.query( app => app === 'SC', env => env === 'al' );
+        httpMock.flush();
+
+        console.log(results['SC, al'].honeydew);
+    });
+
+
 });

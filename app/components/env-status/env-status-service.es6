@@ -35,7 +35,13 @@ class EnvStatus {
                     check: this.Environment.getHealthcheckUrl( app, env )
                 }).$promise;
 
-                p.then( res => {
+                p.then( addHoneydewSummary )
+                    .then( addHoneydewDashboard.bind(this) )
+                    .then( cacheResults.bind(this) );
+
+                promises.push(p);
+
+                function addHoneydewSummary ( res ) {
                     let ARBITRARY_HONEYDEW_SUCCESS = 75;
                     if ( res.hasOwnProperty('honeydew') && res.honeydew.total != 0 ) {
                         res.honeydew.summary = Math.round(
@@ -43,19 +49,24 @@ class EnvStatus {
                         ) > ARBITRARY_HONEYDEW_SUCCESS;
                     }
 
+                    return res;
+                }
+
+                function addHoneydewDashboard ( res ) {
                     let envUrl = this.Environment.getEnvUrl( app, env ),
                         build = res.build.webpub,
                         endpoint = '/dashboard/index.html';
                     res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}&fail-filter=true`;
 
                     return res;
-                }).then( res => {
+                }
+
+                function cacheResults ( res ) {
                     // ehhhh let's keep all the results around on
                     // statuses? shrug.
                     this.statuses[key] = results[key] = res;
-                });
-
-                promises.push(p);
+                    return res;
+                }
             });
         });
 

@@ -132,7 +132,7 @@ class LockerBox {
 
 }
 
-function getBuildOnEnv( $env, $app ) {
+function get_build( $env, $app ) {
     $globalConfig = readInConfSettings();
 
     /* The bucket abstracts out which URL to query, and what the build

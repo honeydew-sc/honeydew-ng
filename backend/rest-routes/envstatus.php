@@ -1,10 +1,10 @@
 <?php
 $app->group('/envstatus', function () use ($app) {
-    require_once 'rest-routes/envstatus/lockerboxclient.php'; # provides getBuildOnEnv
+    require_once 'rest-routes/envstatus/lockerboxclient.php'; # provides get_build
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
         $checkUrl = $app->request()->get('check');
-        $build = getBuildOnEnv( $env, $appName );
+        $build = get_build( $env, $appName );
 
         echo json_encode(array(
             'healthcheck' => healthcheck( $checkUrl ),

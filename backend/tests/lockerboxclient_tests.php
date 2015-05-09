@@ -32,7 +32,7 @@ class LockerboxClient extends UnitTestCase {
         );
 
         foreach ($combos as $args) {
-            $build = call_user_func_array( 'getBuildOnEnv' , $args );
+            $build = call_user_func_array( 'get_build' , $args );
             $this->assertPattern( '/\d{8}[-.]\d{4}/', $build );
         }
     }

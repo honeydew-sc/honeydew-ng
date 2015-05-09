@@ -133,8 +133,5 @@ class Environment {
     }
 }
 
-
-Environment.$inject = [ 'dotmilConfig' ];
-
 angular.module('config')
     .service('Environment', Environment);

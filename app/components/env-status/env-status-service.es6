@@ -48,7 +48,5 @@ class EnvStatus {
     }
 };
 
-EnvStatus.$inject = [ '$resource', '$http', '$q', 'Environment' ];
-
 angular.module('honeydew')
     .service('EnvStatus', EnvStatus);

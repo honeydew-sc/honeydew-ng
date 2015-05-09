@@ -13,7 +13,5 @@ class StatusController {
     }
 }
 
-StatusController.$inject = [ '$anchorScroll', '$location', '$stateParams', 'EnvStatus', 'Environment' ];
-
 angular.module('honeydew')
     .controller('StatusController', StatusController);

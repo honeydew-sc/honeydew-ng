@@ -36,12 +36,22 @@ class EnvStatus {
                 }).$promise;
 
                 p.then( res => {
-                    if ( res.hasOwnProperty('honeydew') && res.honeydew.total !== 0 ) {
+                    let ARBITRARY_HONEYDEW_SUCCESS = 75;
+                    if ( res.hasOwnProperty('honeydew') && res.honeydew.total != 0 ) {
                         res.honeydew.summary = Math.round(
                             res.honeydew.success / res.honeydew.total * 100
-                        );
+                        ) > ARBITRARY_HONEYDEW_SUCCESS;
                     }
 
+                    let envUrl = this.Environment.getEnvUrl( app, env ),
+                        build = res.build.webpub,
+                        endpoint = '/dashboard/index.html';
+                    res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}&fail-filter=true`;
+
+                    return res;
+                }).then( res => {
+                    // ehhhh let's keep all the results around on
+                    // statuses? shrug.
                     this.statuses[key] = results[key] = res;
                 });
 

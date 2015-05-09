@@ -33,6 +33,7 @@ describe('EnvStatus', function () {
     }));
 
     function mockStatus ( honeydew = { success: 8, total: 10 } ) {
+        let build = { webpub: '1.2.3.4' };
         return {
             healthcheck: {
                 summary: true,
@@ -40,6 +41,7 @@ describe('EnvStatus', function () {
                 webpub: true,
                 data: true
             },
+            build,
             honeydew// ,
             // kabocha: {
             //     summary: true
@@ -83,7 +85,7 @@ describe('EnvStatus', function () {
     it('should calculate the honeydew summary', () => {
         let status = results['SC, prod'];
         expect(status.hasOwnProperty('honeydew')).toBe(true);
-        expect(status.honeydew.summary).toBe(80);
+        expect(status.honeydew.summary).toBe(true);
     });
 
     it('should not have a summary for an invalid honeydew db lookup', () => {
@@ -93,7 +95,13 @@ describe('EnvStatus', function () {
         let results = EnvStatus.query( app => app === 'SC', env => env === 'al' );
         httpMock.flush();
 
-        console.log(results['SC, al'].honeydew);
+        expect(results['SC, al'].honeydew.hasOwnProperty('summary'))
+               .toBe(false);
+    });
+
+    it('should derive the dashboard url', () => {
+        let status = results['SC, prod'];
+        expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname.*fail/);
     });
 
 

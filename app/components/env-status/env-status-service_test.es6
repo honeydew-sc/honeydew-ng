@@ -101,7 +101,7 @@ describe('EnvStatus', function () {
 
     it('should derive the dashboard url', () => {
         let status = results['SC, prod'];
-        expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname.*fail/);
+        expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname/);
     });
 
 

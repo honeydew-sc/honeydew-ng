@@ -56,7 +56,7 @@ class EnvStatus {
                     let envUrl = this.Environment.getEnvUrl( app, env ),
                         build = res.build.webpub,
                         endpoint = '/dashboard/index.html';
-                    res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}&fail-filter=true`;
+                    res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
 
                     return res;
                 }

@@ -16,6 +16,7 @@ node_modules
 /app/app.css
 /app/app.css.map
 *.es6.map
+*.map
 .tern*
 /backend/vendor/
 /vendor/

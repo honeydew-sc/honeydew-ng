@@ -386,6 +386,19 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.heroku %>',
                     src: ['**/*']
                 }]
+            },
+            fakeUglify: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '.tmp/concat/scripts',
+                    dest: '<%= yeoman.dist %>/scripts',
+                    src: ['*.js']
+                }]
+            },
+            fakeUglifyHostname: {
+                src: 'dist/scripts/sc.hostname.annotate.js',
+                dest: 'dist/scripts/sc.hostname.min.js'
             }
         },
 
@@ -580,7 +593,8 @@ module.exports = function (grunt) {
         traceur: {
             options: {
                 sourceMaps: 'inline',
-                modules: 'inline'
+                modules: 'inline',
+                annotations: true
             },
             custom: {
                 files:[{
@@ -698,7 +712,8 @@ module.exports = function (grunt) {
         'copy:dist',
         'cdnify',
         'cssmin:generated',
-        'uglify:generated',
+        'copy:fakeUglify',
+        // 'uglify:generated',
         'rev',
         'usemin',
         'htmlmin',
@@ -733,7 +748,8 @@ module.exports = function (grunt) {
         'concat:hostnameCss',
         'ngAnnotate:hostname',
         'cssmin:hostname',
-        'uglify:hostname',
+        // 'uglify:hostname',
+        'copy:fakeUglifyHostname',
         'shell:copyDev'
     ]);
 

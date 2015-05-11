@@ -733,8 +733,8 @@ module.exports = function (grunt) {
         'copy:dist',
         'cdnify',
         'cssmin:generated',
-        'copy:fakeUglify',
-        // 'uglify:generated',
+        // 'copy:fakeUglify',
+        'uglify:generated',
         'rev',
         'usemin',
         'htmlmin',
@@ -769,8 +769,8 @@ module.exports = function (grunt) {
         'concat:hostnameCss',
         'ngAnnotate:hostname',
         'cssmin:hostname',
-        // 'uglify:hostname',
-        'copy:fakeUglifyHostname',
+        'uglify:hostname',
+        // 'copy:fakeUglifyHostname',
         'shell:copyDev'
     ]);
 

@@ -53,9 +53,12 @@ class EnvStatus {
                 }
 
                 function addHoneydewDashboard ( res ) {
-                    let envUrl = this.Environment.getEnvUrl( app, env ),
-                        build = res.build.webpub,
+                    let envUrl = encodeURIComponent(
+                        this.Environment.getEnvUrl( app, env )
+                    ),
+                        build =  res.build.webpub,
                         endpoint = '/dashboard/index.html';
+
                     res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
 
                     return res;

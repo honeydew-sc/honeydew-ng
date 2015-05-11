@@ -34,16 +34,8 @@ module.exports = function (grunt) {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
                 tasks: [ 'newer:traceur' ]
             },
-            fileblocks: {
                 files: [
-                    '<%= yeoman.app %>/**/*.js',
-                    '!<%= yeoman.app %>/**/*app.js',
-                    '!<%= yeoman.app %>/config.js',
-                    '!<%= yeoman.app %>/bower_components/**',
-                    '!<%= yeoman.app %>/**/*.es6',
-                    '!<%= yeoman.app %>/**/*_test*'
                 ],
-                tasks: [ 'newer:fileblocks' ]
             },
             css: {
                 files: [ '<%= yeoman.app %>/**/*.scss' ],

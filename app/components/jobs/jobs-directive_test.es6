@@ -31,6 +31,8 @@ describe('HoneydewJob directive', function () {
         location = $location;
         httpMock = $httpBackend;
         Settings = _Settings_;
+        Settings.reset();
+
         hostname = _hostname_;
         liveReport = _liveReport_;
         storage = $sessionStorage;

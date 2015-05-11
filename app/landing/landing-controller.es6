@@ -66,16 +66,17 @@ angular.module('honeydew')
                 resolve: {
                     active: () => { return active; }
                 },
-                controller: [
-                    '$scope', 'active', ($scope, active) => {
-                        var sources = {
-                            feature: '/landing/new-feature.webm',
-                            set: '/landing/new-set.webm'
-                        };
-
-                        $scope.src = sources[active];
-                    }]
+                controller: viewGifController
             });
         };
+
+        function viewGifController ($scope, active) {
+            var sources = {
+                feature: '/landing/new-feature.webm',
+                set: '/landing/new-set.webm'
+            };
+
+            $scope.src = sources[active];
+        }
 
     });

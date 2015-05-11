@@ -34,8 +34,19 @@ module.exports = function (grunt) {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
                 tasks: [ 'newer:traceur' ]
             },
+            annotate: {
                 files: [
+                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
+                        '<%= yeoman.app %>/app.js'
                 ],
+                tasks: [ 'newer:ngAnnotate:watch' ]
+            },
+            uglify: {
+                files: [
+                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
+                        '<%= yeoman.app %>/app.js'
+                ],
+                tasks: [ 'newer:uglify:watch' ]
             },
             css: {
                 files: [ '<%= yeoman.app %>/**/*.scss' ],
@@ -303,6 +314,15 @@ module.exports = function (grunt) {
                     src: '<%= yeoman.dist %>/scripts/sc.hostname.js',
                     dest: '<%= yeoman.dist %>/scripts/sc.hostname.annotate.js'
                 }]
+            },
+            watch: {
+                files: [{
+                    expand: true,
+                    src: [
+                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
+                        '<%= yeoman.app %>/app.js'
+                    ]
+                }]
             }
         },
 
@@ -419,6 +439,15 @@ module.exports = function (grunt) {
         },
 
         uglify: {
+            watch: {
+                files: [{
+                    expand: true,
+                    src: [
+                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
+                        '<%= yeoman.app %>/app.js'
+                    ]
+                }]
+            },
             hostname: {
                 src: '<%= yeoman.dist %>/scripts/sc.hostname.annotate.js',
                 dest: '<%= yeoman.dist %>/scripts/sc.hostname.min.js'
@@ -667,6 +696,8 @@ module.exports = function (grunt) {
             grunt.task.run([
                 'config',
                 'traceur',
+                'ngAnnotate:watch',
+                'uglify:watch',
                 'fileblocks',
                 'css',
                 'clean:server',
@@ -698,7 +729,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'autoprefixer',
         'concat:generated',
-        'ngAnnotate',
+        'ngAnnotate:dist',
         'copy:dist',
         'cdnify',
         'cssmin:generated',

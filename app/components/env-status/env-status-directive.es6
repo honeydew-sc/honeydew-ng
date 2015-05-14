@@ -1,11 +1,21 @@
-function EnvStatusController (EnvStatus) {
-    let appQuery = new RegExp(this.app || 'SC'),
-        envQuery = new RegExp(this.env || '.*');
+class EnvStatusController {
 
-    this.statuses = EnvStatus.query(
-        app => appQuery.test(app),
-        env => envQuery.test(env)
-    );
+    constructor (EnvStatus) {
+        this.EnvStatus = EnvStatus;
+        this.statuses = this.populateEnvStatus();
+    }
+
+    populateEnvStatus() {
+        let appQuery = new RegExp(this.app || 'SC'),
+            envQuery = new RegExp(this.env || '.*');
+
+        let statuses = this.EnvStatus.query(
+            app => appQuery.test(app),
+            env => envQuery.test(env)
+        );
+
+        return statuses;
+    }
 }
 
 angular.module('honeydew')
@@ -16,12 +26,6 @@ angular.module('honeydew')
                 env: '@'
             },
             bindToController: true,
-
-            // new syntax in 1.4:
-            // bindToController: {
-            //     app: '@',
-            //     env: '@'
-            // },
 
             templateUrl: 'components/env-status/env-status.html',
             replace: true,

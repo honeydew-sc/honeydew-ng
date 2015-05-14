@@ -12,8 +12,6 @@ class EnvStatus {
         this.Environment = Environment;
         this.envs = Environment.envs;
         this.apps = Object.keys(Environment.apps);
-
-        this.statuses = this.statuses || {};
     }
 
     query ( appFilter = () => true, envFilter = () => true ) {
@@ -27,7 +25,6 @@ class EnvStatus {
             envs.forEach( env => {
                 let key = `${app}, ${env}`;
 
-                this.statuses[key] = results[key] = {};
 
                 let p = this.backend.get({
                     app: app,
@@ -37,7 +34,7 @@ class EnvStatus {
 
                 p.then( addHoneydewSummary )
                     .then( addHoneydewDashboard.bind(this) )
-                    .then( cacheResults.bind(this) );
+                    .then( collectResults );
 
                 promises.push(p);
 
@@ -64,10 +61,8 @@ class EnvStatus {
                     return res;
                 }
 
-                function cacheResults ( res ) {
-                    // ehhhh let's keep all the results around on
-                    // statuses? shrug.
-                    this.statuses[key] = results[key] = res;
+                function collectResults( res ) {
+                    results[key] = res;
                     return res;
                 }
             });

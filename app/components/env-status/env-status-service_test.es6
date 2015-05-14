@@ -1,7 +1,6 @@
 describe('EnvStatus', function () {
     let results,
         httpMock,
-        statuses,
         EnvStatus,
         Environment;
 
@@ -28,8 +27,6 @@ describe('EnvStatus', function () {
         results = EnvStatus.query( () => true, env => env === 'prod' );
         // and resolve the promises
         httpMock.flush();
-
-        statuses = EnvStatus.statuses;
     }));
 
     function mockStatus ( honeydew = { success: 8, total: 10 } ) {
@@ -54,11 +51,6 @@ describe('EnvStatus', function () {
         return encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
             .replace(/%3A/, ':');
     }
-
-    it('should cache all statuses and summaries', () => {
-        expect(statuses['SC, prod'].healthcheck.summary).toBe(true);
-        expect(statuses['DROZ, prod'].healthcheck.summary).toBe(true);
-    });
 
     it('should return the results of a query', () => {
         expect(results['SC, prod'].healthcheck.summary).toBe(true);

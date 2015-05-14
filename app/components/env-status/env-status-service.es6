@@ -31,40 +31,42 @@ class EnvStatus {
                     }).$promise;
                 results[key] = results[key] || {};
 
-                p.then( addHoneydewSummary )
-                    .then( addHoneydewDashboard.bind(this) )
-                    .then( collectResults );
+                p.then( initializeHoneydew )
+                    .then( addHoneydewSummary )
+                    .then( status => addHoneydewDashboard.call( this, app, env, status ) )
+                    .then( status => collectResults( key, status ) );
 
                 promises.push(p);
-
-                function addHoneydewSummary ( res ) {
-                    let ARBITRARY_HONEYDEW_SUCCESS = 75;
-                    if ( res.hasOwnProperty('honeydew') && res.honeydew.total != 0 ) {
-                        res.honeydew.summary = Math.round(
-                            res.honeydew.success / res.honeydew.total * 100
-                        ) > ARBITRARY_HONEYDEW_SUCCESS;
-                    }
-
-                    return res;
-                }
-
-                function addHoneydewDashboard ( res ) {
-                    let envUrl = encodeURIComponent(
-                        this.Environment.getEnvUrl( app, env )
-                    ),
-                        build =  res.build.webpub,
-                        endpoint = '/dashboard/index.html';
-
-                    res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
-
-                    return res;
-                }
-
-                function collectResults( res ) {
-                    results[key] = res;
-                    return res;
-                }
             });
+
+            function initializeHoneydew ( status ) {
+                status.honeydew = status.honeydew || {};
+                return status;
+            }
+
+            function addHoneydewSummary ( status ) {
+                let ARBITRARY_HONEYDEW_SUCCESS = 75;
+                if ( status.hasOwnProperty('honeydew') && status.honeydew.total != 0 ) {
+                    status.honeydew.summary = Math.round(
+                        status.honeydew.success / status.honeydew.total * 100
+                    ) > ARBITRARY_HONEYDEW_SUCCESS;
+                }
+
+                return status;
+            }
+
+            function addHoneydewDashboard ( app, env, res ) {
+                let envUrl = encodeURIComponent(
+                    this.Environment.getEnvUrl( app, env )
+                ),
+                    build =  res.build.webpub,
+                    endpoint = '/dashboard/index.html';
+
+                res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
+
+                return res;
+            }
+
         });
 
         results.$promise = this.q.all(promises);

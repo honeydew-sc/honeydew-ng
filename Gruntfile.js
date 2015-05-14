@@ -133,6 +133,18 @@ module.exports = function (grunt) {
                     port: 80,
                     https: false,
                     changeOrigin: false
+                },
+                {
+                    context: [
+                        '/kabocha/api.php/logs/kabocha/status'
+                    ],
+                    host: 'localhost',
+                    rewrite: {
+                        '.*': '/rest.php/fakekabocha'
+                    },
+                    port: 80,
+                    https: false,
+                    changeOrigin: false
                 }
             ]
         },

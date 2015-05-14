@@ -25,10 +25,25 @@ class pusherTests extends UnitTestCase {
 
     function testAuthsInTheRightForm() {
         $response = \Httpful\Request::post($this->baseUrl . "/auth?channel_name=private-foobar&socket_id=1234.1234")
-                                                ->send();
+             ->send();
 
         $this->assertPattern('/.+?:.+?/', $response->body->auth, 'auth looks to be structured correctly... it has two parts at least');
     }
+
+    function testRejectsInvalidSocketID() {
+        $response = \Httpful\Request::post($this->baseUrl . "/auth?channel_name=private-foobar&socket_id=invalid")
+             ->send();
+
+        $this->assertEqual($response->body->success, 'false');
+    }
+
+    function testRejectsInvalidChannel() {
+        $response = \Httpful\Request::post($this->baseUrl . "/auth?channel_name=invalid%20%channel&socket_id=1234.1234")
+             ->send();
+
+        $this->assertEqual($response->body->success, 'false');
+    }
 }
+
 
 ?>

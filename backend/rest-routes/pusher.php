@@ -18,6 +18,16 @@ $app->group('/pusher', function () use ($app) {
             $settings = readInConfSettings();
         }
 
+        if ( ! preg_match('/^\d+\.\d+$/', $_REQUEST['socket_id'] ) ) {
+            echo errorMessage('invalid socket');
+            return;
+        }
+
+        if ( ! preg_match('/^[A-Za-z0-9_\-=@,.;]+$/', $_REQUEST['channel_name'] ) ) {
+            echo errorMessage('invalid channel');
+            return;
+        }
+
         $signature = hash_hmac('sha256', $plainSignature, $settings['pusher_secret'], false);
         echo json_encode(array('auth' => $settings['pusher_auth_key'] . ":" . $signature));
     });

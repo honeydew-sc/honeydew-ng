@@ -37,6 +37,7 @@ class EnvStatus {
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
                     .then( initializeKabocha )
                     .then( status => addKabochaSummary.call( this, app, env, status ) )
+                    .then( addKabochaDashboard )
                     .then( status => collectResults( key, status ) );
 
                 promises.push(p);
@@ -95,6 +96,12 @@ class EnvStatus {
                     return statuses;
                 }
             }
+
+            function addKabochaDashboard ( status ) {
+                status.kabocha.url = '/kabocha/dashboard/index.html';
+                return status;
+            }
+
             function collectResults( key, status ) {
                 results[key] = status;
                 return status;

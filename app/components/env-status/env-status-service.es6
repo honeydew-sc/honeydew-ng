@@ -23,14 +23,13 @@ class EnvStatus {
             let envs = this.envs[app].filter( envFilter );
 
             envs.forEach( env => {
-                let key = `${app}, ${env}`;
-
-
-                let p = this.backend.get({
-                    app: app,
-                    env: env,
-                    check: this.Environment.getHealthcheckUrl( app, env )
-                }).$promise;
+                let key = `${app}, ${env}`,
+                    p = this.backend.get({
+                        app: app,
+                        env: env,
+                        check: this.Environment.getHealthcheckUrl( app, env )
+                    }).$promise;
+                results[key] = results[key] || {};
 
                 p.then( addHoneydewSummary )
                     .then( addHoneydewDashboard.bind(this) )

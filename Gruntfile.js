@@ -473,6 +473,7 @@ module.exports = function (grunt) {
             ci: {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
+                singleRun: false,
                 reporters: 'dots',
                 browsers: ['Chrome']
             },

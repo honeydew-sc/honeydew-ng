@@ -36,6 +36,7 @@ class EnvStatus {
                     .then( addHoneydewSummary )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
                     .then( initializeKabocha )
+                    .then( status => addKabochaSummary.call( this, app, env, status ) )
                     .then( status => collectResults( key, status ) );
 
                 promises.push(p);
@@ -74,6 +75,26 @@ class EnvStatus {
                 return status;
             }
 
+            function addKabochaSummary ( app, env, status ) {
+                if ( this.isSharecare( app ) ) {
+                    kabochaStatuses
+                        .then( reformatKabochaStatuses )
+                        .then( statuses => {
+                            status.kabocha.summary = statuses[env];
+                        });
+                }
+
+                return status;
+
+                function reformatKabochaStatuses ( res ) {
+                    let statuses = {};
+                    Object.keys(res.data.data).forEach( env => {
+                        statuses[env] = res.data.data[env].status === 'ok';
+                    });
+
+                    return statuses;
+                }
+            }
             function collectResults( key, status ) {
                 results[key] = status;
                 return status;

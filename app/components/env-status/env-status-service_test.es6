@@ -70,7 +70,8 @@ describe('EnvStatus', function () {
         );
     });
 
-
+    it('should derive the kabocha summary', () => {
+        expect(results['SC, prod'].kabocha.summary).toBe(true);
     });
 
     function mockQuery( app ) {

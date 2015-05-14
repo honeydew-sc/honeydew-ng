@@ -63,8 +63,12 @@ describe('EnvStatus', function () {
         expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname/);
     });
 
-    it('should talk to kabocha for sharecare', () => {
+    it('should make kabocha with dashboard url for sharecare', () => {
         expect(results['SC, prod'].hasOwnProperty('kabocha')).toBe(true);
+        expect(results['SC, prod'].kabocha.url).toBe(
+            '/kabocha/dashboard/index.html'
+        );
+    });
 
 
     });

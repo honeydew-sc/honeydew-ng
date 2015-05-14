@@ -35,6 +35,7 @@ class EnvStatus {
                 p.then( initializeHoneydew )
                     .then( addHoneydewSummary )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
+                    .then( initializeKabocha )
                     .then( status => collectResults( key, status ) );
 
                 promises.push(p);
@@ -66,6 +67,11 @@ class EnvStatus {
                 res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
 
                 return res;
+            }
+
+            function initializeKabocha ( status ) {
+                status.kabocha = status.kabocha || {};
+                return status;
             }
 
         });

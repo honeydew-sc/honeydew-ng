@@ -20,7 +20,8 @@ class EnvStatus {
             results = {};
 
         apps.forEach( app => {
-            let envs = this.envs[app].filter( envFilter );
+            let envs = this.envs[app].filter( envFilter ),
+                kabochaStatuses = this._getKabochaStatuses( app );
 
             envs.forEach( env => {
                 let key = `${app}, ${env}`,
@@ -71,6 +72,25 @@ class EnvStatus {
 
         results.$promise = this.q.all(promises);
         return results;
+    }
+
+    _getKabochaStatuses ( app ) {
+        if ( this.isSharecare( app ) ) {
+            let p = this.http.get('/kabocha/api.php/logs/kabocha/status');
+
+            p.then( res => {
+
+            });
+
+            return p;
+        }
+        else {
+            return {};
+        }
+    }
+
+    isSharecare( app ) {
+        return app === 'SC';
     }
 };
 

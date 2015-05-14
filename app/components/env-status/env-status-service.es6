@@ -74,6 +74,10 @@ class EnvStatus {
                 return status;
             }
 
+            function collectResults( key, status ) {
+                results[key] = status;
+                return status;
+            }
         });
 
         results.$promise = this.q.all(promises);
@@ -83,10 +87,6 @@ class EnvStatus {
     _getKabochaStatuses ( app ) {
         if ( this.isSharecare( app ) ) {
             let p = this.http.get('/kabocha/api.php/logs/kabocha/status');
-
-            p.then( res => {
-
-            });
 
             return p;
         }

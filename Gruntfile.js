@@ -32,21 +32,11 @@ module.exports = function (grunt) {
         watch: {
             traceur:  {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
-                tasks: [ 'newer:traceur' ]
-            },
-            annotate: {
-                files: [
-                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
-                        '<%= yeoman.app %>/app.js'
-                ],
-                tasks: [ 'newer:ngAnnotate:watch' ]
-            },
-            uglify: {
-                files: [
-                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
-                        '<%= yeoman.app %>/app.js'
-                ],
-                tasks: [ 'newer:uglify:watch' ]
+                tasks: [
+                    'newer:traceur',
+                    'newer:ngAnnotate:watch',
+                    'newer:uglify:watch'
+                ]
             },
             css: {
                 files: [ '<%= yeoman.app %>/**/*.scss' ],

@@ -21,7 +21,7 @@
     "angular-tree-control": "~0.2.7",
     "jqueryui": "~1.10.4",
     "select2-bootstrap-css": "~1.4.4",
-    "traceur-runtime": "~0.0.79",
+    "traceur-runtime": "~0.0.89",
     "angular-ui-select": "~0.9.5"
   },
   "devDependencies": {

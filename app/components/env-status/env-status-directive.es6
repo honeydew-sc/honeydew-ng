@@ -16,6 +16,10 @@ class EnvStatusController {
 
         return statuses;
     }
+
+    isSharecare() {
+        return this.app === 'SC';
+    }
 }
 
 angular.module('honeydew')

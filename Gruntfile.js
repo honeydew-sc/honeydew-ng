@@ -45,16 +45,6 @@ module.exports = function (grunt) {
                     'sass'
                 ]
             },
-            js: {
-                files: [
-                    '<%= yeoman.app %>/app.js',
-                    '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js'
-                ],
-                tasks: ['newer:jshint:all'],
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                }
-            },
             gruntfile: {
                 files: ['Gruntfile.js']
             },

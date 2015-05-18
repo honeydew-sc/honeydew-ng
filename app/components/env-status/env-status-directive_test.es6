@@ -41,9 +41,29 @@ describe('EnvStatus directive', () => {
         expect(EnvStatus.query).toHaveBeenCalled();
     });
 
-    it('should have table headers ', () => {
+    it('should have table headers with kabocha for SC', () => {
         let headers = elm.find('table.table th').text();
-        expect(headers).toBe('appenvhealthcheckhoneydew');
+        expect(headers).toBe([
+            'app',
+            'env',
+            'healthcheck',
+            'honeydew',
+            'kabocha'
+        ].join(''));
+    });
+
+    it('should not have kabocha for other apps', () => {
+        elm = angular.element('<env-status app="DROZ"></env-status>');
+        $compile(elm)(scope);
+        scope.$digest();
+
+        let headers = elm.find('table.table th').text();
+        expect(headers).toBe([
+            'app',
+            'env',
+            'healthcheck',
+            'honeydew'
+        ].join(''));
     });
 
     it('should properly split the name and env out', () => {

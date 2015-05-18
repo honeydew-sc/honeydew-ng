@@ -16,6 +16,7 @@ require_once 'rest-routes/status.php';
 require_once 'rest-routes/report.php';
 require_once 'rest-routes/tree.php';
 require_once 'rest-routes/user.php';
+require_once 'rest-routes/fakekabocha.php';
 
 $app->run();
 

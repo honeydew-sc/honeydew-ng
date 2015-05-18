@@ -1,7 +1,6 @@
 describe('EnvStatus', function () {
     let results,
         httpMock,
-        statuses,
         EnvStatus,
         Environment;
 
@@ -13,56 +12,15 @@ describe('EnvStatus', function () {
 
         EnvStatus.apps = [ 'SC', 'DROZ' ];
 
-        EnvStatus.apps.map( app => {
-            var env = 'prod';
-
-            // the ng-resource encoder doesn't encode ':', so we need to
-            // switch it back
-            var query = mockedCheck( app, env );
-
-            httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/${env}?check=${query}`)
-                .respond( mockStatus() );
-        });
-
-        // kick off the requests...
-        results = EnvStatus.query( () => true, env => env === 'prod' );
-        // and resolve the promises
-        httpMock.flush();
-
-        statuses = EnvStatus.statuses;
+        mockKabochaQuery();
+        results = mockQuery( 'SC' );
     }));
-
-    function mockStatus ( honeydew = { success: 8, total: 10 } ) {
-        let build = { webpub: '1.2.3.4' };
-        return {
-            healthcheck: {
-                summary: true,
-                author: true,
-                webpub: true,
-                data: true
-            },
-            build,
-            honeydew// ,
-            // kabocha: {
-            //     summary: true
-            // }
-        };
-
-    }
-
-    function mockedCheck ( app = 'SC', env = 'prod' ) {
-        return encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
-            .replace(/%3A/, ':');
-    }
-
-    it('should cache all statuses and summaries', () => {
-        expect(statuses['SC, prod'].healthcheck.summary).toBe(true);
-        expect(statuses['DROZ, prod'].healthcheck.summary).toBe(true);
-    });
 
     it('should return the results of a query', () => {
         expect(results['SC, prod'].healthcheck.summary).toBe(true);
-        expect(results['DROZ, prod'].healthcheck.summary).toBe(true);
+
+        let drozResults = mockQuery( 'DROZ' );
+        expect(drozResults['DROZ, prod'].healthcheck.summary).toBe(true);
     });
 
     it('should make the $promise available ', () => {
@@ -90,6 +48,7 @@ describe('EnvStatus', function () {
 
     it('should not have a summary for an invalid honeydew db lookup', () => {
         let query = mockedCheck( 'SC', 'al' );
+        mockKabochaQuery();
         httpMock.expectGET(`/rest.php/envstatus/app/SC/env/al?check=${query}`)
             .respond( mockStatus( { success: 0, total: 0 } ) );
         let results = EnvStatus.query( app => app === 'SC', env => env === 'al' );
@@ -104,5 +63,64 @@ describe('EnvStatus', function () {
         expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname/);
     });
 
+    it('should make kabocha with dashboard url for sharecare', () => {
+        expect(results['SC, prod'].hasOwnProperty('kabocha')).toBe(true);
+        expect(results['SC, prod'].kabocha.url).toBe(
+            '/kabocha/dashboard/index.html'
+        );
+    });
 
+    it('should derive the kabocha summary', () => {
+        expect(results['SC, prod'].kabocha.summary).toBe(true);
+    });
+
+    function mockQuery( app ) {
+        mockHoneydewQuery( app );
+        // kick off the requests...
+        let results = EnvStatus.query( qApp => qApp === app, env => env === 'prod' );
+        // and resolve the promises
+        httpMock.flush();
+
+        return results;
+    }
+
+    function mockKabochaQuery( ) {
+        let fakeKabocha = '{"result":"SUCCESS","data":{"prod":{"status":"ok"},"stage":{"status":"ok"},"dw2":{"status":"ok"},"al2":{"status":"ok"},"cm2":{"status":"ok"},"kms":{"status":"ok"},"mservices":{"status":"ok"},"jd":{"status":"ok"},"dw":{"status":"ok"},"al":{"status":"ok"},"cm":{"status":"ok"}}}';
+
+        httpMock.expectGET('/kabocha/api.php/logs/kabocha/status')
+            .respond(fakeKabocha);
+    }
+
+    function mockHoneydewQuery( app ) {
+        let env = 'prod';
+
+        // the ng-resource encoder doesn't encode ':', so we need to
+        // switch it back
+        let query = mockedCheck( app, env );
+
+        httpMock.expectGET(`/rest.php/envstatus/app/${app}/env/${env}?check=${query}`)
+            .respond( mockStatus() );
+    }
+
+    function mockStatus ( honeydew = { success: 8, total: 10 } ) {
+        let healthcheck = {
+                summary: true,
+                author: true,
+                webpub: true,
+                data: true
+            },
+            build = { webpub: '1.2.3.4' };
+
+        return {
+            healthcheck,
+            build,
+            honeydew
+        };
+
+    }
+
+    function mockedCheck ( app = 'SC', env = 'prod' ) {
+        return encodeURIComponent(Environment.getHealthcheckUrl( app, env ))
+            .replace(/%3A/, ':');
+    }
 });

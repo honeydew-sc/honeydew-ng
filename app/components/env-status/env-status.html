@@ -7,7 +7,7 @@
         <th>env</th>
         <th>healthcheck</th>
         <th>honeydew</th>
-        <!-- <th>kabocha</th> -->
+        <th ng-if="EnvStatus.isSharecare()">kabocha</th>
       </tr>
     </thead>
     <tbody>
@@ -50,18 +50,26 @@
         </td>
         <td class="honeydew">
           <a target="_blank" ng-href="{{ app.honeydew.url }}">
-          <span class="fa fa-2x"
-                    ng-class="{
-                    'fa-check-circle green': app.honeydew.summary === true,
-                    'fa-times-circle red': app.honeydew.summary === false,
-                    'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
-                    }"
-                ></span>
+            <span class="fa fa-2x"
+                  ng-class="{
+                  'fa-check-circle green': app.honeydew.summary === true,
+                  'fa-times-circle red': app.honeydew.summary === false,
+                  'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
+                  }"
+                  ></span>
           </a>
         </td>
-        <!-- <td>
-        <span>{{ app.kabocha.summary }}</span>
-        </td> -->
+        <td ng-if="EnvStatus.isSharecare()">
+          <a target="_blank" ng-href="{{ app.kabocha.url }}">
+            <span class="fa fa-2x"
+                  ng-class="{
+                  'fa-check-circle green': app.kabocha.summary === true,
+                  'fa-times-circle red': app.kabocha.summary === false,
+                  'fa-times-circle silver': !app.kabocha.hasOwnProperty('summary')
+                  }"
+                  ></span>
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>

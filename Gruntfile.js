@@ -32,21 +32,11 @@ module.exports = function (grunt) {
         watch: {
             traceur:  {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
-                tasks: [ 'newer:traceur' ]
-            },
-            annotate: {
-                files: [
-                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
-                        '<%= yeoman.app %>/app.js'
-                ],
-                tasks: [ 'newer:ngAnnotate:watch' ]
-            },
-            uglify: {
-                files: [
-                        '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
-                        '<%= yeoman.app %>/app.js'
-                ],
-                tasks: [ 'newer:uglify:watch' ]
+                tasks: [
+                    'newer:traceur',
+                    'newer:ngAnnotate:watch',
+                    'newer:uglify:watch'
+                ]
             },
             css: {
                 files: [ '<%= yeoman.app %>/**/*.scss' ],
@@ -140,6 +130,18 @@ module.exports = function (grunt) {
                         '/editor/editor/panes'
                     ],
                     host: 'localhost',
+                    port: 80,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: [
+                        '/kabocha/api.php/logs/kabocha/status'
+                    ],
+                    host: 'localhost',
+                    rewrite: {
+                        '.*': '/rest.php/fakekabocha'
+                    },
                     port: 80,
                     https: false,
                     changeOrigin: false
@@ -471,6 +473,7 @@ module.exports = function (grunt) {
             ci: {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
+                singleRun: false,
                 reporters: 'dots',
                 browsers: ['Chrome']
             },

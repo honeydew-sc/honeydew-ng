@@ -52,7 +52,7 @@ describe('Environment', function () {
 
     it('should construct a droz healthcheck', () => {
         let drozCheck = Environment.getHealthcheckUrl( 'DROZ', 'prod' );
-        expect(drozCheck).toBe('http://www.doctoroz.com/healthcheck.php?details=true');
+        expect(drozCheck).toBe('http://www.origin.doctoroz.com/healthcheck.php?details=true');
     });
 
     it('should construct a droz healthcheck', () => {

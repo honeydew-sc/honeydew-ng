@@ -25,16 +25,19 @@ class EnvStatus {
 
             envs.forEach( env => {
                 let key = `${app}, ${env}`,
-                    p = this.backend.get({
+                    checkUrl = this.Environment.getHealthcheckUrl( app, env );
+
+                let p = this.backend.get({
                         app: app,
                         env: env,
-                        check: this.Environment.getHealthcheckUrl( app, env )
+                        check: checkUrl
                     }).$promise;
                 results[key] = results[key] || {};
 
                 p.then( initializeHoneydew )
                     .then( addHoneydewSummary )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
+
                     .then( initializeKabocha )
                     .then( status => addKabochaSummary.call( this, app, env, status ) )
                     .then( addKabochaDashboard )

@@ -46,7 +46,7 @@ $app->group('/envstatus', function () use ($app) {
             $port = 443;
         }
 
-        $timeout = 8;
+        $timeout = 3;
         $domain = url_to_domain( $url );
         $connection = @fsockopen($domain, $port, $errno, $errstr, $timeout);
 

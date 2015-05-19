@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
                 tasks: [
                     'newer:traceur',
-                    'ngAnnotate:watch',
+                    'newer:ngAnnotate:watch',
                     'newer:uglify:watch'
                 ]
             },

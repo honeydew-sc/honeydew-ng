@@ -13,11 +13,26 @@ $app->group('/envstatus', function () use ($app) {
         ));
     });
 
-    function healthcheck ( $url ) {
+    function healthcheck ( $app, $url ) {
         $results = array();
-        $results['webpub'] = array(
-            'status' => check_health( $url )
-        );
+        $boxes = array( 'webpub' );
+
+        if ( $app === 'SC' ) {
+            array_push($boxes, 'author', 'data');
+        }
+
+        foreach ( $boxes as $name ) {
+            if ( $name !== 'webpub' ) {
+                $check_url = preg_replace( '/www/', $name, $url );
+            }
+            else {
+                $check_url = $url;
+            }
+
+            $results[$name] = array(
+                'status' => check_health( $check_url )
+            );
+        }
 
         $results['summary'] = array_reduce(
             array_keys( $results ), function ( $acc, $key ) use ( $results ) {

@@ -10,6 +10,17 @@ class reportTests extends UnitTestCase {
     function testHealthcheckStatus () {
         $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2Flocalhost%2F404')->send();
         $healthcheck = $res->body->healthcheck;
+
+        $this->assertFalse($healthcheck->{'webpub'}->{'status'});
+        $this->assertFalse($healthcheck->{'summary'});
+    }
+
+    function testSharecareChecksAuthorAndData () {
+        $res = \Httpful\Request::get($this->baseUrl . '/app/SC/env/prod?check=http:%2F%2Flocalhost%2F404')->send();
+        $healthcheck = $res->body->healthcheck;
+
+        $this->assertFalse($healthcheck->{'author'}->{'status'});
+        $this->assertFalse($healthcheck->{'data'}->{'status'});
         $this->assertFalse($healthcheck->{'webpub'}->{'status'});
         $this->assertFalse($healthcheck->{'summary'});
     }

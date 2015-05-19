@@ -16,8 +16,7 @@ $app->group('/envstatus', function () use ($app) {
     function healthcheck ( $url ) {
         $results = array();
         $results['webpub'] = array(
-            'status' => check_health( $url ),
-            'url' => $url
+            'status' => check_health( $url )
         );
 
         $results['summary'] = array_reduce(

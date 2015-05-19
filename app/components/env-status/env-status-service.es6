@@ -41,6 +41,9 @@ class EnvStatus {
                     .then( initializeKabocha )
                     .then( status => addKabochaSummary.call( this, app, env, status ) )
                     .then( addKabochaDashboard )
+
+                    .then( status => addHealthcheckLinks.call( this, checkUrl, status ) )
+
                     .then( status => collectResults( key, status ) );
 
                 promises.push(p);
@@ -105,10 +108,19 @@ class EnvStatus {
                 return status;
             }
 
+            function addHealthcheckLinks ( checkUrl, status ) {
+                status.healthcheck = status.healthcheck || {};
+                status.healthcheck.webpub = status.healthcheck.webpub || {};
+
+                status.healthcheck.webpub.url = checkUrl;
+                return status;
+            }
+
             function collectResults( key, status ) {
                 results[key] = status;
                 return status;
             }
+
         });
 
         results.$promise = this.q.all(promises);

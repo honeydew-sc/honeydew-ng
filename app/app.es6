@@ -101,7 +101,7 @@ angular.module('honeydew', [
                 onEnter: setTitle('Screenshots')
             })
             .state('status', {
-                url: '/status',
+                url: '/status?app',
                 templateUrl: 'status/status.html',
                 onEnter: setTitle('Environment Statuses')
             });

@@ -35,7 +35,7 @@ class EnvStatus {
                 results[key] = results[key] || {};
 
                 p.then( initializeHoneydew )
-                    .then( addHoneydewSummary )
+                    .then( status => addHoneydewSummary.call( this, app, status ) )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
 
                     .then( initializeKabocha )
@@ -54,15 +54,24 @@ class EnvStatus {
                 return status;
             }
 
-            function addHoneydewSummary ( status ) {
-                let ARBITRARY_HONEYDEW_SUCCESS = 75;
+            function addHoneydewSummary ( app, status ) {
+                let arbitraryHoneydewSuccess = getHoneydewSuccessFor( app );
                 if ( status.hasOwnProperty('honeydew') && status.honeydew.total != 0 ) {
                     status.honeydew.summary = Math.round(
                         status.honeydew.success / status.honeydew.total * 100
-                    ) > ARBITRARY_HONEYDEW_SUCCESS;
+                    ) > arbitraryHoneydewSuccess;
                 }
 
                 return status;
+            }
+
+            function getHoneydewSuccessFor( app ) {
+                if ( app === 'DROZ' ) {
+                    return 95;
+                }
+                else {
+                    return 75;
+                }
             }
 
             function addHoneydewDashboard ( app, env, res ) {

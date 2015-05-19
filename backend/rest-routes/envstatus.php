@@ -3,13 +3,13 @@ $app->group('/envstatus', function () use ($app) {
     require_once 'rest-routes/envstatus/lockerboxclient.php'; # provides get_build
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
-        $checkUrl = $app->request()->get('check');
+        $check_url = $app->request()->get('check');
         $build = get_build( $env, $appName );
 
         echo json_encode(array(
-            'healthcheck' => healthcheck( $checkUrl ),
+            'healthcheck' => healthcheck( $appName, $check_url ),
             'build' => array ( 'webpub' => $build ),
-            'honeydew' => honeydew_status( $build, url_to_domain( $checkUrl ) )
+            'honeydew' => honeydew_status( $build, url_to_domain( $check_url ) )
         ));
     });
 
@@ -73,7 +73,7 @@ $app->group('/envstatus', function () use ($app) {
         $query->execute( array( $build, $host ) );
         $status = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        /* returns { success: $count, total: $count } */
+
         $ret = $status[0];
         if ( isset($_REQUEST['DEBUG']) && $_REQUEST['DEBUG'] ) {
             $with_build = preg_replace('/buildNumber = \?/', "buildNumber = \"$build\"", $sql);
@@ -83,6 +83,7 @@ $app->group('/envstatus', function () use ($app) {
             $ret['query'] = $readable_sql;
         }
 
+        /* returns { success: $count, total: $count[, query: $query] } */
         return $ret;
     }
 });

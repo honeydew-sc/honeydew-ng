@@ -124,6 +124,7 @@ describe('EnvStatus directive', () => {
 
     it('should display honeydew details on mouseover', () => {
         elm.find('.honeydew').trigger('click');
-        expect(elm.find('.honeydew-details').text()).toMatch(/2 in all/);
+        expect(elm.find('.honeydew-details').text()).toMatch(/1 success/);
+        expect(elm.find('.honeydew-details').text()).toMatch(/2 total/);
     });
 });

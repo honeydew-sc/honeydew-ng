@@ -16,8 +16,7 @@ $app->group('/envstatus', function () use ($app) {
     function healthcheck ( $url ) {
         $results = array();
         $results['webpub'] = array(
-            'status' => check_health( $url ),
-            'url' => $url
+            'status' => check_health( $url )
         );
 
         $results['summary'] = array_reduce(
@@ -30,7 +29,7 @@ $app->group('/envstatus', function () use ($app) {
 
     function check_health ( $url ) {
         if ( can_connect( $url ) ) {
-            $health = file_get_contents( $url );
+            $health = @file_get_contents( $url );
             return strpos( $health, 'successful' ) !== false;
         }
         else {
@@ -46,7 +45,7 @@ $app->group('/envstatus', function () use ($app) {
             $port = 443;
         }
 
-        $timeout = 8;
+        $timeout = 3;
         $domain = url_to_domain( $url );
         $connection = @fsockopen($domain, $port, $errno, $errstr, $timeout);
 

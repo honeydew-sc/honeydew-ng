@@ -84,6 +84,7 @@ class Environment {
         url += '/healthcheck';
 
         if (this._isDroz( app ) ) {
+            url = url.replace(/doctoroz\.com/, 'origin.doctoroz.com');
             url += '.php';
         }
 

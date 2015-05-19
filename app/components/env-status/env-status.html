@@ -22,7 +22,7 @@
         <td class="healthcheck dropdown">
 
           <div class="dropdown">
-            <a ng-href="" class="dropdown-toggle" data-toggle="dropdown">
+            <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="fa fa-2x"
                     ng-class="{
                     'fa-check-circle green': app.healthcheck.summary === true,
@@ -34,30 +34,48 @@
             <div class="dropdown-menu healthcheck-popover" role="menu">
               healthchecks:
               <ul>
-                <li>
-                  <a target="_blank" ng-href="{{ app.healthcheck.webpub.url }}">webpub</a>
-                  <span class="fa"
-                        ng-class="{
-                        'fa-check-circle green': app.healthcheck.webpub.status === true,
-                        'fa-times-circle red': app.healthcheck.webpub.status === false,
-                        'fa-times-circle silver': !app.healthcheck.hasOwnProperty('webpub')
-                        }"
-                        ></span>
+                <li ng-repeat="(name, box) in app.healthcheck">
+                  <span ng-if="name !== 'summary'">
+                    <a target="_blank" ng-href="{{ box.url }}">{{ name }}</a>
+                    <span class="fa"
+                          ng-class="{
+                          'fa-check-circle green': box.status === true,
+                          'fa-times-circle red': box.status === false,
+                          'fa-times-circle silver': !app.healthcheck.hasOwnProperty(name)
+                          }"
+                          ></span>
+                  </span>
                 </li>
               </ul>
             </div>
           </div>
         </td>
         <td class="honeydew">
-          <a target="_blank" ng-href="{{ app.honeydew.url }}">
-            <span class="fa fa-2x"
-                  ng-class="{
-                  'fa-check-circle green': app.honeydew.summary === true,
-                  'fa-times-circle red': app.honeydew.summary === false,
-                  'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
-                  }"
-                  ></span>
-          </a>
+          <div class="dropdown">
+
+            <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="fa fa-2x"
+                    ng-class="{
+                    'fa-check-circle green': app.honeydew.summary === true,
+                    'fa-times-circle red': app.honeydew.summary === false,
+                    'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
+                    }"
+                    ></span>
+            </a>
+
+            <div class="dropdown-menu healthcheck-popover" role="menu">
+              <div>
+                <a target="_blank"
+                   ng-href="{{ app.honeydew.url }}">dashboard.</a>
+              </div>
+              <div>
+              <span class="honeydew-details">
+                {{ app.honeydew.success }} didn't fail out of {{ app.honeydew.total }} in all.
+              </span>
+              </div>
+            </div>
+
+          </div>
         </td>
         <td ng-if="EnvStatus.isSharecare()">
           <a target="_blank" ng-href="{{ app.kabocha.url }}">

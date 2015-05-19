@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 files: [ '<%= yeoman.app %>/**/*.es6' ],
                 tasks: [
                     'newer:traceur',
-                    'ngAnnotate:watch',
+                    'newer:ngAnnotate:watch',
                     'newer:uglify:watch'
                 ]
             },
@@ -44,16 +44,6 @@ module.exports = function (grunt) {
                     'sass_globbing',
                     'sass'
                 ]
-            },
-            js: {
-                files: [
-                    '<%= yeoman.app %>/app.js',
-                    '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js'
-                ],
-                tasks: ['newer:jshint:all'],
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                }
             },
             gruntfile: {
                 files: ['Gruntfile.js']

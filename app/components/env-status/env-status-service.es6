@@ -25,19 +25,25 @@ class EnvStatus {
 
             envs.forEach( env => {
                 let key = `${app}, ${env}`,
-                    p = this.backend.get({
+                    checkUrl = this.Environment.getHealthcheckUrl( app, env );
+
+                let p = this.backend.get({
                         app: app,
                         env: env,
-                        check: this.Environment.getHealthcheckUrl( app, env )
+                        check: checkUrl
                     }).$promise;
                 results[key] = results[key] || {};
 
                 p.then( initializeHoneydew )
-                    .then( addHoneydewSummary )
+                    .then( status => addHoneydewSummary.call( this, app, status ) )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
+
                     .then( initializeKabocha )
                     .then( status => addKabochaSummary.call( this, app, env, status ) )
                     .then( addKabochaDashboard )
+
+                    .then( status => addHealthcheckLinks.call( this, app, checkUrl, status ) )
+
                     .then( status => collectResults( key, status ) );
 
                 promises.push(p);
@@ -48,15 +54,24 @@ class EnvStatus {
                 return status;
             }
 
-            function addHoneydewSummary ( status ) {
-                let ARBITRARY_HONEYDEW_SUCCESS = 75;
+            function addHoneydewSummary ( app, status ) {
+                let arbitraryHoneydewSuccess = getHoneydewSuccessFor( app );
                 if ( status.hasOwnProperty('honeydew') && status.honeydew.total != 0 ) {
                     status.honeydew.summary = Math.round(
                         status.honeydew.success / status.honeydew.total * 100
-                    ) > ARBITRARY_HONEYDEW_SUCCESS;
+                    ) > arbitraryHoneydewSuccess;
                 }
 
                 return status;
+            }
+
+            function getHoneydewSuccessFor( app ) {
+                if ( app === 'DROZ' ) {
+                    return 95;
+                }
+                else {
+                    return 75;
+                }
             }
 
             function addHoneydewDashboard ( app, env, res ) {
@@ -64,7 +79,7 @@ class EnvStatus {
                     this.Environment.getEnvUrl( app, env )
                 ),
                     build =  res.build.webpub,
-                    endpoint = '/dashboard/index.html';
+                    endpoint = '/dashboard.html';
 
                 res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
 
@@ -102,10 +117,27 @@ class EnvStatus {
                 return status;
             }
 
+            function addHealthcheckLinks ( app, checkUrl, status ) {
+                status.healthcheck = status.healthcheck || {};
+
+                if ( this.isSharecare( app ) ) {
+                    [ 'auth', 'data'].forEach( box => {
+                        status.healthcheck[box] = status.healthcheck[box] || {};
+                        status.healthcheck[box].url = checkUrl.replace(/www/, box);
+                    });
+                }
+
+                status.healthcheck.webpub = status.healthcheck.webpub || {};
+
+                status.healthcheck.webpub.url = checkUrl;
+                return status;
+            }
+
             function collectResults( key, status ) {
                 results[key] = status;
                 return status;
             }
+
         });
 
         results.$promise = this.q.all(promises);

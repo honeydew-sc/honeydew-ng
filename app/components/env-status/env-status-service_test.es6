@@ -60,13 +60,13 @@ describe('EnvStatus', function () {
 
     it('should derive the dashboard url', () => {
         let status = results['SC, prod'];
-        expect(status.honeydew.url).toMatch(/dashboard.*build.*hostname/);
+        expect(status.honeydew.url).toMatch(/dashboard\/index\.html\?.*build.*hostname/);
     });
 
     it('should make kabocha with dashboard url for sharecare', () => {
         expect(results['SC, prod'].hasOwnProperty('kabocha')).toBe(true);
         expect(results['SC, prod'].kabocha.url).toBe(
-            '/kabocha/dashboard/index.html'
+            '/kabocha/dashboard.html'
         );
     });
 
@@ -76,17 +76,17 @@ describe('EnvStatus', function () {
 
     it('should add auth and data links to SC', () => {
         let healthcheck = results['SC, prod'].healthcheck;
-        expect(healthcheck.hasOwnProperty('auth')).toBe(true);
+        expect(healthcheck.hasOwnProperty('author')).toBe(true);
         expect(healthcheck.hasOwnProperty('data')).toBe(true);
 
-        expect(healthcheck.auth.url).toMatch(/auth.*sharecare/);
+        expect(healthcheck.author.url).toMatch(/auth.*sharecare/);
         expect(healthcheck.data.url).toMatch(/data.*sharecare/);
     });
 
     it('should not add auth and data to other apps', () => {
         let drozResults = mockQuery( 'DROZ' );
         let healthcheck = drozResults['DROZ, prod'].healthcheck;
-        expect(healthcheck.hasOwnProperty('auth')).toBe(false);
+        expect(healthcheck.hasOwnProperty('author')).toBe(false);
         expect(healthcheck.hasOwnProperty('data')).toBe(false);
     });
 

@@ -79,7 +79,7 @@ class EnvStatus {
                     this.Environment.getEnvUrl( app, env )
                 ),
                     build =  res.build.webpub,
-                    endpoint = '/dashboard.html';
+                    endpoint = '/dashboard/index.html';
 
                 res.honeydew.url = `${endpoint}?build=${build}&hostname=${envUrl}`;
 
@@ -113,7 +113,7 @@ class EnvStatus {
             }
 
             function addKabochaDashboard ( status ) {
-                status.kabocha.url = '/kabocha/dashboard/index.html';
+                status.kabocha.url = '/kabocha/dashboard.html';
                 return status;
             }
 
@@ -121,7 +121,9 @@ class EnvStatus {
                 status.healthcheck = status.healthcheck || {};
 
                 if ( this.isSharecare( app ) ) {
-                    [ 'auth', 'data'].forEach( box => {
+                    // sharecare has author and data boxes that also
+                    // have healthchecks.
+                    [ 'author', 'data'].forEach( box => {
                         status.healthcheck[box] = status.healthcheck[box] || {};
                         status.healthcheck[box].url = checkUrl.replace(/www/, box);
                     });

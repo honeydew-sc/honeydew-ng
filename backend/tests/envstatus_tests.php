@@ -13,4 +13,10 @@ class reportTests extends UnitTestCase {
         $this->assertFalse($healthcheck->{'webpub'}->{'status'});
         $this->assertFalse($healthcheck->{'summary'});
     }
+
+    function testStripOrigin () {
+        $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2Flocalhost/origin.doctoroz/%2F404&DEBUG=1')->send();
+        $query = $res->body->honeydew->query;
+        $this->assertPattern( '/localhost\/doctoroz/', $query );
+    }
 }

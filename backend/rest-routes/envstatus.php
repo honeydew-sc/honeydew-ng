@@ -53,7 +53,8 @@ $app->group('/envstatus', function () use ($app) {
     }
 
     function url_to_domain ( $url ) {
-        return preg_replace('/https?:\/\/(.*)\/.*/', "$1", $url);
+        $strip_origin = preg_replace( '/origin\.doctoroz/', 'doctoroz', $url );
+        return preg_replace('/https?:\/\/(.*)\/.*/', "$1", $strip_origin);
     }
 
     function honeydew_status ( $build, $url) {
@@ -73,6 +74,15 @@ $app->group('/envstatus', function () use ($app) {
         $status = $query->fetchAll(PDO::FETCH_ASSOC);
 
         /* returns { success: $count, total: $count } */
-        return $status[0];
+        $ret = $status[0];
+        if ( isset($_REQUEST['DEBUG']) && $_REQUEST['DEBUG'] ) {
+            $with_build = preg_replace('/buildNumber = \?/', "buildNumber = \"$build\"", $sql);
+            $with_host = preg_replace('/HOST like \?/', "HOST like \"$host\"", $with_build);
+            $readable_sql = preg_replace('/\s+/', ' ', $with_host);
+
+            $ret['query'] = $readable_sql;
+        }
+
+        return $ret;
     }
 });

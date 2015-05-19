@@ -16,7 +16,11 @@ describe('EnvStatus directive', () => {
         var mockStatuses = {
             'SC, prod': {
                 healthcheck: { summary: true },
-                honeydew: { summary: true }
+                honeydew: {
+                    summary: true,
+                    success: 1,
+                    total: 2
+                }
             }
         };
 
@@ -116,5 +120,10 @@ describe('EnvStatus directive', () => {
 
         expect(elm.find('table tbody tr').text()).toMatch(/SC/);
         expect(elm2.find('table tbody tr').text()).toMatch(/DROZ/);
+    });
+
+    it('should display honeydew details on mouseover', () => {
+        elm.find('.honeydew').trigger('click');
+        expect(elm.find('.honeydew-details').text()).toMatch(/2 in all/);
     });
 });

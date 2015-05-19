@@ -42,7 +42,7 @@ class EnvStatus {
                     .then( status => addKabochaSummary.call( this, app, env, status ) )
                     .then( addKabochaDashboard )
 
-                    .then( status => addHealthcheckLinks.call( this, checkUrl, status ) )
+                    .then( status => addHealthcheckLinks.call( this, app, checkUrl, status ) )
 
                     .then( status => collectResults( key, status ) );
 
@@ -108,8 +108,16 @@ class EnvStatus {
                 return status;
             }
 
-            function addHealthcheckLinks ( checkUrl, status ) {
+            function addHealthcheckLinks ( app, checkUrl, status ) {
                 status.healthcheck = status.healthcheck || {};
+
+                if ( this.isSharecare( app ) ) {
+                    [ 'auth', 'data'].forEach( box => {
+                        status.healthcheck[box] = status.healthcheck[box] || {};
+                        status.healthcheck[box].url = checkUrl.replace(/www/, box);
+                    });
+                }
+
                 status.healthcheck.webpub = status.healthcheck.webpub || {};
 
                 status.healthcheck.webpub.url = checkUrl;

@@ -74,6 +74,22 @@ describe('EnvStatus', function () {
         expect(results['SC, prod'].kabocha.summary).toBe(true);
     });
 
+    it('should add auth and data links to SC', () => {
+        let healthcheck = results['SC, prod'].healthcheck;
+        expect(healthcheck.hasOwnProperty('auth')).toBe(true);
+        expect(healthcheck.hasOwnProperty('data')).toBe(true);
+
+        expect(healthcheck.auth.url).toMatch(/auth.*sharecare/);
+        expect(healthcheck.data.url).toMatch(/data.*sharecare/);
+    });
+
+    it('should not add auth and data to other apps', () => {
+        let drozResults = mockQuery( 'DROZ' );
+        let healthcheck = drozResults['DROZ, prod'].healthcheck;
+        expect(healthcheck.hasOwnProperty('auth')).toBe(false);
+        expect(healthcheck.hasOwnProperty('data')).toBe(false);
+    });
+
     function mockQuery( app ) {
         mockHoneydewQuery( app );
         // kick off the requests...
@@ -104,10 +120,7 @@ describe('EnvStatus', function () {
 
     function mockStatus ( honeydew = { success: 8, total: 10 } ) {
         let healthcheck = {
-                summary: true,
-                author: true,
-                webpub: true,
-                data: true
+                summary: true
             },
             build = { webpub: '1.2.3.4' };
 

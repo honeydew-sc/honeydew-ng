@@ -29,7 +29,7 @@ $app->group('/envstatus', function () use ($app) {
 
     function check_health ( $url ) {
         if ( can_connect( $url ) ) {
-            $health = file_get_contents( $url );
+            $health = @file_get_contents( $url );
             return strpos( $health, 'successful' ) !== false;
         }
         else {

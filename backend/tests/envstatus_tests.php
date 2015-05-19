@@ -13,10 +13,4 @@ class reportTests extends UnitTestCase {
         $this->assertFalse($healthcheck->{'webpub'}->{'status'});
         $this->assertFalse($healthcheck->{'summary'});
     }
-
-    function testStatusIncludesUrl() {
-        $res = \Httpful\Request::get($this->baseUrl . '/app/test/env/prod?check=http:%2F%2Flocalhost%2F404')->send();
-        $healthcheck = $res->body->healthcheck;
-        $this->assertEqual($healthcheck->{'webpub'}->{'url'}, 'http://localhost/404');
-    }
 }

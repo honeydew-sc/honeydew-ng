@@ -43,8 +43,18 @@ $app->group('/envstatus', function () use ($app) {
     }
 
     function check_health ( $url ) {
+        /* some healthchecks are misbehaving when we check via http,
+        so we're experimeting with https for all of them. */
+        $url = preg_replace('/http:/', 'https:', $url);
         if ( can_connect( $url ) ) {
-            $health = @file_get_contents( $url );
+            $opts = array(
+                'http' => array(
+                    'header' => "X-Forwarded-For: 50.232.112.210"
+                )
+            );
+
+            $context = stream_context_create($opts);
+            $health = @file_get_contents( $url, false, $context );
             return strpos( $health, 'successful' ) !== false;
         }
         else {

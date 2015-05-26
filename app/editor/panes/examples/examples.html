@@ -457,4 +457,34 @@ do this by putting an extra 's' in front of the Scenario like such:</p>
 
 <p>In the above example, only the second scenario will be run. If multiple
 scenarios have the "sScenario", they will all run, as expected.</p>
+
+<h4>User Agent</h4>
+
+<p>You can specify a device and the browser will masquerade as that
+device by doing two things: first, setting the user agent to match
+that device, and second, resizing the browser window as close as
+possible to match your device.</p>
+
+<pre><code>Feature: pretend to be ipad
+Agent: ipad
+</code></pre>
+
+<p>By default, the device will use the portrait dimensions; you can use
+the landscape dimensions by specifying <code>landscape</code>.</p>
+
+<pre><code>Feature: pretend to be landscape ipad
+Agent: landscape ipad
+</code></pre>
+
+<p>Your options for devices are:</p>
+
+<pre><code>Agent: iphone
+Agent: ipad
+Agent: ipad_seven
+Agent: android_phone
+Agent: android_tablet
+</code></pre>
+
+<p>The resolution &amp; user agent definitions for these devices can be found
+in the <a href="https://github.com/gempesaw/Selenium-UserAgent/blob/master/lib/Selenium/devices.json">project's Github repo</a>.</p>
 </accordion>

@@ -30,16 +30,38 @@ class SetReportService {
         return setReportData;
     }
 
-    // reorganizeReportData ( [ { features }, { reports } ] ) {
-    //     let setHistory = features.map( feature => {
-    //         return {
-    //             13: {
-    //                 status: true,
-    //                 reportId: 5
-    //             }
-    //         };
-    //     });
-    // }
+    reorganizeReportData ( [ { features }, { reports } ] ) {
+        let setIds = {},
+            setData = [],
+            reportData = [];
+
+        // group the unique set ids to be used as table headers into
+        // the `setData` var
+        reports.forEach( ({ setRunId, startDate, browser }) => {
+            if ( ! Object.keys(setIds).some( id => id === setRunId) ) {
+                // collect set IDs we've already seen in a hash for
+                // speed ?
+                setIds[setRunId]++;
+                setData.push( { [setRunId] : {startDate, browser} } );
+            }
+        });
+
+        // Collect the feature reports from the sets into reportData
+        reportData = features.map( feature => {
+            let featureReports = reports.filter( ({ featureFile }) => {
+                return featureFile.match( new RegExp(feature) );
+            });
+
+            let reportSummaryBySet = featureReports.map( ({ setRunId, status, reportId }) => {
+                reportId = parseInt(reportId);
+                return { [setRunId]: { status, reportId } };
+            });
+
+            return { [feature]: reportSummaryBySet };
+        });
+
+        return { setData, reportData };
+    }
 }
 
 angular.module('honeydew')

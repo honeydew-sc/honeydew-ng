@@ -55,6 +55,66 @@ fdescribe('SetReportService', function () {
         });
     });
 
+    it('should combine features with set history data', () => {
+        let browser = 'Chrome local',
+            startDate = '2015-05-27 11:12:50';
+
+        let features = [
+            'test/test.feature',
+            'test/test2.feature'
+        ],
+            reports = [{
+                browser,
+                startDate,
+                featureFile: "/./test/test.feature",
+                reportId: "3",
+                setRunId: "2",
+                status: "success"
+            }, {
+                browser,
+                startDate,
+                featureFile: "/./test/test.feature",
+                reportId: "1",
+                setRunId: "1",
+                status: "success"
+            }, {
+                browser,
+                startDate,
+                featureFile: "/./test/test2.feature",
+                reportId: "2",
+                setRunId: "1",
+                status: "failure"
+            }];
+
+        let { setData, reportData } = SetReportService.reorganizeReportData( [ { features }, { reports }] );
+
+        expect(setData).toEqual([
+            { 2: { startDate, browser } },
+            { 1: { startDate, browser } }
+        ]);
+
+        expect(reportData).toEqual([{
+            'test/test.feature': [{
+                2: {
+                    status: 'success',
+                    reportId: 3
+                }
+            }, {
+                1: {
+                    status: 'success',
+                    reportId: 1
+                }
+            }]
+        }, {
+            'test/test2.feature': [{
+                1: {
+                    status: 'failure',
+                    reportId: 2
+                }
+            }]
+        }]);
+    });
+
     function mockGetFeatures () {
         spyOn( Files , 'get' ).and.callFake( () => {
             let p = $q.defer();

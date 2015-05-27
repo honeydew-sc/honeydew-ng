@@ -35,6 +35,8 @@ class SetReportService {
             setData = [],
             reportData = [];
 
+        reports = reports || [];
+
         // group the unique set ids to be used as table headers into
         // the `setData` var
         reports.forEach( ({ setRunId, startDate, browser }) => {

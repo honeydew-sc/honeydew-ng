@@ -35,7 +35,8 @@ module.exports = function (grunt) {
                 tasks: [
                     'newer:traceur',
                     'newer:ngAnnotate:watch',
-                    'newer:uglify:watch'
+                    // keep commented to preserve source maps
+                    // 'newer:uglify:watch'
                 ]
             },
             css: {

@@ -1,23 +1,18 @@
 class SetController {
-    constructor ($stateParams, $q, SetReportService, SetReport) {
+    constructor ($stateParams, $q, SetReportService) {
         this.stateParams = $stateParams;
 
-        this.setHistory = $q.all( [
+        $q.all( [
             SetReportService.getSetFeatures( this.stateParams.set ),
-            // this.getSetHistory()
+            SetReportService.getSetHistory( this.stateParams.set )
         ] )
-    reorganizeReportData ( [ { features }, { reports } ] ) {
-        let setHistory = features.map( feature => {
-            return {
-                13: {
-                    status: true,
-                    reportId: 5
-                }
-            };
-        });
+            .then( SetReportService.reorganizeReportData )
+            .then( ({ setData, reportData }) => {
+                this.setData = setData;
+                this.reportData = reportData;
+            });
     }
 }
-
 
 angular.module('honeydew')
     .controller('SetController', SetController );

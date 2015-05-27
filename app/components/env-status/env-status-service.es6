@@ -46,8 +46,9 @@ class EnvStatus {
                     .then( addKabochaDashboard )
 
                     .then( status => addHealthcheckLinks.call( this, app, checkUrl, status ) )
+                    .then( status => collectResults( key, status ) )
 
-                    .then( status => collectResults( key, status ) );
+                    .catch( console.log.bind(console) );
 
                 promises.push(p);
             });

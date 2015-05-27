@@ -1,18 +1,5 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('SetController', function ($scope, $stateParams, Files, alerts, SetReport, $timeout, CmDomHelpers) {
-        $scope.editorOptions = {
-            lineWrapping : false,
-            lineNumbers: true,
-            readOnly: "nocursor",
-            mode: 'set-mode',
-            onLoad: function (cm) {
-                CmDomHelpers.compileRenderedLines(cm, $scope);
-                CmDomHelpers.focus(cm, $scope);
-            }
-        };
-
         var filename = 'sets/' + $stateParams.set;
         $scope.file = Files.get({file: Files.encode(filename)}, function () {}, alerts.catcher);
 
@@ -26,41 +13,6 @@ angular.module('honeydew')
             return res;
         }, alerts.catcher);
 
-        $scope.gridOptions = {
-            data: 'setHistory.report',
-            columnDefs: [
-                {
-                    field: 'start',
-                    displayName: 'Start Date',
-                    cellTemplate:
-                    '    <div class="ngCellText" ng-class="col.colIndex()">' +
-                        '    <a href="/dashboard/sets/?setId={{ row.entity.id }}" target="_blank">' +
-                        '        <span ng-cell-text>{{row.getProperty(col.field) | date: "medium" }}</span>' +
-                        '    </a>' +
-                        '</div>'
-                },
-                {
-                    field: 'host',
-                    displayName: 'Host'
-                },
-                {
-                    field: 'browser',
-                    displayName: 'Browser'
-                },
-                {
-                    field: 'status',
-                    displayName: 'Status'
-                }
-            ],
-            multiSelect: false,
-            enableRowSelection: true
-        };
 
-
-        $scope.$on('filetreeToggle', function (event, data) {
-            $timeout(function () {
-                $(window).resize();
-                $(window).resize();
-            });
         });
     });

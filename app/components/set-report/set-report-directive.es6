@@ -3,7 +3,6 @@ class SetReportController {
         this.$q = $q;
         this.SetReport = SetReportService;
 
-        console.log('hi');
         this.getSetHistoryData();
     }
 
@@ -21,7 +20,7 @@ class SetReportController {
 }
 
 angular.module('honeydew')
-    .directive('SetReport', function () {
+    .directive('setReport', function () {
         return {
             templateUrl: 'components/set-report/set-report.html',
             replace: true,

@@ -1,33 +1,14 @@
 class SetController {
-    constructor ($stateParams, $q, Files, alerts, SetReport) {
+    constructor ($stateParams, $q, SetReportService, SetReport) {
         this.stateParams = $stateParams;
-        this.Files = Files;
-        this.SetReport = SetReport;
-        this.alerts = alerts;
 
         this.setHistory = $q.all( [
-            this.getSetFeatures(),
             this.getSetHistory()
+            SetReportService.getSetFeatures( this.stateParams.set ),
         ] )
             .then( this.reorganizeReportData );
     }
 
-    getSetFeatures () {
-        let filename = 'sets/' + this.stateParams.set;
-        this.files = this.Files.get({file: this.Files.encode(filename)})
-            .$promise
-            .then( res => {
-                res.features = res.contents
-                    .split("\n")
-                    .map( str => str.trim() )
-                    .filter( str => str );
-
-                return res;
-            })
-            .catch(this.alerts.catcher);
-
-        return this.files;
-    }
 
     getSetHistory () {
         this.setReportData = this.SetReport.get({ name: this.stateParams.set })

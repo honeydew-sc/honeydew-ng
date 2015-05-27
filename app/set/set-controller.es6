@@ -3,26 +3,9 @@ class SetController {
         this.stateParams = $stateParams;
 
         this.setHistory = $q.all( [
-            this.getSetHistory()
             SetReportService.getSetFeatures( this.stateParams.set ),
+            // this.getSetHistory()
         ] )
-            .then( this.reorganizeReportData );
-    }
-
-
-    getSetHistory () {
-        this.setReportData = this.SetReport.get({ name: this.stateParams.set })
-            .$promise
-            .then( res => {
-                // Angular's date filter expects milliseconds, but the
-                // "start" field is only given in seconds.
-
-                return res;
-            }).catch( this.alerts.catcher);
-
-        return this.setReportData;
-    }
-
     reorganizeReportData ( [ { features }, { reports } ] ) {
         let setHistory = features.map( feature => {
             return {

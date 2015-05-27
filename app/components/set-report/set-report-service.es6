@@ -7,33 +7,38 @@ class SetReportService {
 
     getSetFeatures ( set ) {
         let filename = 'sets/' + set;
-        this.files = this.Files.get({file: this.Files.encode(filename)})
-            .$promise
-            .then( res => {
-                res.features = res.contents
-                    .split("\n")
-                    .map( str => str.trim() )
-                    .filter( str => str );
+        let files = this.Files.get({file: this.Files.encode(filename)})
+                .$promise
+                .then( res => {
+                    res.features = res.contents
+                        .split("\n")
+                        .map( str => str.trim() )
+                        .filter( str => str );
 
-                return res;
-            })
-            .catch(this.alerts.catcher);
+                    return res;
+                })
+                .catch(this.alerts.catcher);
 
-        return this.files;
+        return files;
     }
 
-    // getSetHistory () {
-    //     this.setReportData = this.SetReport.get({ name: this.stateParams.set })
-    //         .$promise
-    //         .then( res => {
-    //             // Angular's date filter expects milliseconds, but the
-    //             // "start" field is only given in seconds.
+    getSetHistory ( name ) {
+        let setReportData = this.SetReport.get({ name })
+                .$promise
+                .then( res => {
+                    res.reports = res.reports.map( report => {
+                        // Angular's date filter expects milliseconds, but the
+                        // "start" field is only given in seconds.
+                        report.startDate *= 1000;
 
-    //             return res;
-    //         }).catch( this.alerts.catcher);
+                        return report;
+                    });
 
-    //     return this.setReportData;
-    // }
+                    return res;
+                }).catch( this.alerts.catcher);
+
+        return setReportData;
+    }
 
     // reorganizeReportData ( [ { features }, { reports } ] ) {
     //     let setHistory = features.map( feature => {

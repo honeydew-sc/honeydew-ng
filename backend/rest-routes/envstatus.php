@@ -100,7 +100,7 @@ $app->group('/envstatus', function () use ($app) {
         $query->execute( array( $build, $host ) );
         $sets = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $ret = $sets;
+        $ret['details'] = $sets;
         if ( isset($_REQUEST['DEBUG']) && $_REQUEST['DEBUG'] ) {
             $with_build = preg_replace('/buildNumber = \?/', "buildNumber = \"$build\"", $sql);
             $with_host = preg_replace('/host LIKE \?/', "host LIKE \"$host\"", $with_build);

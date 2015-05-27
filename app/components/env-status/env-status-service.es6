@@ -105,7 +105,7 @@ class EnvStatus {
                 function reformatKabochaStatuses ( res ) {
                     let statuses = {};
                     Object.keys(res.data.data).forEach( env => {
-                        statuses[env] = res.data.data[env].status === 'ok';
+                        statuses[env] = res.data.data[env].status !== 'not ok';
                     });
 
                     return statuses;

@@ -8,7 +8,8 @@ $app->group('/report', function () use ($app, $setsDir) {
         FROM report r
         INNER JOIN setRun s
         ON s.id = r.setRunId
-        WHERE s.setName LIKE ?';
+        WHERE s.setName LIKE ?
+        ORDER BY s.id DESC';
 
         $sth = $pdo->prepare( $sql );
         $sth->execute(array($name));

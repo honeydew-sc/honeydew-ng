@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('SetCtrl', function ($scope, $stateParams, Files, alerts, SetReport, $timeout, CmDomHelpers) {
+    .controller('SetController', function ($scope, $stateParams, Files, alerts, SetReport, $timeout, CmDomHelpers) {
         $scope.editorOptions = {
             lineWrapping : false,
             lineNumbers: true,

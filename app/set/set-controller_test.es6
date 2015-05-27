@@ -1,10 +1,8 @@
-'use strict';
-
-describe('SetCtrl', function () {
+describe('SetController', function () {
     var cm,
         scope,
         httpMock,
-        SetCtrl;
+        SetController;
 
     beforeEach(module('honeydew'));
 
@@ -13,7 +11,7 @@ describe('SetCtrl', function () {
         scope = $rootScope.$new();
         cm = CmDomHelpers;
 
-        SetCtrl = $controller('SetCtrl', {
+        SetController = $controller('SetController', {
             $scope: scope,
             $stateParams: {
                 set: 'test.set'

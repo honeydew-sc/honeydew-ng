@@ -81,7 +81,6 @@ angular.module('honeydew', [
             .state('editor.sets', {
                 url: '/sets/:set',
                 templateUrl: 'set/set.html',
-                controller: 'SetCtrl',
                 onEnter: setTitleAndHistory
             })
             .state('monitor', {

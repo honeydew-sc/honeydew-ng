@@ -22,8 +22,8 @@ fdescribe('SetReportService', function () {
             .then( res => {
                 called++;
                 expect(res.features).toEqual( [
-                    'features/test.feature',
-                    'features/test2.feature'
+                    'test/test.feature',
+                    'test/test2.feature'
                 ]);
             });
 
@@ -59,8 +59,8 @@ fdescribe('SetReportService', function () {
         spyOn( Files , 'get' ).and.callFake( () => {
             let p = $q.defer();
             p.resolve({
-                contents: `features/test.feature
-                features/test2.feature`
+                contents: `test/test.feature
+                test/test2.feature`
             });
             return { $promise: p.promise };
         });

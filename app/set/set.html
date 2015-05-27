@@ -5,9 +5,7 @@
   <div ng-class="tree.collapse ? 'filetree-collapsed' : 'filetree-expanded'"
        class="{{ $storage.settings.font }} settings wrapper remaining-height sets ">
 
-    <div class="set-report" ng-repeat="report in set.setHistory.reports">
-      {{ report }}
-    </div>
+    <set-report set="{{ set.set }}"></set-report>
   </div>
 
   <center-pane></center-pane>

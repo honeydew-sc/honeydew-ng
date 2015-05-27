@@ -1,4 +1,11 @@
 <div class="set-report">
+  <table>
+    <thead>
+      <th ng-repeat="run in SetReport.setData track by $index">{{ run }}</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
   {{ SetReport.setData }}
 
   {{ SetReport.reportData }}

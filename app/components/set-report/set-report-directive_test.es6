@@ -24,6 +24,27 @@ fdescribe('SetReport directive', () => {
         expect(controller.reportData).toBe('reportData');
     });
 
+    it('should do some other stuff ', () => {
+        let setData = [{
+            "10": {
+                "browser": "Chrome Local",
+                "startDate": "2015-05-27 11:31:04"
+            }
+        }, {
+            "9": {
+                "browser": "Chrome Local",
+                "startDate": "2015-05-27 11:12:50"
+            }
+        }];
+
+        mockSetReportService( setData );
+        compileDirective();
+
+        let header = elm.find('table th[data-set-report-id="10"]').text();
+        expect(header).toMatch(setData[0]['10'].browser);
+        expect(header).toMatch(setData[0]['10'].startDate);
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

@@ -50,7 +50,7 @@ describe('EnvStatus', function () {
         let query = mockedCheck( 'SC', 'al' );
         mockKabochaQuery();
         httpMock.expectGET(`/rest.php/envstatus/app/SC/env/al?check=${query}`)
-            .respond( mockStatus( { success: 0, total: 0 } ) );
+            .respond( mockStatus( { details: [] } ) );
         let results = EnvStatus.query( app => app === 'SC', env => env === 'al' );
         httpMock.flush();
 
@@ -118,7 +118,7 @@ describe('EnvStatus', function () {
             .respond( mockStatus() );
     }
 
-    function mockStatus ( honeydew = { success: 8, total: 10 } ) {
+    function mockStatus ( honeydew = defaultHoneydewResponse() ) {
         let healthcheck = {
                 summary: true
             },
@@ -130,6 +130,27 @@ describe('EnvStatus', function () {
             honeydew
         };
 
+    }
+
+    function defaultHoneydewResponse() {
+        return {
+            details: [{
+                id: "270707",
+                setName: "drozOther.set",
+                success: "3",
+                total: "3"
+            }, {
+                id: "270708",
+                setName: "drozGalleryStart.set",
+                success: "3",
+                total: "3"
+            }, {
+                id: "270709",
+                setName: "drozGalleryStart.set",
+                success: "3",
+                total: "3"
+            }]
+        };
     }
 
     function mockedCheck ( app = 'SC', env = 'prod' ) {

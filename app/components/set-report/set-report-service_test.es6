@@ -89,28 +89,25 @@ describe('SetReportService', function () {
         let { setData, reportData } = SetReportService.reorganizeReportData( [ { features }, { reports }] );
 
         expect(setData).toEqual([
-            { 2: { startDate, browser } },
-            { 1: { startDate, browser } }
+            { setRunId: 2, startDate, browser },
+            { setRunId: 1, startDate, browser }
         ]);
 
         expect(reportData).toEqual([{
             'test/test.feature': [{
-                2: {
-                    status: 'success',
-                    reportId: 3
-                }
+                setRunId: 2,
+                status: 'success',
+                reportId: 3
             }, {
-                1: {
-                    status: 'success',
-                    reportId: 1
-                }
+                setRunId: 1,
+                status: 'success',
+                reportId: 1
             }]
         }, {
             'test/test2.feature': [{
-                1: {
-                    status: 'failure',
-                    reportId: 2
-                }
+                setRunId: 1,
+                status: 'failure',
+                reportId: 2
             }]
         }]);
     });

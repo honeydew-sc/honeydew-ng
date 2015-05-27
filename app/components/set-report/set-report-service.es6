@@ -44,7 +44,8 @@ class SetReportService {
                 // collect set IDs we've already seen in a hash for
                 // speed ?
                 setIds[setRunId]++;
-                setData.push( { [setRunId] : {startDate, browser} } );
+                setRunId = parseInt(setRunId);
+                setData.push( { setRunId, startDate, browser } );
             }
         });
 
@@ -55,8 +56,9 @@ class SetReportService {
             });
 
             let reportSummaryBySet = featureReports.map( ({ setRunId, status, reportId }) => {
+                setRunId = parseInt(setRunId);
                 reportId = parseInt(reportId);
-                return { [setRunId]: { status, reportId } };
+                return { status, setRunId, reportId };
             });
 
             return { [feature]: reportSummaryBySet };

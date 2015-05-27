@@ -1,4 +1,4 @@
-fdescribe('SetReport directive', () => {
+describe('SetReport directive', () => {
     var $q,
         elm,
         scope,

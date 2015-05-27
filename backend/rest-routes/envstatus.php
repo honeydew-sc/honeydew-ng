@@ -84,31 +84,31 @@ $app->group('/envstatus', function () use ($app) {
 
     function honeydew_status ( $build, $url) {
         $host = '%' . $url . '%';
-        $sql = '
-        SELECT COUNT( IF ( status != "failure", 1, NULL ) ) AS success,
-        count(*) AS total
-        FROM report
-        WHERE buildNumber = ?
-        AND setRunId IS NOT NULL
-        AND HOST like ?
-        AND endDate >= now() - INTERVAL 2 DAY';
+        $sql = 'SELECT COUNT( IF ( r.status != "failure", 1, NULL ) ) AS success,
+        COUNT( r.id ) AS total, s.id, s.setName
+        FROM setRun s
+        INNER JOIN report r
+        ON r.setRunId = s.id
+        WHERE r.buildNumber = ?
+        AND s.endDate >= now() - INTERVAL 1 DAY
+        AND s.host LIKE ?
+        AND s.deleted = 0
+        GROUP BY s.setName, s.startDate;';
 
         $pdo = hdewdb_connect();
         $query = $pdo->prepare($sql);
         $query->execute( array( $build, $host ) );
-        $status = $query->fetchAll(PDO::FETCH_ASSOC);
+        $sets = $query->fetchAll(PDO::FETCH_ASSOC);
 
-
-        $ret = $status[0];
+        $ret['details'] = $sets;
         if ( isset($_REQUEST['DEBUG']) && $_REQUEST['DEBUG'] ) {
             $with_build = preg_replace('/buildNumber = \?/', "buildNumber = \"$build\"", $sql);
-            $with_host = preg_replace('/HOST like \?/', "HOST like \"$host\"", $with_build);
+            $with_host = preg_replace('/host LIKE \?/', "host LIKE \"$host\"", $with_build);
             $readable_sql = preg_replace('/\s+/', ' ', $with_host);
 
             $ret['query'] = $readable_sql;
         }
 
-        /* returns { success: $count, total: $count[, query: $query] } */
         return $ret;
     }
 });

@@ -35,6 +35,9 @@ class EnvStatus {
                 results[key] = results[key] || {};
 
                 p.then( initializeHoneydew )
+                    .then( filterHoneydewDetails )
+                    .then( accumulateHoneydewDetails )
+
                     .then( status => addHoneydewSummary.call( this, app, status ) )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
 
@@ -43,14 +46,56 @@ class EnvStatus {
                     .then( addKabochaDashboard )
 
                     .then( status => addHealthcheckLinks.call( this, app, checkUrl, status ) )
+                    .then( status => collectResults( key, status ) )
 
-                    .then( status => collectResults( key, status ) );
+                    .catch( console.log.bind(console) );
 
                 promises.push(p);
             });
 
             function initializeHoneydew ( status ) {
                 status.honeydew = status.honeydew || {};
+                return status;
+            }
+
+            function filterHoneydewDetails ( status ) {
+                let details = status.honeydew.details || [],
+                    mostRecentSets = {};
+
+                // Unique the existing sets so we only count the most
+                // recent run of the set - if a set runs multiple
+                // times, the backend gives us the information for
+                // each run, but we're only interested in the most
+                // recent occasion.
+
+                details.forEach( set => {
+                    let { id, setName } = set;
+                    if ( !mostRecentSets.hasOwnProperty( setName ) ||
+                         mostRecentSets[setName].id < id ) {
+                             mostRecentSets[setName] = set;
+                         }
+                });
+
+                status.honeydew.mostRecentSets = mostRecentSets;
+
+                return status;
+            }
+
+            function accumulateHoneydewDetails ( status ) {
+                // Now that we have the most recent sets, we just need
+                // to accumulate the totals.
+                let mostRecentSets = status.honeydew.mostRecentSets || {},
+                    hdewStatus = { success: 0, total: 0 };
+
+                for ( let key in mostRecentSets ) {
+                    let { success, total } = mostRecentSets[key];
+                    hdewStatus.success += parseInt(success);
+                    hdewStatus.total += parseInt(total);
+                }
+
+                status.honeydew.success = hdewStatus.success;
+                status.honeydew.total = hdewStatus.total;
+
                 return status;
             }
 

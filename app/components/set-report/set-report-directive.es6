@@ -7,11 +7,13 @@ class SetReportController {
     }
 
     getSetHistoryData () {
-        this.$q.all( [
-            this.setReport.getSetFeatures( this.set ),
-            this.setReport.getSetHistory( this.set )
+        let { set, SetReport } = this;
+
+        return this.$q.all( [
+            SetReport.getSetFeatures( set ),
+            SetReport.getSetHistory( set )
         ] )
-            .then( this.setReport.reorganizeReportData )
+            .then( SetReport.reorganizeReportData )
             .then( ({ setData, reportData }) => {
                 this.setData = setData;
                 this.reportData = reportData;

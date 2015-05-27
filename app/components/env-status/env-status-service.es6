@@ -35,7 +35,9 @@ class EnvStatus {
                 results[key] = results[key] || {};
 
                 p.then( initializeHoneydew )
-                    .then( reduceHoneydewDetails )
+                    .then( filterHoneydewDetails )
+                    .then( accumulateHoneydewDetails )
+
                     .then( status => addHoneydewSummary.call( this, app, status ) )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
 
@@ -55,7 +57,7 @@ class EnvStatus {
                 return status;
             }
 
-            function reduceHoneydewDetails ( status ) {
+            function filterHoneydewDetails ( status ) {
                 let details = status.honeydew.details || [],
                     mostRecentSets = {};
 
@@ -64,17 +66,26 @@ class EnvStatus {
                 // times, the backend gives us the information for
                 // each run, but we're only interested in the most
                 // recent occasion.
-                details.map( (set) => {
+
+                details.forEach( set => {
                     let { id, setName } = set;
                     if ( !mostRecentSets.hasOwnProperty( setName ) ||
                          mostRecentSets[setName].id < id ) {
-                        mostRecentSets[setName] = set;
-                    }
+                             mostRecentSets[setName] = set;
+                         }
                 });
 
+                status.honeydew.mostRecentSets = mostRecentSets;
+
+                return status;
+            }
+
+            function accumulateHoneydewDetails ( status ) {
                 // Now that we have the most recent sets, we just need
                 // to accumulate the totals.
-                let hdewStatus = { success: 0, total : 0 };
+                let mostRecentSets = status.honeydew.mostRecentSets || {},
+                    hdewStatus = { success: 0, total: 0 };
+
                 for ( let key in mostRecentSets ) {
                     let { success, total } = mostRecentSets[key];
                     hdewStatus.success += parseInt(success);

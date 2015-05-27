@@ -24,25 +24,29 @@ describe('SetReport directive', () => {
         expect(controller.reportData).toBe('reportData');
     });
 
-    it('should do some other stuff ', () => {
+    it('should construct table headers', () => {
         let setData = [{
-            "10": {
-                "browser": "Chrome Local",
-                "startDate": "2015-05-27 11:31:04"
-            }
+            setRunId: 10,
+            browser: 'Chrome Local',
+            startDate: '2015-05-27 11:31:04'
         }, {
-            "9": {
-                "browser": "Chrome Local",
-                "startDate": "2015-05-27 11:12:50"
-            }
+            setRunId: 9,
+            browser: 'Chrome Local',
+            startDate: '2015-05-27 11:12:50'
         }];
 
         mockSetReportService( setData );
         compileDirective();
 
-        let header = elm.find('table th[data-set-report-id="10"]').text();
-        expect(header).toMatch(setData[0]['10'].browser);
-        expect(header).toMatch(setData[0]['10'].startDate);
+        let first = elm.find('table th:first').text();
+        expect(first).toMatch(setData[0].browser);
+        expect(first).toMatch(setData[0].startDate);
+
+        let last = elm.find('table th:last').text();
+        expect(last).toMatch(setData[1].browser);
+        expect(last).toMatch(setData[1].startDate);
+
+        expect(elm.find('table th').length).toBe(2);
     });
 
     function compileDirective() {

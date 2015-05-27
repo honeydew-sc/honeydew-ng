@@ -1,12 +1,13 @@
 <div class="set-report">
   <table>
     <thead>
-      <th ng-repeat="run in SetReport.setData track by $index">{{ run }}</th>
+      <th>feature</th>
+      <th ng-repeat="run in SetReport.setData">
+        {{ run.browser }} <br />
+        {{ run.startDate }}
+      </th>
     </thead>
     <tbody>
     </tbody>
   </table>
-  {{ SetReport.setData }}
-
-  {{ SetReport.reportData }}
 </div>

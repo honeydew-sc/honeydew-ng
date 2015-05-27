@@ -16,7 +16,7 @@ describe('SetController', function () {
         });
     }));
 
-    it('should put set history on the scope', () => {
-        expect(SetController.setHistory).toBeDefined();
+    it('should put the set name on the scope', () => {
+        expect(SetController.setName).toBe( 'test.set' );
     });
 });

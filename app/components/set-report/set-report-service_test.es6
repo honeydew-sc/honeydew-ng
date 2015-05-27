@@ -1,4 +1,4 @@
-fdescribe('SetReportService', function () {
+describe('SetReportService', function () {
     var $q,
         $rootScope,
         Files,

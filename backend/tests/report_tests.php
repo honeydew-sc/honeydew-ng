@@ -13,22 +13,30 @@ class reportTests extends UnitTestCase {
     }
 
     function testSetup() {
-        $setup = 'insert into setRun (setName, setRunUnique, userId, host, browser, status, startDate, endDate) values("testing.set", "_unique_", 2, "test-host", "test-browser", "success", NOW(), NOW());';
-        $this->pdo->prepare($setup)->execute();
+        $setRunSetup = 'insert into setRun (setName, setRunUnique, userId, host, browser, status, startDate, endDate)
+                               values("testing.set", "_unique_", 2, "test-host", "test-browser", "success", NOW(), NOW());';
+        $this->pdo->prepare($setRunSetup)->execute();
+        $this->setRunId = $this->pdo->lastInsertId();
+
+        $reportSetup = 'insert into report ( startDate, endDate, host, browser, featureFile, jobId, result, status, userId, setRunId ) values ( NOW(), NOW(), "test-host", "test-browser", "features/testing.feature", "_unique_", "result", "success", 2, ?)';
+        $this->pdo->prepare($reportSetup)->execute( array( $this->setRunId ) );
     }
 
     function testSetReport() {
         $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set')->send();
-        $report = $response->body->report[0];
+        $report = $response->body->reports[0];
 
+        $this->assertEqual($report->setRunId, $this->setRunId, "setRunId matches");
         $this->assertEqual($report->status, 'success', "status matches");
         $this->assertEqual($report->browser, 'test-browser', "browser matches");
-        $this->assertEqual($report->host, 'test-host', "host matches");
     }
 
     function testCleanUp() {
         $cleanup = 'delete from setRun where `setRunUnique` = "_unique_"';
         $this->pdo->prepare($cleanup)->execute();
+
+        $cleanupReports = 'delete from report where `setRunId` = ?';
+        $this->pdo->prepare($cleanupReports)->execute(array( $this->setRunId ) );
     }
 }
 

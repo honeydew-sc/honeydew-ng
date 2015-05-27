@@ -1,24 +1,59 @@
-angular.module('honeydew')
-    .controller('SetController', function ($scope, $stateParams, Files, alerts, SetReport, $timeout, CmDomHelpers) {
-        var filename = 'sets/' + $stateParams.set;
-        var files = Files.get({file: Files.encode(filename)}).$promise
-                .then( res => {
-                    res.contents = res.contents
-                        .split("\n")
-                        .map( str => str.trim() )
-                        .filter( str => str );
+class SetController {
+    constructor ($stateParams, $q, Files, alerts, SetReport) {
+        this.stateParams = $stateParams;
+        this.Files = Files;
+        this.SetReport = SetReport;
+        this.alerts = alerts;
 
-                    return res;
-                })
-                .catch(alerts.catcher);
+        this.setHistory = $q.all( [
+            this.getSetFeatures(),
+            this.getSetHistory()
+        ] )
+            .then( this.reorganizeReportData );
+    }
 
-        var setReportData = SetReport.get({ name: $stateParams.set }).$promise
-                .then( res => {
-                    // Angular's date filter expects milliseconds, but the
-                    // "start" field is only given in seconds.
+    getSetFeatures () {
+        let filename = 'sets/' + this.stateParams.set;
+        this.files = this.Files.get({file: this.Files.encode(filename)})
+            .$promise
+            .then( res => {
+                res.features = res.contents
+                    .split("\n")
+                    .map( str => str.trim() )
+                    .filter( str => str );
 
-                    return res;
-                }).catch( alerts.catcher);
+                return res;
+            })
+            .catch(this.alerts.catcher);
 
+        return this.files;
+    }
+
+    getSetHistory () {
+        this.setReportData = this.SetReport.get({ name: this.stateParams.set })
+            .$promise
+            .then( res => {
+                // Angular's date filter expects milliseconds, but the
+                // "start" field is only given in seconds.
+
+                return res;
+            }).catch( this.alerts.catcher);
+
+        return this.setReportData;
+    }
+
+    reorganizeReportData ( [ { features }, { reports } ] ) {
+        let setHistory = features.map( feature => {
+            return {
+                13: {
+                    status: true,
+                    reportId: 5
+                }
+            };
         });
-    });
+    }
+}
+
+
+angular.module('honeydew')
+    .controller('SetController', SetController );

@@ -44,7 +44,7 @@ fdescribe('SetReportService', function () {
                 expect(res.reports).toEqual([{
                     reportId: 1,
                     setRunId: 2,
-                    startDate: 12345000
+                    startDate: 'start date'
                 }]);
             });
 
@@ -74,7 +74,7 @@ fdescribe('SetReportService', function () {
                 reports: [{
                     reportId: 1,
                     setRunId: 2,
-                    startDate: 12345
+                    startDate: 'start date'
                 }]
             });
             return { $promise: p.promise };

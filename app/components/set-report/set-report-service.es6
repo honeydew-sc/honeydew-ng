@@ -25,17 +25,7 @@ class SetReportService {
     getSetHistory ( name ) {
         let setReportData = this.SetReport.get({ name })
                 .$promise
-                .then( res => {
-                    res.reports = res.reports.map( report => {
-                        // Angular's date filter expects milliseconds, but the
-                        // "start" field is only given in seconds.
-                        report.startDate *= 1000;
-
-                        return report;
-                    });
-
-                    return res;
-                }).catch( this.alerts.catcher);
+                .catch( this.alerts.catcher);
 
         return setReportData;
     }

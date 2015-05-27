@@ -1,18 +1,24 @@
 angular.module('honeydew')
     .controller('SetController', function ($scope, $stateParams, Files, alerts, SetReport, $timeout, CmDomHelpers) {
         var filename = 'sets/' + $stateParams.set;
-        $scope.file = Files.get({file: Files.encode(filename)}, function () {}, alerts.catcher);
+        var files = Files.get({file: Files.encode(filename)}).$promise
+                .then( res => {
+                    res.contents = res.contents
+                        .split("\n")
+                        .map( str => str.trim() )
+                        .filter( str => str );
 
-        $scope.setHistory = SetReport.get({ name: $stateParams.set }, function ( res ) {
-            // Angular's date filter expects milliseconds, but the
-            // "start" field is only given in seconds.
-            res.report.forEach(function ( it ) {
-                it.start *= 1000;
-            });
+                    return res;
+                })
+                .catch(alerts.catcher);
 
-            return res;
-        }, alerts.catcher);
+        var setReportData = SetReport.get({ name: $stateParams.set }).$promise
+                .then( res => {
+                    // Angular's date filter expects milliseconds, but the
+                    // "start" field is only given in seconds.
 
+                    return res;
+                }).catch( alerts.catcher);
 
         });
     });

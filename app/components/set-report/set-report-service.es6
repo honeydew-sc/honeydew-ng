@@ -49,16 +49,19 @@ class SetReportService {
             }
         });
 
-        // Collect the feature reports from the sets into reportData
-        reportData = features.map( feature => {
-            let featureReports = reports.filter( ({ featureFile }) => {
-                return featureFile.match( new RegExp(feature) );
+        let setRunIdOrder = setData.map( ({ setRunId }) => parseInt(setRunId) ),
+            reportsByFeature = features.map( feature => {
+                let featureReports = reports.filter( ({ featureFile }) => {
+                    return featureFile.match( new RegExp(feature) );
+                }).map( report => {
+                    report.setRunId = parseInt(report.setRunId);
+                    report.reportId = parseInt(report.reportId);
+                    return report;
+                });
+
+                return featureReports;
             });
 
-            let reportSummaryBySet = featureReports.map( ({ setRunId, status, reportId }) => {
-                setRunId = parseInt(setRunId);
-                reportId = parseInt(reportId);
-                return { status, setRunId, reportId };
             });
 
             return { [feature]: reportSummaryBySet };

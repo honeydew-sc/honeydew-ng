@@ -93,7 +93,7 @@ describe('SetReportService', function () {
             { setRunId: 1, startDate, browser }
         ]);
 
-        expect(reportData).toEqual([{
+        expect(reportData).toEqual({
             'test/test.feature': [{
                 setRunId: 2,
                 status: 'success',
@@ -102,14 +102,15 @@ describe('SetReportService', function () {
                 setRunId: 1,
                 status: 'success',
                 reportId: 1
-            }]
-        }, {
+            }],
             'test/test2.feature': [{
+                setRunId: 2
+            }, {
                 setRunId: 1,
                 status: 'failure',
                 reportId: 2
             }]
-        }]);
+        });
     });
 
     function mockGetFeatures () {

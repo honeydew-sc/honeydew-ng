@@ -8,6 +8,12 @@
       </th>
     </thead>
     <tbody>
+      <tr ng-repeat="(feature, reports) in SetReport.reportData">
+        <td> {{ feature }} </td>
+        <td ng-repeat="report in reports">
+          <span ng-if="report.status">{{ report.status }}</span>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

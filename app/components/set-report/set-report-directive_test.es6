@@ -49,6 +49,17 @@ describe('SetReport directive', () => {
         expect(elm.find('table th').length).toBe(3);
     });
 
+    it('should link to features', () => {
+        mockSetReportService( setData, featureData );
+        compileDirective();
+
+        let firstLink = elm.find('tr td:first a').attr('href');
+        expect(firstLink).toBe('#/features/test/test.feature');
+
+        let secondLink = elm.find('tr:last td:first a').attr('href');
+        expect(secondLink).toBe('#/features/test/test2.feature');
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

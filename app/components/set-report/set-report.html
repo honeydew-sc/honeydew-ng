@@ -9,7 +9,9 @@
     </thead>
     <tbody>
       <tr ng-repeat="(feature, reports) in SetReport.reportData track by $index">
-        <td> {{ feature }} </td>
+        <td>
+          <a ng-href="#/features/{{ feature }}">{{ feature }}</a>
+        </td>
         <td ng-repeat="report in reports">
           <span ng-if="report.status">{{ report.status }}</span>
         </td>

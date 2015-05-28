@@ -32,8 +32,7 @@ class SetReportService {
 
     reorganizeReportData ( [ { features }, { reports } ] ) {
         let setIds = {},
-            setData = [],
-            reportData = [];
+            setData = [];
 
         reports = reports || [];
 
@@ -60,11 +59,26 @@ class SetReportService {
                 });
 
                 return featureReports;
+            }),
+            reportData = {};
+
+        reportsByFeature.forEach( (reports, index) => {
+            let featureFile = features[index];
+            let reportsByFeatureAndSet = setRunIdOrder.map( correctSetRunId => {
+                let matchingReport = reports.find( ({
+                    setRunId
+                }) => correctSetRunId === setRunId );
+
+                if ( matchingReport ) {
+                    let { setRunId, status, reportId } = matchingReport;
+                    return { setRunId, status, reportId };
+                }
+                else {
+                    return { setRunId: correctSetRunId };
+                }
             });
 
-            });
-
-            return { [feature]: reportSummaryBySet };
+            reportData[featureFile] = reportsByFeatureAndSet;
         });
 
         return { setData, reportData };

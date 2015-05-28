@@ -38,7 +38,7 @@ describe('SetReport directive', () => {
         mockSetReportService( setData );
         compileDirective();
 
-        let first = elm.find('table th:first').text();
+        let first = elm.find('table th:first + th').text();
         expect(first).toMatch(setData[0].browser);
         expect(first).toMatch(setData[0].startDate);
 
@@ -46,7 +46,7 @@ describe('SetReport directive', () => {
         expect(last).toMatch(setData[1].browser);
         expect(last).toMatch(setData[1].startDate);
 
-        expect(elm.find('table th').length).toBe(2);
+        expect(elm.find('table th').length).toBe(3);
     });
 
     function compileDirective() {

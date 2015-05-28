@@ -2,8 +2,10 @@ describe('SetReport directive', () => {
     var $q,
         elm,
         scope,
+        setData,
         $compile,
         controller,
+        featureData,
         SetReportService;
 
     beforeEach(module('honeydew'));
@@ -16,6 +18,37 @@ describe('SetReport directive', () => {
         $compile = _$compile_;
     }));
 
+    beforeEach( () => {
+        setData = [{
+            setRunId: 2,
+            browser: 'Chrome Local',
+            startDate: '2015-05-27 11:31:04'
+        }, {
+            setRunId: 1,
+            browser: 'Chrome Local',
+            startDate: '2015-05-27 11:12:50'
+        }];
+
+        featureData = {
+            'test/test.feature': [{
+                setRunId: 2,
+                status: 'success',
+                reportId: 3
+            }, {
+                setRunId: 1,
+                status: 'success',
+                reportId: 1
+            }],
+            'test/test2.feature': [{
+                setRunId: 2
+            }, {
+                setRunId: 1,
+                status: 'failure',
+                reportId: 2
+            }]
+        };
+    });
+
     it('should have set and report data available', () => {
         mockSetReportService();
         compileDirective();
@@ -25,16 +58,6 @@ describe('SetReport directive', () => {
     });
 
     it('should construct table headers', () => {
-        let setData = [{
-            setRunId: 10,
-            browser: 'Chrome Local',
-            startDate: '2015-05-27 11:31:04'
-        }, {
-            setRunId: 9,
-            browser: 'Chrome Local',
-            startDate: '2015-05-27 11:12:50'
-        }];
-
         mockSetReportService( setData );
         compileDirective();
 

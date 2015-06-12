@@ -140,11 +140,7 @@ $app->group('/files', function () use ($app) {
             /* encode the data to avoid problems with (char-to-string 160)
              */
             file_put_contents($filename, utf8_encode($featureData));
-            $processOwner = posix_getpwuid(posix_geteuid());
-            $fileOwner = posix_getpwuid(fileowner($filename));
-            if ($fileOwner == $processOwner) {
-                chmod($filename, 0666);
-            }
+            chmod_safely( $filename );
         }
     }
 
@@ -181,8 +177,17 @@ $app->group('/files', function () use ($app) {
 
         if ($contents != "") {
             file_put_contents($setName, $contents);
-            chmod( $setName, 0666 );
+            chmod_safely( $setName );
         }
+    }
+
+    function chmod_safely( $filename, $mask = 0666 ) {
+        $processOwner = posix_getpwuid(posix_geteuid());
+        $fileOwner = posix_getpwuid(fileowner($filename));
+        if ($fileOwner == $processOwner) {
+            chmod($filename, $mask);
+        }
+
     }
 });
 

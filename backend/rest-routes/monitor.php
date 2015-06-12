@@ -53,7 +53,7 @@ $app->group('/monitor', function () use ($app) {
         $body = json_decode($app->request()->getBody());
 
         try {
-            validateNewMonitor($body);
+            validate_new_monitor($body);
 
             $pdo = hdewdb_connect();
             /* new entries are "on" by default */
@@ -85,7 +85,7 @@ $app->group('/monitor', function () use ($app) {
         $body = json_decode($app->request()->getBody());
 
         try {
-            $status = validateNewMonitor($body);
+            $status = validate_new_monitor($body);
 
             $pdo = hdewdb_connect();
 
@@ -158,14 +158,47 @@ function convertJsonToSQL( $monitorFile = "/opt/honeydew/sets/setInfo" ) {
     }
 }
 
-function validateNewMonitor($monitor) {
-    $reason = "";
-    if (!preg_match("/sharecare|doctoroz|army|ultimateme|bactes|dailystrength/", $monitor->{"host"})) {
-        $reason = "Error: invalid host selection: " . $monitor->{'host'};
-    }
+function validate_new_monitor($monitor) {
+    validate_host( $monitor->{'host'} );
+    validate_set( $monitor->{'set'} );
+    validate_browser( $monitor->{'browser'} );
+}
 
-    if ($reason != "") {
-        throw new Exception($reason);
+function validate_host( $host ) {
+    if (!preg_match("/sharecare|doctoroz|army|ultimateme|bactes|dailystrength/", $host)) {
+        throw new Exception('Error: invalid host selection: ' . $host);
+    }
+}
+
+function validate_set( $set, $retry = false ) {
+    /* when validating a new monitor, ensure that the set exists, or
+    try to create it! */
+    $set_filename = abs_set_path( $set );
+    if ( ! file_exists( $set_filename ) ) {
+        if ( $retry ) {
+            throw new Exception( 'Error: the set does not exist: ' . $set_filename );
+        }
+        else {
+            refreshSet( $set_filename );
+            validate_set( $set, true );
+        }
+    }
+}
+
+function validate_browser( $browser ) {
+    if ( preg_match( '/localhost/i', $browser ) ) {
+        throw new Exception( 'Error: you probably do not want to schedule a LOCALHOST monitor' );
+    }
+}
+
+function abs_set_path( $set ) {
+    if ( strpos($set, '/') === 0) {
+        return $set;
+    }
+    else {
+        $config = readInConfSettings();
+        $sets_dir = $config['basedir'] . 'sets/';
+        return $sets_dir . $set;
     }
 }
 

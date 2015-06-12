@@ -65,6 +65,26 @@ class monitorTests extends UnitTestCase {
         unlink($fakeSet);
     }
 
+    function testForceExistNewMonitor() {
+        $fakeSet = "/tmp/fake.set";
+        unlink($fakeSet);
+
+        $validMonitor = array(
+            "set" => $fakeSet,
+            "browser" => "Chrome",
+            "host" => "sharecare"
+        );
+
+        $response = \Httpful\Request::post($this->monitorUri)
+            ->sendsJson()
+            ->body(json_encode($validMonitor))
+            ->send();
+
+        $res = $response->body;
+        $this->assertTrue( file_exists( $fakeSet ) );
+        unlink($fakeSet);
+    }
+
     function testUpdateExisting() {
         $response = \Httpful\Request::get($this->monitorUri)->send();
         $monitor = $response->body[0];

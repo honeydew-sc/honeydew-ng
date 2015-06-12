@@ -181,6 +181,7 @@ $app->group('/files', function () use ($app) {
 
         if ($contents != "") {
             file_put_contents($setName, $contents);
+            chmod( $setName, 0666 );
         }
     }
 });

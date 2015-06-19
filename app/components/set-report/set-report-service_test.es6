@@ -73,7 +73,8 @@ describe('SetReportService', function () {
         $rootScope.$apply();
         expect(called).toBe(1);
         expect(SetReport.get).toHaveBeenCalledWith({
-            name: 'test.set'
+            name: 'test.set',
+            host: undefined
         });
     });
 

@@ -11,11 +11,13 @@ describe('SetReport directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_) => {
+    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, hostname) => {
         $q = _$q_;
         SetReportService = _SetReportService_;
         scope = $rootScope;
         $compile = _$compile_;
+
+        hostname.host = 'test-host';
     }));
 
     beforeEach( () => {
@@ -84,7 +86,7 @@ describe('SetReport directive', () => {
 
     it('should pass the host when getting set history', () => {
         expect(SetReportService.getSetHistory).toHaveBeenCalledWith(
-            'test.set', 'https://www.sharecare.com'
+            'test.set', 'test-host'
         );
     });
 

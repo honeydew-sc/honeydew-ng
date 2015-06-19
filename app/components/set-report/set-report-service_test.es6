@@ -111,6 +111,7 @@ describe('SetReportService', function () {
 
         let { setData, reportData } = SetReportService.reorganizeReportData( [ { features }, { reports }] );
 
+        startDate = new Date(startDate);
         expect(setData).toEqual([
             { setRunId: 2, startDate, browser },
             { setRunId: 1, startDate, browser }

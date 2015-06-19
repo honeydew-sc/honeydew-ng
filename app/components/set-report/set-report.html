@@ -4,7 +4,7 @@
       <th>Feature</th>
       <th ng-repeat="run in SetReport.setData track by $index">
         {{ run.browser }} <br />
-        {{ run.startDate }}
+        <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>
       </th>
     </thead>
     <tbody>

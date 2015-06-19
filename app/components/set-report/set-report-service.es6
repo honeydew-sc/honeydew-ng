@@ -45,6 +45,7 @@ class SetReportService {
                 // speed ?
                 setIds[setRunId]++;
                 setRunId = parseInt(setRunId);
+                startDate = new Date(startDate);
                 setData.push( { setRunId, startDate, browser } );
             }
         });
@@ -66,9 +67,9 @@ class SetReportService {
         reportsByFeature.forEach( (reports, index) => {
             let featureFile = features[index];
             let reportsByFeatureAndSet = setRunIdOrder.map( correctSetRunId => {
-                let matchingReport = reports.find( ({
-                    setRunId
-                }) => correctSetRunId === setRunId );
+                let matchingReport = reports.find(
+                    ({setRunId}) => correctSetRunId === setRunId
+                );
 
                 if ( matchingReport ) {
                     let { setRunId, status, reportId } = matchingReport;

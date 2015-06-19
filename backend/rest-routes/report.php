@@ -15,13 +15,15 @@ $app->group('/report', function () use ($app, $setsDir) {
             $sql_args = array($name);
         }
 
+        $limit = 100;
         $sql = 'SELECT r.id as reportId, r.status, r.featureFile, s.startDate, s.browser, s.id as setRunId
         FROM report r
         INNER JOIN setRun s
         ON s.id = r.setRunId
         WHERE s.setName LIKE ?'
         . $host_filter .
-        'ORDER BY s.id DESC';
+        'ORDER BY s.id DESC
+        LIMIT ' . $limit;
 
         $sth = $pdo->prepare( $sql );
         $sth->execute($sql_args);

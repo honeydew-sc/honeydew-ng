@@ -47,20 +47,17 @@ describe('SetReport directive', () => {
                 reportId: 2
             }]
         };
+
+        mockSetReportService( setData, featureData );
+        compileDirective();
     });
 
     it('should have set and report data available', () => {
-        mockSetReportService( setData, featureData );
-        compileDirective();
-
         expect(controller.setData).toBe(setData);
         expect(controller.reportData).toBe(featureData);
     });
 
     it('should construct table headers', () => {
-        mockSetReportService( setData, featureData );
-        compileDirective();
-
         let first = elm.find('table th:first + th').text();
         expect(first).toMatch(setData[0].browser);
         expect(first).toMatch(setData[0].startDate);
@@ -73,22 +70,31 @@ describe('SetReport directive', () => {
     });
 
     it('should only show one parent directory and no extension', () => {
-        mockSetReportService( setData, featureData );
-        compileDirective();
-
         let shortFeature = elm.find('tr td:first a').text();
         expect(shortFeature).toBe('test/test');
     });
 
     it('should link to features', () => {
-        mockSetReportService( setData, featureData );
-        compileDirective();
-
         let firstLink = elm.find('tr td:first a').attr('href');
         expect(firstLink).toBe('#/features/test/test.feature');
 
         let secondLink = elm.find('tr:last td:first a').attr('href');
         expect(secondLink).toBe('#/features/test/test2.feature');
+    });
+
+    it('should pass the host when getting set history', () => {
+        expect(SetReportService.getSetHistory).toHaveBeenCalledWith(
+            'test.set', 'https://www.sharecare.com'
+        );
+    });
+
+    it('should refresh itself when the hostname changes', () => {
+        spyOn( controller, 'getSetHistoryData' );
+
+        scope.$broadcast('hostname:changed');
+        scope.$apply();
+
+        expect(controller.getSetHistoryData).toHaveBeenCalled();
     });
 
     function compileDirective() {

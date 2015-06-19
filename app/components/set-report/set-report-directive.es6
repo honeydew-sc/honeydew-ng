@@ -3,8 +3,10 @@ class SetReportController {
         this.$q = $q;
         this.SetReport = SetReportService;
         this.hostname = hostname;
+        this.$scope = $scope;
 
         this.getSetHistoryData();
+        this.refreshDataOnHostnameChange();
     }
 
     getSetHistoryData () {
@@ -19,6 +21,12 @@ class SetReportController {
                 this.setData = setData;
                 this.reportData = reportData;
             });
+    }
+
+    refreshDataOnHostnameChange () {
+        this.$scope.$on('hostname:changed', ( ) => {
+            this.getSetHistoryData();
+        });
     }
 }
 

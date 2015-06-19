@@ -1,17 +1,18 @@
 class SetReportController {
-    constructor ($q, SetReportService) {
+    constructor ($scope, $q, SetReportService, hostname) {
         this.$q = $q;
         this.SetReport = SetReportService;
+        this.hostname = hostname;
 
         this.getSetHistoryData();
     }
 
     getSetHistoryData () {
-        let { set, SetReport } = this;
+        let { set, SetReport, hostname } = this;
 
         return this.$q.all( [
             SetReport.getSetFeatures( set ),
-            SetReport.getSetHistory( set )
+            SetReport.getSetHistory( set, hostname.host )
         ] )
             .then( SetReport.reorganizeReportData )
             .then( ({ setData, reportData }) => {

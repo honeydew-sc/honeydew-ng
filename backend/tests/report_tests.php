@@ -31,6 +31,20 @@ class reportTests extends UnitTestCase {
         $this->assertEqual($report->browser, 'test-browser', "browser matches");
     }
 
+    function testFoundSetReportHostFilter() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?host=http://test-host')->send();
+        $report = $response->body->reports[0];
+
+        $this->assertEqual($report->setRunId, $this->setRunId, "setRunId matches");
+        $this->assertEqual($report->status, 'success', "status matches");
+        $this->assertEqual($report->browser, 'test-browser', "browser matches");
+    }
+
+    function testMissedSetReportHostFilter() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?host=http://wrong-host')->send();
+        $this->assertTrue( empty($response->bodyreports) );
+    }
+
     function testCleanUp() {
         $cleanup = 'delete from setRun where `setRunUnique` = "_unique_"';
         $this->pdo->prepare($cleanup)->execute();

@@ -34,6 +34,28 @@ describe('SetReportService', function () {
         });
     });
 
+    it('should sort the feature list alphabetically', () => {
+        mockGetFeatures([
+            "test/c.feature",
+            "test/b.feature",
+            "test/a.feature"
+        ].join("\n"));
+
+        let called = 0;
+        SetReportService.getSetFeatures('test.set')
+            .then( res => {
+                called++;
+                expect(res.features).toEqual( [
+                    "test/a.feature",
+                    "test/b.feature",
+                    "test/c.feature"
+                ]);
+            });
+
+        $rootScope.$apply();
+        expect(called).toBe(1);
+    });
+
     it('should get the history of a set by name', () => {
         mockGetSetHistory();
 
@@ -113,13 +135,10 @@ describe('SetReportService', function () {
         });
     });
 
-    function mockGetFeatures () {
+    function mockGetFeatures ( contents = "test/test.feature\ntest/test2.feature" ) {
         spyOn( Files , 'get' ).and.callFake( () => {
             let p = $q.defer();
-            p.resolve({
-                contents: `test/test.feature
-                test/test2.feature`
-            });
+            p.resolve({ contents });
             return { $promise: p.promise };
         });
     }

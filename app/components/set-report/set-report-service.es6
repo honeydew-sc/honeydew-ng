@@ -13,7 +13,8 @@ class SetReportService {
                     res.features = res.contents
                         .split("\n")
                         .map( str => str.trim() )
-                        .filter( str => str );
+                        .filter( str => str )
+                        .sort();
 
                     return res;
                 })

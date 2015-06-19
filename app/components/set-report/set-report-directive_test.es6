@@ -50,15 +50,15 @@ describe('SetReport directive', () => {
     });
 
     it('should have set and report data available', () => {
-        mockSetReportService();
+        mockSetReportService( setData, featureData );
         compileDirective();
 
-        expect(controller.setData).toBe('setData');
-        expect(controller.reportData).toBe('reportData');
+        expect(controller.setData).toBe(setData);
+        expect(controller.reportData).toBe(featureData);
     });
 
     it('should construct table headers', () => {
-        mockSetReportService( setData );
+        mockSetReportService( setData, featureData );
         compileDirective();
 
         let first = elm.find('table th:first + th').text();

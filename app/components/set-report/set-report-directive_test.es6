@@ -72,6 +72,14 @@ describe('SetReport directive', () => {
         expect(elm.find('table th').length).toBe(3);
     });
 
+    it('should only show one parent directory and no extension', () => {
+        mockSetReportService( setData, featureData );
+        compileDirective();
+
+        let shortFeature = elm.find('tr td:first a').text();
+        expect(shortFeature).toBe('test/test');
+    });
+
     it('should link to features', () => {
         mockSetReportService( setData, featureData );
         compileDirective();

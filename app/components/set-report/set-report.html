@@ -10,14 +10,11 @@
     <tbody>
       <tr ng-repeat="(feature, reports) in SetReport.reportData track by $index">
         <td>
-          {{ $index + 1}}. <a ng-href="#/features/{{ feature }}">{{ feature | shortFeature }}</a>
+          {{ $index + 1}}. <a ng-href="#/features/{{ ::feature }}">{{ ::feature | shortFeature }}</a>
         </td>
-        <td ng-repeat="report in reports">
-          <span ng-if="report.status">
-            <a ng-href="#/report/{{ report.reportId }}">
-              {{ report.status }}
-            </a>
-          </span>
+        <td ng-repeat="report in reports" class="status" ng-class="::report.status" >
+          <a ng-href="#/report/{{ ::report.reportId }}" ng-if="::report.status">
+          </a>
         </td>
       </tr>
     </tbody>

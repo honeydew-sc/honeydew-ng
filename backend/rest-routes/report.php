@@ -3,29 +3,33 @@ $app->group('/report', function () use ($app, $setsDir) {
 
     $app->get('/set/:name', function ($name) use ($app) {
         $pdo = hdewdb_connect();
+        $host = $app->request()->params('host');
 
-        $sth = $pdo->prepare('SELECT s.id, UNIX_TIMESTAMP(s.startDate), s.host, s.browser, s.status, u.name
- FROM setRun s
- JOIN user u
- ON u.id = s.userId
- WHERE setName = ?
- ORDER by id desc
- LIMIT 10' );
 
-        $sth->execute(array($name));
+        if ( isset($host) && $host ) {
+            $host_filter = 'AND s.host LIKE ?';
+            $sql_args = array($name, host_as_sql_like_param( $host ));
+        }
+        else {
+            $host_filter = '';
+            $sql_args = array($name);
+        }
 
-        $res = $sth->fetchAll(PDO::FETCH_FUNC, function ($id, $start, $host, $browser, $status, $user) {
-            return array(
-                'id' => $id,
-                'start' => $start,
-                'host' => $host,
-                'browser' => $browser,
-                'status' => $status,
-                'user' => $user
-            );
-        });
+        $limit = 100;
+        $sql = 'SELECT r.id as reportId, r.status, r.featureFile, s.startDate, s.browser, s.id as setRunId
+        FROM report r
+        INNER JOIN setRun s
+        ON s.id = r.setRunId
+        WHERE s.setName LIKE ?'
+        . $host_filter .
+        'ORDER BY s.id DESC
+        LIMIT ' . $limit;
 
-        echo successMessage(array('report' => $res));
+        $sth = $pdo->prepare( $sql );
+        $sth->execute($sql_args);
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        echo successMessage( array( "reports" => $res ) );
     });
 
     $app->get('/:id', function ($id) use ($app) {
@@ -38,6 +42,11 @@ $app->group('/report', function () use ($app, $setsDir) {
 
         echo successMessage($res[0]);
     });
+
+    function host_as_sql_like_param ( $host = '' ) {
+        $host = preg_replace( '{^https?://}', '%', $host );
+        return $host;
+    }
 });
 
 ?>

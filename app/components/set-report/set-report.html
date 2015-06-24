@@ -1,0 +1,25 @@
+<div class="set-report table-response">
+  <table class="table table-hover">
+    <thead>
+      <th>Feature</th>
+      <th ng-repeat="run in SetReport.setData track by $index">
+        {{ run.browser }} <br />
+        <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>
+      </th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="(feature, reports) in SetReport.reportData track by $index">
+        <td>
+          {{ $index + 1}}. <a ng-href="#/features/{{ feature }}">{{ feature | shortFeature }}</a>
+        </td>
+        <td ng-repeat="report in reports">
+          <span ng-if="report.status">
+            <a ng-href="#/report/{{ report.reportId }}">
+              {{ report.status }}
+            </a>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

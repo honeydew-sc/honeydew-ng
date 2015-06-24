@@ -1,0 +1,13 @@
+.set-report {
+    width: auto;
+
+    table.table {
+        th:not(:first-child), td:not(:first-child) {
+            text-align: center;
+        }
+
+        th {
+            background-color: honeydew;
+        }
+    }
+}

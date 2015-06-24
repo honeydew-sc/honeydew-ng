@@ -1,13 +1,49 @@
 .set-report {
-    width: auto;
+    height: 100%;
 
     table.table {
-        th:not(:first-child), td:not(:first-child) {
+        width: calc(100% - 40px);
+
+        th:not(:first-child),
+        td:not(:first-child) {
             text-align: center;
         }
 
         th {
             background-color: honeydew;
+        }
+
+        td.status {
+            $border: 1px solid $gray;
+
+            border-right: $border;
+            border-bottom: $border;
+
+            // enforcing a height on the <a> makes it so the entire td
+            // is clickable. usually, the height is 21 px with two 8px
+            // padding. we want the whole thing clickable, so make it
+            // 36px tall and 0px borders.
+            padding: 0px;
+            a {
+                display: block;
+                min-height: 36px;
+            }
+        }
+
+        td.status.bugged {
+            background-color: $bg-purple;
+        }
+
+        td.status.success {
+            background-color: $bg-green;
+        }
+
+        td.status.failure {
+            background-color: $bg-red;
+        }
+
+        td.status.maybe-failure {
+            background-color: $bg-yellow;
         }
     }
 }

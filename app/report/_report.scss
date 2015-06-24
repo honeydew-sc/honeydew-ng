@@ -1,11 +1,13 @@
 .single-report.report .CodeMirror pre {
     padding: 1%;
-    max-width: 800px;
-    word-wrap: break-word;
 }
 
 .single-report.report {
     min-height: 100vh;
+
+    .live-report {
+        min-height: 100vh;
+    }
 }
 
 .single-report .navbar-form button.btn.btn-default {

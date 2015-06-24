@@ -1,7 +1,13 @@
 <div class="set-report table-response">
   <table class="table table-hover">
     <thead>
-      <th>Feature</th>
+      <th>Feature
+        <span ng-if="SetReport.setData.length === 0" class="pull-right">
+          This page filters by the hostname above! Please choose the
+          appropriate hostname if you're expecting results and not
+          seeing any :) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </th>
       <th ng-repeat="run in SetReport.setData track by $index">
         {{ run.browser }} <br />
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>

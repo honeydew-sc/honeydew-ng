@@ -570,6 +570,32 @@ module.exports = function (grunt) {
                 }
             },
 
+            angular2: {
+                command: function () {
+                    // change the following lines in es5build.js:
+                    //
+                    // var src = ['!node_modules', '!node_modules/**', './**/*.js'];
+                    // to
+                    // var src = ['!node_modules', '!node_modules/**', '!es5build.js*', './**/*.js'];
+
+                    // and
+
+                    // fs.readFile(file.path.replace('.js', '.map'), function(error, buffer) {
+                    // to
+                    // fs.readFile(file.path.replace('.js', '.js.map'), function(error, buffer) {
+
+                    // gotta make sure we've npm installed all our stuff, but since we need to change es5build.js, we don't want to
+                    var command = [
+                        'npm install',
+                        'cd node_modules',
+                        'npm install',
+                        'node es6/prod/es5build.js -s es6/prod/ -d ../../app/bower_components/angular2'
+                    ];
+
+                    return command.join(' && ');
+                }
+            },
+
             phpTests: {
                 options: {
                     stdout: true,

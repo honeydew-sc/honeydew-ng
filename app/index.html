@@ -119,7 +119,19 @@
     <script src="bower_components/select2/select2.js"></script>
     <script src="bower_components/traceur-runtime/traceur-runtime.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+    <script src="bower_components/system.js/dist/system.js"></script>
     <!-- endbower -->
+    <script>
+     System.config({
+         baseURL: '/',
+         paths: {
+             'angular2/*':'bower_components/angular2/*.js',
+         }
+     });
+     System.import('angular2/angular2');
+     System.import('components/fancy-status/fancy-status.js');
+    </script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -190,6 +202,7 @@
     <script src="components/set-report/set-report-service.js"></script>
     <script src="components/set-report/set-report-directive.js"></script>
     <script src="components/short-feature/short-feature-filter.js"></script>
+    <!-- <script src="components/fancy-status/fancy-status.js"></script> -->
     <!-- endfileblock -->
 
     <!-- codemirror plugins -->

@@ -119,7 +119,8 @@ module.exports = function (grunt) {
                         '/rest.php',
                         '/reports.php',
                         '/docs',
-                        '/editor/editor/panes'
+                        '/editor/editor/panes',
+                        'bower_components'
                     ],
                     host: 'localhost',
                     port: 80,

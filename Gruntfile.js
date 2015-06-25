@@ -618,6 +618,20 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.app %>',
                     ext: '.js'
                 }]
+            },
+            ng2: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/components',
+                    src: ['**/*.ts'],
+                    dest: '<%= yeoman.app %>/components',
+                    ext: '.js'
+                }],
+                options: {
+                    modules: 'instantiate',
+                    moduleName: 'true'
+                }
+
             }
         },
 

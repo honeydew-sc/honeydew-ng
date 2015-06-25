@@ -7,6 +7,8 @@ class SetReportController {
 
         this.getSetHistoryData();
         this.refreshDataOnHostnameChange();
+
+        this.wrongHostMessage = 'This page filters by the hostname above! Please choose the appropriate hostname if you\'re expecting results and not seeing any :)';
     }
 
     getSetHistoryData () {
@@ -27,6 +29,13 @@ class SetReportController {
         this.$scope.$on('hostname:changed', ( ) => {
             this.getSetHistoryData();
         });
+    }
+
+    isSetRunOld( startDate ) {
+        let oneWeekAgo = 1000 * 60 * 60 * 24 * 7,
+            now = new Date();
+
+        return now - startDate > oneWeekAgo;
     }
 }
 

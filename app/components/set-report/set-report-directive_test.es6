@@ -99,6 +99,11 @@ describe('SetReport directive', () => {
         expect(controller.getSetHistoryData).toHaveBeenCalled();
     });
 
+    it('should suggest to use the hostname filter', () => {
+        let helperText = elm.find('.filter-host i').attr('popover');
+        expect(helperText).toBe(controller.wrongHostMessage);
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

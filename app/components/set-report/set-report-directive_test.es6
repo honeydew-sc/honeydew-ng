@@ -24,11 +24,11 @@ describe('SetReport directive', () => {
         setData = [{
             setRunId: 2,
             browser: 'Chrome Local',
-            startDate: '2015-05-27 11:31:04'
+            startDate: new Date('2015-05-27 11:31:04')
         }, {
             setRunId: 1,
             browser: 'Chrome Local',
-            startDate: '2015-05-27 11:12:50'
+            startDate: new Date('2015-05-27 11:12:50')
         }];
 
         featureData = {
@@ -62,11 +62,11 @@ describe('SetReport directive', () => {
     it('should construct table headers', () => {
         let first = elm.find('table th:first + th').text();
         expect(first).toMatch(setData[0].browser);
-        expect(first).toMatch(setData[0].startDate);
+        expect(first).toMatch('5-27, 11:31AM');
 
         let last = elm.find('table th:last').text();
         expect(last).toMatch(setData[1].browser);
-        expect(last).toMatch(setData[1].startDate);
+        expect(last).toMatch('5-27, 11:12AM');
 
         expect(elm.find('table th').length).toBe(3);
     });

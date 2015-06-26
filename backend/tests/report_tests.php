@@ -45,6 +45,19 @@ class reportTests extends UnitTestCase {
         $this->assertTrue( empty($response->bodyreports) );
     }
 
+    function testDefaultDateFilter() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?debug=1')->send();
+        $sql = $response->body->sql;
+        $this->assertPattern( '/startDate.*INTERVAL/', $sql, 'date filter is applied by default');
+    }
+
+    function testRemoveDateFilter() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?date=all&debug=1')->send();
+        $sql = $response->body->sql;
+        $this->assertNoPattern( '/startDate.*INTERVAL/', $sql, 'date filter can be removed');
+    }
+
+
     function testCleanUp() {
         $cleanup = 'delete from setRun where `setRunUnique` = "_unique_"';
         $this->pdo->prepare($cleanup)->execute();

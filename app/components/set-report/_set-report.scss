@@ -14,12 +14,13 @@
             background-color: honeydew;
         }
 
-        td.status {
+        td {
             $border: 1px solid $gray;
-
             border-right: $border;
             border-bottom: $border;
+        }
 
+        td.status {
             // enforcing a height on the <a> makes it so the entire td
             // is clickable. usually, the height is 21 px with two 8px
             // padding. we want the whole thing clickable, so make it

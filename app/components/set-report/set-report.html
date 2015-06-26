@@ -2,6 +2,15 @@
   <table class="table table-hover">
     <thead>
       <th>Feature
+        <span class="small">
+          <span class="small">
+            (&nbsp;<a ng-click="SetReport.toggleAllSetRunDisplay()"
+                      href=""
+                      class="toggle-display-all">
+            {{ SetReport.displayToggleText }}
+            </a>&nbsp;)
+          </span>
+        </span>
         <span ng-if="SetReport.setData.length === 0" class="pull-right">
           {{ ::SetReport.wrongHostMessage }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>

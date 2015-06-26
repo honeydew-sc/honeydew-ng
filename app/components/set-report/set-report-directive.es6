@@ -46,6 +46,15 @@ class SetReportController {
         this.displayToggleText = "more";
     }
 
+    toggleAllSetRunDisplay () {
+        if ( this.setRunDisplayCount === 100 ) {
+            this.hideExtraSetRuns();
+        }
+        else {
+            this.displayToggleText = "less";
+            this.setRunDisplayCount = 100;
+        }
+    }
 }
 
 angular.module('honeydew')

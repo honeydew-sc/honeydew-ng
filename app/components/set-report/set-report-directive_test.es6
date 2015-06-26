@@ -115,6 +115,16 @@ describe('SetReport directive', () => {
         expect(headerText.indexOf('Chrome Local'))
             .toBe(headerText.lastIndexOf('Chrome Local'));
     });
+
+    it('should toggle the display of all sets on click', () => {
+        controller.setRunDisplayCount = 1;
+        scope.$apply();
+
+        elm.find('.toggle-display-all').click();
+        var headers = elm.find('th');
+        expect(headers.length).toBe(3);
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

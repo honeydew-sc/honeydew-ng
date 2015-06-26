@@ -104,6 +104,17 @@ describe('SetReport directive', () => {
         expect(helperText).toBe(controller.wrongHostMessage);
     });
 
+    it('should hide set runs from view', () => {
+        controller.setRunDisplayCount = 1;
+        scope.$apply();
+
+        var headers = elm.find('th');
+        expect(headers.length).toBe(2);
+
+        var headerText = headers.text();
+        expect(headerText.indexOf('Chrome Local'))
+            .toBe(headerText.lastIndexOf('Chrome Local'));
+    });
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

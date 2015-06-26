@@ -5,6 +5,7 @@ class SetReportController {
         this.hostname = hostname;
         this.$scope = $scope;
 
+        this.hideExtraSetRuns();
         this.getSetHistoryData();
         this.refreshDataOnHostnameChange();
 
@@ -20,6 +21,8 @@ class SetReportController {
         ] )
             .then( SetReport.reorganizeReportData )
             .then( ({ setData, reportData }) => {
+                this.hideExtraSetRuns();
+
                 this.setData = setData;
                 this.reportData = reportData;
             });
@@ -37,6 +40,12 @@ class SetReportController {
 
         return now - startDate > oneWeekAgo;
     }
+
+    hideExtraSetRuns () {
+        this.setRunDisplayCount = 5;
+        this.displayToggleText = "more";
+    }
+
 }
 
 angular.module('honeydew')

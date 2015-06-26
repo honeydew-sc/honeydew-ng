@@ -85,4 +85,19 @@ function grepDirectory($dir, $filter, $args = "-iRl", $escape = true) {
     return $result;
 }
 
+function debug_sql( $sql, $args ) {
+    $sql_parts = explode( '?', $sql );
+
+    foreach ($sql_parts as $sql_part) {
+        $debugged_sql .= $sql_part;
+
+        $replacement = '"' . array_shift( $args ) . '"';
+        if ( $replacement != '""' ) {
+            $debugged_sql .= $replacement ;
+        }
+    }
+
+    return preg_replace( '/\s+/', ' ', $debugged_sql );
+}
+
 ?>

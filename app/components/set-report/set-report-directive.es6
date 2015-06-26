@@ -16,14 +16,17 @@ class SetReportController {
         let { set, SetReport, hostname } = this;
         this.$scope.$emit('progress:loading');
 
-        return this.$q.all( [
-            SetReport.getSetFeatures( set ),
-            SetReport.getSetHistory( set, hostname.host )
-        ] )
+        let p1 = SetReport.getSetFeatures( set ),
+            p2 = SetReport.getSetHistory( set, hostname.host );
+
+        p1.then( res => { this.$scope.$emit( 'progress:increment' ); } );
+        p2.then( res => { this.$scope.$emit( 'progress:increment' ); } );
+
+        return this.$q.all( [ p1, p2 ] )
             .then( SetReport.reorganizeReportData )
             .then( ({ setData, reportData }) => {
                 this.hideExtraSetRuns();
-                this.$scope.$emit('progress:done');
+                this.$scope.$emit( 'progress:value', { value: 100 } );
 
                 this.setData = setData;
                 this.reportData = reportData;

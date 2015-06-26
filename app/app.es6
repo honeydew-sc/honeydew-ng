@@ -11,6 +11,8 @@ angular.module('honeydew', [
     'doowb.angular-pusher',
     'treeControl',
     'ui.select',
+    'ngAria',
+    'ngMaterial',
 
 
     // internal modules

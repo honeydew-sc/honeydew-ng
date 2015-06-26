@@ -48,6 +48,9 @@ module.exports = function(config) {
             'app/bower_components/showdown/compressed/showdown.js',
             'app/bower_components/angular-tree-control/angular-tree-control.js',
             'app/bower_components/angular-ui-select/dist/select.js',
+            'app/bower_components/angular-animate/angular-animate.js',
+            'app/bower_components/angular-aria/angular-aria.js',
+            'app/bower_components/angular-material/angular-material.js',
 
             // our scripts
             'app/config_test.js',

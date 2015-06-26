@@ -44,8 +44,13 @@ class SetReportService {
                 // collect set IDs we've already seen in a hash for
                 // speed ?
                 setIds[setRunId]++;
+
                 setRunId = parseInt(setRunId);
                 startDate = new Date(startDate);
+                browser = browser
+                    .replace(/ \(set\) *$/, '')
+                    .replace(/ Local *$/, '');
+
                 setData.push( { setRunId, startDate, browser } );
             }
         });

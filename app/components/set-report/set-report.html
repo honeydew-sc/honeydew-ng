@@ -7,7 +7,7 @@
         </span>
       </th>
       <th ng-repeat="run in SetReport.setData track by $index">
-        {{ run.browser }} <br />
+        {{ run.browser }}
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>
         <span class="filter-host"
               ng-if="SetReport.isSetRunOld( run.startDate )" >
@@ -25,7 +25,7 @@
           {{ $index + 1}}. <a ng-href="#/features/{{ ::feature }}" target="_blank">{{ ::feature | shortFeature }}</a>
         </td>
         <td ng-repeat="report in reports" class="status" ng-class="::report.status" >
-          <a ng-href="#/report/{{ ::report.reportId }}" ng-if="::report.status">
+          <a ng-href="#/report/{{ ::report.reportId }}" target="_blank" ng-if="::report.status">
           </a>
         </td>
       </tr>

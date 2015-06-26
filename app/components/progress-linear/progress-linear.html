@@ -2,6 +2,7 @@
   <md-progress-linear
     class="hd-progress"
     ng-if="ProgressLinear.loading"
-    md-mode="indeterminate">
+    ng-value="ProgressLinear.value"
+    md-mode="{{ ProgressLinear.mode }}">
   </md-progress-linear>
 </div>

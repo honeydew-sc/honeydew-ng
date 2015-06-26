@@ -27,6 +27,20 @@ describe('ProgressLinear directive', () => {
         expect(mdProgress.length).toBe(1);
     });
 
+    it('should update its progress value', () => {
+        scope.$emit( 'progress:value', { value: 50 } );
+        scope.$apply();
+        expect(controller.loading).toBe(true);
+        expect(controller.value).toBe(50);
+    });
+
+    it('should close itself when the value is 100', () => {
+        scope.$emit( 'progress:value', { value: 100 } );
+        scope.$apply();
+        expect(controller.loading).toBe(true);
+        expect(controller.value).toBe( 100 );
+    });
+
     it('should display on its loading event', () => {
         scope.$emit( 'progress:loading' );
         scope.$apply();

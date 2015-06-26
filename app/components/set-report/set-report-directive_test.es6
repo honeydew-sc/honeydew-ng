@@ -125,6 +125,20 @@ describe('SetReport directive', () => {
         expect(headers.length).toBe(3);
     });
 
+    it('should emit progress events throughout its lifecycle', () => {
+        let loading = 0,
+            done = 0;
+
+        scope.$on('progress:loading', () => loading++ );
+        scope.$on('progress:done', () => done++ );
+
+        controller.getSetHistoryData();
+        scope.$apply();
+
+        expect(loading).toBe(1);
+        expect(done).toBe(1);
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

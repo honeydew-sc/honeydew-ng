@@ -14,6 +14,7 @@ class SetReportController {
 
     getSetHistoryData () {
         let { set, SetReport, hostname } = this;
+        this.$scope.$emit('progress:loading');
 
         return this.$q.all( [
             SetReport.getSetFeatures( set ),
@@ -22,9 +23,14 @@ class SetReportController {
             .then( SetReport.reorganizeReportData )
             .then( ({ setData, reportData }) => {
                 this.hideExtraSetRuns();
+                this.$scope.$emit('progress:done');
 
                 this.setData = setData;
                 this.reportData = reportData;
+            })
+            .catch( res => {
+                console.log(res);
+                this.$scope.$emit('progress:done');
             });
     }
 

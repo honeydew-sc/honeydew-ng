@@ -127,16 +127,16 @@ describe('SetReport directive', () => {
 
     it('should emit progress events throughout its lifecycle', () => {
         let loading = 0,
-            done = 0;
+            increment = 0;
 
         scope.$on('progress:loading', () => loading++ );
-        scope.$on('progress:done', () => done++ );
+        scope.$on('progress:increment', () => increment++ );
 
         controller.getSetHistoryData();
         scope.$apply();
 
         expect(loading).toBe(1);
-        expect(done).toBe(1);
+        expect(increment).toBe(2);
     });
 
     function compileDirective() {
@@ -148,8 +148,9 @@ describe('SetReport directive', () => {
     }
 
     function mockSetReportService( setData = 'setData', reportData = 'reportData' ) {
-        let promise = $q.defer();
-        promise.resolve( {} );
+        let deferred = $q.defer();
+        deferred.resolve( {} );
+        let promise = deferred.promise;
 
         spyOn( SetReportService, 'getSetFeatures').and.returnValue( promise );
         spyOn( SetReportService, 'getSetHistory' ).and.returnValue( promise );

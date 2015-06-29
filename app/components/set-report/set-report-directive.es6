@@ -32,7 +32,6 @@ class SetReportController {
                 this.reportData = reportData;
             })
             .catch( res => {
-                console.log(res);
                 this.$scope.$emit('progress:done');
             });
     }
@@ -43,7 +42,8 @@ class SetReportController {
         });
     }
 
-    isSetRunOld( startDate ) {
+    isSetRunOld ( startDate ) {
+        // we're assuming startDate is a Date() because we're LAZY
         let oneWeekAgo = 1000 * 60 * 60 * 24 * 7,
             now = new Date();
 

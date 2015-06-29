@@ -20,6 +20,11 @@
             border-bottom: $border;
         }
 
+        .title-dropdown {
+            right: 0;
+            left: auto;
+        }
+
         td.status {
             // enforcing a height on the <a> makes it so the entire td
             // is clickable. usually, the height is 21 px with two 8px

@@ -19,6 +19,21 @@
           ng-if="$index < SetReport.setRunDisplayCount">
         {{ run.browser | shortBrowser }}
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>
+
+        <span class="dropdown">
+          <a href class="dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </a>
+          <ul class="title-dropdown dropdown-menu" role="menu">
+            <li>
+              <a href ng-click="rerunFailures( run )">rerun failures?</a>
+            </li>
+            <span class="small">
+              User: {{ run.user }}
+            </span>
+          </ul>
+        </span>
+
         <span class="filter-host"
               ng-if="SetReport.isSetRunOld( run.startDate )" >
           <i class="fa fa-question-circle"

@@ -16,6 +16,9 @@ class HostnamePickerController {
         }
     }
 
+    userChangedHostname () {
+        this.$scope.$emit( 'hostname:changed', { host: this.name.host } );
+    }
 }
 
 angular.module('sc.hostname')

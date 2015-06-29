@@ -43,4 +43,18 @@ describe('HostnamePickerDirective', function () {
         ctrl.emit('SC', 'qa');
         expect(scope.name.host).toMatch(/qa.*sharecare/);
     });
+
+    it('should emit an event when the hostname is manually changed', () => {
+        let input = element.find('input'),
+            changed = 0;
+
+        spyOn( ctrl, 'userChangedHostname' ).and.callThrough();
+        scope.$on( 'hostname:changed', () => changed++ );
+
+        input.triggerHandler('blur');
+
+        expect( ctrl.userChangedHostname ).toHaveBeenCalled();
+        expect( changed ).toBe( 1 );
+
+    });
 });

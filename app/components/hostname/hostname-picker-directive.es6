@@ -1,7 +1,25 @@
-'use strict';
+class HostnamePickerController {
+    constructor ( $scope, hostname ) {
+        this.$scope = $scope;
+        this.hostname = hostname;
+
+        this.name = hostname;
+
+        this.$scope.$emit('hostname:ready');
+    }
+
+    emit (app, env) {
+        this.$scope.$emit('hostname:update', app, env);
+
+        if (env) {
+            self.open = false;
+        }
+    }
+
+}
 
 angular.module('sc.hostname')
-    .directive('hostnamePicker', function ( $location, hostname ) {
+    .directive('hostnamePicker', function ( $location ) {
         return {
             templateUrl: () => {
                 var url = 'components/hostname/hostname.html';
@@ -15,20 +33,7 @@ angular.module('sc.hostname')
             replace: true,
             scope: true,
             restrict: 'E',
-            controller: function ( $scope, hostname ) {
-                var self = this;
-                self.name = hostname;
-
-                self.emit = function (app, env) {
-                    $scope.$emit('hostname:update', app, env);
-
-                    if (env) {
-                        self.open = false;
-                    }
-                };
-
-                $scope.$emit('hostname:ready');
-            },
+            controller: HostnamePickerController,
             controllerAs: 'Host'
         };
     });

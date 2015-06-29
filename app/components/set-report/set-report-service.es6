@@ -39,7 +39,7 @@ class SetReportService {
 
         // group the unique set ids to be used as table headers into
         // the `setData` var
-        reports.forEach( ({ setRunId, startDate, browser }) => {
+        reports.forEach( ({ setRunId, startDate, browser, host }) => {
             if ( ! Object.keys(setIds).some( id => id === setRunId) ) {
                 // collect set IDs we've already seen in a hash for
                 // speed ?
@@ -48,7 +48,7 @@ class SetReportService {
                 setRunId = parseInt(setRunId);
                 startDate = new Date(startDate);
 
-                setData.push( { setRunId, startDate, browser } );
+                setData.push( { setRunId, startDate, browser, host } );
             }
         });
 

@@ -9,7 +9,7 @@ $app->group('/report', function () use ($app, $setsDir) {
         $sql_args = get_set_report_sql_args( $name, $host );
 
         $date_filter = get_date_filter( $app->request()->params('date') );
-        $sql = 'SELECT r.id as reportId, r.status, r.featureFile, s.startDate, s.browser, s.id as setRunId
+        $sql = 'SELECT r.id as reportId, r.status, r.featureFile, s.startDate, s.browser, s.id as setRunId, s.host
         FROM report r
         INNER JOIN setRun s
         ON s.id = r.setRunId

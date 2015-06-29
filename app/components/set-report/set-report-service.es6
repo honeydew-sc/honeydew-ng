@@ -47,9 +47,6 @@ class SetReportService {
 
                 setRunId = parseInt(setRunId);
                 startDate = new Date(startDate);
-                browser = browser
-                    .replace(/ \(set\) *$/, '')
-                    .replace(/ Local *$/, '');
 
                 setData.push( { setRunId, startDate, browser } );
             }

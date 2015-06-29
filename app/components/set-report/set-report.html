@@ -17,7 +17,7 @@
       </th>
       <th ng-repeat="run in SetReport.setData track by $index"
           ng-if="$index < SetReport.setRunDisplayCount">
-        {{ run.browser }}
+        {{ run.browser | shortBrowser }}
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M-dd, h:mma' }}</a>
         <span class="filter-host"
               ng-if="SetReport.isSetRunOld( run.startDate )" >

@@ -60,7 +60,7 @@ angular.module('honeydew')
 
 
         var resolveOptionalIcons = function (path) {
-            if (path.match(/phrases.*\.phrase$/)) {
+            if (path && path.match(/phrases.*\.phrase$/)) {
                 if ( ! hasPhraseInfo() ) {
                     panes.push(phraseInfo);
                 }

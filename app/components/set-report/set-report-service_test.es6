@@ -67,7 +67,8 @@ describe('SetReportService', function () {
                     reportId: 1,
                     setRunId: 2,
                     startDate: 'start date',
-                    host: 'host'
+                    host: 'host',
+                    user: 'user'
                 }]);
             });
 
@@ -82,26 +83,27 @@ describe('SetReportService', function () {
     it('should combine features with set history data', () => {
         let browser = 'Chrome local',
             startDate = '2015-05-27 11:12:50',
-            host = 'host';
+            host = 'host',
+            user = 'user';
 
         let features = [
             'test/test.feature',
             'test/test2.feature'
         ],
             reports = [{
-                browser, startDate, host,
+                browser, startDate, host, user,
                 featureFile: "/./test/test.feature",
                 reportId: "3",
                 setRunId: "2",
                 status: "success"
             }, {
-                browser, startDate, host,
+                browser, startDate, host, user,
                 featureFile: "/./test/test.feature",
                 reportId: "1",
                 setRunId: "1",
                 status: "success"
             }, {
-                browser, startDate, host,
+                browser, startDate, host, user,
                 featureFile: "/./test/test2.feature",
                 reportId: "2",
                 setRunId: "1",
@@ -112,8 +114,8 @@ describe('SetReportService', function () {
 
         startDate = new Date(startDate);
         expect(setData).toEqual([
-            { setRunId: 2, startDate, browser, host },
-            { setRunId: 1, startDate, browser, host }
+            { setRunId: 2, startDate, browser, host, user },
+            { setRunId: 1, startDate, browser, host, user }
         ]);
 
         expect(reportData).toEqual({
@@ -153,7 +155,8 @@ describe('SetReportService', function () {
                     reportId: 1,
                     setRunId: 2,
                     startDate: 'start date',
-                    host: 'host'
+                    host: 'host',
+                    user: 'user'
                 }]
             });
             return { $promise: p.promise };

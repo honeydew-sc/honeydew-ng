@@ -22,6 +22,7 @@ class jobsTests extends UnitTestCase {
             'browser' => array('phantomjs local'),
             'file' => $this->tempPath,
             'username' => $this->testUser,
+            'test' => true
         );
 
         $response = \Httpful\Request::post($this->baseUrl)
@@ -32,6 +33,25 @@ class jobsTests extends UnitTestCase {
         unlink($this->basePath . $this->tempPath);
     }
 
+    function testCanQueueJobs() {
+        touch($this->basePath . $this->tempPath);
+        $contents = array(
+            'host' => 'http://www.google.com',
+            'browser' => array('phantomjs local'),
+            'file' => $this->tempPath,
+            'username' => $this->testUser,
+            'test' => true,
+            'queue' => true
+        );
+
+        $response = \Httpful\Request::post($this->baseUrl)
+             ->sendsJson()
+             ->body(json_encode($contents))
+             ->send();
+        $this->assertPattern('/hd-queue-job/', $response->body->command[0], 'including queue as a kv pair queues the job');
+        unlink($this->basePath . $this->tempPath);
+    }
+
     function testSerialBatchJobs() {
         touch($this->basePath . $this->tempPath);
         $contents = array(
@@ -39,7 +59,8 @@ class jobsTests extends UnitTestCase {
             'browser' => array('phantomjs local', 'phantomjs local again'),
             'file' => $this->tempPath,
             'username' => $this->testUser,
-            'serial' => 'test'
+            'serial' => 'test',
+            'test' => true
         );
 
         $response = \Httpful\Request::post($this->baseUrl)

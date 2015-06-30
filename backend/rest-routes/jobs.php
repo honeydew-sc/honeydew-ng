@@ -30,7 +30,8 @@ $app->group('/jobs', function () use ($app) {
             }
 
             echo successMessage(array(
-                "command" => $cmd
+                'command' => $cmd,
+                'jobs' => $jobs
             ));
         }
         catch (Exception $e) {

@@ -1,7 +1,7 @@
 class SetReportController {
     constructor ($scope, $q, SetReportService, hostname) {
         this.$q = $q;
-        this.SetReport = SetReportService;
+        this.SetReportService = SetReportService;
         this.hostname = hostname;
         this.$scope = $scope;
 
@@ -13,17 +13,17 @@ class SetReportController {
     }
 
     getSetHistoryData () {
-        let { set, SetReport, hostname } = this;
+        let { set, SetReportService, hostname } = this;
         this.$scope.$emit('progress:loading');
 
-        let p1 = SetReport.getSetFeatures( set ),
-            p2 = SetReport.getSetHistory( set, hostname.host );
+        let p1 = SetReportService.getSetFeatures( set ),
+            p2 = SetReportService.getSetHistory( set, hostname.host );
 
         p1.then( res => { this.$scope.$emit( 'progress:increment' ); } );
         p2.then( res => { this.$scope.$emit( 'progress:increment' ); } );
 
         return this.$q.all( [ p1, p2 ] )
-            .then( SetReport.reorganizeReportData )
+            .then( SetReportService.reorganizeReportData )
             .then( ({ setData, reportData }) => {
                 this.hideExtraSetRuns();
                 this.$scope.$emit( 'progress:value', { value: 100 } );

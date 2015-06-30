@@ -43,6 +43,9 @@ class HoneydewJob
         $this->setSize(@$jobData["size"]);
         $this->setChannel(@$jobData["channel"]);
 
+        $this->setQueue(@$jobData['queue']);
+        $this->setTest(@$jobData['test']);
+
         $this->_config_file = @$jobData['config'];
     }
 
@@ -175,6 +178,24 @@ class HoneydewJob
         }
     }
 
+    private function setQueue($queue) {
+        if (isset($queue) && $queue) {
+            $this->_queue = true;
+        }
+        else {
+            $this->_queue = false;
+        }
+    }
+
+    private function setTest($test) {
+        if (isset($test) && $test) {
+            $this->_test = true;
+        }
+        else {
+            $this->_test = false;
+        }
+    }
+
     protected function getChannelString() {
         $string = "";
         if(isset($this->_channel)) {
@@ -288,7 +309,7 @@ class HoneydewJob
     {
         $cmd = $this->asyncShellCommand();
 
-        if (!$test)
+        if (!$test && !$this->_test)
         {
             system($cmd);
         }

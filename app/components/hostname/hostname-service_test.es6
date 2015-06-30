@@ -10,6 +10,8 @@ describe('hostnameService', function () {
         hostname = _hostname_;
         scope = _$rootScope_;
 
+        hostname.host = 'http://www.sharecare.com';
+
         var tpl = '<hostname-picker></hostname-picker>';
         var element = angular.element(tpl);
         var elm = $compile(element)(scope);

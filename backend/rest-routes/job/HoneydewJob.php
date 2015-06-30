@@ -332,6 +332,25 @@ class HoneydewJob
         return $cmd;
     }
 
+    private function findQueueBinary() {
+        $libs = explode('-I', $this->getConfig('libs') );
+        $binaryName = 'hd-queue-job';
+
+        $libs = array_filter( $libs, function ( $it ) { return !!$it; } );
+        $binaries = array_map( function ( $lib ) use ( $binaryName ) {
+            $bin = preg_replace('/lib.*/', 'bin/', $lib);
+            return $bin . $binaryName;
+        }, $libs );
+
+        foreach ($binaries as $binary) {
+            if ( file_exists( $binary ) ) {
+                return $binary;
+            }
+        }
+
+        return $binaryName;
+    }
+
     public function asyncShellCommand()
     {
         $cmd = $this->syncShellCommand();

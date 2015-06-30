@@ -327,7 +327,14 @@ class HoneydewJob
             $libs = '-I/home/honeydew/perl5/lib/perl5';
         }
 
-        $cmd = 'perl ' . $libs . ' /opt/honeydew/bin/jobRunner.pl "' . $jobString . '"';
+        if ($this->_queue) {
+            $binary = $this->findQueueBinary();
+        }
+        else {
+            $binary = ' /opt/honeydew/bin/jobRunner.pl ';
+        }
+
+        $cmd = 'perl ' . $libs . ' ' . $binary . ' "' . $jobString . '"';
 
         return $cmd;
     }

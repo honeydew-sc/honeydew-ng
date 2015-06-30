@@ -139,6 +139,16 @@ describe('SetReport directive', () => {
         expect(increment).toBe(2);
     });
 
+    it('should delegate to the set report service for rerunning failures', () => {
+        spyOn( SetReportService, 'missingOrFailed' );
+        spyOn( SetReportService, 'rerun' );
+        let rerun = elm.find('.rerun-failures');
+        rerun[0].click();
+
+        expect(SetReportService.missingOrFailed).toHaveBeenCalled();
+        expect(SetReportService.rerun).toHaveBeenCalled();
+    });
+
     function compileDirective() {
         elm = angular.element('<set-report set="test.set"></set-report>');
         $compile(elm)(scope);

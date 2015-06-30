@@ -50,6 +50,15 @@ class SetReportController {
         return now - startDate > oneWeekAgo;
     }
 
+    rerunFailures ( setData ) {
+        let missing = this.SetReportService.missingOrFailed(
+            setData.setRunId,
+            this.reportData
+        );
+
+        return this.SetReportService.rerun( missing, setData );
+    }
+
     hideExtraSetRuns () {
         this.setRunDisplayCount = 5;
         this.displayToggleText = "more";

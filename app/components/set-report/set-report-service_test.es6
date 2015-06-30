@@ -138,6 +138,55 @@ describe('SetReportService', function () {
         });
     });
 
+    it('should figure out which features are failed', () => {
+        let reportData = {
+            "test/test.feature": [
+                { "setRunId":2, "status":"success", "reportId":3 },
+                { "setRunId":1, "status":"success", "reportId":1 }
+            ],
+            "test/test2.feature": [
+                { "setRunId":2 },
+                { "setRunId":1, "status":"failure", "reportId":2 }
+            ]
+        };
+
+        let failed = SetReportService.missingOrFailed( 1, reportData );
+        expect(failed).toEqual([ 'test/test2.feature' ]);
+    });
+
+    it('should figure out which features are missing', () => {
+        let reportData = {
+            "test/test.feature": [
+                { "setRunId":2, "status":"success", "reportId":3 },
+                { "setRunId":1, "status":"success", "reportId":1 }
+            ],
+            "test/test2.feature": [
+                { "setRunId":2 },
+                { "setRunId":1, "status":"failure", "reportId":2 }
+            ]
+        };
+
+        let missing = SetReportService.missingOrFailed( 2, reportData );
+        expect(missing).toEqual([ 'test/test2.feature' ]);
+    });
+
+    it('should combine features that are failed and missing', () => {
+        let reportData = {
+            "test/test.feature": [
+                { "setRunId":3, "status":"success", "reportId":1 }
+            ],
+            "test/test2.feature": [
+                { "setRunId":3, "status":"failure", "reportId":2 }
+            ],
+            "test/test3.feature": [
+                { "setRunId":3 }
+            ]
+        };
+
+        let missingOrFailed = SetReportService.missingOrFailed( 3, reportData );
+        expect(missingOrFailed).toEqual([ 'test/test2.feature', 'test/test3.feature' ]);
+    });
+
     function mockGetFeatures ( contents = "test/test.feature\ntest/test2.feature" ) {
         spyOn( Files , 'get' ).and.callFake( () => {
             let p = $q.defer();

@@ -87,6 +87,22 @@ class SetReportService {
 
         return { setData, reportData };
     }
+
+    missingOrFailed ( setRunId, reportData ) {
+        let features = Object.keys(reportData);
+
+        return features
+            .map( feature => {
+                return reportData[feature]
+                    .map( it => { it.feature = feature; return it; } )
+                    .find( report => report.setRunId === setRunId );
+            })
+            .filter( report => {
+                return report.status === 'failure' ||
+                    !report.hasOwnProperty('reportId');
+            })
+            .map( report => report.feature );
+    }
 }
 
 angular.module('honeydew')

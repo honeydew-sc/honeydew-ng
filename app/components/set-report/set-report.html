@@ -49,8 +49,7 @@
         <td>
           {{ $index + 1}}. <a ng-href="#/features/{{ ::feature }}" target="_blank">{{ ::feature | shortFeature }}</a>
         </td>
-        <td ng-repeat="report in reports"
-            ng-if="$index < SetReport.setRunDisplayCount"
+        <td ng-repeat="report in reports | limitTo: SetReport.setRunDisplayCount"
             ng-class="::report.status"
             class="status" >
           <a ng-href="#/report/{{ ::report.reportId }}" target="_blank" ng-if="::report.status">

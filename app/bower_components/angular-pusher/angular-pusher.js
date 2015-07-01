@@ -66,7 +66,9 @@ angular.module('doowb.angular-pusher', [])
       var pusher;
 
       function onSuccess () {
-        pusher = new $window.Pusher(apiKey, initOptions);
+        if (apiKey) {
+          pusher = new $window.Pusher(apiKey, initOptions);
+        }
       }
 
       var onScriptLoad = function (callback) {

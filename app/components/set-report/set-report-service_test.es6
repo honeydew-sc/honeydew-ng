@@ -227,8 +227,8 @@ describe('SetReportService', function () {
         });
 
         it('should include the feature name in the payload', () => {
-            expect(rerunJobs[0].feature).toBe('test/test1.feature');
-            expect(rerunJobs[1].feature).toBe('test/test2.feature');
+            expect(rerunJobs[0].file).toBe('test/test1.feature');
+            expect(rerunJobs[1].file).toBe('test/test2.feature');
         });
     });
 

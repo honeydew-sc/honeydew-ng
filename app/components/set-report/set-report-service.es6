@@ -123,7 +123,7 @@ class SetReportService {
 
         let jobs = features.map( feature => {
             let job = jobMetadata;
-            job.feature = feature;
+            job.file = feature;
             return new this.HoneydewJob( job );
         });
 

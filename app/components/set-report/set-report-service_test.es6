@@ -5,10 +5,11 @@ describe('SetReportService', function () {
         SetReport,
         httpMock,
         LiveReport,
+        QueueWorker,
         SetReportService;
 
     beforeEach(module('honeydew'));
-    beforeEach(inject(function (_$rootScope_, _$q_, _SetReport_, _SetReportService_, _Files_, $httpBackend, _liveReport_) {
+    beforeEach(inject(function (_$rootScope_, _$q_, _SetReport_, _SetReportService_, _Files_, $httpBackend, _liveReport_, _QueueWorker_) {
         $rootScope = _$rootScope_;
         $q = _$q_;
         Files = _Files_;
@@ -18,6 +19,7 @@ describe('SetReportService', function () {
         LiveReport = _liveReport_;
 
         spyOn( _liveReport_, 'switchChannel' );
+        QueueWorker = _QueueWorker_;
     }));
 
     it('should get the list of features for a set', () => {
@@ -204,6 +206,11 @@ describe('SetReportService', function () {
                 startDate: 'startDate'
             };
 
+            let p = $q.defer();
+            p.resolve({});
+
+            spyOn( QueueWorker, 'spawn' )
+                .and.returnValue({ $promise: p.promise });
             httpMock.expectPOST('/rest.php/jobs').respond({});
             httpMock.expectPOST('/rest.php/jobs').respond({});
 

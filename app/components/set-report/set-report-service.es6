@@ -1,11 +1,12 @@
 class SetReportService {
-    constructor ( Files, SetReport, alerts, HoneydewJob, randomString, liveReport ) {
+    constructor ( Files, SetReport, alerts, HoneydewJob, randomString, liveReport, QueueWorker ) {
         this.Files = Files;
         this.SetReport = SetReport;
         this.alerts = alerts;
         this.HoneydewJob = HoneydewJob;
         this.rand = randomString.string;
         this.LiveReport = liveReport;
+        this.QueueWorker = QueueWorker;
     }
 
     getSetFeatures ( set ) {
@@ -117,8 +118,15 @@ class SetReportService {
             return new this.HoneydewJob( job );
         });
 
-        let promises = jobs.map( job => job.$execute() );
-        return { jobs, promises };
+        let spawnWorker = this.QueueWorker
+                .spawn({ channel: jobMetadata.channel })
+                .$promise;
+
+        let promises = spawnWorker.then( () => {
+            return jobs.map( job => job.$execute() );
+        });
+
+        return { jobs, promises, spawnWorker };
     }
 
     _getRerunChannel( setName ) {

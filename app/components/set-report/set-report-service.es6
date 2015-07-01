@@ -108,18 +108,12 @@ class SetReportService {
     }
 
     rerun ( features, jobData ) {
-        let jobMetadata = angular.copy(jobData);
-        // we don't want to set the user or startDate
-        delete jobMetadata.user;
-        delete jobMetadata.startDate;
 
         // we want all the jobs on the same channel in case the user
         // wants to watch them
         jobMetadata.channel = 'private-' + this.rand();
         this.LiveReport.switchChannel( jobMetadata.channel );
 
-        // Queue these so we don't flood the backend
-        jobMetadata.queue = true;
 
         let jobs = features.map( feature => {
             let job = jobMetadata;
@@ -129,6 +123,18 @@ class SetReportService {
 
         let promises = jobs.map( job => job.$execute() );
         return { jobs, promises };
+    }
+
+    _sanitizeRerunAttributes ( jobData ) {
+        let sanitizedAttrs = angular.copy(jobData);
+        // we don't want to set the user or startDate
+        delete sanitizedAttrs.user;
+        delete sanitizedAttrs.startDate;
+
+        // Queue the rerun jobs so we don't flood the backend
+        sanitizedAttrs.queue = true;
+
+        return sanitizedAttrs;
     }
 }
 

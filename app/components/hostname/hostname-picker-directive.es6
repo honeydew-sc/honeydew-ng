@@ -12,7 +12,7 @@ class HostnamePickerController {
         this.$scope.$emit('hostname:update', app, env);
 
         if (env) {
-            self.open = false;
+            this.open = false;
         }
     }
 

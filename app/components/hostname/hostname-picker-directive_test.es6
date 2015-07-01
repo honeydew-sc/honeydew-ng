@@ -57,4 +57,11 @@ describe('HostnamePickerDirective', function () {
         expect( changed ).toBe( 1 );
 
     });
+
+    it('should automatically close the dropdown when choosing an env', () => {
+        ctrl.open = true;
+        let env = element.find('.btn-hdew.env:first-child');
+        env.click();
+        expect(ctrl.open).toBe(false);
+    });
 });

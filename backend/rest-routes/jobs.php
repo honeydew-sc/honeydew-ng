@@ -42,11 +42,12 @@ $app->group('/jobs', function () use ($app) {
     $app->post('/worker', function () use ($app) {
         $body = json_decode( $app->request()->getBody() );
         $channel = $body->{'channel'};
+        $do_work = filter_var($app->request()->get('work'), FILTER_VALIDATE_BOOLEAN);
 
         try {
             $worker_binary = get_worker_binary();
             $exec_worker = get_async_worker_command( $worker_binary, $channel );
-            if ( $body->{'work'} ) {
+            if ( $do_work ) {
                 exec($exec_worker, $output);
             }
             else {

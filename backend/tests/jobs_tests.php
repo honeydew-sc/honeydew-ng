@@ -112,8 +112,8 @@ class jobsTests extends UnitTestCase {
     }
 
     function testCanStartWorker() {
-        $body = array( 'channel' => 'chan', 'work' => false );
-        $response = \Httpful\Request::post($this->baseUrl . '/worker')
+        $body = array( 'channel' => 'chan' );
+        $response = \Httpful\Request::post($this->baseUrl . '/worker?work=false')
             ->sendsJson()
             ->body(json_encode($body))
             ->send();

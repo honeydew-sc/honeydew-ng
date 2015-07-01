@@ -56,7 +56,9 @@ class SetReportController {
             this.reportData
         );
 
-        return this.SetReportService.rerun( missing, setData );
+        // We need the set name on the setData so we can name the
+        // channel after it.
+        return this.SetReportService.rerun( missing, setData, this.set );
     }
 
     hideExtraSetRuns () {

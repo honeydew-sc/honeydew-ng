@@ -107,13 +107,9 @@ class SetReportService {
             .map( report => report.feature );
     }
 
-    rerun ( features, jobData ) {
-
-        // we want all the jobs on the same channel in case the user
-        // wants to watch them
-        jobMetadata.channel = 'private-' + this.rand();
-        this.LiveReport.switchChannel( jobMetadata.channel );
-
+    rerun ( features, jobData, setName ) {
+        let jobMetadata = this._sanitizeRerunAttributes( jobData );
+        jobMetadata.channel = this._getRerunChannel( setName );
 
         let jobs = features.map( feature => {
             let job = jobMetadata;
@@ -123,6 +119,19 @@ class SetReportService {
 
         let promises = jobs.map( job => job.$execute() );
         return { jobs, promises };
+    }
+
+    _getRerunChannel( setName ) {
+        let channel = [
+            'private',
+            this.rand(),
+            setName.replace(/\.set$/, ''),
+            'rerun'
+        ].join('-');
+
+        this.LiveReport.switchChannel( channel );
+
+        return channel;
     }
 
     _sanitizeRerunAttributes ( jobData ) {

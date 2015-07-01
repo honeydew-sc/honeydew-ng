@@ -207,7 +207,7 @@ describe('SetReportService', function () {
             httpMock.expectPOST('/rest.php/jobs').respond({});
             httpMock.expectPOST('/rest.php/jobs').respond({});
 
-            let { jobs } = SetReportService.rerun( [ 'test/test1.feature', 'test/test2.feature' ], setData );
+            let { jobs } = SetReportService.rerun( [ 'test/test1.feature', 'test/test2.feature' ], setData, 'name.set' );
             rerunJobs = jobs;
 
             httpMock.flush();

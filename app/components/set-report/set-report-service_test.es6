@@ -17,8 +17,6 @@ describe('SetReportService', function () {
         SetReportService = _SetReportService_;
         httpMock = $httpBackend;
         LiveReport = _liveReport_;
-
-        spyOn( _liveReport_, 'switchChannel' );
         QueueWorker = _QueueWorker_;
     }));
 
@@ -211,6 +209,8 @@ describe('SetReportService', function () {
 
             spyOn( QueueWorker, 'spawn' )
                 .and.returnValue({ $promise: p.promise });
+            spyOn( LiveReport, 'switchChannel' );
+
             httpMock.expectPOST('/rest.php/jobs').respond({});
             httpMock.expectPOST('/rest.php/jobs').respond({});
 

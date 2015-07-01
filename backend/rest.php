@@ -100,4 +100,24 @@ function debug_sql( $sql, $args ) {
     return preg_replace( '/\s+/', ' ', $debugged_sql );
 }
 
+function get_config($file = "/opt/honeydew/honeydew.ini") {
+    $contents = file($file);
+
+    $group = '';
+    foreach ($contents as $row) {
+        if (preg_match("/^\s*#/", $row) || !preg_match('/(?:^\[|=)/', $row)) {
+            continue;
+        }
+        else if (preg_match('/^\[(.*)\]$/', $row, $matches) ) {
+            $group = $matches[1];
+        }
+        else {
+            list($name, $value) = explode("=", trim($row));
+            $settings[$group][$name] = $value;
+        }
+    }
+
+    return $settings;
+}
+
 ?>

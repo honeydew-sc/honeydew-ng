@@ -1,8 +1,11 @@
 class SetReportService {
-    constructor ( Files, SetReport, alerts ) {
+    constructor ( Files, SetReport, alerts, HoneydewJob, randomString, liveReport ) {
         this.Files = Files;
         this.SetReport = SetReport;
         this.alerts = alerts;
+        this.HoneydewJob = HoneydewJob;
+        this.rand = randomString.string;
+        this.LiveReport = liveReport;
     }
 
     getSetFeatures ( set ) {
@@ -102,6 +105,30 @@ class SetReportService {
                     !report.hasOwnProperty('reportId');
             })
             .map( report => report.feature );
+    }
+
+    rerun ( features, jobData ) {
+        let jobMetadata = angular.copy(jobData);
+        // we don't want to set the user or startDate
+        delete jobMetadata.user;
+        delete jobMetadata.startDate;
+
+        // we want all the jobs on the same channel in case the user
+        // wants to watch them
+        jobMetadata.channel = 'private-' + this.rand();
+        this.LiveReport.switchChannel( jobMetadata.channel );
+
+        // Queue these so we don't flood the backend
+        jobMetadata.queue = true;
+
+        let jobs = features.map( feature => {
+            let job = jobMetadata;
+            job.feature = feature;
+            return new this.HoneydewJob( job );
+        });
+
+        let promises = jobs.map( job => job.$execute() );
+        return { jobs, promises };
     }
 }
 

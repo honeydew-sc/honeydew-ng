@@ -3,15 +3,21 @@ describe('SetReportService', function () {
         $rootScope,
         Files,
         SetReport,
+        httpMock,
+        LiveReport,
         SetReportService;
 
     beforeEach(module('honeydew'));
-    beforeEach(inject(function (_$rootScope_, _$q_, _SetReport_, _SetReportService_, _Files_) {
+    beforeEach(inject(function (_$rootScope_, _$q_, _SetReport_, _SetReportService_, _Files_, $httpBackend, _liveReport_) {
         $rootScope = _$rootScope_;
         $q = _$q_;
         Files = _Files_;
         SetReport = _SetReport_;
         SetReportService = _SetReportService_;
+        httpMock = $httpBackend;
+        LiveReport = _liveReport_;
+
+        spyOn( _liveReport_, 'switchChannel' );
     }));
 
     it('should get the list of features for a set', () => {
@@ -185,6 +191,45 @@ describe('SetReportService', function () {
 
         let missingOrFailed = SetReportService.missingOrFailed( 3, reportData );
         expect(missingOrFailed).toEqual([ 'test/test2.feature', 'test/test3.feature' ]);
+    });
+
+    describe('rerunning', () => {
+        let rerunJobs;
+
+        beforeEach( () => {
+            let setData = {
+                browser: 'browser',
+                host: 'host',
+                user: 'user',
+                startDate: 'startDate'
+            };
+
+            httpMock.expectPOST('/rest.php/jobs').respond({});
+            httpMock.expectPOST('/rest.php/jobs').respond({});
+
+            let { jobs } = SetReportService.rerun( [ 'test/test1.feature', 'test/test2.feature' ], setData );
+            rerunJobs = jobs;
+
+            httpMock.flush();
+        });
+
+        it('should compose jobs to be rerun with the proper attributes', () => {
+            rerunJobs.map( job => {
+                expect(job.hasOwnProperty('user')).toBe(false);
+                expect(job.hasOwnProperty('startDate')).toBe(false);
+                expect(job.queue).toBe(true);
+            });
+        });
+
+        it('should construct a single channel and switch to it', () => {
+            expect(rerunJobs[0].channel).toBe(rerunJobs[1].channel);
+            expect(LiveReport.switchChannel).toHaveBeenCalledWith( rerunJobs[1].channel );
+        });
+
+        it('should include the feature name in the payload', () => {
+            expect(rerunJobs[0].feature).toBe('test/test1.feature');
+            expect(rerunJobs[1].feature).toBe('test/test2.feature');
+        });
     });
 
     function mockGetFeatures ( contents = "test/test.feature\ntest/test2.feature" ) {

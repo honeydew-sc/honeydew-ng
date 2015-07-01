@@ -224,6 +224,7 @@ describe('SetReportService', function () {
         it('should construct a single channel and switch to it', () => {
             expect(rerunJobs[0].channel).toBe(rerunJobs[1].channel);
             expect(LiveReport.switchChannel).toHaveBeenCalledWith( rerunJobs[1].channel );
+            expect(rerunJobs[0].channel).toMatch(/private-\w{8}-name-rerun/);
         });
 
         it('should include the feature name in the payload', () => {

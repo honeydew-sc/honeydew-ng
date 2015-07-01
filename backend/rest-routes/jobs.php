@@ -39,6 +39,30 @@ $app->group('/jobs', function () use ($app) {
         }
     });
 
+    $app->post('/worker', function () use ($app) {
+        $body = json_decode( $app->request()->getBody() );
+        $channel = $body->{'channel'};
+
+        try {
+            $worker_binary = get_worker_binary();
+            $exec_worker = get_async_worker_command( $worker_binary, $channel );
+            if ( $body->{'work'} ) {
+                exec($exec_worker, $output);
+            }
+            else {
+                $output = array(0);
+            }
+            echo successMessage( array(
+                'channel' => $channel,
+                'command' => $exec_worker,
+                'output' => $output[0]
+            ));
+        }
+        catch (Exception $e) {
+            $app->halt('418', errorMessage($e->getMessage()));
+        }
+    });
+
     $app->post('/sets/rerunfailed/:setId', function ($setId) use ($app) {
         try {
             validateSetId($setId);
@@ -121,6 +145,33 @@ $app->group('/jobs', function () use ($app) {
         }
 
         return $cmd;
+    }
+
+    function get_worker_binary() {
+        $binary_name = 'bin/manual_set_worker.pl';
+
+        $config = get_config();
+        $honeydew = $config['honeydew']['basedir'];
+        $binary_path = $honeydew . $binary_name;
+
+        if (file_exists($binary_path)) {
+            return $binary_path;
+        }
+        else {
+            throw Exception('cannot find set worker binary at ' . $binary_path . ', waaah!');
+        }
+    }
+
+    function get_async_worker_command( $binary, $channel )  {
+        if ( !isset( $channel ) ) {
+            throw Exception('workers need channels!');
+        }
+
+        $config = get_config();
+        $include_libs = $config['perl']['libs'];
+        $async = ' > /dev/null 2>&1 & echo $!';
+
+        return "perl $include_libs $binary $channel $async";
     }
 });
 

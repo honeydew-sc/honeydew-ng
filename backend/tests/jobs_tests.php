@@ -109,7 +109,19 @@ class jobsTests extends UnitTestCase {
 
         $sth = $pdo->prepare('delete from setRun where id = ?');
         $sth->execute(array($id));
+    }
 
+    function testCanStartWorker() {
+        $body = array( 'channel' => 'chan', 'work' => false );
+        $response = \Httpful\Request::post($this->baseUrl . '/worker')
+            ->sendsJson()
+            ->body(json_encode($body))
+            ->send();
+
+        $cmd = $response->body->command;
+        $this->assertPattern('/manual_set_worker.* chan .*&/', $cmd, 'command has proper binary and async stuff');
+        $this->assertEqual($response->body->output, 0, 'we get the pid afterwards');
+        $this->assertEqual($response->body->channel, 'chan', 'we derive the channel properly');
     }
 }
 ?>

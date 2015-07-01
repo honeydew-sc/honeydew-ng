@@ -62,11 +62,11 @@ describe('SetReport directive', () => {
     it('should construct table headers', () => {
         let first = elm.find('table th:first + th').text();
         expect(first).toMatch(/Chrome$/m);
-        expect(first).toMatch('5-27, 11:31AM');
+        expect(first).toMatch(/5.27,.11:31AM/);
 
         let last = elm.find('table th:last').text();
         expect(last).toMatch(/Chrome$/m);
-        expect(last).toMatch('5-27, 11:12AM');
+        expect(last).toMatch(/5.27,.11:12AM/);
 
         expect(elm.find('table th').length).toBe(3);
     });

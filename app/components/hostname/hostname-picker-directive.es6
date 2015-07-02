@@ -19,7 +19,9 @@ class HostnamePickerController {
     }
 
     userChangedHostname () {
-        this.$scope.$emit( 'hostname:changed', { host: this.name.host } );
+        this.$scope.$emit( 'hostname:changed', this.name.host );
+    }
+
     isAppHighlighted( currentApp ) {
         if ( this._shouldHighlight() ) {
             let apps = this.highlight.map( ({ app }) => app );

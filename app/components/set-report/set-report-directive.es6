@@ -18,23 +18,30 @@ class SetReportController {
         this.$scope.$emit('progress:loading');
 
         let p1 = SetReportService.getSetFeatures( set ),
-            p2 = SetReportService.getSetHistory( set, hostname.host );
+            p2 = SetReportService.getSetHistory( set, hostname.host ),
+            p3 = this.highlightHostnames();
 
-        p1.then( res => { this.$scope.$emit( 'progress:increment' ); } );
-        p2.then( res => { this.$scope.$emit( 'progress:increment' ); } );
+        [p1, p2, p3].map( promise => {
+            promise.then( () => this._showProgress() );
+        });
 
-        return this.$q.all( [ p1, p2 ] )
+        return this.$q.all( [ p1, p2, p3 ] )
             .then( SetReportService.reorganizeReportData )
             .then( ({ setData, reportData }) => {
                 this.hideExtraSetRuns();
-                this.$scope.$emit( 'progress:value', { value: 100 } );
 
                 this.setData = setData;
                 this.reportData = reportData;
             })
+
+            .then( () => this.$scope.$emit( 'progress:value', { value: 100 } ) )
             .catch( res => {
                 this.$scope.$emit('progress:done');
             });
+    }
+
+    _showProgress() {
+        this.$scope.$emit( 'progress:increment' );
     }
 
     highlightHostnames() {

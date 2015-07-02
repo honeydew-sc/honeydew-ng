@@ -20,13 +20,29 @@
       </button>
       <li class="hostname-apps">
         <div class="btn-group">
-          <button ng-repeat="app in Host.name.appOptions" type="button" class="btn btn-hdew app" ng-model="Host.name.app" btn-radio="app" ng-click="Host.emit(app, undefined)">{{ app }}</button>
+          <button ng-repeat="app in Host.name.appOptions"
+                  type="button"
+                  class="btn btn-hdew app"
+                  ng-model="Host.name.app"
+                  btn-radio="app"
+                  ng-class="{ highlight: Host.isAppHighlighted( app ) }"
+                  ng-click="Host.emit(app, undefined)">
+            {{ app }}
+          </button>
         </div>
       </li>
       <li class="divider"></li>
       <li class="hostname-envs">
         <div class="btn-group">
-          <button ng-repeat="env in Host.name.envOptions" type="button" class="btn btn-hdew env" ng-model="Host.name.env" btn-radio="env" ng-click="Host.emit(undefined, env)">{{ env }}</button>
+          <button ng-repeat="env in Host.name.envOptions"
+                  type="button"
+                  class="btn btn-hdew env"
+                  ng-model="Host.name.env"
+                  btn-radio="env"
+                  ng-class="{ highlight: Host.isEnvHighlighted( env ) }"
+                  ng-click="Host.emit(undefined, env)">
+            {{ env }}
+          </button>
         </div>
       </li>
     </ul>

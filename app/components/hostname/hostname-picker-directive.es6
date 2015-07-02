@@ -1,11 +1,13 @@
 class HostnamePickerController {
-    constructor ( $scope, hostname ) {
+    constructor ( $scope, $location, hostname ) {
         this.$scope = $scope;
+        this.$location = $location;
         this.hostname = hostname;
 
         this.name = hostname;
-
         this.$scope.$emit('hostname:ready');
+
+        this.highlight = hostname.highlight;
     }
 
     emit (app, env) {
@@ -18,6 +20,34 @@ class HostnamePickerController {
 
     userChangedHostname () {
         this.$scope.$emit( 'hostname:changed', { host: this.name.host } );
+    isAppHighlighted( currentApp ) {
+        if ( this._shouldHighlight() ) {
+            let apps = this.highlight.map( ({ app }) => app );
+            return apps.some( app => currentApp === app );
+        }
+        else {
+            return false;
+        }
+    }
+
+    isEnvHighlighted( envOpt ) {
+        if ( this._shouldHighlight() ) {
+            return this.highlight.some( ({app, env}) => app === this.name.app && env === envOpt );
+        }
+        else {
+            return false;
+        }
+    }
+
+    _shouldHighlight() {
+        let isSetState = /\.set$/.test(this.$location.path());
+
+        if ( isSetState ) {
+            return isSetState;
+        }
+        else {
+            return this.highlight.length === 0;
+        }
     }
 }
 

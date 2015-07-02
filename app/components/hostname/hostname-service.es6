@@ -14,6 +14,8 @@ angular.module('sc.hostname')
             envOptions: [],
             appOptions: [],
 
+            highlight: [],
+
             resolve: function () {
                 // when restoring from localStorage, we undefine the
                 // env to prevent from overwriting the stored value.
@@ -23,6 +25,10 @@ angular.module('sc.hostname')
 
                     $rootScope.$broadcast('hostname:changed', this.host);
                 }
+            },
+
+            highlightEnvs( appEnvPairs ) {
+                this.highlight = appEnvPairs;
             }
         };
 

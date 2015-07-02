@@ -61,4 +61,10 @@ describe('hostnameService', function () {
         ctrl.emit('Mobile', 'Android');
         expect(hostname.host).toMatch(/origin.*apk$/);
     });
+
+    it('should overwrite what environments need to be higlighted', () => {
+        let pair = { app: 'SC', env: 'prod' };
+        hostname.highlightEnvs([ pair ]);
+        expect(hostname.highlight).toEqual([ pair ]);
+    });
 });

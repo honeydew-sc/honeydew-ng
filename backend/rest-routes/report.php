@@ -34,6 +34,32 @@ $app->group('/report', function () use ($app, $setsDir) {
         echo successMessage( $ret );
     });
 
+    $app->get('/set/:name/host', function ( $name ) use ( $app ) {
+        $pdo = hdewdb_connect();
+
+        $sql_args = array( $name );
+        $date_filter = get_date_filter();
+
+        $sql = 'SELECT s.host
+        FROM setRun s
+        WHERE s.setName LIKE ?
+        ' . $date_filter . '
+        ORDER BY s.id DESC';
+
+        $sth = $pdo->prepare( $sql );
+
+        $sth->execute($sql_args);
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        $ret = array( "hostnames" => $res );
+        if ( $app->request()->params('debug') ) {
+            $ret['sql'] = debug_sql( $sql, $sql_args );
+        }
+
+        echo successMessage( $ret );
+    });
+
+
     $app->get('/:id', function ($id) use ($app) {
         $pdo = hdewdb_connect();
         $sth = $pdo->prepare('SELECT * from report where id = ?');

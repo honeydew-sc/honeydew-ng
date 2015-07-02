@@ -57,13 +57,19 @@ class reportTests extends UnitTestCase {
         $this->assertNoPattern( '/startDate.*INTERVAL/', $sql, 'date filter can be removed');
     }
 
+    function testLookupSetHosts() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set/host?debug=1')->send();
+        $hostnames = $response->body->hostnames;
+        $this->assertEqual( $hostnames[0]->{'host'}, 'test-host' );
+        $this->assertPattern( '/select s.host from setRun s/i', $response->body->sql );
+    }
 
     function testCleanUp() {
-        $cleanup = 'delete from setRun where `setRunUnique` = "_unique_"';
-        $this->pdo->prepare($cleanup)->execute();
-
         $cleanupReports = 'delete from report where `setRunId` = ?';
         $this->pdo->prepare($cleanupReports)->execute(array( $this->setRunId ) );
+
+        $cleanup = 'delete from setRun where `setRunUnique` = "_unique_"';
+        $this->pdo->prepare($cleanup)->execute();
     }
 }
 

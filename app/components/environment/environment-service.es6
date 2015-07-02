@@ -36,6 +36,8 @@ class Environment {
             Army: '',
             TMA: ''
         };
+
+        this.urlLookup = [];
     }
 
     getEnvUrl ( app, env ) {
@@ -94,6 +96,37 @@ class Environment {
         else {
             return url += '?details=true';
         }
+    }
+
+    lookup ( url ) {
+        let lookup = this._getUrlLookup();
+
+        if ( lookup.hasOwnProperty( url ) ) {
+            return lookup[url];
+        }
+        else {
+            return '';
+        }
+    }
+
+    _getUrlLookup() {
+        if ( this.urlLookup.length === 0 ) {
+            this.urlLookup = Object.keys(this.envs)
+                .map( app => {
+                    return this.envs[app].map( env => {
+                        return { app, env };
+                    });
+                })
+                .reduce( (acc, pairs) => {
+                    return acc.concat(pairs);
+                }, [])
+                .reduce( (acc, { app, env }) => {
+                    acc[this.getEnvUrl(app, env)] = { app, env };
+                    return acc;
+                }, []);
+        }
+
+        return this.urlLookup;
     }
 
     _isMobile ( app ) {

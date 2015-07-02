@@ -59,4 +59,11 @@ describe('Environment', function () {
         let check = Environment.getHealthcheckUrl( 'Army', 'prod' );
         expect(check).toBe('/healthcheck?details=true&healthcheckKey=');
     });
+
+    it('should do reverse url lookups', () => {
+        let url = 'https://www.sharecare.com';
+        let { app, env } = Environment.lookup(url);
+        expect(app).toBe('SC');
+        expect(env).toBe('prod');
+    });
 });

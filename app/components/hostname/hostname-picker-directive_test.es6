@@ -17,12 +17,20 @@ describe('HostnamePickerDirective', function () {
         var elm = $compile(element)(scope);
         scope.$digest();
         ctrl = element.controller('hostnamePicker');
+        ctrl.open = true;
+        scope.$digest();
         hostValue = element.find('.hostname');
     }));
 
     afterEach(function() {
         element.remove();
         hostValue = undefined;
+    });
+
+    it('should ng-if out of the DOM when closed', () => {
+        ctrl.open = false;
+        scope.$digest();
+        expect(element.find('.hostname button').length).toBe(0);
     });
 
     it('should create a hostname input', function () {

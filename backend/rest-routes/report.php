@@ -71,12 +71,12 @@ $app->group('/report', function () use ($app, $setsDir) {
         echo successMessage($res[0]);
     });
 
-    function host_as_sql_like_param ( $host = '' ) {
+    function host_as_sql_like_param( $host = '' ) {
         $host = preg_replace( '{^https?://}', '%', $host );
         return $host;
     }
 
-    function get_host_filter ( $host ) {
+    function get_host_filter( $host ) {
         if ( isset( $host ) && $host ) {
             return 'AND s.host LIKE ?';
         }
@@ -85,7 +85,7 @@ $app->group('/report', function () use ($app, $setsDir) {
         }
     }
 
-    function get_date_filter ( $date ) {
+    function get_date_filter( $date = '' ) {
         if ( isset( $date ) && $date == 'all' ) {
             return '';
         }
@@ -94,7 +94,7 @@ $app->group('/report', function () use ($app, $setsDir) {
         }
     }
 
-    function get_set_report_sql_args ( $name, $host ) {
+    function get_set_report_sql_args( $name, $host ) {
         if ( isset( $host ) && $host !== '' ) {
             return array( $name, host_as_sql_like_param( $host ) );
         }

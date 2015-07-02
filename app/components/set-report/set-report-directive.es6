@@ -1,7 +1,8 @@
 class SetReportController {
-    constructor ($scope, $q, SetReportService, hostname) {
+    constructor ($scope, $q, SetReportService, Environment, hostname) {
         this.$q = $q;
         this.SetReportService = SetReportService;
+        this.Environment = Environment;
         this.hostname = hostname;
         this.$scope = $scope;
 
@@ -33,6 +34,22 @@ class SetReportController {
             })
             .catch( res => {
                 this.$scope.$emit('progress:done');
+            });
+    }
+
+    highlightHostnames() {
+        let { set, SetReportService, hostname, Environment } = this;
+
+        return SetReportService.getSetHostnames( set )
+            .then( ({ hostnames }) => {
+                let appEnvPairs = hostnames
+                        .map( ({ host })  => host )
+                        .map( host => Environment.lookup( host ) )
+                        .filter( pair => pair );
+
+                hostname.highlightEnvs( appEnvPairs );
+
+                return appEnvPairs;
             });
     }
 

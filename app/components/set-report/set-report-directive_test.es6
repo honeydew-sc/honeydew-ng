@@ -18,6 +18,11 @@ describe('SetReport directive', () => {
         $compile = _$compile_;
 
         hostname.host = 'test-host';
+
+        let p = $q.defer();
+        p.resolve({ hostnames: [{host: 'https://www.sharecare.com' }]});
+        spyOn( SetReportService, 'getSetHostnames' )
+            .and.returnValue(p.promise);
     }));
 
     beforeEach( () => {
@@ -136,7 +141,7 @@ describe('SetReport directive', () => {
         scope.$apply();
 
         expect(loading).toBe(1);
-        expect(increment).toBe(2);
+        expect(increment).toBeGreaterThan(2);
     });
 
     it('should delegate to the set report service for rerunning failures', () => {
@@ -147,6 +152,21 @@ describe('SetReport directive', () => {
 
         expect(SetReportService.missingOrFailed).toHaveBeenCalled();
         expect(SetReportService.rerun).toHaveBeenCalled();
+    });
+
+    it('should highlight hostname app/env pairs', () => {
+        let pairs = controller.highlightHostnames(),
+            called = 0;
+
+        pairs.then( ([{ app, env }]) => {
+            called++;
+            expect(app).toBe('SC');
+            expect(env).toBe('prod');
+        });
+
+        scope.$apply();
+        expect(called).toBe(1);
+
     });
 
     function compileDirective() {

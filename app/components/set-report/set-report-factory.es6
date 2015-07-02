@@ -1,7 +1,14 @@
 function SetReportFactory ($resource) {
-    return $resource('/rest.php/report/set/:name', {
+    let ret = $resource('/rest.php/report/set/:name', {
         name: '@name'
-    });
+    }),
+        hostnames = $resource('/rest.php/report/set/:name/host', {});
+
+    ret.getHostnames = ({ name }) => {
+        return hostnames.get({ name });;
+    };
+
+    return ret;
 }
 
 angular.module('honeydew')

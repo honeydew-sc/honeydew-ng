@@ -51,7 +51,7 @@ function successMessage( $notes = "" ){
 
 function getUser() {
     if (!isset($_SERVER['PHP_AUTH_USER'])) {
-        $_SERVER['PHP_AUTH_USER'] = 'default';
+        $_SERVER['PHP_AUTH_USER'] = 'honeydoer';
     }
 
     return $_SERVER['PHP_AUTH_USER'];

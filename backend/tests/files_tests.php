@@ -96,7 +96,7 @@ class filesTests extends UnitTestCase {
 
         $this->assertPattern('/user-push/', $response->body->git, "shell script is mentioned in git commit");
         $this->assertPattern('/fake.feature/', $response->body->git, "filename is mentioned in git commit");
-        $this->assertPattern('/default/', $response->body->git, "username is mentioned in git commit");
+        $this->assertPattern('/honeydoer/', $response->body->git, "username is mentioned in git commit");
 
         $this->assertPattern('/SC-12345/', $response->body->git, "jira ticket is mentioned in git commit");
     }

@@ -41,12 +41,12 @@ $app->group('/jobs', function () use ($app) {
 
     $app->post('/worker', function () use ($app) {
         $body = json_decode( $app->request()->getBody() );
-        $channel = $body->{'channel'};
+        $queue = get_queue_name( $body->{'channel'} );
         $do_work = filter_var($app->request()->get('work'), FILTER_VALIDATE_BOOLEAN);
 
         try {
             $worker_binary = get_worker_binary();
-            $exec_worker = get_async_worker_command( $worker_binary, $channel );
+            $exec_worker = get_async_worker_command( $worker_binary, $queue );
             if ( $do_work ) {
                 exec($exec_worker, $output);
             }
@@ -54,7 +54,7 @@ $app->group('/jobs', function () use ($app) {
                 $output = array(0);
             }
             echo successMessage( array(
-                'channel' => $channel,
+                'queue' => $queue,
                 'command' => $exec_worker,
                 'output' => $output[0]
             ));
@@ -173,6 +173,13 @@ $app->group('/jobs', function () use ($app) {
         $async = ' > /dev/null 2>&1 & echo $!';
 
         return "perl $include_libs $binary $channel $async";
+    }
+
+    function get_queue_name( $channel ) {
+        $user = getUser();
+
+        $queue = $channel . '-' . $user;
+        return $queue;
     }
 });
 

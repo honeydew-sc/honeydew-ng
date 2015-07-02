@@ -119,9 +119,9 @@ class jobsTests extends UnitTestCase {
             ->send();
 
         $cmd = $response->body->command;
-        $this->assertPattern('/manual_set_worker.* chan .*&/', $cmd, 'command has proper binary and async stuff');
+        $this->assertPattern('/manual_set_worker.* chan-honeydoer .*&/', $cmd, 'command has proper binary and async stuff');
         $this->assertEqual($response->body->output, 0, 'we get the pid afterwards');
-        $this->assertEqual($response->body->channel, 'chan', 'we derive the channel properly');
+        $this->assertEqual($response->body->queue, 'chan-honeydoer', 'we derive the channel properly');
     }
 }
 ?>

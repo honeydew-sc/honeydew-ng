@@ -86,6 +86,23 @@ describe('SetReportService', function () {
         });
     });
 
+    it('should get the hostnames where a set has been run', () => {
+        let p = $q.defer();
+        p.resolve({ hostnames: [{ host: 'host' }] });
+        spyOn( SetReport, 'getHostnames').and.returnValue({ $promise: p.promise });
+
+        let called = 0,
+            name = 'test.set';
+        SetReportService.getSetHostnames( name )
+            .then( res => {
+                called++;
+            });
+        $rootScope.$apply();
+
+        expect(called).toBe(1);
+        expect(SetReport.getHostnames).toHaveBeenCalledWith({ name });
+    });
+
     it('should combine features with set history data', () => {
         let browser = 'Chrome local',
             startDate = '2015-05-27 11:12:50',

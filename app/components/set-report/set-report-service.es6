@@ -30,9 +30,17 @@ class SetReportService {
     getSetHistory ( name, host ) {
         let setReportData = this.SetReport.get({ name, host })
                 .$promise
-                .catch( this.alerts.catcher);
+                .catch( this.alerts.catcher );
 
         return setReportData;
+    }
+
+    getSetHostnames ( name ) {
+        let setHostnames = this.SetReport.getHostnames({ name })
+                .$promise
+                .catch( this.alerts.catcher );
+
+        return setHostnames;
     }
 
     reorganizeReportData ( [ { features }, { reports } ] ) {

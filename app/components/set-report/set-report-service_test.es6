@@ -174,7 +174,7 @@ describe('SetReportService', function () {
         };
 
         let failed = SetReportService.missingOrFailed( 1, reportData );
-        expect(failed).toEqual([ 'test/test2.feature' ]);
+        expect(failed).toEqual([{ feature: 'test/test2.feature', reportId: 2 }]);
     });
 
     it('should figure out which features are missing', () => {
@@ -190,7 +190,7 @@ describe('SetReportService', function () {
         };
 
         let missing = SetReportService.missingOrFailed( 2, reportData );
-        expect(missing).toEqual([ 'test/test2.feature' ]);
+        expect(missing).toEqual([{ feature: 'test/test2.feature' }]);
     });
 
     it('should combine features that are failed and missing', () => {
@@ -207,7 +207,10 @@ describe('SetReportService', function () {
         };
 
         let missingOrFailed = SetReportService.missingOrFailed( 3, reportData );
-        expect(missingOrFailed).toEqual([ 'test/test2.feature', 'test/test3.feature' ]);
+        expect(missingOrFailed).toEqual([
+            { feature: 'test/test2.feature', reportId: 2 },
+            { feature: 'test/test3.feature' }
+        ]);
     });
 
     describe('rerunning', () => {
@@ -231,7 +234,10 @@ describe('SetReportService', function () {
             httpMock.expectPOST('/rest.php/jobs').respond({});
             httpMock.expectPOST('/rest.php/jobs').respond({});
 
-            let { jobs } = SetReportService.rerun( [ 'test/test1.feature', 'test/test2.feature' ], setData, 'name.set' );
+            let { jobs } = SetReportService.rerun([
+                { feature: 'test/test1.feature', reportId: 2 },
+                { feature: 'test/test2.feature' }
+            ], setData, 'name.set' );
             rerunJobs = jobs;
 
             httpMock.flush();
@@ -254,6 +260,11 @@ describe('SetReportService', function () {
         it('should include the feature name in the payload', () => {
             expect(rerunJobs[0].file).toBe('test/test1.feature');
             expect(rerunJobs[1].file).toBe('test/test2.feature');
+        });
+
+        it('should include the report id if rerunning a job', () => {
+            expect(rerunJobs[0].reportId).toBe(2);
+            expect(rerunJobs[1].reportId).not.toBeDefined();
         });
     });
 

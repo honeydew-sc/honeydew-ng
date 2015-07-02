@@ -113,16 +113,26 @@ class SetReportService {
                 return report.status === 'failure' ||
                     !report.hasOwnProperty('reportId');
             })
-            .map( report => report.feature );
+            .map( ({ feature, reportId }) => {
+                if ( reportId ) {
+                    return { feature, reportId };
+                }
+                else {
+                    return { feature };
+                }
+            });
     }
 
     rerun ( features, jobData, setName ) {
         let jobMetadata = this._sanitizeRerunAttributes( jobData );
         jobMetadata.channel = this._getRerunChannel( setName );
 
-        let jobs = features.map( feature => {
-            let job = jobMetadata;
+        let jobs = features.map( ({ feature, reportId }) => {
+            let job = angular.copy(jobMetadata);
             job.file = feature;
+            if ( reportId ) {
+                job.reportId = reportId;
+            }
             return new this.HoneydewJob( job );
         });
 

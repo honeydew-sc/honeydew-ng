@@ -1,14 +1,15 @@
 describe('HostnamePickerDirective', function () {
-    var scope, $compile, hostname, element, hostValue, ctrl;
+    var scope, $compile, $location, hostname, element, hostValue, ctrl;
     var ENV_COUNT = 15,
         APP_COUNT = 7;
 
     beforeEach(module('sc.hostname'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject(function ($rootScope, _$compile_, _hostname_) {
+    beforeEach(inject(function ($rootScope, _$compile_, _hostname_, _$location_) {
         scope = $rootScope.$new();
         $compile = _$compile_;
+        $location = _$location_;
         hostname = _hostname_;
         scope.name = hostname;
 
@@ -63,7 +64,6 @@ describe('HostnamePickerDirective', function () {
 
         expect( ctrl.userChangedHostname ).toHaveBeenCalled();
         expect( changed ).toBe( 1 );
-
     });
 
     it('should automatically close the dropdown when choosing an env', () => {
@@ -71,5 +71,22 @@ describe('HostnamePickerDirective', function () {
         let env = element.find('.btn-hdew.env:first-child');
         env.click();
         expect(ctrl.open).toBe(false);
+    });
+
+    it('should be disabled if it is not highlighted', () => {
+        spyOn( $location, 'path' ).and.returnValue( 'minh.set' );
+        hostname.highlightEnvs([{ app: 'SC', env: 'prod' }]);
+        scope.$digest();
+        expect(element.find('button.env[disabled]').length)
+            .toBe(ENV_COUNT - 1);
+    });
+
+    it('should not be disabled on non-set pages', () => {
+        spyOn( $location, 'path' ).and.returnValue( 'not a set page' );
+        hostname.highlightEnvs([]);
+        scope.$digest();
+        expect(element.find('button.env[disabled="disabled"]').length)
+            .toBe(0);
+
     });
 });

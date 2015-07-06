@@ -6,8 +6,6 @@ class HostnamePickerController {
 
         this.name = hostname;
         this.$scope.$emit('hostname:ready');
-
-        this.highlight = hostname.highlight;
     }
 
     emit (app, env) {
@@ -24,7 +22,7 @@ class HostnamePickerController {
 
     isAppHighlighted( currentApp ) {
         if ( this._shouldHighlight() ) {
-            let apps = this.highlight.map( ({ app }) => app );
+            let apps = this.name.highlight.map( ({ app }) => app );
             return apps.some( app => currentApp === app );
         }
         else {
@@ -34,21 +32,46 @@ class HostnamePickerController {
 
     isEnvHighlighted( envOpt ) {
         if ( this._shouldHighlight() ) {
-            return this.highlight.some( ({app, env}) => app === this.name.app && env === envOpt );
+            return this.name.highlight.some( ({app, env}) => {
+                return app === this.name.app && env === envOpt;
+            });
         }
         else {
             return false;
         }
     }
 
+    isDisabled({ app, env }) {
+        if ( this._isSetPage() ) {
+            if ( app ) {
+                return !this.isAppHighlighted( app );
+            }
+            else if ( env ) {
+                return !this.isEnvHighlighted( env );
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            // we're not on a set page at all, so nothing should be
+            // disabled
+            return false;
+        }
+    }
+
+    _isSetPage() {
+        return /\.set$/.test(this.$location.path());
+    }
+
     _shouldHighlight() {
-        let isSetState = /\.set$/.test(this.$location.path());
+        let isSetState = this._isSetPage();
 
         if ( isSetState ) {
             return isSetState;
         }
         else {
-            return this.highlight.length === 0;
+            return this.name.highlight.length !== 0;
         }
     }
 }

@@ -25,6 +25,7 @@
                   class="btn btn-hdew app"
                   ng-model="Host.name.app"
                   btn-radio="app"
+                  ng-disabled="Host.isDisabled({ app: app })"
                   ng-class="{ highlight: Host.isAppHighlighted( app ) }"
                   ng-click="Host.emit(app, undefined)">
             {{ app }}
@@ -39,6 +40,7 @@
                   class="btn btn-hdew env"
                   ng-model="Host.name.env"
                   btn-radio="env"
+                  ng-disabled="Host.isDisabled({ env: env })"
                   ng-class="{ highlight: Host.isEnvHighlighted( env ) }"
                   ng-click="Host.emit(undefined, env)">
             {{ env }}

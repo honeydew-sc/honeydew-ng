@@ -52,8 +52,15 @@ angular.module('honeydew')
             else {
                 service.current = '';
                 service.output.push(cmReportMode.highlight(item));
+                emitEndOfReport( item );
             }
         };
+
+        function emitEndOfReport( item ) {
+            if ( /End Date: /.test( item ) ) {
+                $rootScope.$broadcast( 'report:ended' );
+            }
+        }
 
         service.tail = function (channel) {
             // we don't want input from two channels at once

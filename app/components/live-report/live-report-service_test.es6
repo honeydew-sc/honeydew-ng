@@ -1,5 +1,3 @@
-'use strict';
-
 describe('LiveReportService', function () {
     var liveReportService, rootScope, pusherMock, timeout, pusherReal;
     var channel = 'testChannel';
@@ -96,6 +94,15 @@ describe('LiveReportService', function () {
         rootScope.$on('report:failure', () => emits++);
 
         liveReportService.pusherListener(failed);
+        expect(emits).toBe(1);
+    });
+
+    it('should broadcast an event about the end of a test', () => {
+         var ended = 'End Date: 123456789',
+            emits = 0;
+        rootScope.$on('report:ended', () => emits++);
+
+        liveReportService.pusherListener(ended);
         expect(emits).toBe(1);
     });
 

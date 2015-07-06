@@ -101,13 +101,24 @@ describe('SetReport directive', () => {
         );
     });
 
-    it('should refresh itself when the hostname changes', () => {
-        spyOn( controller, 'getSetHistoryData' );
+    describe('auto-refresh', () => {
+        it('should trigger when the hostname changes', () => {
+            spyOn( controller, 'getSetHistoryData' );
 
-        scope.$broadcast('hostname:changed');
-        scope.$apply();
+            scope.$broadcast('hostname:changed');
+            scope.$apply();
 
-        expect(controller.getSetHistoryData).toHaveBeenCalled();
+            expect(controller.getSetHistoryData).toHaveBeenCalled();
+        });
+
+        it('should trigger when a report ends', () => {
+            spyOn( controller, 'getSetHistoryData' );
+
+            scope.$broadcast('report:ended');
+            scope.$apply();
+
+            expect(controller.getSetHistoryData).toHaveBeenCalled();
+        });
     });
 
     it('should suggest to use the hostname filter', () => {

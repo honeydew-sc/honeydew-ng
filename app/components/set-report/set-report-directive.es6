@@ -9,7 +9,7 @@ class SetReportController {
         hostname.highlightEnvs([ ]);
         this.hideExtraSetRuns();
         this.getSetHistoryData();
-        this.refreshDataOnHostnameChange();
+        this.listenForAutoRefreshEvents();
 
         this.wrongHostMessage = 'This page filters by the hostname above! Please choose the appropriate hostname if you\'re expecting results and not seeing any :)';
     }
@@ -62,8 +62,12 @@ class SetReportController {
             });
     }
 
-    refreshDataOnHostnameChange () {
-        this.$scope.$on('hostname:changed', ( ) => {
+    listenForAutoRefreshEvents () {
+        this.$scope.$on( 'hostname:changed' , ( ) => {
+            this.getSetHistoryData();
+        });
+
+        this.$scope.$on( 'report:ended' , ( ) => {
             this.getSetHistoryData();
         });
     }

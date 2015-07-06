@@ -214,10 +214,10 @@ describe('SetReportService', function () {
     });
 
     describe('rerunning', () => {
-        let rerunJobs;
+        let rerunJobs, setData;
 
         beforeEach( () => {
-            let setData = {
+            setData = {
                 browser: 'browser',
                 host: 'host',
                 user: 'user',
@@ -265,6 +265,18 @@ describe('SetReportService', function () {
         it('should include the report id if rerunning a job', () => {
             expect(rerunJobs[0].reportId).toBe(2);
             expect(rerunJobs[1].reportId).not.toBeDefined();
+        });
+
+        it('should spawn a worker to handle the jobs', () => {
+            expect(QueueWorker.spawn).toHaveBeenCalled();
+        });
+
+        it('should not spawn a worker ', () => {
+            QueueWorker.spawn.calls.reset();
+
+            let { jobs } = SetReportService.rerun( [], setData, 'name.set' );
+            expect( jobs ).toEqual([]);
+            expect(QueueWorker.spawn).not.toHaveBeenCalled();
         });
     });
 

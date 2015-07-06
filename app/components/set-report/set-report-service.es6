@@ -136,15 +136,20 @@ class SetReportService {
             return new this.HoneydewJob( job );
         });
 
-        let spawnWorker = this.QueueWorker
-                .spawn({ channel: jobMetadata.channel })
-                .$promise;
+        if ( jobs.length ) {
+            let spawnWorker = this.QueueWorker
+                    .spawn({ channel: jobMetadata.channel })
+                    .$promise;
 
-        let promises = spawnWorker.then( () => {
-            return jobs.map( job => job.$execute() );
-        });
+            let promises = spawnWorker.then( () => {
+                return jobs.map( job => job.$execute() );
+            });
 
-        return { jobs, promises, spawnWorker };
+            return { jobs, promises, spawnWorker };
+        }
+        else {
+            return { jobs };
+        }
     }
 
     _getRerunChannel( setName ) {

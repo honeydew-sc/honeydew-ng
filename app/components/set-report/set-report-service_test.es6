@@ -107,7 +107,8 @@ describe('SetReportService', function () {
         let browser = 'Chrome local',
             startDate = '2015-05-27 11:12:50',
             host = 'host',
-            user = 'user';
+            user = 'user',
+            hasFailures = true;
 
         let features = [
             'test/test.feature',
@@ -137,8 +138,8 @@ describe('SetReportService', function () {
 
         startDate = new Date(startDate);
         expect(setData).toEqual([
-            { setRunId: 2, startDate, browser, host, user },
-            { setRunId: 1, startDate, browser, host, user }
+            { setRunId: 2, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature' } ] },
+            { setRunId: 1, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature', reportId: 2 } ] }
         ]);
 
         expect(reportData).toEqual({

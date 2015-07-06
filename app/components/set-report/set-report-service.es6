@@ -97,15 +97,28 @@ class SetReportService {
             reportData[featureFile] = reportsByFeatureAndSet;
         });
 
+        setData = this._addRerunCandidatesToSetData( setData, reportData );
+
         return { setData, reportData };
     }
 
+
+    _addRerunCandidatesToSetData( setData, reportData ) {
+        setData.forEach( (set) => {
+            set.missing = this.missingOrFailed( set.setRunId, reportData );
+            set.hasFailures = !!set.missing.length;
+        });
+
+        return setData;
+    }
+
     missingOrFailed ( setRunId, reportData ) {
-        let features = Object.keys(reportData);
+        let reports = angular.copy(reportData);
+        let features = Object.keys(reports);
 
         return features
             .map( feature => {
-                return reportData[feature]
+                return reports[feature]
                     .map( it => { it.feature = feature; return it; } )
                     .find( report => report.setRunId === setRunId );
             })

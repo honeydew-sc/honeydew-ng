@@ -44,25 +44,7 @@ class SetReportService {
     }
 
     reorganizeReportData ( [ { features }, { reports } ] ) {
-        let setIds = {},
-            setData = [];
-
-        reports = reports || [];
-
-        // group the unique set ids to be used as table headers into
-        // the `setData` var
-        reports.forEach( ({ setRunId, startDate, browser, host, user }) => {
-            if ( ! Object.keys(setIds).some( id => id === setRunId) ) {
-                // collect set IDs we've already seen in a hash for
-                // speed ?
-                setIds[setRunId]++;
-
-                setRunId = parseInt(setRunId);
-                startDate = new Date(startDate);
-
-                setData.push( { setRunId, startDate, browser, host, user } );
-            }
-        });
+        let setData = this._collectSetsFromReports( reports );
 
         let setRunIdOrder = setData.map( ({ setRunId }) => parseInt(setRunId) ),
             reportsByFeature = features.map( feature => {
@@ -102,6 +84,28 @@ class SetReportService {
         return { setData, reportData };
     }
 
+    _collectSetsFromReports( reports ) {
+        let setIds = {},
+            setData = [];
+
+        reports = reports || [];
+
+        // group the unique set ids to be used as table headers into
+        // the `setData` var
+        reports.forEach( ({ setRunId, startDate, browser, host, user }) => {
+            setRunId = parseInt(setRunId);
+            if ( ! setIds.hasOwnProperty(setRunId) ) {
+                // collect set IDs we've already seen in a hash for
+                // speed ?
+                setIds[setRunId]++;
+                startDate = new Date(startDate);
+
+                setData.push( { setRunId, startDate, browser, host, user } );
+            }
+        });
+
+        return setData;
+    }
 
     _addRerunCandidatesToSetData( setData, reportData ) {
         setData.forEach( (set) => {

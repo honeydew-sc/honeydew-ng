@@ -158,22 +158,29 @@ describe('SetReport directive', () => {
         expect(SetReportService.rerun).toHaveBeenCalled();
     });
 
-    it('should highlight hostname app/env pairs', () => {
-        let pairs = controller.highlightHostnames(),
-            called = 0;
 
-        pairs.then( ([{ app, env }]) => {
-            called++;
-            expect(app).toBe('SC');
-            expect(env).toBe('prod');
         });
 
-        scope.$apply();
-        expect(called).toBe(1);
     });
 
-    it('should reset the hostname highlights', () => {
-        expect(hostname.highlightEnvs).toHaveBeenCalledWith([]);
+    describe('hostname highlighting', () => {
+        it('should highlight hostname app/env pairs', () => {
+            let pairs = controller.highlightHostnames(),
+                called = 0;
+
+            pairs.then( ([{ app, env }]) => {
+                called++;
+                expect(app).toBe('SC');
+                expect(env).toBe('prod');
+            });
+
+            scope.$apply();
+            expect(called).toBe(1);
+        });
+
+        it('should reset the hostname highlights', () => {
+            expect(hostname.highlightEnvs).toHaveBeenCalledWith([]);
+        });
     });
 
     function compileDirective() {

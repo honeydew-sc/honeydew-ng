@@ -20,7 +20,7 @@
         {{ run.browser | shortBrowser }}
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M&#8209;dd,&nbsp;h:mma' }}</a>
 
-        <span class="dropdown">
+        <span class="dropdown" ng-if="run.hasFailures">
           <a href class="dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
           </a>

@@ -33,11 +33,13 @@ describe('SetReport directive', () => {
         setData = [{
             setRunId: 2,
             browser: 'Chrome Local',
-            startDate: new Date('2015-05-27 11:31:04')
+            startDate: new Date('2015-05-27 11:31:04'),
+            hasFailures: true
         }, {
             setRunId: 1,
             browser: 'Chrome Local',
-            startDate: new Date('2015-05-27 11:12:50')
+            startDate: new Date('2015-05-27 11:12:50'),
+            hasFailures: false
         }];
 
         featureData = {
@@ -148,17 +150,19 @@ describe('SetReport directive', () => {
         expect(increment).toBeGreaterThan(2);
     });
 
-    it('should delegate to the set report service for rerunning failures', () => {
-        spyOn( SetReportService, 'missingOrFailed' );
-        spyOn( SetReportService, 'rerun' );
-        let rerun = elm.find('.rerun-failures');
-        rerun[0].click();
+    describe('rerunning', () => {
 
-        expect(SetReportService.missingOrFailed).toHaveBeenCalled();
-        expect(SetReportService.rerun).toHaveBeenCalled();
-    });
+        it('should delegate to the set report service for rerunning failures', () => {
+            spyOn( SetReportService, 'rerun' );
+            let rerun = elm.find('.rerun-failures');
+            rerun[0].click();
 
+            expect(SetReportService.rerun).toHaveBeenCalled();
+        });
 
+        it('should not display the rerun dropdown for successful runs', () => {
+            let dropdowns = elm.find('.rerun-failures');
+            expect(dropdowns.length).toBe(1);
         });
 
     });

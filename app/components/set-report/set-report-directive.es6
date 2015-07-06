@@ -27,14 +27,15 @@ class SetReportController {
         });
 
         return this.$q.all( [ p1, p2, p3 ] )
-            .then( SetReportService.reorganizeReportData )
+            .then( (res) => {
+                return SetReportService.reorganizeReportData(res);
+            })
             .then( ({ setData, reportData }) => {
                 this.hideExtraSetRuns();
 
                 this.setData = setData;
                 this.reportData = reportData;
             })
-
             .then( () => this.$scope.$emit( 'progress:value', { value: 100 } ) )
             .catch( res => {
                 this.$scope.$emit('progress:done');
@@ -76,10 +77,7 @@ class SetReportController {
     }
 
     rerunFailures ( setData ) {
-        let missing = this.SetReportService.missingOrFailed(
-            setData.setRunId,
-            this.reportData
-        );
+        let missing = setData.missing;
 
         // We need the set name on the setData so we can name the
         // channel after it.

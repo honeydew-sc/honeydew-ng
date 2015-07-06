@@ -4,6 +4,7 @@ describe('SetReport directive', () => {
         scope,
         setData,
         $compile,
+        hostname,
         controller,
         featureData,
         SetReportService;
@@ -11,11 +12,12 @@ describe('SetReport directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, hostname) => {
+    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, _hostname_) => {
         $q = _$q_;
         SetReportService = _SetReportService_;
         scope = $rootScope;
         $compile = _$compile_;
+        hostname = _hostname_;
 
         hostname.host = 'test-host';
 
@@ -23,6 +25,8 @@ describe('SetReport directive', () => {
         p.resolve({ hostnames: [{host: 'https://www.sharecare.com' }]});
         spyOn( SetReportService, 'getSetHostnames' )
             .and.returnValue(p.promise);
+
+        spyOn( hostname, 'highlightEnvs').and.callThrough();
     }));
 
     beforeEach( () => {
@@ -166,7 +170,10 @@ describe('SetReport directive', () => {
 
         scope.$apply();
         expect(called).toBe(1);
+    });
 
+    it('should reset the hostname highlights', () => {
+        expect(hostname.highlightEnvs).toHaveBeenCalledWith([]);
     });
 
     function compileDirective() {

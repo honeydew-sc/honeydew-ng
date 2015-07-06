@@ -6,6 +6,7 @@ class SetReportController {
         this.hostname = hostname;
         this.$scope = $scope;
 
+        hostname.highlightEnvs([ ]);
         this.hideExtraSetRuns();
         this.getSetHistoryData();
         this.refreshDataOnHostnameChange();

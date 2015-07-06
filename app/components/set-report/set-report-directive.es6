@@ -1,10 +1,11 @@
 class SetReportController {
-    constructor ($scope, $q, SetReportService, Environment, hostname) {
+    constructor ($scope, $q, SetReportService, Environment, hostname, panes) {
         this.$q = $q;
         this.SetReportService = SetReportService;
         this.Environment = Environment;
         this.hostname = hostname;
         this.$scope = $scope;
+        this.panes = panes;
 
         hostname.highlightEnvs([ ]);
         this.hideExtraSetRuns();
@@ -81,11 +82,14 @@ class SetReportController {
     }
 
     rerunFailures ( setData ) {
-        let missing = setData.missing;
+        let { set, panes, SetReportService } = this,
+            missing = setData.missing;
+
+        panes.openPane('report');
 
         // We need the set name on the setData so we can name the
         // channel after it.
-        return this.SetReportService.rerun( missing, setData, this.set );
+        return SetReportService.rerun( missing, setData, set );
     }
 
     hideExtraSetRuns () {

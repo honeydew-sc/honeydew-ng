@@ -2,6 +2,7 @@ describe('SetReport directive', () => {
     var $q,
         elm,
         scope,
+        panes,
         setData,
         $compile,
         hostname,
@@ -12,12 +13,13 @@ describe('SetReport directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, _hostname_) => {
+    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, _hostname_, _panes_) => {
         $q = _$q_;
         SetReportService = _SetReportService_;
         scope = $rootScope;
         $compile = _$compile_;
         hostname = _hostname_;
+        panes = _panes_;
 
         hostname.host = 'test-host';
 
@@ -162,17 +164,29 @@ describe('SetReport directive', () => {
     });
 
     describe('rerunning', () => {
+        let rerunLocator = '.rerun-failures';
+
+        beforeEach( () => {
+            spyOn( SetReportService, 'rerun' );
+        });
 
         it('should delegate to the set report service for rerunning failures', () => {
-            spyOn( SetReportService, 'rerun' );
-            let rerun = elm.find('.rerun-failures');
+            let rerun = elm.find(rerunLocator);
             rerun[0].click();
 
             expect(SetReportService.rerun).toHaveBeenCalled();
         });
 
+        it('should pop open the report pane when rerunning', () => {
+            spyOn( panes, 'openPane' );
+            let rerun = elm.find(rerunLocator);
+            rerun[0].click();
+
+            expect(panes.openPane).toHaveBeenCalledWith( 'report' );
+        });
+
         it('should not display the rerun dropdown for successful runs', () => {
-            let dropdowns = elm.find('.rerun-failures');
+            let dropdowns = elm.find(rerunLocator);
             expect(dropdowns.length).toBe(1);
         });
 

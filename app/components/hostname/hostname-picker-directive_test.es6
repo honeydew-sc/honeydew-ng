@@ -72,21 +72,4 @@ describe('HostnamePickerDirective', function () {
         env.click();
         expect(ctrl.open).toBe(false);
     });
-
-    it('should be disabled if it is not highlighted', () => {
-        spyOn( $location, 'path' ).and.returnValue( 'minh.set' );
-        hostname.highlightEnvs([{ app: 'SC', env: 'prod' }]);
-        scope.$digest();
-        expect(element.find('button.env[disabled]').length)
-            .toBe(ENV_COUNT - 1);
-    });
-
-    it('should not be disabled on non-set pages', () => {
-        spyOn( $location, 'path' ).and.returnValue( 'not a set page' );
-        hostname.highlightEnvs([]);
-        scope.$digest();
-        expect(element.find('button.env[disabled="disabled"]').length)
-            .toBe(0);
-
-    });
 });

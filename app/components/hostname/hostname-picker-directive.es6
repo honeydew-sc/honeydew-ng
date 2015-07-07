@@ -41,25 +41,6 @@ class HostnamePickerController {
         }
     }
 
-    isDisabled({ app, env }) {
-        if ( this._isSetPage() ) {
-            if ( app ) {
-                return !this.isAppHighlighted( app );
-            }
-            else if ( env ) {
-                return !this.isEnvHighlighted( env );
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            // we're not on a set page at all, so nothing should be
-            // disabled
-            return false;
-        }
-    }
-
     _isSetPage() {
         return /\.set$/.test(this.$location.path());
     }

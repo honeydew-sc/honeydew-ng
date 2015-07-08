@@ -19,7 +19,8 @@ $app->group('/report', function () use ($app, $setsDir) {
         WHERE s.setName LIKE ?
         ' . $host_filter . '
         ' . $date_filter . '
-        ORDER BY s.id DESC';
+        ORDER BY s.id DESC
+        LIMIT 1234';
 
         $sth = $pdo->prepare( $sql );
 
@@ -40,7 +41,7 @@ $app->group('/report', function () use ($app, $setsDir) {
         $sql_args = array( $name );
         $date_filter = get_date_filter();
 
-        $sql = 'SELECT s.host
+        $sql = 'SELECT DISTINCT(s.host)
         FROM setRun s
         WHERE s.setName LIKE ?
         ' . $date_filter . '

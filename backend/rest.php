@@ -88,6 +88,7 @@ function grepDirectory($dir, $filter, $args = "-iRl", $escape = true) {
 function debug_sql( $sql, $args ) {
     $sql_parts = explode( '?', $sql );
 
+    $debugged_sql = '';
     foreach ($sql_parts as $sql_part) {
         $debugged_sql .= $sql_part;
 

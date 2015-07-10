@@ -5,6 +5,7 @@ describe('SetReport directive', () => {
         panes,
         setData,
         $compile,
+        $timeout,
         hostname,
         controller,
         featureData,
@@ -13,8 +14,9 @@ describe('SetReport directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( (_$q_, _$compile_, $rootScope, _SetReportService_, _hostname_, _panes_) => {
+    beforeEach(inject( (_$q_, _$compile_, $rootScope, _$timeout_, _SetReportService_, _hostname_, _panes_) => {
         $q = _$q_;
+        $timeout = _$timeout_;
         SetReportService = _SetReportService_;
         scope = $rootScope;
         $compile = _$compile_;
@@ -118,6 +120,7 @@ describe('SetReport directive', () => {
 
             scope.$broadcast('report:ended');
             scope.$apply();
+            $timeout.flush();
 
             expect(controller.getSetHistoryData).toHaveBeenCalled();
         });

@@ -1,6 +1,7 @@
 class SetReportController {
-    constructor ($scope, $q, SetReportService, Environment, hostname, panes) {
+    constructor ($scope, $q, $timeout, SetReportService, Environment, hostname, panes) {
         this.$q = $q;
+        this.$timeout = $timeout;
         this.SetReportService = SetReportService;
         this.Environment = Environment;
         this.hostname = hostname;
@@ -69,7 +70,9 @@ class SetReportController {
         });
 
         this.$scope.$on( 'report:ended' , ( ) => {
-            this.getSetHistoryData();
+            this.$timeout( () => {
+                this.getSetHistoryData();
+            }, 1000 );
         });
     }
 

@@ -82,19 +82,6 @@ class jobsTests extends UnitTestCase {
         $this->assertTrue($response->body->success == 'false', 'rerunning sets must take integers');
     }
 
-    function testCanRerunFailedSet() {
-        $pdo = hdewdb_connect();
-        $sth = $pdo->prepare('UPDATE user set name = "' . $this->testUser .'" where id = 1');
-        $sth->execute();
-        $sth = $pdo->prepare('UPDATE report set browser = "*firefox wd local", host = "http://www.realage.com", featureFile = "test/dan.feature", status = "failure", userId = 1 WHERE setRunId = 3 and id > 15;');
-        $sth->execute();
-
-        $response = \Httpful\Request::post($this->baseUrl . '/sets/rerunfailed/3')->send();
-
-        $cmd = $response->body->command;
-        $this->assertTrue(preg_match('/17/', $cmd), 'rerun all failed jobs');
-    }
-
     function testCanDeleteSetRun() {
         $pdo = hdewdb_connect();
         $sth = $pdo->prepare('insert into setRun (setRunUnique, setName, userId, host, browser, status, startDate, endDate) values("setRunUn", "setName", 1, "host", "browser", "success", NOW(), NOW());');

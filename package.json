@@ -58,6 +58,6 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "grunt traceur karma:travis"
+    "test": "grunt karma:travis"
   }
 }

@@ -5,9 +5,8 @@ pages:
 - Quick Start:
     - Overview: 'quickstart.md'
     - Install Webdriver: 'install-webdriver.md'
-- Authoring Features:
+- Features:
     - 'Preamble Options': 'features/preamble.md'
-
 
 site_dir: dist/docs
 

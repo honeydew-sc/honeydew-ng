@@ -195,7 +195,8 @@ module.exports = function (grunt) {
                     src: ['**/*']
                 }]
             },
-            server: '.tmp'
+            server: '.tmp',
+            docs: 'dist/docs'
         },
 
         // Add vendor prefixed styles
@@ -671,7 +672,21 @@ module.exports = function (grunt) {
                     dest: '/opt/honeydew-ui/htdocs/',
                     host: 'honeydew@honeydew'
                 }
+            },
+            docs: {
+                options: {
+                    // in mkdocs.yml, the site_dir is dist/docs
+                    src: '<%= yeoman.dist %>/docs',
+                    dest: '/opt/honeydew-ui/htdocs',
+                    host: 'honeydew@honeydew'
+                }
             }
+        },
+
+        // all configuration for the documentation is handled in
+        // mkdocs.yml, not here.
+        mkdocs: {
+            dist: {}
         }
     });
 
@@ -790,5 +805,11 @@ module.exports = function (grunt) {
     grunt.registerTask('heroku', [
         'build',
         'copy:heroku'
+    ]);
+
+    grunt.registerTask('deployDocs', [
+        'mkdocs:dist',
+        'rsync:docs',
+        'clean:docs'
     ]);
 };

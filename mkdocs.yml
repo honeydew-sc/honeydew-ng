@@ -9,6 +9,6 @@ pages:
     - 'Preamble Options': 'features/preamble.md'
 
 
-site_dir: app/docs
+site_dir: dist/docs
 
 theme: readable

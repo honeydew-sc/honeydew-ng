@@ -666,6 +666,10 @@ module.exports = function (grunt) {
                 ],
                 recursive: true
             },
+            // The following host keys depends explicitly on a
+            // matching entry in your ~/.ssh/config file called
+            // Honeydew. If you are missing that entry, I'd expect
+            // these things to crash and burn.
             prod: {
                 options: {
                     src: '<%= yeoman.dist %>/',

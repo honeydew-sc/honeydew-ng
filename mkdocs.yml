@@ -1,0 +1,14 @@
+site_name: Honeydew
+
+pages:
+- Home: index.md
+- Quick Start:
+    - Overview: 'quickstart.md'
+    - Install Webdriver: 'install-webdriver.md'
+- Authoring Features:
+    - 'Preamble Options': 'features/preamble.md'
+
+
+site_dir: app/docs
+
+theme: readable

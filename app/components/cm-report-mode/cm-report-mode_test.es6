@@ -1,7 +1,7 @@
 describe('ReportMode', function () {
     var cmReportMode, preambleOptions;
 
-    beforeEach(module('sc.cmmodes'));
+    beforeEach(module('config', 'sc.cmmodes'));
     beforeEach(inject( (_cmReportMode_, _preambleOptions_) => {
         cmReportMode = _cmReportMode_;
         preambleOptions = _preambleOptions_;
@@ -98,6 +98,21 @@ End Date: 1427121879`;
         it('should make links clickable', () => {
             expect(cmReportMode.highlight( 'Report ID: 44' ))
                 .toContain( '<a href="/#/report/44">44</a>' );
+        });
+
+        it('should make links out of screenshot diagnostic info', () => {
+            let output = cmReportMode.highlight( 'Reference: /mnt/screenshots/abc & current: /mnt/screenshots/123' );
+
+            expect(output).toContain( 'href="http:///honeydew/screenshots/abc">Reference</a>' );
+            expect(output).toContain( 'href="http:///honeydew/screenshots/123">current</a>' );
+            expect(output).toMatch( /target="_blank"/ );
+        });
+
+        it('should make links out of reference screenshot log info', () => {
+            let output = cmReportMode.highlight( 'Saving reference: /mnt/screenshots/abc' );
+
+            expect(output).toContain( 'href="http:///honeydew/screenshots/abc">reference</a>' );
+
         });
     });
 

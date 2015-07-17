@@ -1,10 +1,12 @@
-function cmReportModeService ($rootScope, preambleOptions) {
+function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
     var style = {
         HEADER: 'cm-keyword',
         SUCCESS: 'success',
         FAILURE: 'failure',
         SCENARIO: 'scenario',
         LINK: 'link',
+        SCREENSHOT: 'screenshot',
+        PLAINLINK: 'plain-link',
 
         successfulScenario () {
             return this.SUCCESS + ' ' + this.SCENARIO;
@@ -19,8 +21,20 @@ function cmReportModeService ($rootScope, preambleOptions) {
             var ret = CodeMirror.runMode(line, 'report', (token, style) => {
                 if (style) {
                     var outputToken;
-                    if (style === 'link') {
+                    if (style === this.LINK) {
                         outputToken = token.replace(/(\d+)/, '<a href="/#/report/$1">$1</a>');
+                    }
+                    else if (style === this.SCREENSHOT) {
+                        let base = 'http://' + (awsConfig.aws_bucket || '') + '/honeydew/screenshots/',
+                            targ = 'target="_blank"';
+
+                        outputToken = token
+                            .replace(/Saving reference: .*\/(.*)/, `<a ${targ} href="${base}$1">reference</a>`)
+                            .replace(/Reference: .*\/([^&]*) & current:/, `<a ${targ} href="${base}$1">Reference</a> & current:`)
+                            .replace(/current: .*\/(.*)/, `<a ${targ} href="${base}$1">current</a>`);
+                    }
+                    else if (style === this.PLAINLINK) {
+                        outputToken = `<a target="_blank" href=${token}>${token}</a>`;
                     }
                     else {
                         outputToken = token;
@@ -28,7 +42,7 @@ function cmReportModeService ($rootScope, preambleOptions) {
 
                     elem += '<span class="' + style + '">' + outputToken + '</span>';
 
-                    if (style === 'failure') {
+                    if (style === this.FAILURE) {
                         $rootScope.$broadcast('report:failure');
                     }
                 }
@@ -76,6 +90,15 @@ function cmReportModeService ($rootScope, preambleOptions) {
                 }
                 else if (stream.match(/Report ID: \d+/)) {
                     return style.LINK;
+                }
+                else if (stream.match(/Reference: .*current: .*/)) {
+                    return style.SCREENSHOT;
+                }
+                else if (stream.match(/Saving reference: .*/)) {
+                    return style.SCREENSHOT;
+                }
+                else if (stream.match(/^https?:\/\/.*screenshot.*png$/) ){
+                    return style.PLAINLINK;
                 }
                 else {
                     stream.next();

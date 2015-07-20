@@ -103,15 +103,15 @@ End Date: 1427121879`;
         it('should make links out of screenshot diagnostic info', () => {
             let output = cmReportMode.highlight( 'Reference: /mnt/screenshots/abc & current: /mnt/screenshots/123' );
 
-            expect(output).toContain( 'href="http:///honeydew/screenshots/abc">Reference</a>' );
-            expect(output).toContain( 'href="http:///honeydew/screenshots/123">current</a>' );
+            expect(output).toContain( 'href="/screenshots/abc">Reference</a>' );
+            expect(output).toContain( 'href="/screenshots/123">current</a>' );
             expect(output).toMatch( /target="_blank"/ );
         });
 
         it('should make links out of reference screenshot log info', () => {
             let output = cmReportMode.highlight( 'Saving reference: /mnt/screenshots/abc' );
 
-            expect(output).toContain( 'href="http:///honeydew/screenshots/abc">reference</a>' );
+            expect(output).toContain( 'href="/screenshots/abc">reference</a>' );
 
         });
     });

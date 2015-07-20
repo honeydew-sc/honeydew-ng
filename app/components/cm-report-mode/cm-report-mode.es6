@@ -25,7 +25,7 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
                         outputToken = token.replace(/(\d+)/, '<a href="/#/report/$1">$1</a>');
                     }
                     else if (style === this.SCREENSHOT) {
-                        let base = 'http://' + (awsConfig.aws_bucket || '') + '/honeydew/screenshots/',
+                        let base = '/screenshots/',
                             targ = 'target="_blank"';
 
                         outputToken = token

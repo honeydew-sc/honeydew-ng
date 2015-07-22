@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('honeydew')
-    .controller('ScreenshotCtrl', function ($scope, $stateParams, awsConfig) {
-        var opponent = $stateParams.screenshot;
+    .controller('ScreenshotCtrl', function ($scope, $stateParams) {
+        var candidate = $stateParams.screenshot;
 
         // ^(\w+\-) - starts with a word, followed by a dash
         // (.*\d{4}) - the build number is anything ending in 4 numbers [-.]HHMM
         // ([\w-]* - an optional secction for a user input name
         // \-\d+x) - the screenshot size
-        var knownGood = opponent.replace(/^(\w+\-)(.*\d{4})([\w-]*\-\d+x)/, '$1known-good$3');
-        var diff = opponent.replace(/\.png$/, '-diff.png');
+        var knownGood = candidate.replace(/^(\w+\-)(.*\d{4})([\w-]*\-\d+x)/, '$1known-good$3');
+        var diff = candidate.replace(/\.png$/, '-diff.png');
 
-        this.awsBucket = 'http://' + awsConfig.aws_bucket + '/honeydew/screenshots';
+        this.awsBucket = '/screenshots';
         this.images = [
             {
                 label: 'known good',
@@ -19,8 +19,8 @@ angular.module('honeydew')
             },
 
             {
-                label: 'opponent',
-                src: opponent
+                label: 'candidate',
+                src: candidate
             },
 
             {

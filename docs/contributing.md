@@ -57,5 +57,5 @@ questions!
 [docs]: https://github.com/honeydew-sc/honeydew-ng/tree/master/docs
 [mdbasic1]: https://help.github.com/articles/markdown-basics/
 [mdbasic2]: https://guides.github.com/features/mastering-markdown/
-[raw]: https://github.com/honeydew-sc/honeydew-ng/blob/master/docs/contributing.md
+[raw]: https://raw.githubusercontent.com/honeydew-sc/honeydew-ng/master/docs/contributing.md
 [commitrules]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html

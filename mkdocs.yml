@@ -1,4 +1,4 @@
-site_name: Honeydew
+site_name: Melonland
 
 pages:
 - Home: index.md
@@ -6,8 +6,9 @@ pages:
     - Overview: 'quickstart.md'
     - Install Webdriver: 'install-webdriver.md'
 - Features:
-    - 'Preamble Options': 'features/preamble.md'
-    - 'Finding Elements': 'features/finding-elements.md'
+    - Preamble Options: 'features/preamble.md'
+    - Finding Elements: 'features/finding-elements.md'
+- Contributing: contributing.md
 
 site_dir: dist/docs
 

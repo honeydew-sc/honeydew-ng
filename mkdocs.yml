@@ -2,12 +2,12 @@ site_name: Melonland
 
 pages:
 - Home: index.md
-- Quick Start:
-    - Overview: 'quickstart.md'
-    - Install Webdriver: 'install-webdriver.md'
-- Features:
-    - Preamble Options: 'features/preamble.md'
-    - Finding Elements: 'features/finding-elements.md'
+- HD Quick Start:
+    - Overview: quickstart.md
+    - Install Webdriver: install-webdriver.md
+- HD Features:
+    - Preamble Options: features/preamble.md
+    - Finding Elements: features/finding-elements.md
 - Contributing: contributing/contributing.md
 
 site_dir: dist/docs

@@ -11,12 +11,10 @@ Thanks for contributing to the docs! Here's how to go about it.
 
     The documentation is written in Markdown format, which is similar
     to the markup that we use in Confluence. For example, **\*bold\***
-    and _\_italics\__ work the same in both systems. Here are a couple
-    good resources for learning about the basics:
-    [Github Markdown Basics][mdbasic1] and
-    [Mastering Markdown][mdbasic2]. This document itself is written in
-    markdown - you can see its [raw source][raw] in the Github
-    repository as well.
+    and _\_italics\__ work the same in both systems. Github has an
+    excellent guide on [Mastering Markdown][mdbasic2]. This document
+    itself is written in markdown - you can see its [raw source][raw]
+    in the Github repository as well.
 
 3.  To add an entirely new section of the site, click on the +.  Name
     your file after your section with the file extension `.md` and put
@@ -38,9 +36,10 @@ Thanks for contributing to the docs! Here's how to go about it.
 
     ![propose file change](propose-file-change.png)
 
-    First, put in a short summary of your changes. If you want to get a
-    gold star, keep it less than 50 chars, use present tense, and
-    start with a capital letter, as suggested in [this article](commitrules).
+    First, put in a short summary of your changes. If you want to get
+    a gold star, keep it less than 50 chars, use present tense, and
+    start with a capital letter, as outlined in
+    [this article][commitrules].
 
     Next, switch the radio button to make a new branch for a Pull
     Request, instead of committing to master. (No worries if you

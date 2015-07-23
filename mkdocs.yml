@@ -8,7 +8,7 @@ pages:
 - Features:
     - Preamble Options: 'features/preamble.md'
     - Finding Elements: 'features/finding-elements.md'
-- Contributing: contributing.md
+- Contributing: contributing/contributing.md
 
 site_dir: dist/docs
 

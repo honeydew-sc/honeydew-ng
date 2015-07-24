@@ -99,7 +99,9 @@ angular.module('honeydew')
                                 alerts.addAlert({
                                     type: 'danger',
                                     msg: 'The webdriver server at ' + res.serverAddress + ':4444 is unreachable! Your test is not running!'
-                                });
+                                }, 3210);
+
+                                panes.openPane('settings');
                             }
 
                             return res.webdriverStatus;

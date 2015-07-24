@@ -74,7 +74,7 @@ angular.module('honeydew')
             replace: true,
             restrict: 'E',
             scope: {
-                status: '@'
+                status: '='
             },
             bindToController: true,
             controller: IpCheckerController,

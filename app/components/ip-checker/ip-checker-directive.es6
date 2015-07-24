@@ -65,7 +65,7 @@ class IpCheckerController {
             this.checking = false;
         });
     }
-};
+}
 
 angular.module('honeydew')
     .directive('ipChecker', function () {

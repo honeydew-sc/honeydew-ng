@@ -1,7 +1,29 @@
-<form class="form-horizontal" role="form">
-  <label for="ip">IP Address:
-    <input id="ip" type="text" ng-model="IpChecker.address"
+<form class="form-horizontal ip-checker" role="form">
+  <label for="ip">
+    <span ng-if="::!IpChecker.short">IP Address:</span>
+
+    <input id="ip"
+           class="form-control address {{IpChecker.status}}"
+           type="text"
+           ng-model="IpChecker.address"
            ng-model-options="{ getterSetter: true, updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">
   </label>
-  <i ng-if="IpChecker.checking" class="fa fa-spinner fa-spin"></i>
+
+  <span ng-if="IpChecker.checking" class="checking">
+    <i class="fa fa-spinner fa-spin"></i>
+  </span>
+
+  <span class="visit" ng-if="!IpChecker.checking && IpChecker.status">
+    <a class="small" target="_blank" ng-href="http://{{IpChecker.address()}}:4444/wd/hub">
+      visit
+    </a>
+  </span>
+
+
+  <input class="reset btn btn-default"
+         type="button"
+         ng-click="IpChecker.reset()"
+         value="reset"
+         popover="We'll guess your IP; this will only work if you're on the VPN."
+         popover-trigger="mouseenter" >
 </form>

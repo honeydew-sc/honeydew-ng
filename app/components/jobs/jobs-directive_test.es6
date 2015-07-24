@@ -1,6 +1,7 @@
 describe('HoneydewJob directive', function () {
     'use strict';
     var elm,
+        panes,
         scope,
         compile,
         storage,
@@ -21,11 +22,13 @@ describe('HoneydewJob directive', function () {
                            $sessionStorage,
                            $httpBackend,
                            $location,
+                           _panes_,
                            _Settings_,
                            _hostname_,
                            _liveReport_,
                            _availableBrowsers_) {
         elm = angular.element('<job-options></job-options>');
+        panes = _panes_;
         scope = $rootScope;
         compile = $compile;
         location = $location;
@@ -204,12 +207,18 @@ describe('HoneydewJob directive', function () {
     });
 
     it('should not run if the webdriver server is down', () => {
+        spyOn( panes, 'openPane' );
+
         // Note that we are asserting that we only receive a single
         // GET request, and implicitly asserting that we do not see
         // the subsequent POST to /jobs that would start the job.
         httpMock.expectGET('/rest.php/status/webdriver?local=Localhost').respond({webdriverStatus: false});
         elm.find('#execute').eq(0).click();
         httpMock.flush();
+
+        // we want to automatically open the settings pane so you can
+        // fix your ip on the spot!
+        expect(panes.openPane).toHaveBeenCalledWith('settings');
     });
 
     it('should not yet check for local mobile server status', () => {

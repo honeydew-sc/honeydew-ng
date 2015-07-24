@@ -51,3 +51,26 @@ and both use AngularJS heavily for their frontends.
 [krat]: https://honeydew.be.jamconsultg.com/kabocha/ratm.html#/assessments
 [Honeydew]: https://honeydew.be.jamconsultg.com/
 [Selenium]: http://www.seleniumhq.org
+
+
+### Honeydew FAQ
+
+#### How do I create new folders ?
+
+When choosing a filename, just put in the path you want; any folders
+that do not exist along the path will be created for you.
+
+<video controls="controls">
+  <source type="video/webm" src="new-feature.webm"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+
+#### How do I create new sets ?
+
+Add `Set: @something` to the preamble of your feature, and then click
+on the link it creates.
+
+<video controls="controls">
+  <source type="video/webm" src="new-set.webm"></source>
+  <p>Your browser does not support the video element.</p>
+</video>

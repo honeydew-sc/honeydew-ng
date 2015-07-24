@@ -1,7 +1,7 @@
 <form class="form-horizontal" role="form">
   <label for="ip">IP Address:
     <input id="ip" type="text" ng-model="IpChecker.address"
-           ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">
+           ng-model-options="{ getterSetter: true, updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">
   </label>
-  <span ng-if="IpChecker.checking">Checking {{IpChecker.address()}}...</span>
+  <i ng-if="IpChecker.checking" class="fa fa-spinner fa-spin"></i>
 </form>

@@ -8,3 +8,11 @@
     overflow: hidden;
     background-color: #e5e5e5;
 }
+
+.manual-address .success {
+    background-color: $bg-green;
+}
+
+.manual-address .failure {
+    background-color: $bg-red;
+}

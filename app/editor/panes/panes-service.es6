@@ -95,7 +95,7 @@ angular.module('honeydew')
                             this.url = pane.templateUrl;
                         }
                         else {
-                            if (typeof(contents) === 'undefined' && pane.name === 'report') {
+                            if (typeof(contents) === 'undefined') {
                                 contents = $compile( pane.template )( $rootScope );
                             }
                             $('.center-panel.' + pane.name).html(contents);

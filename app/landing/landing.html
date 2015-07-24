@@ -3,57 +3,75 @@
 
     <div class="col-md-6">
       <div class="parent">
-        <h3>Common Tasks:</h3>
-        <p>
-          <ul>
-            <li>
-              Create a <a class="btn btn-primary btn-lg" ng-click="Landing.openModal()">New Feature File</a> or a <a class="btn btn-primary btn-md" ng-click="Landing.gotoTempFile()">temporary file</a>
-            </li>
-          </ul>
-          <ul class="outbound-links">
-            <li>
+
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-xs-6">
+              <a class="btn btn-hdew btn-md" ng-click="Landing.openModal()">Create New Feature</a>
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <a class="btn btn-hdew btn-md" ng-click="Landing.gotoTempFile()">Temporary Feature</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="outbound-links container-fluid">
+          <div class="">
+            <div class="col-md-4 col-xs-6">
               <a target="_blank" href="/dashboard/index.html">
+                <span class="small">Dashboard</span>
                 <img class="thumbnail" src="landing/honeydew-dashboard-sm.png" alt="Dashboard">
               </a>
-            </li>
-            <li>
+            </div>
+            <div class="col-md-4 col-xs-6">
               <a target="_blank" href="/#/monitor">
+                <span class="small">Monitor</span>
                 <img class="thumbnail" src="landing/honeydew-monitor-sm.png" alt="Monitor Setup">
               </a>
-            </li>
-            <li>
+            </div>
+            <div class="col-md-4 col-xs-6">
               <a target="_blank" ng-href="/#/status">
+                <span class="small">EnvStatus</span>
                 <img class="thumbnail" src="landing/honeydew-status-sm.png" alt="Environment Statuses">
               </a>
-            </li>
-            <li>
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <a target="_blank" href="docs">
+                <span class="small">Docs/FAQ</span>
+                <img class="thumbnail" src="landing/honeydew-docs-sm.png" alt="Docs & FAQ">
+              </a>
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">
+                <span class="small">Queues!</span>
+                <img class="thumbnail" src="landing/honeydew-queue-sm.png" alt="Nightly Queues">
+              </a>
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <a target="_blank" href="/old.php">
+                <span class="small">Olddew</span>
+                <img class="thumbnail" src="landing/honeydew-old-sm.png" alt="Old Honeydew">
+              </a>
+            </div>
+            <div class="col-md-4 col-xs-6">
               <a target="_blank" href="/kabocha/dashboard.html">
+                <span class="small">Kabocha</span>
                 <img class="thumbnail" src="landing/kabocha-dashboard-sm.png" alt="Kabocha">
               </a>
-            </li>
-          </ul>
-        </p>
-
-        <div class="">
-          <h3>FAQ:</h3>
-          <p>How do I...
-            <ul>
-              <li>
-                <p><a ng-click="Landing.viewGif('feature')" class="btn btn-default" role="button">create new folders?</a> or <a class="btn btn-default" role="button" ng-click="Landing.viewGif('set')">new sets?</a></p>
-              </li>
-              <li>set up my <a role="button" target="_blank" href="https://gist.github.com/gempesaw/4a317a5076644f263642">Local Honeydew</a> or <a role="button" target="_blank" href="http://appium.io/getting-started.html?lang=en">Appium</a>?
-              </li>
-              <li>go to the <a href="/old.php">previous editor?</a>
-              </li>
-            </ul>
-          </p>
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <a target="_blank" href="/kabocha/ratm.html#/assessments">
+                <span class="small">RATM</span>
+                <img class="thumbnail" src="landing/kabocha-rat-sm.png" alt="Kabocha RAT">
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <background-status></background-status>
-        </div>
+        <div class="clearfix"></div>
+        <background-status></background-status>
+
       </div>
-
     </div>
 
     <div class="col-md-6">

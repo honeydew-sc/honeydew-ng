@@ -1,0 +1,41 @@
+.ip-checker {
+    .checking {
+        position: relative;
+        z-index: 1;
+        width: 0px;
+        height: 0px;
+    }
+
+    .fa.fa-spin {
+        position: absolute;
+        left: -25px;
+        top: 1px;
+    }
+
+    .btn {
+        position: relative;
+        top: -1px;
+    }
+
+    .visit {
+        position: relative;
+        z-index: 1;
+        width: 0px;
+        height: 0px;
+
+        a {
+            position: absolute;
+            left: -33px;
+            top: 1px;
+        }
+    }
+
+
+    .address.true {
+        background-color: $bg-green;
+    }
+
+    .address.false {
+        background-color: $bg-red;
+    }
+}

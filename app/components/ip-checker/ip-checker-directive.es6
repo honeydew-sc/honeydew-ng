@@ -4,40 +4,34 @@ class IpCheckerController {
         this.BackgroundStatus = BackgroundStatus;
 
         this.status = 'loading';
-        this.initAddress();
+        this._initAddress();
     }
 
-    initAddress () {
-        var storedAddr = this.Settings.get('wdAddress');
-        if ( storedAddr ) {
-            this.updateServerStatus( storedAddr );
+    address ( newAddress ) {
+        if ( angular.isDefined( newAddress ) ) {
+            return this._setAddress( newAddress );
         }
         else {
-            this.getAddressFromServer();
+            return this._getAddress();
         }
     }
 
-    getAddressFromServer () {
-        this.BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
-            this.status = res.webdriverStatus;
-            this.addressFromServer = res.serverAddress;
-            this.Settings.set('wdAddress', res.serverAddress);
-        });
+    reset() {
+        this.Settings.delete('wdAddress');
+        this._updateServerStatus( this._getAddressFromServer() );
     }
 
-    updateServerStatus ( address ) {
-        this.checking = true;
-        this.BackgroundStatus.get({
-            status: 'webdriver',
-            local: address
-        }).$promise.then( res => {
-            this.status = res.webdriverStatus;
-        }).finally( () => {
-            this.checking = false;
-        });
+    _initAddress () {
+        var storedAddr = this.Settings.get('wdAddress');
+        if ( storedAddr ) {
+            this._updateServerStatus( storedAddr );
+        }
+        else {
+            this._getAddressFromServer();
+        }
     }
 
-    get address () {
+    _getAddress () {
         var storedAddr = this.Settings.get('wdAddress');
         if ( storedAddr ) {
             return storedAddr;
@@ -47,16 +41,29 @@ class IpCheckerController {
         }
     }
 
-    set address ( newAddress ) {
-        console.log('hi');
-        this.updateServerStatus( newAddress );
+    _setAddress ( newAddress ) {
+        this._updateServerStatus( newAddress );
         this.Settings.set('wdAddress', newAddress);
-        return newAddress;
     }
 
-    reset() {
-        this.Settings.delete('wdAddress');
-        this.updateServerStatus( this.getAddressFromServer() );
+    _getAddressFromServer () {
+        this.BackgroundStatus.get({status: 'webdriver'}).$promise.then( res => {
+            this.status = res.webdriverStatus;
+            this.addressFromServer = res.serverAddress;
+            this.Settings.set('wdAddress', res.serverAddress);
+        });
+    }
+
+    _updateServerStatus ( address ) {
+        this.checking = true;
+        this.BackgroundStatus.get({
+            status: 'webdriver',
+            local: address
+        }).$promise.then( res => {
+            this.status = res.webdriverStatus;
+        }).finally( () => {
+            this.checking = false;
+        });
     }
 };
 

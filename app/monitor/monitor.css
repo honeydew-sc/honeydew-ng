@@ -18,5 +18,18 @@
 }
 
 .monitor-container #filter {
-    width: 400px;
+    width: 505px;
+}
+
+.monitor-container .reset-query {
+    position: relative;
+    width: 0px;
+    height: 0px;
+}
+
+.monitor-container .reset-query > i {
+    position: absolute;
+    left: 490px;
+    top: -24px;
+    z-index: 10;
 }

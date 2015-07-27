@@ -2,14 +2,22 @@
   <job-options class="row"></job-options>
 
   <div class="row">
-    <strong>Filter:</strong>
-    <input type="text"
-           ng-model="Monitor.filterOptions.filterText"
-           placeholder="Please search for something"
-           ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
-           id="filter"/>
 
-    <span ng-if="!Monitor.queried"><---To avoid slow page loads, we delay populating the chart until you search.</span>
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="col-sm-6">
+          <input type="text"
+                 class="form-control"
+                 ng-model="Monitor.filterOptions.filterText"
+                 placeholder='Enter a search query populate the table, search for "set" to see all monitors'
+                 ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
+                 id="filter"/>
+          <span class="reset-query">
+            <i class="fa fa-times" ng-click="Monitor.resetQuery()"></i>
+          </span>
+        </div>
+      </div>
+    </form>
   </div>
 
 

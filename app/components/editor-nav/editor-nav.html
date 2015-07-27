@@ -25,6 +25,11 @@
             <li ng-if="!isSet"><a id="copy" ng-click="open('Copy')"><i class="fa fa-fw fa-lg fa-copy"></i> Copy To...</a></li>
             <li ng-if="!isSet"><a id="copy-temp" ng-click="open('CopyTemp')"><i class="fa fa-fw fa-lg fa-copy"></i> Temporary Copy</a></li>
             <li ng-if="!isSet"><a id="move" ng-click="open('Move')"><i class="fa fa-fw fa-lg fa-cut"></i> Move/Rename</a></li>
+            <li>
+              <a id="history" target="_blank" ng-href="{{ historyUrl }}">
+                <i class="fa fa-fw fa-lg fa-clock-o"></i> History
+              </a>
+            </li>
             <li ng-if="!isSet" class="divider"></li>
             <li ng-if="!isSet"><a id="delete" ng-click="fileActions.Delete.cb()"><i class="fa fa-fw fa-lg fa-trash-o"></i> Delete</a></li>
             <li ng-if="!isSet"><a id="undoDelete" ng-show="$storage.undoFile" ng-click="undoDelete()"><i class="fa fa-fw fa-lg fa-trash-o fa-rotate-180"></i> Undo Delete</a></li>

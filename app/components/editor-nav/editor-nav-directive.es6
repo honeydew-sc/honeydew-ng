@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('honeydew')
-    .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree) {
+    .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree, honeydewConfig) {
         return {
             templateUrl: 'components/editor-nav/editor-nav.html',
             scope: {
@@ -135,6 +135,10 @@ angular.module('honeydew')
                         $location.path(path);
                     });
                 };
+
+                scope.historyUrl = (function () {
+                    return honeydewConfig.vcs_url + $location.path().substring(1);
+                })();
             },
             controller: ($scope, $localStorage) => {
                 $scope.settings = $localStorage.settings;

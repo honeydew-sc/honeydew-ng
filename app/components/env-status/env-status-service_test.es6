@@ -2,6 +2,8 @@ describe('EnvStatus', function () {
     let results,
         httpMock,
         EnvStatus,
+        HD_TOTAL,
+        HD_SUCCESS,
         Environment;
 
     beforeEach(module('honeydew'));
@@ -12,6 +14,7 @@ describe('EnvStatus', function () {
 
         EnvStatus.apps = [ 'SC', 'DROZ' ];
 
+        HD_TOTAL = HD_SUCCESS = 3;
         mockKabochaQuery();
         results = mockQuery( 'SC' );
     }));
@@ -40,10 +43,28 @@ describe('EnvStatus', function () {
         expect(Object.keys(results)).toContain('DROZ, stage');
     });
 
-    it('should calculate the honeydew summary', () => {
-        let status = results['SC, prod'];
-        expect(status.hasOwnProperty('honeydew')).toBe(true);
-        expect(status.honeydew.summary).toBe(true);
+    describe('HD summary calculation', () => {
+        it('should calculate the generic honeydew summary when passing', () => {
+            let status = results['SC, prod'];
+            expect(status.hasOwnProperty('honeydew')).toBe(true);
+            expect(status.honeydew.summary).toBe(true);
+        });
+
+        it('should calculate the droz passing summary as a flat failure count', () => {
+            HD_TOTAL = 20;
+            HD_SUCCESS = 6;
+            let results = mockQuery( 'DROZ' );
+            let drozSummary = results['DROZ, prod'].honeydew.summary;
+            expect(drozSummary).toBe(true);
+        });
+
+        it('should calculate the droz failing summary as a flat failure count', () => {
+            HD_TOTAL = 20;
+            HD_SUCCESS = 5;
+            let results = mockQuery( 'DROZ' );
+            let drozSummary = results['DROZ, prod'].honeydew.summary;
+            expect(drozSummary).toBe(false);
+        });
     });
 
     it('should not have a summary for an invalid honeydew db lookup', () => {
@@ -133,12 +154,19 @@ describe('EnvStatus', function () {
     }
 
     function defaultHoneydewResponse() {
+        // it is a little gross to use a global variable for this, but
+        // on the other hand we get to be explicit in our tests about
+        // what we're sending in, and we don't have to refactor all
+        // those mock* functions at the bottom to let us pass through
+        // a few more arguments.
+        let success = HD_SUCCESS || 3;
+        let total = HD_TOTAL || 3;
         return {
             details: [{
                 id: "270707",
                 setName: "drozOther.set",
-                success: "3",
-                total: "3"
+                success,
+                total
             }, {
                 id: "270708",
                 setName: "drozGalleryStart.set",

@@ -6,15 +6,17 @@ angular.module('honeydew')
             monitors = [];
         $scope.monitors = monitors;
 
-        self.queried = false;
         self.query = function () {
+            $scope.$emit('progress:loading');
             var query = Monitor.query( forceRedraw );
 
             // couldn't figure out how to use gridOptions for monitors on
             // self instead of $scope, so.
-            $scope.monitors = monitors = query;
+            $scope.monitors = monitors = self.queryResults = query;
 
-            return query.$promise.then( () => self.queried = true );
+            return query.$promise
+                .then( () => $scope.$emit( 'progress:value', { value: 100 } ) )
+                .catch( () => $scope.$emit('progress:done') );
         };
 
         self.delete = function ( row ) {
@@ -35,6 +37,14 @@ angular.module('honeydew')
                     monitor.$save({ id: id});
                 }
             });
+        };
+
+        self.resetQuery = function () {
+            // store the already-queried results so we can restore
+            // them when the user searches again
+            self.queryResults = $scope.monitors;
+            $scope.monitors = [];
+            self.filterOptions.filterText = '';
         };
 
         $scope.$on('ngGridEventStartCellEdit', function(evt){
@@ -84,15 +94,19 @@ angular.module('honeydew')
         };
 
         // wait for user to search for something
-        var cancelUserQueries = $scope.$watch(
+        $scope.$watch(
             () => self.filterOptions.filterText,
             userInitializesQuery
         );
         function userInitializesQuery (newValue, oldValue) {
             var QUERY_LENGTH = 1;
             if (newValue.length > QUERY_LENGTH) {
-                cancelUserQueries();
-                self.query();
+                if ( self.hasOwnProperty('queryResults') && self.queryResults ) {
+                    $scope.monitors = self.queryResults;
+                }
+                else {
+                    self.query();
+                }
             }
         }
 

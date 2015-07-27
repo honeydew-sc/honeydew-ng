@@ -1,5 +1,3 @@
-'use strict';
-
 describe('MonitorCtrl', function () {
     var scope,
         monitors,
@@ -48,7 +46,7 @@ describe('MonitorCtrl', function () {
         expect(promise.then).toBeDefined();
     });
 
-    it('should query after 3 keys in the filter', () => {
+    it('should query after 1 key in the filter', () => {
         httpMock.expectGET('/rest.php/monitor').respond(monitors);
 
         MonitorCtrl.filterOptions.filterText = '1';
@@ -57,7 +55,7 @@ describe('MonitorCtrl', function () {
         httpMock.flush();
     });
 
-    it('should only use user input to query once ', () => {
+    it('should only use user input to query once', () => {
         httpMock.expectGET('/rest.php/monitor').respond(monitors);
 
         MonitorCtrl.filterOptions.filterText = 'this should trigger it';
@@ -65,6 +63,29 @@ describe('MonitorCtrl', function () {
         MonitorCtrl.filterOptions.filterText = 'and this should not';
 
         httpMock.flush();
+    });
+
+    describe('query reset', () => {
+        beforeEach( () => {
+            httpMock.expectGET('/rest.php/monitor').respond(monitors);
+            MonitorCtrl.filterOptions.filterText = 'this should trigger it';
+            scope.$digest();
+            httpMock.flush();
+        });
+
+        it('should reset the monitors for convenience', () => {
+            MonitorCtrl.resetQuery();
+            expect(scope.monitors).toEqual([]);
+            expect(MonitorCtrl.filterOptions.filterText).toBe('');
+
+        });
+
+        it('should restore monitors after a reset without hitting the backend', () => {
+            MonitorCtrl.resetQuery();
+            MonitorCtrl.filterOptions.filterText = 'set';
+            scope.$digest();
+            expect(scope.monitors).not.toEqual([]);
+        });
     });
 
 });

@@ -91,12 +91,6 @@ angular.module('honeydew')
                         cb: function ( phrase ) { }
                     },
 
-                    'Permalink': {
-                        template: 'components/new-file-modal/new-file-modal.html',
-                        controller: 'NewFileModalCtrl',
-                        cb: function ( ) { }
-                    },
-
                     'Copy': {
                         template: 'components/new-file-modal/new-file-modal.html',
                         controller: 'NewFileModalCtrl',

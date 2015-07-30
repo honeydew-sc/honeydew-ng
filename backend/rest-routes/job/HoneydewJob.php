@@ -33,6 +33,8 @@ class HoneydewJob
         }
 
         $this->setFilename($filename);
+        $this->setReplacementSetData(@$jobData['setName'], @$jobData['setRunId']);
+
         $this->setHostname($jobData["host"]);
         $this->setBrowser($jobData["browser"]);
         $this->setSauce($jobData["browser"]);
@@ -133,6 +135,14 @@ class HoneydewJob
         }
     }
 
+    private function setReplacementSetData($setName, $setRunId)
+    {
+        if (isset($setName) && isset($setRunId)) {
+            $this->_setName = $setName;
+            $this->_setRunId = $setRunId;
+        }
+    }
+
     protected function setHostname($hostname)
     {
         if(!(preg_match("/https?:\/\//", $hostname)))
@@ -219,7 +229,7 @@ class HoneydewJob
         $feature = $this->getFileString();
         $hostname = $this->getHostnameString();
         $sauce = $this->getSauceString();
-        $setRunId = $this->getSetRunIdString();
+        $setData = $this->getSetDataString();
         $browser = $this->getBrowserString();
         $user = $this->getUserString();
         $reportId = $this->getReportIdString();
@@ -230,14 +240,14 @@ class HoneydewJob
         $job = $feature
              . $hostname
              . $sauce
-             . $setRunId
+             . $setData
              . $user
              . $reportId
              . $size
              . $channel
              . $local
              . $browser;
-        /* echo $job . "  \n<br />  "; */
+
         return $job;
     }
 
@@ -252,9 +262,15 @@ class HoneydewJob
         }
     }
 
-    protected function getSetRunIdString()
+    protected function getSetDataString()
     {
-        if (preg_match("/.set$/", $this->_filename))
+        if (isset($this->_setRunId) && isset($this->_setName))
+        {
+            $setName = 'setName=' . $this->_setName . '^';
+            $setRunId = 'setRunId=' . $this->_setRunId . '^';
+            return $setName . $setRunId;
+        }
+        else if (preg_match("/.set$/", $this->_filename))
         {
             return "setRunId=" . $this->genRandomString(8) . "^";
         }

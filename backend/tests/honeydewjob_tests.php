@@ -42,6 +42,7 @@ class TestHoneydewJob extends UnitTestCase {
             );
             $job = new HoneydewJob($jobData);
             $this->assertPattern('/^setName=\/opt\/honeydew\/sets\/examples.set/', $job->getJobString(), 'sets work');
+            $this->assertPattern('/\^setRunId=.{8}\^/', $job->getJobString(), 'sets include set run id');
 
             $jobData = array(
                 "filename" => "sets/examples.set",
@@ -51,6 +52,7 @@ class TestHoneydewJob extends UnitTestCase {
             );
             $job = new HoneydewJob($jobData);
             $this->assertPattern('/^setName=\/opt\/honeydew\/sets\/examples.set/', $job->getJobString(), 'new sets work');
+            $this->assertPattern('/\^setRunId=.{8}\^/', $job->getJobString(), 'new sets include set run id');
 
             $jobData = array(
                 "filename" => "features/test/dan.feature",
@@ -267,5 +269,32 @@ class TestHoneydewJob extends UnitTestCase {
 
         $jenn = $job->getConfig("jenn_cs");
         $this->assertPattern("/(\d{1,3}\.?){4}/", $jenn);
+    }
+
+    function testCanCreateReplaceJob() {
+        $jobData = array(
+            'setRunId' => 47,
+            'setName' => 'sets/examples.set',
+            'filename' => 'test/dan.feature',
+            "set" => "examples.set",
+            "host" => "www.sharecare.com",
+            "browser" => "chrome local",
+            "username" => "dgempesaw",
+        );
+
+        $job = new HoneydewJob($jobData);
+        $jobString = $job->getJobString();
+        $this->assertPattern('%feature=/opt/honeydew/features/test/dan.feature\^%', $jobString,
+                             'replace jobs have a feature');
+
+        /* this gets us past a sanity check in Reports.pm that wants
+        us to have a non-empty setName */
+        $this->assertPattern('%setName=sets/examples.set\^%', $jobString,
+                             'replace jobs have a setName');
+
+        /* having a set run id is crucial! this is how we know what
+        set to add it to. */
+        $this->assertPattern('%setRunId=47\^%', $jobString,
+                             'replace jobs have a setRunId');
     }
 }

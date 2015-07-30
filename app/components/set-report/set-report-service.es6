@@ -147,6 +147,7 @@ class SetReportService {
         let jobs = features.map( ({ feature, reportId }) => {
             let job = angular.copy(jobMetadata);
             job.file = feature;
+            job.setName = setName;
             if ( reportId ) {
                 job.reportId = reportId;
             }

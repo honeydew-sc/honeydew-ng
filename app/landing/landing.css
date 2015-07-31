@@ -27,3 +27,8 @@
     width: 33%;
     margin: 0 auto;
 }
+
+.landing .thumbnail {
+    width: 145px;
+    height: 80px;
+}

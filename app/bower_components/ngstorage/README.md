@@ -1,6 +1,10 @@
 ngStorage
 =========
 
+[![Build Status](https://travis-ci.org/gsklee/ngStorage.svg)](https://travis-ci.org/gsklee/ngStorage)
+[![Dependency Status](https://david-dm.org/gsklee/ngStorage.svg)](https://david-dm.org/gsklee/ngStorage)
+[![devDependency Status](https://david-dm.org/gsklee/ngStorage/dev-status.svg)](https://david-dm.org/gsklee/ngStorage#info=devDependencies)
+
 An [AngularJS](https://github.com/angular/angular.js) module that makes Web Storage working in the *Angular Way*. Contains two services: `$localStorage` and `$sessionStorage`.
 
 ### Differences with Other Implementations
@@ -10,14 +14,47 @@ An [AngularJS](https://github.com/angular/angular.js) module that makes Web Stor
 * **sessionStorage** - We got this often-overlooked buddy covered.
 
 * **Cleanly-Authored Code** - Written in the *Angular Way*, well-structured with testability in mind.
- 
-* **No Cookie Fallback** - With Web Storage being [readily available](http://caniuse.com/namevalue-storage) in [all the browsers AngularJS officially supports](http://docs.angularjs.org/misc/faq#canidownloadthesourcebuildandhosttheangularjsenvironmentlocally), such fallback is largely redundant. 
+
+* **No Cookie Fallback** - With Web Storage being [readily available](http://caniuse.com/namevalue-storage) in [all the browsers AngularJS officially supports](http://docs.angularjs.org/misc/faq#canidownloadthesourcebuildandhosttheangularjsenvironmentlocally), such fallback is largely redundant.
 
 Install
 =======
 
+### Bower
+
 ```bash
 bower install ngstorage
+```
+
+*NOTE:* We are `ngstorage` and *NOT* `ngStorage`. The casing is important!
+
+### NPM
+```bash
+npm install ngstorage
+```
+
+*NOTE:* We are `ngstorage` and *NOT* `ngStorage`. The casing is important!
+
+CDN
+===
+
+### cdnjs
+cdnjs now hosts ngStorage at <https://cdnjs.com/libraries/ngStorage>
+
+To use it
+
+``` html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+```
+
+### jsDelivr
+
+jsDelivr hosts ngStorage at <http://www.jsdelivr.com/#!ngstorage>
+
+To use is
+
+``` html
+<script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
 ```
 
 Usage

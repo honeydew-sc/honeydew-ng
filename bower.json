@@ -13,7 +13,7 @@
     "angular-ui-codemirror": "~0.2.1",
     "angular-ui-router": "master",
     "angular-bootstrap": "~0.10.0",
-    "ngstorage": "~0.3.0",
+    "ngstorage": "~0.3.7",
     "font-awesome": "~4.0.3",
     "ng-grid": "~2.0.14",
     "angular-pusher": "~0.0.7",

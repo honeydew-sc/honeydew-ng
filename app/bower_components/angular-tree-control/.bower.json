@@ -1,6 +1,6 @@
 {
   "name": "angular-tree-control",
-  "version": "0.2.7",
+  "version": "0.2.12",
   "main": [
     "./angular-tree-control.js",
     "./css/tree-control.css"
@@ -12,7 +12,7 @@
     "karma.conf.js"
   ],
   "dependencies": {
-    "angular": "~1.2.6"
+    "angular": "~1.2.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.7",
@@ -22,14 +22,14 @@
     "google-code-prettify": "1.0.1"
   },
   "homepage": "https://github.com/wix/angular-tree-control",
-  "_release": "0.2.7",
+  "_release": "0.2.12",
   "_resolution": {
     "type": "version",
-    "tag": "0.2.7",
-    "commit": "901877280bd671e931a8ade1d6eab94dbfdca21f"
+    "tag": "0.2.12",
+    "commit": "db07c7ad5e74f9ebf8769fcaebbb72bdaa137b71"
   },
   "_source": "git://github.com/wix/angular-tree-control.git",
-  "_target": "~0.2.7",
+  "_target": "~0.2.12",
   "_originalSource": "angular-tree-control",
   "_direct": true
 }

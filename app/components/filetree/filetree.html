@@ -13,13 +13,13 @@
            ng-click="refresh(tab.label)"
            ng-mouseenter="tab.showRefreshLabel = true"
            ng-mouseleave="tab.showRefreshLabel = false">
-          <span ng-show="tab.showRefreshLabel" class="slide"> Refresh </span>
+          <span ng-if="tab.showRefreshLabel" class="slide"> Refresh </span>
           <i class="fa fa-refresh"
                 ng-class="{'fa-spin': tab.refreshing}" ></i>
         </a>
       </div>
 
-      <div ng-show="tab.needle">
+      <div ng-if="tab.needle">
         <span class="search">Filename:</span>
       </div>
       <!-- the is the label of each branch/leaf is the text inside of
@@ -34,7 +34,7 @@
         {{ node.label }}
       </treecontrol>
 
-      <div ng-show="tab.needle">
+      <div ng-if="tab.needle">
         <hr>
         <span class="search">Within:</span>
         <treecontrol class="tree-classic search-results-tree"

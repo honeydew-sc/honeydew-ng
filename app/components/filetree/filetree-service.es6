@@ -4,10 +4,6 @@ angular.module('honeydew')
     .service('filetree', function ($resource, $localStorage, $location, $rootScope, Tree) {
         var self = this;
 
-        if (typeof($localStorage.topLevelTree) === 'undefined') {
-            $localStorage.topLevelTree = {};
-        }
-
         this.get = function ( folder ) {
             var promise = Tree.get({ folder: folder }).$promise;
 
@@ -19,7 +15,7 @@ angular.module('honeydew')
         };
 
         function persistTree(folder, tree, broadcast) {
-            $localStorage.topLevelTree[folder] = self[folder + 'tree'] = tree;
+            self[folder + 'tree'] = tree;
 
             if (broadcast) {
                 $rootScope.$broadcast('tree', { folder: folder });

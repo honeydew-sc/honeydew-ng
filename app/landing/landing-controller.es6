@@ -58,25 +58,4 @@ angular.module('honeydew')
             });
         };
 
-
-
-        self.viewGif = active => {
-            var modal = $modal.open({
-                templateUrl: 'landing/gif.html',
-                resolve: {
-                    active: () => { return active; }
-                },
-                controller: viewGifController
-            });
-        };
-
-        function viewGifController ($scope, active) {
-            var sources = {
-                feature: '/landing/new-feature.webm',
-                set: '/landing/new-set.webm'
-            };
-
-            $scope.src = sources[active];
-        }
-
     });

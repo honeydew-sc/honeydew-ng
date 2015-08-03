@@ -68,16 +68,12 @@ angular.module('honeydew')
 
         function getActiveTab () {
             var path = $location.path();
-            return $scope.tabs.find( tab => {
-                let folder = tab.label.toLowerCase();
-                let isActive = !!path.match('^.' + folder );
-                if (isActive) {
-                    tab.active = true;
-                }
+            let activeTab = $scope.tabs.find( isTabActive );
 
-                return isActive;
-            });
-        }
+            activeTab.active = true;
+            activeTab.ready = true;
+            return activeTab;
+        };
 
         function setExpandedNodesFromPath() {
             let tab = getActiveTab();

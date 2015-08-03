@@ -77,10 +77,10 @@
     <div class="col-md-6">
       <div class="parent">
         <h3>Your recent files:</h3>
-        <p>
-          <span ng-show="!Landing.history.length">You don't have any history items. Browse a few features and come back!</span>
-          <ul ng-show="Landing.history.length">
-            <li ng-repeat="item in Landing.history">
+        <p class="small">
+          <span ng-if="!Landing.history.length">You don't have any history items. Browse a few features and come back!</span>
+          <ul ng-if="Landing.history.length">
+            <li ng-repeat="item in ::Landing.history">
               <small><a href="#{{ item.href }}">{{ item.label }}</a></small>
             </li>
           </ul>

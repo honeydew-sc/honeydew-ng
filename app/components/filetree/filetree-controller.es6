@@ -26,6 +26,7 @@ angular.module('honeydew')
             return !!$location.path().match( '^.' + tab.label.toLowerCase() );
         };
 
+        let onload = true;
         $scope.getTreeContents = function ( tab ) {
             if ( tab === undefined ) {
                 return;
@@ -38,12 +39,27 @@ angular.module('honeydew')
                 return;
             }
 
-            var tree, folder = tab.label.toLowerCase();
+            var tree,
+                folder = tab.label.toLowerCase();
 
-            filetree.get(folder).finally(function ( res ) {
-                tree = tab.data = filetree[folder + 'tree'];
-                tab.refreshing = false;
-            });
+            tab.refreshing = true;
+            filetree.get(folder)
+                .finally(function ( res ) {
+                    tree = tab.data = filetree[folder + 'tree'];
+                    tab.refreshing = false;
+                })
+                .finally( () => {
+                    // we only want to set expanded nodes when we are
+                    // loading the page. any time after that, we'll be
+                    // in getTreeContents because the user changed the
+                    // active tab on their own. when that happens, we
+                    // don't want to interfere with what they're
+                    // doing.
+                    if ( onload ) {
+                        onload = false;
+                        setExpandedNodesFromPath( tab );
+                    }
+                });
 
             function search(newNeedle, oldNeedle) {
                 if (newNeedle === oldNeedle) {
@@ -75,8 +91,7 @@ angular.module('honeydew')
             return activeTab;
         };
 
-        function setExpandedNodesFromPath() {
-            let tab = getActiveTab();
+        function setExpandedNodesFromPath( tab ) {
             let label = tab.label.toLowerCase();
             if ( label === 'sets' ) {
                 // sets tab has no folders and thus nothing to expand

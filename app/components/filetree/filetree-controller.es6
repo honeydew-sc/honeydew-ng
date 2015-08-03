@@ -27,9 +27,8 @@ angular.module('honeydew')
         };
 
         $scope.getTreeContents = function ( tab ) {
-            // the default tab is the features tab - aka tabs[0].
             if ( tab === undefined ) {
-                tab = $scope.tabs[0];
+                return;
             }
 
             // let's only query the server once per session by

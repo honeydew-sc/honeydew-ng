@@ -31,17 +31,25 @@ angular.module('honeydew')
             }
         ];
 
-        var path = $location.path();
-        $scope.tabs.forEach(function (tab) {
+        $scope.getTreeContents = function ( tab ) {
+            // the default tab is the features tab - aka tabs[0].
+            if ( tab === undefined ) {
+                tab = $scope.tabs[0];
+            }
+
+            // let's only query the server once per session by
+            // default; for manual refreshes, there is a refresh
+            // button.
+            if ( tab.hasOwnProperty( 'data' ) ) {
+                return;
+            }
+
             var tree, folder = tab.label.toLowerCase();
-            tab.data = $localStorage.topLevelTree[folder] || [];
 
             filetree.get(folder).finally(function ( res ) {
                 tree = tab.data = filetree[folder + 'tree'];
                 tab.refreshing = false;
             });
-
-            tab.active = !!path.match('^.' + folder);
 
             function search(newNeedle, oldNeedle) {
                 if (newNeedle === oldNeedle) {
@@ -62,7 +70,17 @@ angular.module('honeydew')
             };
 
             $scope.$watch(function () {return tab.needle;}, debounce(search, 350));
-        });
+        };
+
+        $scope.getTreeContents( getActiveTab() );
+
+        function getActiveTab () {
+            var path = $location.path();
+            return $scope.tabs.find( tab => {
+                let folder = tab.label.toLowerCase();
+                return !!path.match('^.' + folder );
+            });
+        }
 
         $scope.$on('tree', function (event, data) {
             var tab = $scope.tabs.find(function (tab) {
@@ -86,9 +104,4 @@ angular.module('honeydew')
                     tab.refreshing = false;
                 });
         };
-
-        $timeout(function () {
-            // prevent animations during pageload
-            $scope.animate = 1;
-        });
     });

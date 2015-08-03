@@ -74,6 +74,47 @@ angular.module('honeydew')
             });
         }
 
+        function setExpandedNodesFromPath() {
+            let tab = getActiveTab();
+            let label = tab.label.toLowerCase();
+            if ( label === 'sets' ) {
+                // sets tab has no folders and thus nothing to expand
+                return;
+            }
+            else {
+                let path = $location.path();
+                // path looks like
+                //
+                // /<tabName>/nodes/to/be/expanded/name.ext
+                //
+                // if we put the nodes to be expanded in
+                // tab.expandedNodes, the tree-control will do the
+                // rest.
+                let expandedLabels = path.replace(`/${label}/`, '' ).split('/');
+                let expanded = filterExpandedNodes( [], tab.data, expandedLabels );
+                let leaf = expanded.pop();
+
+                tab.expandedNodes = expanded;
+                tab.selectedNode = leaf;
+            }
+        }
+
+        function filterExpandedNodes( acc, nodes, labels ) {
+            if ( !nodes.length ) {
+                return acc;
+            }
+
+            let label = labels.shift();
+            let node = nodes.find( node => node.label === label );
+            if ( node ) {
+                acc.push(node);
+                return filterExpandedNodes( acc, node.children, labels );
+            }
+            else {
+                return acc;
+            }
+        }
+
         $scope.$on('tree', function (event, data) {
             var tab = $scope.tabs.find(function (tab) {
                 return tab.label.toLowerCase() === data.folder;

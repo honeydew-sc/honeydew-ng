@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('FileTreeCtrl', function ($scope, filetree, $location, $timeout, debounce, $localStorage, alerts) {
         // put filetree.show() on the scope as the display fn
@@ -78,7 +76,12 @@ angular.module('honeydew')
             var path = $location.path();
             return $scope.tabs.find( tab => {
                 let folder = tab.label.toLowerCase();
-                return !!path.match('^.' + folder );
+                let isActive = !!path.match('^.' + folder );
+                if (isActive) {
+                    tab.active = true;
+                }
+
+                return isActive;
             });
         }
 

@@ -10,7 +10,7 @@ angular.module('honeydew')
                     return false;
                 }
 
-                return a.$$hashKey == b.$$hashKey;
+                return a.$$hashKey === b.$$hashKey;
             }
         };
 

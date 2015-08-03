@@ -66,3 +66,12 @@ div.sidebar-wrapper {
     height: 41px;
     border-bottom: 1px solid #e7e7e7;
 }
+
+#filetree a.input-group-addon .refresh-label {
+    display: none;
+}
+
+#filetree a.input-group-addon:hover .refresh-label {
+    display: inline;
+    padding-right: 10px;
+}

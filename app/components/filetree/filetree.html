@@ -11,10 +11,8 @@
                ng-model="tab.needle"
                class="{{ tab.label }}-search form-control">
         <a class="input-group-addon btn btn-bland"
-           ng-click="refresh(tab.label)"
-           ng-mouseenter="tab.showRefreshLabel = true"
-           ng-mouseleave="tab.showRefreshLabel = false">
-          <span ng-if="tab.showRefreshLabel" class="slide"> Refresh </span>
+           ng-click="refresh(tab.label)">
+          <span class="slide refresh-label">Refresh</span>
           <i class="fa fa-refresh"
                 ng-class="{'fa-spin': tab.refreshing}" ></i>
         </a>

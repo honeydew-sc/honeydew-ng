@@ -41,6 +41,15 @@ describe('FileTreeCtrl', function () {
             $scope: scope
         });
 
+        // TODO: since this is an old component, it's not set up as a
+        // directive. as a result, even though the template has a hook
+        // to invoke getTreeContents for the active tab on its own,
+        // the controller on its own doesn't do it, so we need to fake
+        // it out here. this needs to be refactored into a directive
+        // and then we won't need to kludge this on our own.
+        let tab = scope.tabs.find( tab => tab.active );
+        scope.getTreeContents( tab );
+
         httpMock.flush();
         scope.$apply();
     }

@@ -20,6 +20,12 @@ angular.module('honeydew')
             { label: "Sets" }
         ];
 
+        $scope.tabs.forEach( tab => tab.active = isTabActive( tab ) );
+
+        function isTabActive ( tab ) {
+            return !!$location.path().match( '^.' + tab.label.toLowerCase() );
+        };
+
         $scope.getTreeContents = function ( tab ) {
             // the default tab is the features tab - aka tabs[0].
             if ( tab === undefined ) {

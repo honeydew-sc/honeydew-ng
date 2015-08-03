@@ -27,8 +27,8 @@
       <treecontrol class="tree-classic"
                    tree-model="tab.data"
                    options="treeOptions"
-                   selected-node="node1"
-
+                   selected-node="tab.selectedNode"
+                   expanded-nodes="tab.expandedNodes"
                    on-selection="tree.show(node)">
         {{ node.label }}
       </treecontrol>
@@ -39,8 +39,6 @@
         <treecontrol class="tree-classic search-results-tree"
                      tree-model="tab.grepResults"
                      options="treeOptions"
-                     selected-node="node1"
-
                      on-selection="tree.show(node)">
           {{ node.label }}
         </treecontrol>

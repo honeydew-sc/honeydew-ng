@@ -19,7 +19,6 @@ angular.module('honeydew')
             { label: "Phrases" },
             { label: "Sets" }
         ];
-
         $scope.tabs.forEach( tab => tab.active = isTabActive( tab ) );
 
         function isTabActive ( tab ) {
@@ -80,15 +79,6 @@ angular.module('honeydew')
             };
 
             $scope.$watch(function () {return tab.needle;}, debounce(search, 350));
-        };
-
-        function getActiveTab () {
-            var path = $location.path();
-            let activeTab = $scope.tabs.find( isTabActive );
-
-            activeTab.active = true;
-            activeTab.ready = true;
-            return activeTab;
         };
 
         function setExpandedNodesFromPath( tab ) {

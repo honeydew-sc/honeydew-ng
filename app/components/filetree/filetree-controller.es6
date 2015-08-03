@@ -15,18 +15,9 @@ angular.module('honeydew')
         };
 
         $scope.tabs = [
-            {
-                label: "Features",
-                refreshing: true
-            },
-            {
-                label: "Phrases",
-                refreshing: true
-            },
-            {
-                label: "Sets",
-                refreshing: true
-            }
+            { label: "Features" },
+            { label: "Phrases" },
+            { label: "Sets" }
         ];
 
         $scope.getTreeContents = function ( tab ) {

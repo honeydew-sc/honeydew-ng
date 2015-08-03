@@ -61,8 +61,6 @@ angular.module('honeydew')
             $scope.$watch(function () {return tab.needle;}, debounce(search, 350));
         };
 
-        $scope.getTreeContents( getActiveTab() );
-
         function getActiveTab () {
             var path = $location.path();
             return $scope.tabs.find( tab => {

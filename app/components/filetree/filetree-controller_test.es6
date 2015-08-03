@@ -20,7 +20,6 @@ describe('FileTreeCtrl', function () {
     });
 
     it('should set the active tab based on the url', function () {
-        location.path('/sets/blah-blah/');
         httpMockTree('sets');
 
         scope.tabs.forEach(function (tab) {
@@ -30,11 +29,28 @@ describe('FileTreeCtrl', function () {
         });
     });
 
-    function httpMockTree( label ) {
-        let children = [];
+    it('should expand nodes from the url ', () => {
+        let children = [
+            { label: 'path', children: [
+                { label: 'to', children: [
+                    { label: 'thing.phrase', children: [] }
+                ]}
+            ]}
+        ];
+        httpMockTree('phrases', children);
+        let tab = scope.tabs.find( tab => tab.active );
+
+        expect(tab.expandedNodes[0].label).toBe('path');
+        expect(tab.expandedNodes[1].label).toBe('to');
+    });
+
+    function httpMockTree( label, children ) {
+        location.path(`/${label}/path/to/thing.phrase`);
+
+        children = children || [{ label, children: [] }];
         httpMock.expectGET('/rest.php/tree/' + label).respond({
             success: true,
-            tree: [{ label, children }]
+            tree: children
         });
 
         FileTreeCtrl = controller('FileTreeCtrl', {

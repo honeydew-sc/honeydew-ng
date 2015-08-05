@@ -41,6 +41,10 @@
             background-color: $bg-purple;
         }
 
+        td.status.bugpass {
+            background-color: $bg-blue;
+        }
+
         td.status.success {
             background-color: $bg-green;
         }

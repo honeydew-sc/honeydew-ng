@@ -62,6 +62,15 @@ describe('SetReport directive', () => {
                 setRunId: 1,
                 status: 'failure',
                 reportId: 2
+            }],
+            'test/test3.feature': [{
+                setRunId: 2,
+                status: 'bugged',
+                reportId: 10
+            }, {
+                setRunId: 1,
+                status: 'bugpass',
+                reportId: 11
             }]
         };
 
@@ -74,29 +83,40 @@ describe('SetReport directive', () => {
         expect(controller.reportData).toBe(featureData);
     });
 
-    it('should construct table headers', () => {
-        let first = elm.find('table th:first + th').text();
-        expect(first).toMatch(/Chrome$/m);
-        expect(first).toMatch(/5.27,.11:31AM/);
+    describe('table', () => {
+        it('should construct table headers', () => {
+            let first = elm.find('table th:first + th').text();
+            expect(first).toMatch(/Chrome$/m);
+            expect(first).toMatch(/5.27,.11:31AM/);
 
-        let last = elm.find('table th:last').text();
-        expect(last).toMatch(/Chrome$/m);
-        expect(last).toMatch(/5.27,.11:12AM/);
+            let last = elm.find('table th:last').text();
+            expect(last).toMatch(/Chrome$/m);
+            expect(last).toMatch(/5.27,.11:12AM/);
 
-        expect(elm.find('table th').length).toBe(3);
-    });
+            expect(elm.find('table th').length).toBe(3);
+        });
 
-    it('should only show one parent directory and no extension', () => {
-        let shortFeature = elm.find('tr td:first a').text();
-        expect(shortFeature).toBe('test/test');
-    });
+        it('should only show one parent directory and no extension', () => {
+            let shortFeature = elm.find('tr td:first a').text();
+            expect(shortFeature).toBe('test/test');
+        });
 
-    it('should link to features', () => {
-        let firstLink = elm.find('tr td:first a').attr('href');
-        expect(firstLink).toBe('#/features/test/test.feature');
+        it('should link to features', () => {
+            let firstLink = elm.find('tr td:first a').attr('href');
+            expect(firstLink).toBe('#/features/test/test.feature');
 
-        let secondLink = elm.find('tr:last td:first a').attr('href');
-        expect(secondLink).toBe('#/features/test/test2.feature');
+            let secondLink = elm.find('tr:nth-child(2) td:first a').attr('href');
+            expect(secondLink).toBe('#/features/test/test2.feature');
+        });
+
+        it('should apply classes based on status', () => {
+            let tds = elm.find('td.status');
+            expect(tds.hasClass('success')).toBe(true);
+            expect(tds.hasClass('failure')).toBe(true);
+            expect(tds.hasClass('bugged')).toBe(true);
+            expect(tds.hasClass('bugpass')).toBe(true);
+        });
+
     });
 
     it('should pass the host when getting set history', () => {

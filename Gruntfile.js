@@ -58,6 +58,8 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.{es6,html,css,scss}',
                     '<%= yeoman.app %>/index.html',
                     '!<%= yeoman.app %>/**/.#*',
+                    // don't refresh the webview when editing test
+                    // files
                     '!<%= yeoman.app %>/<%= yeoman.folders %>/**/*_test.es6'
                 ]
             }

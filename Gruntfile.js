@@ -144,20 +144,6 @@ module.exports = function (grunt) {
             ]
         },
 
-        // Make sure code styles are up to par and there are no obvious mistakes
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
-            all: grunt.file.expand([
-                '<%= yeoman.app %>/app.js',
-                '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.js',
-                '!<%= yeoman.app %>/<%= yeoman.folders %>/**/*_test.js',
-                'Gruntfile.js'
-            ])
-        },
-
         sass: {
             dist: {
                 files: {

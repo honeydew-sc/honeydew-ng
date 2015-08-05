@@ -1,5 +1,5 @@
 class SetReportController {
-    constructor ($scope, $q, $timeout, SetReportService, Environment, hostname, panes) {
+    constructor ( $scope, $q, $timeout, SetReportService, Environment, hostname, panes ) {
         this.$q = $q;
         this.$timeout = $timeout;
         this.SetReportService = SetReportService;
@@ -24,11 +24,11 @@ class SetReportController {
             p2 = SetReportService.getSetHistory( set, hostname.host ),
             p3 = this.highlightHostnames();
 
-        [p1, p2, p3].map( promise => {
+        [ p1, p2, p3 ].map( promise => {
             promise.then( () => this._showProgress() );
         });
 
-        return this.$q.all( [ p1, p2, p3 ] )
+        return this.$q.all([ p1, p2, p3 ])
             .then( (res) => {
                 return SetReportService.reorganizeReportData(res);
             })
@@ -39,16 +39,16 @@ class SetReportController {
                 this.reportData = reportData;
             })
             .then( () => this.$scope.$emit( 'progress:value', { value: 100 } ) )
-            .catch( res => {
+            .catch( () => {
                 this.$scope.$emit('progress:done');
             });
     }
 
-    _showProgress() {
+    _showProgress () {
         this.$scope.$emit( 'progress:increment' );
     }
 
-    highlightHostnames() {
+    highlightHostnames () {
         let { set, SetReportService, hostname, Environment } = this;
 
         return SetReportService.getSetHostnames( set )
@@ -65,11 +65,11 @@ class SetReportController {
     }
 
     listenForAutoRefreshEvents () {
-        this.$scope.$on( 'hostname:changed' , ( ) => {
+        this.$scope.$on( 'hostname:changed', ( ) => {
             this.getSetHistoryData();
         });
 
-        this.$scope.$on( 'report:ended' , ( ) => {
+        this.$scope.$on( 'report:ended', ( ) => {
             this.$timeout( () => {
                 this.getSetHistoryData();
             }, 1000 );
@@ -97,7 +97,7 @@ class SetReportController {
 
     hideExtraSetRuns () {
         this.setRunDisplayCount = 5;
-        this.displayToggleText = "more";
+        this.displayToggleText = 'more';
     }
 
     toggleAllSetRunDisplay () {
@@ -105,7 +105,7 @@ class SetReportController {
             this.hideExtraSetRuns();
         }
         else {
-            this.displayToggleText = "less";
+            this.displayToggleText = 'less';
             this.setRunDisplayCount = 100;
         }
     }

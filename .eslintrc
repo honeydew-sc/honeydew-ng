@@ -1,3 +1,43 @@
 {
-  "extends": "airbnb"
+    "extends": "airbnb",
+
+    "env": {
+        "jasmine": true,
+        "es6": true
+    },
+
+    "globals": {
+        "angular": true
+    },
+
+    "ecmaFeatures": {
+        "arrowFunctions": true,
+        // "blockBindings": true,
+        "classes": true,
+        "defaultParams": true,
+        "destructuring": true,
+        // "forOf": true,
+        // "generators": true,
+        "modules": true,
+        // "spread": true,
+        "templateStrings": true,
+    },
+
+    "rules": {
+        "indent": 0,
+        "brace-style": [2],
+        "camelcase": [2],
+
+        "comma-dangle": [0],
+        "one-var": [0],
+        "prefer-const": [0],
+
+        "space-before-function-paren": [ 2, "always" ],
+        "brace-style": [ 2, "stroustrup" ],
+        "array-bracket-spacing": [ 2, "always", {
+            "singleValue": false,
+            "objectsInArrays": false,
+            "arraysInArrays": false
+        }]
+    }
 }

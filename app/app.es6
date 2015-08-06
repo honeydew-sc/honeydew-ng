@@ -46,8 +46,8 @@ angular.module('honeydew', [
         $urlRouterProvider.otherwise(defaultPath);
 
         var setTitleAndHistory = [
-            '$rootScope', '$location', '$localStorage', '$stateParams',
-            function ($rootScope, $location, $localStorage, $stateParams) {
+            '$rootScope', '$location', '$stateParams',
+            function ($rootScope, $location, $stateParams) {
                 if ($stateParams.path || $stateParams.set) {
                     $rootScope.title = $location.path().split('/').pop();
                 }

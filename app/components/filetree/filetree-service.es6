@@ -202,6 +202,28 @@ angular.module('honeydew')
             });
         };
 
+
+        (function cleanUpStorage () {
+            // we used to store a copy of the filetree in the
+            // localStorage to hopefully assist with buffering issues
+            // if the tree isn't loaded, the users can't see anything
+            // and then they can't navigate, so we serialized the tree
+            // to localStorage so that we could present a cached tree
+            // while loading the true data from the network. However,
+            // this method doesn't work ( the tree is still shows as
+            // blank for whatever reason ) so we've stopped persisting
+            // to localStorage. However, with that value around, the
+            // ngStorage module gets hung up trying to maintain it, so
+            // we want to remove it entirely for a performance boost.
+            try {
+                delete $localStorage.topLevelTree;
+                window.localStorage.removeItem('ngStorage-topLevelTree');
+            }
+            catch (exception) {
+                console.log('Could not delete topLevelTree from localStorage...', exception);
+            }
+        })();
+
     });
 
 // polyfill for array.find() from

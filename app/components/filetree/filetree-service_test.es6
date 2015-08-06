@@ -1,5 +1,3 @@
-'use strict';
-
 describe('filetreeService', function () {
     var httpMock, filetree, scope, location, store;
     var root, oldLength;
@@ -94,6 +92,10 @@ describe('filetreeService', function () {
         filetree.show(fakeNode);
         scope.$apply();
         expect(location.path()).toMatch('folder.*label');
+    });
+
+    it('should delete an used localStorage key', () => {
+        expect(store.hasOwnProperty('topLevelTree')).toBe(false);
     });
 
     describe('FiletreeFilenameSearch', function () {

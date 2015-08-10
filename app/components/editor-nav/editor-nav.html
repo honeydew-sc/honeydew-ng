@@ -1,6 +1,5 @@
 <nav class="editor-nav navbar navbar-default {{ settings.navClass }}" role="navigation">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <ul class="nav navbar-nav navbar-left">
       <li ng-if="!tree.collapse">
         <a ng-click="tree.toggleTree()">
@@ -39,27 +38,9 @@
 
       <job-options></job-options>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/#/">Home</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </a>
-
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/old.php">Ye Olde</a></li>
-            <li><a target="_blank" ng-href="{{ ::base }}/dashboard/index.html">Dashboard</a></li>
-            <li><a target="_blank" ng-href="{{ ::base }}/keywords/index.html">Keywords</a></li>
-            <li><a target="_blank" ng-href="{{ ::base }}/kabocha/index.php">Kabocha</a></li>
-            <li><a target="_blank" ng-href="{{ ::base }}/#/monitor">Monitor</a></li>
-            <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
-            <li><a target="_blank" href="http://qa-166.terminus1.openstack.internal:9191/overview">Queues</a></li>
-            <li class="divider"></li>
-            <li class="disabled"><a>Reports</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div class="nav navbar-nav navbar-right">
+        <site-nav></site-nav>
+      </div>
 
     </div>
   </div><!-- /.container-fluid -->

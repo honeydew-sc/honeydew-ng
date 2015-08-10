@@ -1,12 +1,33 @@
-<div class="outbound-links container-fluid">
-  <div class="">
+<div class="site-nav">
 
-    <div ng-repeat="link in SiteNav.links" class="outbound-link col-md-4 col-xs-6">
-      <a target="_blank" ng-href="{{ link.url }}">
-        <span class="small">{{ link.title }}</span>
-        <img ng-if="::SiteNav.images" class="thumbnail" ng-src="{{ link.image }}" alt="{{ link.title }}">
-      </a>
-    </div>
+  <div ng-if="::!SiteNav.images" class="btn-group">
+    <button type="button" class="btn btn-default btn-bland"><a href="#/">Home</a></button>
+    <button type="button" class="btn btn-default btn-bland dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
 
+    <ul class="dropdown-menu">
+      <li ng-repeat="link in SiteNav.links">
+        <a target="_blank" ng-href="{{ link.url }}">{{ link.title }}</a>
+      </li>
+      <li class="divider"></li>
+      <li><a target="_blank" ng-href="{{ ::base }}/keywords/index.html">Keywords</a></li>
+      <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
+    </ul>
   </div>
+
+  <div class="outbound-links container-fluid" ng-if="::SiteNav.images" >
+    <div class="">
+
+      <div ng-repeat="link in SiteNav.links" class="outbound-link col-md-4 col-xs-6">
+        <a target="_blank" ng-href="{{ link.url }}">
+          <span class="small">{{ link.title }}</span>
+          <img class="thumbnail" ng-src="{{ link.image }}" alt="{{ link.title }}">
+        </a>
+      </div>
+
+    </div>
+  </div>
+
 </div>

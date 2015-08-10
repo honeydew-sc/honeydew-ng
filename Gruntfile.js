@@ -31,7 +31,10 @@ module.exports = function (grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             traceur:  {
-                files: [ '<%= yeoman.app %>/**/*.es6' ],
+                files: [
+                    '<%= yeoman.app %>/**/*.es6',
+                    '!<%= yeoman.app %>/**/.*'
+                ],
                 tasks: [
                     'newer:traceur',
                     'newer:ngAnnotate:watch',
@@ -40,7 +43,10 @@ module.exports = function (grunt) {
                 ]
             },
             css: {
-                files: [ '<%= yeoman.app %>/**/*.scss' ],
+                files: [
+                    '<%= yeoman.app %>/**/*.scss',
+                    '!<%= yeoman.app %>/**/.*'
+                ],
                 tasks: [
                     'sass_globbing',
                     'sass'
@@ -57,7 +63,13 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/app.css',
                     '<%= yeoman.app %>/<%= yeoman.folders %>/**/*.{es6,html,css,scss}',
                     '<%= yeoman.app %>/index.html',
+
+                    // temporary emacs files
                     '!<%= yeoman.app %>/**/.#*',
+
+                    // dotfiles, in particular those created by eslint
+                    '!<%= yeoman.app %>/**/.*',
+
                     // don't refresh the webview when editing test
                     // files
                     '!<%= yeoman.app %>/<%= yeoman.folders %>/**/*_test.es6'

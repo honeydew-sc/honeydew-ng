@@ -40,19 +40,3 @@
 .navbar-nav {
     margin: 0px 0px;
 }
-
-.btn.btn-bland {
-    background: transparent;
-}
-
-.btn.btn-bland:hover {
-    background-color: #e7e7e7;
-}
-
-.editor-nav .elsewhere {
-    padding: 2px;
-}
-
-.editor-nav .elsewhere button {
-    border: 1px solid #DDD;
-}

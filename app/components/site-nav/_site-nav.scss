@@ -1,4 +1,9 @@
 .site-nav {
-    margin-top: 2px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+    .site-nav-dropdown {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
 }

@@ -1,8 +1,19 @@
 <div class="site-nav">
 
-  <div ng-if="::!SiteNav.images" class="btn-group">
-    <button type="button" class="btn btn-default btn-bland"><a href="#/">Home</a></button>
-    <button type="button" class="btn btn-default btn-bland dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <!-- It would be cooler if we could do the toggle via css
+  breakpoints or something instead of on SiteNav.images, but ... we're
+  lazy. -->
+  <div ng-if="::!SiteNav.images" class="site-nav-dropdown btn-group nav navbar-nav navbar-right">
+    <button type="button" class="btn btn-default btn-bland">
+      <a href="#/">
+        Home
+      </a>
+    </button>
+    <button type="button"
+            class="btn btn-default btn-bland dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
       <span class="caret"></span>
       <span class="sr-only">Toggle Dropdown</span>
     </button>
@@ -12,8 +23,12 @@
         <a target="_blank" ng-href="{{ link.url }}">{{ link.title }}</a>
       </li>
       <li class="divider"></li>
-      <li><a target="_blank" ng-href="{{ ::base }}/keywords/index.html">Keywords</a></li>
-      <li><a target="_blank" href="https://squash.sharecare.com/">Squash</a></li>
+      <li>
+        <a target="_blank" href="/keywords/index.html">Keywords</a>
+      </li>
+      <li>
+        <a target="_blank" href="https://squash.sharecare.com/">Squash</a>
+      </li>
     </ul>
   </div>
 

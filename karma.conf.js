@@ -67,13 +67,29 @@ module.exports = function(config) {
 
             // let karma see our templates for pre-processing
             'app/components/**/*.html',
-            'app/editor/**/*.html'
+            'app/editor/**/*.html',
+
+            // don't worry about image requests
+            {
+                pattern: '**/*.png',
+                watched: false,
+                included: false,
+                served: true
+            },
+
         ],
 
         // list of files / patterns to exclude
         exclude: [
             '**/.*'
         ],
+
+        // don't worry about image requests
+        proxies: {
+            // the /base/ part is specific to karma; the rest is the
+            // path in our app
+            '/landing/': '/base/app/landing/'
+        },
 
         // web server port
         port: 7979,

@@ -1,4 +1,4 @@
-fdescribe('SiteNav directive', () => {
+describe('SiteNav directive', () => {
     var elm,
         scope,
         controller;
@@ -6,24 +6,53 @@ fdescribe('SiteNav directive', () => {
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ($compile, $rootScope) => {
-        elm = angular.element('<site-nav></site-nav>');
-        scope = $rootScope;
-        $compile(elm)(scope);
-        scope.$digest();
+    describe('dropdown version', () => {
+        beforeEach(inject( ($compile, $rootScope) => {
+            elm = angular.element('<site-nav></site-nav>');
+            scope = $rootScope;
+            $compile(elm)(scope);
+            scope.$digest();
 
-        controller = elm.isolateScope().SiteNav;
-    }));
+            controller = elm.isolateScope().SiteNav;
+        }));
 
-    it('should display all links', () => {
-        let expectedLength = controller.links.length;
+        it('should link to home outside of the dropdown', () => {
+            let home = elm.find('button a');
+            expect(home.text()).toMatch(/Home/);
+        });
 
-        let linkCount = elm.find('.outbound-link a');
-        expect(linkCount.length).toBe(expectedLength);
+        it('should display the rest of the links in the dropdown', () => {
+            let EXTRA_LINKS_COUNT = 2;
+            let expectedImageCount = controller.links.length + EXTRA_LINKS_COUNT;
+
+            // we need to open the dropdown to see the links!
+            elm.find('.dropdown').click();
+            let links = elm.find('.dropdown-menu a');
+            expect(links.length).toBe(expectedImageCount);
+        });
+
+        it('should not display any images', () => {
+            let images = elm.find('img');
+            expect(images.length).toBe(0);
+        });
     });
 
-    it('should not display images by default', () => {
-        let images = elm.find('img');
-        expect(images.length).toBe(0);
+    describe('image version', () => {
+        beforeEach(inject( ($compile, $rootScope) => {
+            elm = angular.element('<site-nav images="true"></site-nav>');
+            scope = $rootScope;
+            $compile(elm)(scope);
+            scope.$digest();
+
+            controller = elm.isolateScope().SiteNav;
+        }));
+
+        it('should include images for each link', () => {
+            let expectedImageCount = controller.links.length;
+            let images = elm.find('img');
+
+            expect(images.length).toBe(expectedImageCount);
+        });
+
     });
 });

@@ -1,8 +1,10 @@
 <div ng-controller="ReportCtrl as Report" ng-class="::Report.theme" class="single-report report" >
+
   <div class="CodeMirror live-report">
     <div class="clearfix" ng-class="::Report.navClass">
       <form class="navbar-form navbar-left" role="search">
         <button ng-click="Report.replaceReportInSet()" class="btn btn-default">Rerun & Replace</button>
+        <site-nav></site-nav>
       </form>
     </div>
     <pre><span ng-repeat="item in Report.result.output track by $index"><span ng-bind-html="::item"></span></span>{{ Report.result.current }}<span></pre>

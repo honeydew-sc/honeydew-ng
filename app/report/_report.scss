@@ -23,11 +23,16 @@
         height: 41px;
         top: 0px;
         right: 2px;
+        background-color: white;
     }
 
     .replace-button {
         float: right;
         margin-top: 2px;
         margin-right: 95px;
+    }
+
+    site-nav {
+        z-index: 5;
     }
 }

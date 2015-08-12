@@ -1,11 +1,11 @@
-<div class="sets" ng-controller="SetController as set">
+<div class="sets" ng-controller="SetController as Set">
   <editor-nav></editor-nav>
 
   <!-- this is apparently inheriting .tree and $storage from $parent? dear lord -->
   <div ng-class="tree.collapse ? 'filetree-collapsed' : 'filetree-expanded'"
        class="{{ $storage.settings.font }} settings wrapper remaining-height sets ">
 
-    <set-report set="{{ set.setName }}"></set-report>
+    <set-report set="{{ Set.setName }}" run="{{ Set.run }}"></set-report>
   </div>
 
   <center-pane></center-pane>

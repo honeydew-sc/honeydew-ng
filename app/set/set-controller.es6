@@ -3,6 +3,7 @@ class SetController {
         this.stateParams = $stateParams;
 
         this.setName = $stateParams.set;
+        this.run = $stateParams.run || '';
     }
 }
 

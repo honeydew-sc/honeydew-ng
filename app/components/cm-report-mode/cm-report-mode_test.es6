@@ -11,7 +11,7 @@ describe('ReportMode', function () {
 Host: https://www.jd.sharecare.com
 Build: 4.17.4.20150319-1944
 Browser: Chrome Local
-Feature File: /test/dan.feature
+Feature File: test/dan.feature
 Job ID: 1a9a3d9e-5597-4b27-a18b-06023403906f
 
 Feature: test
@@ -95,23 +95,32 @@ End Date: 1427121879`;
                 .toBe(expectedHighlighting);
         });
 
-        it('should make links clickable', () => {
-            expect(cmReportMode.highlight( 'Report ID: 44' ))
-                .toContain( '<a href="/#/report/44">44</a>' );
-        });
+        describe('link-making', () => {
+            it('should linkify feature file references', () => {
+                let highlit = cmReportMode.highlight( 'Feature File: test/dan.feature' );
+                let link = 'href="/#/features/test/dan.feature"';
+                expect( highlit ).toContain( link );
 
-        it('should make links out of screenshot diagnostic info', () => {
-            let output = cmReportMode.highlight( 'Reference: /mnt/screenshots/abc & current: /mnt/screenshots/123' );
+            });
 
-            expect(output).toContain( 'href="/screenshots/abc">Reference</a>' );
-            expect(output).toContain( 'href="/screenshots/123">current</a>' );
-            expect(output).toMatch( /target="_blank"/ );
-        });
+            it('should make links clickable', () => {
+                expect(cmReportMode.highlight( 'Report ID: 44' ))
+                    .toContain( '<a href="/#/report/44">44</a>' );
+            });
 
-        it('should make links out of reference screenshot log info', () => {
-            let output = cmReportMode.highlight( 'Saving reference: /mnt/screenshots/abc' );
+            it('should make links out of screenshot diagnostic info', () => {
+                let output = cmReportMode.highlight( 'Reference: /mnt/screenshots/abc & current: /mnt/screenshots/123' );
 
-            expect(output).toContain( 'href="/screenshots/abc">reference</a>' );
+                expect(output).toContain( 'href="/screenshots/abc">Reference</a>' );
+                expect(output).toContain( 'href="/screenshots/123">current</a>' );
+                expect(output).toMatch( /target="_blank"/ );
+            });
+
+            it('should make links out of reference screenshot log info', () => {
+                let output = cmReportMode.highlight( 'Saving reference: /mnt/screenshots/abc' );
+
+                expect(output).toContain( 'href="/screenshots/abc">reference</a>' );
+            });
 
         });
     });

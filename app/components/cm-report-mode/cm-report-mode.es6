@@ -7,6 +7,7 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
         LINK: 'link',
         SCREENSHOT: 'screenshot',
         PLAINLINK: 'plain-link',
+        FEATURE: 'feature-file',
 
         successfulScenario () {
             return this.SUCCESS + ' ' + this.SCENARIO;
@@ -16,14 +17,25 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
             return this.FAILURE + ' ' + this.SCENARIO;
         },
 
+        makeLink ( title, route ) {
+            return `<a href="${route}${title}">${title}</a>`;
+        },
+
         highlight (line) {
             var elem = '';
             var ret = CodeMirror.runMode(line, 'report', (token, style) => {
                 if (style) {
                     var outputToken;
                     if (style === this.LINK) {
-                        outputToken = token.replace(/(\d+)/, '<a href="/#/report/$1">$1</a>');
+                        let route = '/#/report/';
+                        outputToken = token.replace(/(\d+)/, this.makeLink( "$1", route ) );
                     }
+
+                    else if ( style === this.FEATURE ) {
+                        let route = '/#/features/';
+                        outputToken = token.replace(/ (.*.feature)/, ' ' + this.makeLink( "$1", route ) );
+                    }
+
                     else if (style === this.SCREENSHOT) {
                         let base = '/screenshots/',
                             targ = 'target="_blank"';
@@ -33,9 +45,11 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
                             .replace(/Reference: .*\/([^&]*) & current:/, `<a ${targ} href="${base}$1">Reference</a> & current:`)
                             .replace(/current: .*\/(.*)/, `<a ${targ} href="${base}$1">current</a>`);
                     }
+
                     else if (style === this.PLAINLINK) {
                         outputToken = `<a target="_blank" href=${token}>${token}</a>`;
                     }
+
                     else {
                         outputToken = token;
                     }
@@ -90,6 +104,9 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
                 }
                 else if (stream.match(/Report ID: \d+/)) {
                     return style.LINK;
+                }
+                else if (stream.match( /.*\.feature$/ ) ) {
+                    return style.FEATURE;
                 }
                 else if (stream.match(/Reference: .*current: .*/)) {
                     return style.SCREENSHOT;

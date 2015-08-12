@@ -3,10 +3,10 @@
 }
 
 .single-report.report {
-    height: 100vh;
+    min-height: 100vh;
 
     .live-report {
-        height: 100vh;
+        min-height: 100vh;
     }
 
     pre {
@@ -19,7 +19,7 @@
 
     .report-form {
         z-index: 5;
-        position: absolute;
+        position: fixed;
         height: 41px;
         top: 0px;
         right: 2px;

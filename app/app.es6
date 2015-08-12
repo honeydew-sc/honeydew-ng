@@ -85,6 +85,11 @@ angular.module('honeydew', [
                 templateUrl: 'set/set.html',
                 onEnter: setTitleAndHistory
             })
+            .state('editor.setId', {
+                url: '/sets/:set/run/:run',
+                templateUrl: 'set/set.html',
+                onEnter: setTitleAndHistory
+            })
             .state('monitor', {
                 url: '/monitor',
                 templateUrl: 'monitor/monitor.html',

@@ -62,27 +62,77 @@ describe('SetReportService', function () {
         expect(called).toBe(1);
     });
 
-    it('should get the history of a set by name', () => {
-        mockGetSetHistory();
+    describe('set history lookup', () => {
+        let called;
+        let name;
+        let host;
+        let run;
+        let result;
+        beforeEach( () => {
+            mockGetSetHistory();
 
-        let called = 0;
-        SetReportService.getSetHistory( 'test.set' )
-            .then( res => {
-                called++;
-                expect(res.reports).toEqual([{
-                    reportId: 1,
-                    setRunId: 2,
-                    startDate: 'start date',
-                    host: 'host',
-                    user: 'user'
-                }]);
+            called = 0;
+            name = 'test.set';
+            result = [{
+                reportId: 1,
+                setRunId: 2,
+                startDate: 'start date',
+                host: 'host',
+                user: 'user'
+            }];
+        });
+
+        it('should query by name', () => {
+            SetReportService.getSetHistory({ name })
+                .then( res => {
+                    called++;
+                    expect(res.reports).toEqual(result);
+                });
+
+            $rootScope.$apply();
+            expect(called).toBe(1);
+
+            host = run = undefined;
+            expect(SetReport.get).toHaveBeenCalledWith({
+                name, host, run
+            });
+        });
+
+        it('should query by name and run', () => {
+            name = 'test.set';
+            host = undefined;
+            run = '123';
+
+            SetReportService.getSetHistory({ name, run })
+                .then( res => {
+                    called++;
+                    expect(res.reports).toEqual(result);
+                });
+
+            $rootScope.$apply();
+            expect(called).toBe(1);
+            expect(SetReport.get).toHaveBeenCalledWith({
+                name, host, run
             });
 
-        $rootScope.$apply();
-        expect(called).toBe(1);
-        expect(SetReport.get).toHaveBeenCalledWith({
-            name: 'test.set',
-            host: undefined
+        });
+
+        it('should query by name, host, and run', () => {
+            name = 'test.set';
+            host = 'host';
+            run = '123';
+
+            SetReportService.getSetHistory({ name, host, run })
+                .then( res => {
+                    called++;
+                    expect(res.reports).toEqual(result);
+                });
+
+            $rootScope.$apply();
+            expect(called).toBe(1);
+            expect(SetReport.get).toHaveBeenCalledWith({
+                name, host, run
+            });
         });
     });
 

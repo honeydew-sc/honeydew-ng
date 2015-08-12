@@ -27,8 +27,8 @@ class SetReportService {
         return files;
     }
 
-    getSetHistory ( name, host ) {
-        let setReportData = this.SetReport.get({ name, host })
+    getSetHistory ({ name, host, run }) {
+        let setReportData = this.SetReport.get({ name, host, run })
                 .$promise
                 .catch( this.alerts.catcher );
 

@@ -1,13 +1,17 @@
 <div ng-controller="ReportCtrl as Report" ng-class="::Report.theme" class="single-report report" >
 
   <div class="CodeMirror live-report">
-    <div class="clearfix" ng-class="::Report.navClass">
-      <form class="navbar-form navbar-left" role="search">
-        <button ng-click="Report.replaceReportInSet()" class="btn btn-default">Rerun & Replace</button>
-        <site-nav></site-nav>
-      </form>
+    <!-- Keep this all on the same line since the pre will care about the whitespace -->
+    <pre><span ng-repeat="item in Report.result.output track by $index"><span ng-bind-html="::item"></span></span>{{ Report.result.current }}</pre>
+
+    <div class="clear-fix report-form" ng-class="::Report.navClass">
+      <button ng-click="Report.replaceReportInSet()"
+              class="btn btn-hdew replace-button">
+        Rerun & Replace
+      </button>
+
+      <site-nav></site-nav>
     </div>
-    <pre><span ng-repeat="item in Report.result.output track by $index"><span ng-bind-html="::item"></span></span>{{ Report.result.current }}<span></pre>
 
   </div>
 </div>

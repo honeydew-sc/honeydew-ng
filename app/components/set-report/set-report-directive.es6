@@ -17,11 +17,15 @@ class SetReportController {
     }
 
     getSetHistoryData () {
-        let { set, SetReportService, hostname } = this;
+        let { set, run, SetReportService, hostname } = this;
         this.$scope.$emit('progress:loading');
 
         let p1 = SetReportService.getSetFeatures( set ),
-            p2 = SetReportService.getSetHistory( set, hostname.host ),
+            p2 = SetReportService.getSetHistory({
+                name: set,
+                host: hostname.host,
+                run: run
+            }),
             p3 = this.highlightHostnames();
 
         [ p1, p2, p3 ].map( promise => {
@@ -118,7 +122,8 @@ angular.module('honeydew')
             replace: true,
             restrict: 'E',
             scope: {
-                set: '@'
+                set: '@',
+                run: '@'
             },
             bindToController: true,
             controller: SetReportController,

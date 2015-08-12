@@ -120,9 +120,12 @@ describe('SetReport directive', () => {
     });
 
     it('should pass the host when getting set history', () => {
-        expect(SetReportService.getSetHistory).toHaveBeenCalledWith(
-            'test.set', 'test-host'
-        );
+        let name = 'test.set',
+            host = 'test-host',
+            run = undefined;
+
+        expect(SetReportService.getSetHistory)
+            .toHaveBeenCalledWith({ name, host, run });
     });
 
     describe('auto-refresh', () => {
@@ -235,8 +238,28 @@ describe('SetReport directive', () => {
         });
     });
 
+    describe('for a specific run', () => {
+        beforeEach( () => {
+            elm = angular.element('<set-report set="test.set" run="123"></set-report>');
+            $compile(elm)(scope);
+            scope.$digest();
+
+            controller = elm.isolateScope().SetReport;
+        });
+
+        it('should pass the run id in the history query', () => {
+            let name = 'test.set',
+                host = 'test-host',
+                run = '123';
+
+            expect(SetReportService.getSetHistory)
+                .toHaveBeenCalledWith({ name, host, run });
+        });
+
+    });
+
     function compileDirective() {
-        elm = angular.element('<set-report set="test.set"></set-report>');
+        elm = angular.element('<set-report set="test.set" run=""></set-report>');
         $compile(elm)(scope);
         scope.$digest();
 

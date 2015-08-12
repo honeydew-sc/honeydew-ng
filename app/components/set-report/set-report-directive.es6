@@ -1,6 +1,7 @@
 class SetReportController {
-    constructor ( $scope, $q, $timeout, SetReportService, Environment, hostname, panes ) {
+    constructor ( $scope, $q, $timeout, $location, SetReportService, Environment, hostname, panes ) {
         this.$q = $q;
+        this.$location = $location;
         this.$timeout = $timeout;
         this.SetReportService = SetReportService;
         this.Environment = Environment;
@@ -70,7 +71,14 @@ class SetReportController {
 
     listenForAutoRefreshEvents () {
         this.$scope.$on( 'hostname:changed', ( ) => {
-            this.getSetHistoryData();
+            let { set, run, $location } = this;
+            if ( this.run && this.run !== '' ) {
+                $location.path( `/sets/${set}` );
+            }
+            else {
+                this.getSetHistoryData();
+            }
+
         });
 
         this.$scope.$on( 'report:ended', ( ) => {

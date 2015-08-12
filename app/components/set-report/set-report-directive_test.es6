@@ -239,21 +239,32 @@ describe('SetReport directive', () => {
     });
 
     describe('for a specific run', () => {
-        beforeEach( () => {
+        let $location;
+
+        let name = 'test.set';
+        let host = 'test-host';
+        let run = '123';
+
+        beforeEach( inject( ( _$location_ ) => {
+            $location = _$location_;
             elm = angular.element('<set-report set="test.set" run="123"></set-report>');
             $compile(elm)(scope);
             scope.$digest();
 
             controller = elm.isolateScope().SetReport;
-        });
+        }));
 
         it('should pass the run id in the history query', () => {
-            let name = 'test.set',
-                host = 'test-host',
-                run = '123';
-
             expect(SetReportService.getSetHistory)
                 .toHaveBeenCalledWith({ name, host, run });
+        });
+
+        it('should drop the run aspect when the hostname changes', () => {
+            scope.$broadcast('hostname:changed');
+            scope.$apply();
+            $timeout.flush();
+
+            expect( $location.path() ).toBe( `/sets/${name}` );
         });
 
     });

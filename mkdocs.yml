@@ -4,12 +4,14 @@ pages:
 - Home: index.md
 - HD Quick Start:
     - Overview: quickstart.md
-    - Install Webdriver: install-webdriver.md
 - HD Features:
     - Preamble Options: features/preamble.md
     - Finding Elements: features/finding-elements.md
-- Contributing: contributing/contributing.md
+- HD FAQ:
+    - FAQ: faq.md
+    - Install Webdriver: faq/install-webdriver.md
+    - Contributing: faq/contributing.md
 
 site_dir: dist/docs
 
-theme: readable
+theme: readthedocs

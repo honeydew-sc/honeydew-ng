@@ -40,9 +40,26 @@ class reportTests extends UnitTestCase {
         $this->assertEqual($report->browser, 'test-browser', "browser matches");
     }
 
+    function testMissedSetReportRunFilter() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?run=1')->send();
+        $reports = $response->body->reports;
+
+        $this->assertEqual( $reports, array(), 'can limit set history by run id');
+    }
+
+    function testFoundSetReportRunFilter() {
+        $run = $this->setRunId;
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?run=' . $run)->send();
+        $report = $response->body->reports[0];
+
+        $this->assertEqual($report->setRunId, $this->setRunId, "found set run filter setRunId matches");
+        $this->assertEqual($report->status, 'success', "found set run filter status matches");
+        $this->assertEqual($report->browser, 'test-browser', "found set run filter browser matches");
+    }
+
     function testMissedSetReportHostFilter() {
         $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?host=http://wrong-host')->send();
-        $this->assertTrue( empty($response->bodyreports) );
+        $this->assertTrue( empty($response->body->reports) );
     }
 
     function testDefaultDateFilter() {
@@ -55,6 +72,12 @@ class reportTests extends UnitTestCase {
         $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?date=all&debug=1')->send();
         $sql = $response->body->sql;
         $this->assertNoPattern( '/startDate.*INTERVAL/', $sql, 'date filter can be removed');
+    }
+
+    function testRunFilterSQL() {
+        $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set?run=123&debug=1')->send();
+        $sql = $response->body->sql;
+        $this->assertPattern( '/s.id <= "123"/', $sql, 'date filter is applied by default');
     }
 
     function testLookupSetHosts() {

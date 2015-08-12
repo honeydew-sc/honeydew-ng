@@ -6,18 +6,23 @@ $app->group('/report', function () use ($app, $setsDir) {
 
         $host = $app->request()->params('host');
         $host_filter = get_host_filter( $host );
-        $sql_args = get_set_report_sql_args( $name, $host );
+
+        $run = $app->request()->params('run');
+        $run_filter = get_run_filter( $run );
+
+        $sql_args = get_set_report_sql_args( $name, $host, $run );
 
         $date_filter = get_date_filter( $app->request()->params('date') );
         $sql = 'SELECT r.id as reportId, r.status, r.featureFile,
-                       s.startDate, s.browser, s.id as setRunId, s.host,
-                       u.name as user
+        s.startDate, s.browser, s.id as setRunId, s.host,
+        u.name as user
         FROM report r
         INNER JOIN setRun s
         ON s.id = r.setRunId
         JOIN user u on u.id = s.userId
         WHERE s.setName LIKE ?
         ' . $host_filter . '
+        ' . $run_filter . '
         ' . $date_filter . '
         ORDER BY s.id DESC
         LIMIT 1234';
@@ -95,13 +100,27 @@ $app->group('/report', function () use ($app, $setsDir) {
         }
     }
 
-    function get_set_report_sql_args( $name, $host ) {
-        if ( isset( $host ) && $host !== '' ) {
-            return array( $name, host_as_sql_like_param( $host ) );
+    function get_run_filter( $run = '' ) {
+        if ( isset( $run ) && $run ) {
+            return 'AND s.id <= ?';
         }
         else {
-            return array( $name );
+            return '';
         }
+    }
+
+    function get_set_report_sql_args( $name, $host, $run ) {
+        $args = array( $name );
+
+        if ( isset( $host ) && $host !== '' ) {
+            array_push( $args, host_as_sql_like_param( $host ) );
+        }
+
+        if ( isset( $run ) && $run !== '' ) {
+            array_push( $args, $run );
+        }
+
+        return $args;
     }
 });
 

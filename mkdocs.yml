@@ -11,6 +11,7 @@ pages:
     - FAQ: faq.md
     - Install Webdriver: faq/install-webdriver.md
     - Contributing: faq/contributing.md
+    - Regex: faq/regex.md
 
 site_dir: dist/docs
 

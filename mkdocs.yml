@@ -15,4 +15,5 @@ pages:
 
 site_dir: dist/docs
 
-theme: readthedocs
+theme: readable
+theme: mkdocs

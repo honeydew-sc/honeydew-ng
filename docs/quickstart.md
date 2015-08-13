@@ -39,8 +39,9 @@ should look something like this when you're ready:
 
 ![feature options](quickstart/feature-options.png)
 
-Choose a browser, and hit <button>Execute!</button> You should be
-rewarded with some sweet automation testing whether our sitewide
-search automatically takes us to the real age test!
+Choose a browser, and hit the <button>execute</button> button over
+there. You should be rewarded with some sweet automation testing
+whether our sitewide search automatically takes us to the real age
+test!
 
 [honeydew]: https://honeydew.be.jamconsultg.com

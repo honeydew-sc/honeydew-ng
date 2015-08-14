@@ -9,18 +9,19 @@ class History {
     }
 
     get entries () {
-        return this.history
+        this.history = this.history
             .filter( ( file, index, ary ) =>  ary.indexOf( file ) === index )
-            .map( ( item, index, ary ) => {
-                let href = item;
-                let label = item.replace( /\/?(features|sets)\/?/, '' );
-                return { href, label };
-            });
+            .filter( (_, index ) => index < 10 );
+
+        return this.history.map( ( item, index, ary ) => {
+            let href = item;
+            let label = item.replace( /\/?(features|sets)\/?/, '' );
+            return { href, label };
+        });
     }
 
     add ( item ) {
         this.history.unshift( item );
-        this.history = this.history.filter( (_, index ) => index < 10 );
     }
 
     addCurrentLocation( ) {

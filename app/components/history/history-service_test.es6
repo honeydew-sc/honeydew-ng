@@ -22,7 +22,6 @@ describe('History', function () {
 
     it('should automatically add the current location', () => {
         History.addCurrentLocation();
-        console.log(History.entries);
         expect(History.entries.length).toBe(1);
     });
 

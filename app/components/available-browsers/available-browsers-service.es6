@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('availableBrowsers', function (localConfig, $location) {
         var service = this;

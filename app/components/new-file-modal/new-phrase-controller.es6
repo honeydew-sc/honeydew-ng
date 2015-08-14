@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('NewPhraseCtrl', ($scope, $modalInstance, $location, Author, Files, alerts, filename, title, action) => {
         // filename, title, and action are manually injected when

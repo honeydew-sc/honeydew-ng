@@ -1,5 +1,3 @@
-'use strict';
-
 describe('BackgroundStatus directive', () => {
     var elm,
         scope,

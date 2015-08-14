@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('NewFileModalCtrl', function ($scope, $modalInstance, $location, filename, Author, Files, alerts, title, action) {
         $scope.filename = filename;

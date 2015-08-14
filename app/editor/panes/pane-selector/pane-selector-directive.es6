@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .directive('paneSelector', function (panes, $compile, $localStorage) {
         return {

@@ -1,5 +1,3 @@
-'use strict';
-
 describe('LiveReportDirective', function () {
     var elm, compile, scope, ctrl, channel, pusherMock, liveReport, storage;
 

@@ -1,5 +1,3 @@
-'use strict';
-
 describe('NewPhraseCtrl', () => {
     var httpMock, scope, $modalInstance, NewPhraseCtrl, Files;
 

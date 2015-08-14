@@ -1,6 +1,4 @@
 describe('Settings', function () {
-    'use strict';
-
     var Settings,
         addr = '1.1.1.1';
 

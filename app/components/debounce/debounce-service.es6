@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .factory('debounce', function($timeout, $q) {
         return function(func, wait, immediate) {

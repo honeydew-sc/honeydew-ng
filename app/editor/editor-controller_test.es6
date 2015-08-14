@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Controller: EditorCtrl', function () {
     var httpMock, scope, EditorCtrl, testFileUrl, shortFile, encodedFile, fakeText, fakedContents, Files, fakeFile;
     beforeEach(module('honeydew'));

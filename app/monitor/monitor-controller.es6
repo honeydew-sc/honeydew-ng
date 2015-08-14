@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('MonitorCtrl', function ($scope, $timeout, Monitor, alerts) {
         var self = this,

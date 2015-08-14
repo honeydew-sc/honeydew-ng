@@ -1,5 +1,3 @@
-'use strict';
-
 describe('phraseInfo directive', () => {
     var elm,
         scope,

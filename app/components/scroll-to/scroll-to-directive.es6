@@ -1,5 +1,3 @@
-'use strict';
-
 
 // Version 0.0.2
 // AngularJS simple hash-tag scroll alternative

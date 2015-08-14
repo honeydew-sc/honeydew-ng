@@ -1,5 +1,3 @@
-'use strict';
-
 describe('ReportCtrl', function () {
     var scope,
         location,

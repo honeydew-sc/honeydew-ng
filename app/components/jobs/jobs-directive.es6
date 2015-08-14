@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .directive('jobOptions', function (availableBrowsers, $sessionStorage, $location, Monitor, Tree) {
         return {

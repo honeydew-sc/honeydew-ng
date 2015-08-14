@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Pane Selector directive', () => {
     var elm,
         scope,

@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree, honeydewConfig) {
         return {

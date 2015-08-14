@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('honeydewLint', function (autocomplete) {
         var honeydewLintService = {

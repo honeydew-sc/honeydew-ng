@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('alerts', function ($timeout) {
         var self = this;

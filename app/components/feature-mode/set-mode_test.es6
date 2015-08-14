@@ -1,5 +1,3 @@
-'use strict';
-
 describe('FeatureMode', () => {
     var set,
         tests,

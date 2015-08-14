@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .directive('editorHelp', function () {
         return {

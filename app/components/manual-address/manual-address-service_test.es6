@@ -1,6 +1,4 @@
 describe('manualAddress', function () {
-    'use strict';
-
     var manualAddress;
     beforeEach(module('honeydew'));
     beforeEach(inject(function (_manualAddress_) {

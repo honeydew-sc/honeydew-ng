@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .factory('CmDomHelpers', function ($location, $compile, autocomplete) {
         var factory = this;

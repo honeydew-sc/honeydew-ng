@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('autocomplete', function ($resource, $http, alerts, Tree, preambleOptions) {
         CodeMirror.commands.jumpOrAutocomplete = function (cm) {

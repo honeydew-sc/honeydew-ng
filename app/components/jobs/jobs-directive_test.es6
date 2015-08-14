@@ -1,5 +1,4 @@
 describe('HoneydewJob directive', function () {
-    'use strict';
     var elm,
         panes,
         scope,

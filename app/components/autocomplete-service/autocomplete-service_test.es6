@@ -1,5 +1,3 @@
-'use strict';
-
 describe('autocompleteService', function () {
     var autocomplete, httpMock;
     var httpResponse = {

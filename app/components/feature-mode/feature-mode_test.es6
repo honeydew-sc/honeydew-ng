@@ -1,5 +1,3 @@
-'use strict';
-
 describe('FeatureMode', () => {
     var httpMock, featureMode, feature, tests, preambleOptions,
         PHRASE_TOKEN = 'atom',

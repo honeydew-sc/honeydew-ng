@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .factory('Files', function ($resource, $localStorage, $location, alerts, filetree) {
         var Files = $resource('/rest.php/files/:file', { file: '@file' }, {

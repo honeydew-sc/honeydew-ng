@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('ReportCtrl', function ($stateParams, Settings, BackgroundStatus, cmReportMode, liveReport, HoneydewJob, Report) {
         var headers = {

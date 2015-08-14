@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .filter('capitalize', function () {
         return function(input, scope) {

@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('panes', function ($compile, $rootScope, $stateParams) {
         var base = '/editor/panes/';

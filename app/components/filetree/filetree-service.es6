@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .service('filetree', function ($resource, $localStorage, $location, $rootScope, Tree) {
         var self = this;

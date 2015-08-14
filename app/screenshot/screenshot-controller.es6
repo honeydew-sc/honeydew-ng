@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('honeydew')
     .controller('ScreenshotCtrl', function ($scope, $stateParams) {
         var candidate = $stateParams.screenshot;

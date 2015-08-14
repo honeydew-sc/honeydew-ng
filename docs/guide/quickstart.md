@@ -10,7 +10,7 @@ First things first - you'll need to have a webdriver server running
 locally on your computer. Here are some [detailed instructions][]
 available on how to download and start up the server.
 
-[detailed instructions]: faq/install-webdriver.md
+[detailed instructions]: ../faq/install-webdriver.md
 
 #### Create a feature
 
@@ -37,7 +37,7 @@ from the dropdown at the top of the page, or simply type
 `https://www.stage.sharecare.com` into the input field. The options
 should look something like this when you're ready:
 
-![feature options](quickstart/feature-options.png)
+![feature options](feature-options.png)
 
 Choose a browser, and hit the <button>execute</button> button over
 there. You should be rewarded with some sweet automation testing

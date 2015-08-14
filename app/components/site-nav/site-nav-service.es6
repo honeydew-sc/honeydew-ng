@@ -13,7 +13,7 @@ class SiteNav {
             title: 'EnvStatus',
             image: 'landing/honeydew-status-sm.png'
         }, {
-            url: 'docs',
+            url: '/docs',
             title: 'Docs',
             image: 'landing/honeydew-docs-sm.png'
         }, {

@@ -1,27 +1,8 @@
-'use strict';
-
 angular.module('honeydew')
-    .controller('LandingCtrl', function ($scope, $localStorage, $modal, $location, Files) {
+    .controller('LandingCtrl', function ($scope, History, $modal, $location, Files) {
         var self = this;
 
-        self.history = ($localStorage.history || [])
-            .filter(( item, index, self ) => {
-                // de dupe again just to be sure
-                return self.indexOf(item) === index;
-            })
-            .map( (item) => {
-                // format the history items for use in the view
-                return {
-                    href: item,
-                    label: item.replace(/\/?(features|sets)\/?/, '')
-                };
-            });
-
-        var historyLength = self.history.length;
-        // keep the length manageable
-        if (historyLength > 10) {
-            $localStorage.history.splice(10, historyLength - 10);
-        }
+        self.history = History.entries;
 
         self.gotoTempFile = () => {
             var filename = 'features/test/tmp/' + new Date().getTime() + '.feature';

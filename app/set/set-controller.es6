@@ -1,8 +1,9 @@
 class SetController {
-    constructor ($stateParams, $q, SetReportService) {
+    constructor ($stateParams, $q, SetReportService, History) {
         this.stateParams = $stateParams;
 
         this.setName = $stateParams.set;
+        History.addCurrentLocation();
     }
 }
 

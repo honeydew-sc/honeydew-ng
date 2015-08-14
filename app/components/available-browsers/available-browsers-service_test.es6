@@ -27,7 +27,7 @@ describe('availableBrowsersService', () => {
         var servers = availableBrowsers.getServers();
         expect(servers).toContain('Localhost');
 
-        pathSpy.and.returnValue('#/monitor');
+        pathSpy.and.returnValue('/monitor');
         expect(availableBrowsers.getServers()).not.toContain('Localhost');
 
     });

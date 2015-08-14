@@ -37,7 +37,6 @@ class EnvStatus {
                 p.then( initializeHoneydew )
                     .then( filterHoneydewDetails )
                     .then( accumulateHoneydewDetails )
-
                     .then( status => addHoneydewSummary.call( this, app, status ) )
                     .then( status => addHoneydewDashboard.call( this, app, env, status ) )
 
@@ -46,6 +45,9 @@ class EnvStatus {
                     .then( addKabochaDashboard )
 
                     .then( status => addHealthcheckLinks.call( this, app, checkUrl, status ) )
+
+                    .then( status => addEnvUrl.call( this, app, env, status ) )
+
                     .then( status => collectResults( key, status ) )
 
                     .catch( console.log.bind(console) );
@@ -181,6 +183,11 @@ class EnvStatus {
                 status.healthcheck.webpub = status.healthcheck.webpub || {};
 
                 status.healthcheck.webpub.url = checkUrl;
+                return status;
+            }
+
+            function addEnvUrl ( app, env, status ) {
+                status.url = this.Environment.getEnvUrl( app, env );
                 return status;
             }
 

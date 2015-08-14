@@ -111,6 +111,11 @@ describe('EnvStatus', function () {
         expect(healthcheck.hasOwnProperty('data')).toBe(false);
     });
 
+    it('should add a url to the status', () => {
+        let status = results['SC, prod'];
+        expect(status.url).toBe('https://www.sharecare.com');
+    });
+
     function mockQuery( app ) {
         mockHoneydewQuery( app );
         // kick off the requests...

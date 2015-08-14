@@ -127,4 +127,9 @@ describe('EnvStatus directive', () => {
         expect(elm.find('.honeydew-details').text()).toMatch(/1 success/);
         expect(elm.find('.honeydew-details').text()).toMatch(/2 total/);
     });
+
+    it('should display a link to the actual environment', () => {
+        let link = elm.find('.env a');
+        expect(link.text()).toMatch('prod');
+    });
 });

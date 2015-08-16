@@ -48,7 +48,6 @@ describe('EnvStatus directive', () => {
     it('should have table headers with kabocha for SC', () => {
         let headers = elm.find('table.table th').text();
         expect(headers).toBe([
-            'app',
             'env',
             'healthcheck',
             'honeydew',
@@ -63,7 +62,6 @@ describe('EnvStatus directive', () => {
 
         let headers = elm.find('table.table th').text();
         expect(headers).toBe([
-            'app',
             'env',
             'healthcheck',
             'honeydew'

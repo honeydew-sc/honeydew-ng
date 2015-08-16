@@ -3,8 +3,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>app</th>
-        <th>env</th>
+        <th>{{ EnvStatus.app }}: env</th>
         <th>healthcheck</th>
         <th>honeydew</th>
         <th ng-if="EnvStatus.isSharecare()">kabocha</th>
@@ -13,9 +12,6 @@
     <tbody>
 
       <tr ng-repeat="(name, app) in EnvStatus.statuses">
-        <td class="name">
-          <span>{{ ::name.split(',')[0] }}</span>
-        </td>
         <td class="env">
           <a target="_blank" ng-href="{{app.url}}">
             <span>{{ ::name.split(',')[1] }}</span>
@@ -71,9 +67,9 @@
                    ng-href="{{ app.honeydew.url }}">dashboard.</a>
               </div>
               <div>
-              <span class="honeydew-details">
-                {{ app.honeydew.success }} successes; {{ app.honeydew.total }} total.
-              </span>
+                <span class="honeydew-details">
+                  {{ app.honeydew.success }} successes; {{ app.honeydew.total }} total.
+                </span>
               </div>
             </div>
 

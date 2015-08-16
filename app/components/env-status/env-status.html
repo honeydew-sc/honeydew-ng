@@ -11,7 +11,8 @@
     </thead>
     <tbody>
 
-      <tr ng-repeat="(name, app) in EnvStatus.statuses">
+      <tr ng-repeat-start="(name, app) in EnvStatus.statuses"
+          ng-click="app.detailedView = !app.detailedView">
         <td class="env">
           <a target="_blank" ng-href="{{app.url}}">
             <span>{{ ::name.split(',')[1] }}</span>
@@ -87,6 +88,15 @@
           </a>
         </td>
       </tr>
+
+      <tr ng-if="app.detailedView"
+          ng-repeat-end>
+        <td env-status-content
+            name="{{ EnvStatus.app }}"
+            app="::app">
+        </td>
+      </tr>
+
     </tbody>
   </table>
 

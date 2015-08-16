@@ -1,6 +1,6 @@
 <div ng-controller="StatusController as status" class="envStatus">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav style="body { padding-top: 70px; }" class="navbar navbar-default navbar-static-top">
     <div class="container container-fluid">
       <ul class="nav navbar-nav">
         <li ng-repeat="app in ::status.appChoices">
@@ -10,6 +10,7 @@
       <site-nav></site-nav>
     </div>
   </nav>
+
   <env-status ng-repeat="app in status.apps" app="{{::app}}"></env-status>
 
 </div>

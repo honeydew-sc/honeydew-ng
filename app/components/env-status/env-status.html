@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>{{ EnvStatus.app }}: env</th>
+        <th>branch</th>
         <th>healthcheck</th>
         <th>honeydew</th>
         <th ng-if="EnvStatus.isSharecare()">kabocha</th>
@@ -13,9 +14,12 @@
 
       <tr ng-repeat-start="(name, app) in EnvStatus.statuses"
           ng-click="app.detailedView = !app.detailedView">
+
         <td class="env">
           <a target="_blank" ng-href="{{app.url}}">
-            <span>{{ ::name.split(',')[1] }}</span>
+            <span>
+              {{ ::name.split(',')[1] }}
+            </span>
           </a>
         </td>
 
@@ -58,7 +62,7 @@
           ng-repeat-end>
         <td env-status-detail
             name="{{ EnvStatus.app }}"
-            app="::app">
+            app="app">
         </td>
       </tr>
 

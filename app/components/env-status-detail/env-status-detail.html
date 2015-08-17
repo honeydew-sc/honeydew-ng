@@ -1,3 +1,44 @@
-<td colspan="{{ EnvStatusDetail.isSharecare() ? 4 : 3 }}">
-  {{ EnvStatusDetail.app }}
+<td colspan="{{ EnvStatusDetail.isSharecare() ? 5 : 4 }}"
+    class="env-status-detail">
+
+  <md-grid-list md-cols="3"
+                md-cols-sm="2"
+                md-row-height-gt-md="1:1"
+                md-row-height="2:2"
+                md-gutter="12px"
+                md-gutter-gt-sm="8px">
+
+    <md-grid-tile class="green"
+                  md-rowspan="1"
+                  md-colspan="1"
+                  md-colspan-sm="1">
+
+      <span ng-if="EnvStatusDetail.app.healthcheck.summary">
+        All healthchecks are passing!
+      </span>
+
+      <span ng-if="!EnvStatusDetail.app.healthcheck.summary">
+        {{ EnvStatusDetail.failedHealthcheckCount }} healthcheck{{ EnvStatusDetail.failedHealthcheckCount > 1 ? 's are' : ' is' }} failing:
+        <span ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
+              ng-if="name !== 'summary'"
+              ng-if="!box.status">
+          <a target="_blank" ng-href="{{ box.url }}">{{ name }}</a>
+          <span class="fa"
+                ng-class="{
+                'fa-check-circle green': box.status === true,
+                'fa-times-circle red': box.status === false,
+                'fa-times-circle silver': !EnvStatusDetail.app.healthcheck.hasOwnProperty(name)
+                }"
+                ></span>
+        </span>
+      </span>
+
+      <md-grid-tile-footer>
+        <h3>healthchecks</h3>
+      </md-grid-tile-footer>
+
+    </md-grid-tile>
+
+  </md-grid-list>
+
 </td>

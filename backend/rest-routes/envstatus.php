@@ -4,20 +4,45 @@ $app->group('/envstatus', function () use ($app) {
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
         $check_url = $app->request()->get('check');
-        $build = get_build( $env, $appName );
 
         echo json_encode(array(
             'healthcheck' => healthcheck( $appName, $check_url ),
-            'build' => array ( 'webpub' => $build ),
+            'build' => build_data( $env, $appName ),
             'honeydew' => honeydew_status( $build, url_to_domain( $check_url ) )
         ));
     });
+
+    function build_data ( $env, $app ) {
+        $build_number = get_build( $env, $app );
+
+        $ret = array( 'webpub' => $build_number );
+        if ( isSharecare( $app ) ) {
+            $ret['branch'] = get_branch( $build_number );
+        }
+
+        return $ret;
+    }
+
+    function get_branch ( $build_number ) {
+        $sql = 'SELECT `branch` FROM `jenkins` where build_number = ? LIMIT 1';
+
+        $pdo = hdewdb_connect();
+        $query = $pdo->prepare($sql);
+        $query->execute( array( $build_number ) );
+        $branch = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $branch[0]['branch'];
+    }
+
+    function isSharecare ( $app ) {
+        return $app === 'SC';
+    }
 
     function healthcheck ( $app, $url ) {
         $results = array();
         $boxes = array( 'webpub' );
 
-        if ( $app === 'SC' ) {
+        if ( isSharecare( $app ) ) {
             array_push($boxes, 'author', 'data');
         }
 

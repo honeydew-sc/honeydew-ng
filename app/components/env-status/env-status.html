@@ -18,36 +18,13 @@
             <span>{{ ::name.split(',')[1] }}</span>
           </a>
         </td>
-        <td class="healthcheck dropdown">
 
-          <div class="dropdown">
-            <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="fa fa-2x"
-                    ng-class="{
-                    'fa-check-circle green': app.healthcheck.summary === true,
-                    'fa-times-circle red': app.healthcheck.summary === false,
-                    'fa-times-circle silver': !app.hasOwnProperty('healthcheck')
-                    }"
-                    ></span>
-            </a>
-            <div class="dropdown-menu healthcheck-popover" role="menu">
-              healthchecks:
-              <ul>
-                <li ng-repeat="(name, box) in app.healthcheck">
-                  <span ng-if="name !== 'summary'">
-                    <a target="_blank" ng-href="{{ box.url }}">{{ name }}</a>
-                    <span class="fa"
-                          ng-class="{
-                          'fa-check-circle green': box.status === true,
-                          'fa-times-circle red': box.status === false,
-                          'fa-times-circle silver': !app.healthcheck.hasOwnProperty(name)
-                          }"
-                          ></span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <td class="branch">
+          ({{ app.build.branch ? app.build.branch : app.build.webpub }})
+        </td>
+
+        <td class="healthcheck">
+          <status-button status="app.healthcheck.summary"></status-button>
         </td>
         <td class="honeydew">
           <div class="dropdown">

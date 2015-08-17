@@ -13,9 +13,10 @@
       </td>
 
       <td>
-        <span class="label {{ proc.status ? 'green' : 'red' }}">
-          {{ proc.status ? 'on' : 'off' }}
-        </span>
+        <status-button style="font-size: 1em " status="!!proc.status"></status-button>
+        <!-- <span class="label {{ proc.status ? 'green' : 'red' }}">
+        {{ proc.status ? 'on' : 'off' }}
+        </span> -->
 
       </td>
     </li>

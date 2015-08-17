@@ -53,13 +53,7 @@
           <div class="dropdown">
 
             <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="fa fa-2x"
-                    ng-class="{
-                    'fa-check-circle green': app.honeydew.summary === true,
-                    'fa-times-circle red': app.honeydew.summary === false,
-                    'fa-times-circle silver': !app.honeydew.hasOwnProperty('summary')
-                    }"
-                    ></span>
+              <status-button status="app.honeydew.summary"></status-button>
             </a>
 
             <div class="dropdown-menu healthcheck-popover" role="menu">
@@ -78,13 +72,7 @@
         </td>
         <td ng-if="EnvStatus.isSharecare()">
           <a target="_blank" ng-href="{{ app.kabocha.url }}">
-            <span class="fa fa-2x"
-                  ng-class="{
-                  'fa-check-circle green': app.kabocha.summary === true,
-                  'fa-times-circle red': app.kabocha.summary === false,
-                  'fa-times-circle silver': !app.kabocha.hasOwnProperty('summary')
-                  }"
-                  ></span>
+            <status-button status="app.kabocha.summary"></status-button>
           </a>
         </td>
       </tr>

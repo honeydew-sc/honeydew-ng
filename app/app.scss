@@ -20,10 +20,15 @@ html, body {
     background: transparent;
 }
 
-.btn.btn-bland a:visited {
+.btn.btn-bland:visited {
     color: #333;
 }
 
 .btn.btn-bland:hover {
     background-color: #e7e7e7;
+}
+
+.btn.btn-bland > span.caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
 }

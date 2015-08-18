@@ -98,7 +98,7 @@ class SetReportService {
                 // collect set IDs we've already seen in a hash for
                 // speed ?
                 setIds[setRunId]++;
-                startDate = new Date(startDate);
+                startDate = new Date(startDate + ' UTC');
 
                 setData.push( { setRunId, startDate, browser, host, user } );
             }

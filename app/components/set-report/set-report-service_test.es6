@@ -136,7 +136,7 @@ describe('SetReportService', function () {
 
         let { setData, reportData } = SetReportService.reorganizeReportData( [ { features }, { reports }] );
 
-        startDate = new Date(startDate);
+        startDate = new Date(startDate + ' UTC');
         expect(setData).toEqual([
             { setRunId: 2, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature' } ] },
             { setRunId: 1, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature', reportId: 2 } ] }

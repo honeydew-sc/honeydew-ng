@@ -32,7 +32,7 @@ User: 1new-email-address@mailinator.com
 # Success
 
 
-End Date: 1427121879`;
+End Date: 2015-08-18 16:00:46`;
 
     describe('Parsing: ', () => {
         var headers = [
@@ -48,7 +48,8 @@ End Date: 1427121879`;
             'Subtitles:',
             'JIRA:',
             'Agent:',
-            'User:'
+            'User:',
+            'End Date:',
         ].map( header => {
             it('should parse the header "' + header + '"', () => {
                 expectClass(feature, header , cmReportMode.HEADER);
@@ -83,6 +84,17 @@ End Date: 1427121879`;
             var line = 'Report ID: 44';
             expectClass(line, 'Report ID', cmReportMode.LINK);
             expectClass(line, '44', cmReportMode.LINK);
+        });
+
+        it('should parse dates in seconds', () => {
+            let line = 'Start Date: 1439926735';
+            expectClass(line, '1439926735', cmReportMode.DATE);
+        });
+
+        it('should parse dates in YYYY-MM-DD HH:MM:SS', () => {
+            let line = 'End Date 2015-08-18 19:39:10';
+            expectClass(line, '2015-08-18 19:39:10', cmReportMode.DATE);
+
         });
     });
 
@@ -121,7 +133,19 @@ End Date: 1427121879`;
 
                 expect(output).toContain( 'href="/screenshots/abc">reference</a>' );
             });
+        });
 
+        describe('dates', () => {
+            it('should convert dates from seconds to local TZ', () => {
+                let output = cmReportMode.highlight('Start Date: 1439926735');
+                expect(output).toMatch(/8.*18, .*:38:55.M/);
+            });
+
+            it('should should convert dates from database to local TZ', () => {
+                let output = cmReportMode.highlight('End Date: 2015-08-18 19:39:10');
+                expect(output).toMatch(/8.*18, .*:39:10.M/);
+
+            });
         });
     });
 

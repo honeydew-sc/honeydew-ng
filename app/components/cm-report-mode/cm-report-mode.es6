@@ -1,6 +1,7 @@
-function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
+function cmReportModeService ($rootScope, $filter, preambleOptions, awsConfig) {
     var style = {
         HEADER: 'cm-keyword',
+        DATE: 'date',
         SUCCESS: 'success',
         FAILURE: 'failure',
         SCENARIO: 'scenario',
@@ -17,37 +18,21 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
             return this.FAILURE + ' ' + this.SCENARIO;
         },
 
-        makeLink ( title, route ) {
-            return `<a href="${route}${title}">${title}</a>`;
-        },
-
         highlight (line) {
             var elem = '';
             var ret = CodeMirror.runMode(line, 'report', (token, style) => {
                 if (style) {
                     var outputToken;
-                    if (style === this.LINK) {
-                        let route = '/#/report/';
-                        outputToken = token.replace(/(\d+)/, this.makeLink( "$1", route ) );
-                    }
-
-                    else if ( style === this.FEATURE ) {
-                        let route = '/#/features/';
-                        outputToken = token.replace(/ (.*.feature)/, ' ' + this.makeLink( "$1", route ) );
+                    if (style === this.LINK || style === this.FEATURE || style === this.PLAINLINK) {
+                        outputToken = this.outputLink( token, style );
                     }
 
                     else if (style === this.SCREENSHOT) {
-                        let base = '/screenshots/',
-                            targ = 'target="_blank"';
-
-                        outputToken = token
-                            .replace(/Saving reference: .*\/(.*)/, `<a ${targ} href="${base}$1">reference</a>`)
-                            .replace(/Reference: .*\/([^&]*) & current:/, `<a ${targ} href="${base}$1">Reference</a> & current:`)
-                            .replace(/current: .*\/(.*)/, `<a ${targ} href="${base}$1">current</a>`);
+                        outputToken = this.outputScreenshot( token, style );
                     }
 
-                    else if (style === this.PLAINLINK) {
-                        outputToken = `<a target="_blank" href=${token}>${token}</a>`;
+                    else if (style === this.DATE) {
+                        outputToken = this.outputDate( token, style );
                     }
 
                     else {
@@ -66,13 +51,65 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
             });
 
             return elem;
+        },
+
+
+        makeLink ( title, route ) {
+            return `<a href="${route}${title}">${title}</a>`;
+        },
+
+        outputLink( token, style ) {
+            let outputToken = '';
+            if ( style === this.LINK ) {
+                let route = '/#/report/';
+                outputToken = token.replace(/(\d+)/, this.makeLink( "$1", route ) );
+            }
+
+            else if ( style === this.FEATURE ) {
+                let route = '/#/features/';
+                outputToken = token.replace(/ (.*.feature)/, ' ' + this.makeLink( "$1", route ) );
+            }
+
+            else if ( style === this.PLAINLINK ) {
+                outputToken = `<a target="_blank" href=${token}>${token}</a>`;
+            }
+
+            return outputToken;
+        },
+
+        outputScreenshot( token, style ) {
+            let base = '/screenshots/',
+                targ = 'target="_blank"';
+
+            let outputToken = token
+                .replace(/Saving reference: .*\/(.*)/, `<a ${targ} href="${base}$1">reference</a>`)
+                .replace(/Reference: .*\/([^&]*) & current:/, `<a ${targ} href="${base}$1">Reference</a> & current:`)
+                .replace(/current: .*\/(.*)/, `<a ${targ} href="${base}$1">current</a>`);
+
+            return outputToken;
+        },
+
+        outputDate( token, style ) {
+            if ( /\d{9,10}/.test(token) ) {
+                let timeFromSeconds = new Date( 0 );
+                timeFromSeconds.setSeconds( token );
+                return ' ' + this.formatDate( timeFromSeconds );
+            }
+            else {
+                let date = new Date( token );
+                return ' ' + this.formatDate( date );
+            }
+        },
+
+        formatDate( date ) {
+            let dateFormat = 'M&#8209;dd, h:mm:ssa';
+            return $filter('date')(date, dateFormat);
         }
     };
 
     CodeMirror.defineMode('report', function () {
         var preambleKeys = Object.keys(preambleOptions);
         var headers = new RegExp([
-            'Start Date',
             'Host',
             'Build',
             'Browser',
@@ -81,14 +118,31 @@ function cmReportModeService ($rootScope, preambleOptions, awsConfig) {
             'Feature',
         ].concat(preambleKeys).map(it => it + ':').join('|'));
 
+        var dateHeaders = /Start Date:|End Date:/;
+
+        var date = new RegExp(/ \d{9,10}| \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
+
         var successRule = /# \(OK\).*?\)/;
         var failureRule = /# \(ER\).*?\)/;
 
         return {
-            startState: () => { return {}; },
+            startState: () => {
+                let inDateHeader = false;
+                return { inDateHeader };
+            },
+
             token: (stream, state) => {
                 if (stream.match(headers)) {
+                    state.inDateHeader = false;
                     return style.HEADER;
+                }
+                else if (stream.match(dateHeaders)) {
+                    state.inDateHeader = true;
+                    return style.HEADER;
+                }
+                else if (stream.match(date)) {
+                    state.inDateHeader = false;
+                    return style.DATE;
                 }
                 else if (stream.match(successRule)) {
                     return style.SUCCESS;

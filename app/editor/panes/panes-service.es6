@@ -12,7 +12,7 @@ angular.module('honeydew')
                 },
                 {
                     name: 'samples',
-                    classes: 'col-md-6',
+                    classes: 'col-md-3',
                     templateUrl: base + 'examples/examples.html',
                     icon: 'fa-clipboard',
                     tooltip: 'Samples',

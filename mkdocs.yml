@@ -5,9 +5,9 @@ pages:
 - HD Guide:
     - Quick Start: guide/quickstart.md
     - Example Snippets: guide/snippets.md
-- HD Features:
-    - Preamble Options: features/preamble.md
-    - Finding Elements: features/finding-elements.md
+- HD Reference:
+    - Preamble Options: reference/preamble.md
+    - Finding Elements: reference/finding-elements.md
 - HD FAQ:
     - FAQ: faq.md
     - Install Webdriver: faq/install-webdriver.md

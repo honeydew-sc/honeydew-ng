@@ -176,7 +176,7 @@ from your examples scenario.
 #### Finding them!?
 
 The most common method of finding elements is CSS selectors, which are
-explained in depth [over here](../features/finding-elements.md).
+explained in depth [over here](../reference/finding-elements.md).
 
     <a id="unique" class="notUnique" name="email">Log In</a>
 

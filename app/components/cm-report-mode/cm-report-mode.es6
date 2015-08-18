@@ -90,13 +90,27 @@ function cmReportModeService ($rootScope, $filter, preambleOptions, awsConfig) {
         },
 
         outputDate( token, style ) {
+            // dates are either in milliseconds from a current run of
+            // honeydew (basically, the output of perl's `time`
+            // function)
+            //
+            // OR
+            //
+            // they're from the database, where there'd stored in UTC
+            // +0 time, in which case we have to convert them back.
             if ( /\d{9,10}/.test(token) ) {
                 let timeFromSeconds = new Date( 0 );
-                timeFromSeconds.setSeconds( token );
+                // the dates in seconds come missing an hour; i dunno
+                // why...
+                let hour = 3600;
+                timeFromSeconds.setSeconds( parseInt(token) + hour );
                 return ' ' + this.formatDate( timeFromSeconds );
             }
             else {
-                let date = new Date( token );
+                // appending the UTC part convinces date to parse it
+                // as UTC, which we have to do since it's recorded in
+                // the database as UTC.
+                let date = new Date( token + ' UTC' );
                 return ' ' + this.formatDate( date );
             }
         },

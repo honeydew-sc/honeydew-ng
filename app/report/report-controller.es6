@@ -20,7 +20,7 @@ angular.module('honeydew')
                 var report = formatted_headers.concat([
                     res.result,
                     '',
-                    'End Date ' + res.endDate
+                    'End Date: ' + res.endDate
                 ]).join("\n");
 
                 this.result = {

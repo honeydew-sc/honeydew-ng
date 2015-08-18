@@ -17,7 +17,7 @@ describe('SiteNav directive', () => {
         }));
 
         it('should link to home outside of the dropdown', () => {
-            let home = elm.find('button a');
+            let home = elm.find('a.btn-bland.btn-default');
             expect(home.text()).toMatch(/Home/);
         });
 

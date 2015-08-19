@@ -22,3 +22,6 @@ theme: mkdocs
 markdown_extensions:
     - toc:
         permalink: 
+
+# CSS files and JS files are automatically included, in particular
+# docs.css and docs.js.

@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th>{{ EnvStatus.app }}: env</th>
-        <th>branch</th>
+        <!-- <th>branch</th> -->
         <th>healthcheck</th>
         <th>honeydew</th>
         <th ng-if="EnvStatus.isSharecare()">kabocha</th>
@@ -23,38 +23,20 @@
           </a>
         </td>
 
-        <td class="branch">
-          ({{ app.build.branch ? app.build.branch : app.build.webpub }})
-        </td>
+        <!-- <td class="branch">
+        ({{ app.build.branch ? app.build.branch : app.build.webpub }})
+        </td> -->
 
         <td class="healthcheck">
           <status-button status="app.healthcheck.summary"></status-button>
         </td>
+
         <td class="honeydew">
-          <div class="dropdown">
-
-            <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <status-button status="app.honeydew.summary"></status-button>
-            </a>
-
-            <div class="dropdown-menu healthcheck-popover" role="menu">
-              <div>
-                <a target="_blank"
-                   ng-href="{{ app.honeydew.url }}">dashboard.</a>
-              </div>
-              <div>
-                <span class="honeydew-details">
-                  {{ app.honeydew.success }} successes; {{ app.honeydew.total }} total.
-                </span>
-              </div>
-            </div>
-
-          </div>
+          <status-button status="app.honeydew.summary"></status-button>
         </td>
+
         <td ng-if="EnvStatus.isSharecare()">
-          <a target="_blank" ng-href="{{ app.kabocha.url }}">
-            <status-button status="app.kabocha.summary"></status-button>
-          </a>
+          <status-button status="app.kabocha.summary"></status-button>
         </td>
       </tr>
 

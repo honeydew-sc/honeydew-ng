@@ -1,5 +1,5 @@
 (function () {
-    var github = 'https://github.com/honeydew-sc/honeydew-ng/edit/master/docs';
+    var github = 'https://github.com/honeydew-sc/honeydew-ng/edit/master';
 
     var url = getEditHref();
 
@@ -12,10 +12,10 @@
 
     function getEditHref() {
         var path = window.location.pathname;
-        var isHomepage = path === '/';
+        var isHomepage = path === '/docs/';
 
         if ( isHomepage ) {
-            var indexEditHref = github + '/index.md';
+            var indexEditHref = github + path + 'index.md';
             return indexEditHref;
         }
         else {

@@ -5,34 +5,14 @@ Thanks for contributing to the docs! Here's how to go about it.
 1.  [Make a Github.com account][join]. Optionally, tell me your
     username and we'll get you added into the Honeydew organization.
 
-2.  Open up the Honeydew frontend repository and go to
-    [the `docs` folder.][docs] This is where the documentation
-    Honeydew is stored.
+2.  Navigate to any page in the docs, scroll to the bottom, and use
+    the "Edit this page in Github" link!
 
-    The documentation is written in Markdown format, which is similar
-    to the markup that we use in Confluence. For example, **\*bold\***
-    and _\_italics\__ work the same in both systems. Github has an
-    excellent guide on [Mastering Markdown][mdbasic2]. This document
-    itself is written in markdown - you can see its [raw source][raw]
-    in the Github repository as well.
-
-3.  To add an entirely new section of the site, click on the +.  Name
-    your file after your section with the file extension `.md` and put
-    in some markdown.
-
-    ![create new file](create-new-file.png)
-
-    To edit an existing file, click on the filename to open it up, and
-    then click on the pencil to go into the editor.
-
-    ![edit an existing file](edit-file.png)
-
-    Go ahead and do the thing! (write the docs, fix the typo, correct
+    Go ahead and do your thing! (write the docs, fix the typo, correct
     the mistake, save the cheerleader, save the world).
 
-4.  Once you're done creating/making your changes, it's time to fill
-    out the form at the bottom. There are three final steps (it's
-    okay, one of them is clicking a button)
+3.  Once you're done creating/making your changes, it's time to fill
+    out the form at the bottom:
 
     ![propose file change](propose-file-change.png)
 

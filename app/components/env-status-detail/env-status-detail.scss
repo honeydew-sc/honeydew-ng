@@ -1,7 +1,24 @@
 .env-status-detail {
-    .healthcheck {
-        top: -5px;
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-start;
+        align-items: flex-start;
+    }
 
-        ul { list-style: none }
+    .detail {
+        flex: 1;
+        margin: 10px;
+
+        background-color: $white;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+    }
+
+    .healthcheck ul {
+        list-style-type: none;
     }
 }

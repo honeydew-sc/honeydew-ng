@@ -1,44 +1,53 @@
 <td colspan="{{ EnvStatusDetail.isSharecare() ? 5 : 4 }}"
     class="env-status-detail">
+  <div class="flex-container">
 
-  <md-grid-list md-cols="3"
-                md-cols-sm="2"
-                md-row-height-gt-md="1:1"
-                md-row-height="2:2"
-                md-gutter="12px"
-                md-gutter-gt-sm="8px">
-
-    <md-grid-tile class="green"
-                  md-rowspan="1"
-                  md-colspan="1"
-                  md-colspan-sm="1">
-
+    <div class="detail healthcheck">
+      <h4>healthchecks</h4>
       <span ng-if="EnvStatusDetail.app.healthcheck.summary">
-        All healthchecks are passing!
+        All healthchecks are passing! Hooray.
       </span>
 
-      <span ng-if="!EnvStatusDetail.app.healthcheck.summary">
-        {{ EnvStatusDetail.failedHealthcheckCount }} healthcheck{{ EnvStatusDetail.failedHealthcheckCount > 1 ? 's are' : ' is' }} failing:
-        <span ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
-              ng-if="name !== 'summary'"
-              ng-if="!box.status">
-          <a target="_blank" ng-href="{{ box.url }}">{{ name }}</a>
-          <span class="fa"
-                ng-class="{
-                'fa-check-circle green': box.status === true,
-                'fa-times-circle red': box.status === false,
-                'fa-times-circle silver': !EnvStatusDetail.app.healthcheck.hasOwnProperty(name)
-                }"
-                ></span>
+      <span ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
+            ng-if="name !== 'summary'"
+            ng-if="!box.status">
+        <ul>
+          <li>
+            <a target="_blank" ng-href="{{ box.url }}">
+              {{ name }}
+              <status-button class="fa-small" status="box.status">
+              </status-button>
+            </a>
+          </li>
+        </ul>
+      </span>
+
+    </div>
+
+    <div class="detail honeydew">
+      <h4>honeydew</h4>
+      <div>
+        <a target="_blank"
+           ng-href="{{ app.honeydew.url }}">
+          dashboard
+        </a>
+      </div>
+      <div>
+        {{ app.honeydew }}
+        <span class="honeydew-details">
+          {{ app.honeydew.success }} successes; {{ app.honeydew.total }} total.
         </span>
-      </span>
+      </div>
+    </div>
 
-      <md-grid-tile-footer>
-        <h3>healthchecks</h3>
-      </md-grid-tile-footer>
+    <div ng-if="EnvStatusDetail.isSharecare()" class="detail kabocha">
+      <h4>kabocha</h4>
+      {{ app.kabocha }}
+      <a target="_blank" ng-href="{{ app.kabocha.url }}">
+        <status-button status="app.kabocha.summary"></status-button>
+      </a>
+    </div>
 
-    </md-grid-tile>
-
-  </md-grid-list>
+  </div>
 
 </td>

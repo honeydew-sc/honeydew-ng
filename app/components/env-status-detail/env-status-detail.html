@@ -1,13 +1,11 @@
 <td colspan="{{ EnvStatusDetail.isSharecare() ? 5 : 4 }}"
     class="env-status-detail">
-  <div class="flex-container">
 
+  <div class="flex-container checks">
     <div class="detail healthcheck">
-      <h4>healthchecks</h4>
-      <span ng-if="EnvStatusDetail.app.healthcheck.summary">
-        All healthchecks are passing! Hooray.
-      </span>
-
+      <h4 ng-class="{ green: EnvStatusDetail.app.healthcheck.summary }">
+        healthchecks
+      </h4>
       <span ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
             ng-if="name !== 'summary'"
             ng-if="!box.status">
@@ -25,7 +23,9 @@
     </div>
 
     <div class="detail honeydew">
-      <h4>honeydew</h4>
+      <h4 ng-class="{ green: EnvStatusDetail.app.honeydew.summary }">
+        honeydew
+      </h4>
       <div>
         <a target="_blank"
            ng-href="{{ app.honeydew.url }}">
@@ -41,13 +41,25 @@
     </div>
 
     <div ng-if="EnvStatusDetail.isSharecare()" class="detail kabocha">
-      <h4>kabocha</h4>
+      <h4 ng-class="{ green: EnvStatusDetail.app.abocha }">
+        kabocha
+      </h4>
       {{ app.kabocha }}
       <a target="_blank" ng-href="{{ app.kabocha.url }}">
         <status-button status="app.kabocha.summary"></status-button>
       </a>
     </div>
+  </div>
 
+  <div class="flex-container build">
+    <div ng-if="EnvStatusDetail.app.build.branch "
+      class="build-detail">
+      <span class="emph">branch</span>: {{ EnvStatusDetail.app.build.branch }}
+    </div>
+    <div ng-if="EnvStatusDetail.app.build.webpub"
+         class="build-detail">
+      <span class="emph">build</span>: {{ EnvStatusDetail.app.build.webpub }}
+    </div>
   </div>
 
 </td>

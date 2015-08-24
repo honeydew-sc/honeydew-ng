@@ -8,14 +8,28 @@
         align-items: flex-start;
     }
 
+
     .detail {
+        flex: 1;
+        flex-basis: 200px;
+        margin: 10px;
+        height: 120px;
+
+        background-color: $white;
+        border-radius: 4px;
+
+    }
+
+    .build-detail {
         flex: 1;
         margin: 10px;
 
         background-color: $white;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-radius: 4px;
 
+        .emph {
+            font-weight: bolder;
+        }
     }
 
     .healthcheck ul {

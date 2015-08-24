@@ -10,7 +10,6 @@ describe('EnvStatusDetail directive', () => {
         elm = angular.element('<td env-status-detail name="name" app="app"></td>');
 
         scope = $rootScope;
-        scope.name = 'name';
         scope.app = fakeAppDetails();
 
         $compile(elm)(scope);
@@ -25,19 +24,36 @@ describe('EnvStatusDetail directive', () => {
     });
 
     it('should know if the current app is Sharecare', () => {
+        controller.name = 'name';
         expect(controller.isSharecare()).toBe(false);
+
+        controller.name = 'SC';
+        expect(controller.isSharecare()).toBe(true);
     });
 
-    function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = {}) {
+    it('should display build information when available', () => {
+        let text = elm.find('.build-detail').text();
+        expect(text).toMatch(/branch: branch/);
+        expect(text).toMatch(/build: build/);
+    });
+
+    it('should hide the build information when missing', () => {
+        delete controller.app.build;
+        scope.$digest();
+        expect(elm.find('.build-detail').length).toBe(0);
+    });
+
+    function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = { summary: true }) {
         let status = true;
         let webauth = { status };
         let webpub = { status };
         let data = { status };
+        let build = { webpub: 'build', branch: 'branch' };
 
         healthcheck = angular.equals(healthcheck, {}) ? {
             webauth, webpub, data
         } : {};
 
-        return { healthcheck, honeydew, kabocha };
+        return { healthcheck, honeydew, kabocha, build };
     }
 });

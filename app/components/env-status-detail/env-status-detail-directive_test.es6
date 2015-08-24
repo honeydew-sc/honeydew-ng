@@ -7,7 +7,7 @@ describe('EnvStatusDetail directive', () => {
     beforeEach(module('tpl'));
 
     beforeEach(inject( ($compile, $rootScope) => {
-        elm = angular.element('<env-status-detail name="name" app="app"></env-status-detail>');
+        elm = angular.element('<td env-status-detail name="name" app="app"></td>');
 
         scope = $rootScope;
         scope.name = 'name';
@@ -34,9 +34,9 @@ describe('EnvStatusDetail directive', () => {
         let webpub = { status };
         let data = { status };
 
-        healthcheck = healthcheck || {
+        healthcheck = angular.equals(healthcheck, {}) ? {
             webauth, webpub, data
-        };
+        } : {};
 
         return { healthcheck, honeydew, kabocha };
     }

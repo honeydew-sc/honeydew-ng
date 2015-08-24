@@ -4,11 +4,12 @@ $app->group('/envstatus', function () use ($app) {
 
     $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
         $check_url = $app->request()->get('check');
+        $build_data = build_data( $env, $appName );
 
         echo json_encode(array(
             'healthcheck' => healthcheck( $appName, $check_url ),
-            'build' => build_data( $env, $appName ),
-            'honeydew' => honeydew_status( $build, url_to_domain( $check_url ) )
+            'build' => $build_data,
+            'honeydew' => honeydew_status( $build_data['webpub'], url_to_domain( $check_url ) )
         ));
     });
 
@@ -30,8 +31,12 @@ $app->group('/envstatus', function () use ($app) {
         $query = $pdo->prepare($sql);
         $query->execute( array( $build_number ) );
         $branch = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        return $branch[0]['branch'];
+        if ( count( $branch ) ) {
+            return $branch[0]['branch'];
+        }
+        else {
+            return;
+        }
     }
 
     function isSharecare ( $app ) {

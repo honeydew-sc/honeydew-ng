@@ -20,5 +20,9 @@
 
     .healthcheck ul {
         list-style-type: none;
+
+        // counter the indent from the bullets that we're not
+        // displaying
+        margin-left: -40px;
     }
 }

@@ -13,10 +13,13 @@
     <tbody>
 
       <tr ng-repeat-start="(name, app) in EnvStatus.statuses"
-          ng-click="app.detailedView = !app.detailedView">
+          ng-click="app.detailedView = !app.detailedView"
+          class="env-row">
 
         <td class="env">
-          <a target="_blank" ng-href="{{app.url}}">
+          <a target="_blank"
+             ng-href="{{app.url}}"
+             class="btn btn-default">
             <span>
               {{ ::name.split(',')[1] }}
             </span>

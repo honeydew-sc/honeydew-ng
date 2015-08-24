@@ -118,10 +118,12 @@ describe('EnvStatus directive', () => {
         expect(elm2.find(firstTableHeader).text()).toMatch(/DROZ/);
     });
 
-    it('should display honeydew details on mouseover', () => {
-        elm.find('.honeydew').trigger('click');
-        expect(elm.find('.honeydew-details').text()).toMatch(/1 success/);
-        expect(elm.find('.honeydew-details').text()).toMatch(/2 total/);
+    it('should display detailed information on click', () => {
+        let row = elm.find('tr');
+        row.click();
+
+        expect(ctrl.statuses['SC, prod'].detailedView).toBe(true);
+        expect(elm.find('[env-status-detail]').length).toBe(1);
     });
 
     it('should display a link to the actual environment', () => {

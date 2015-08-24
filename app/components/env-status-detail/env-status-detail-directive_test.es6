@@ -28,10 +28,6 @@ describe('EnvStatusDetail directive', () => {
         expect(controller.isSharecare()).toBe(false);
     });
 
-    it('should tell us when all healthchecks are passing' , () => {
-        expect(controller.hasPassingHealthchecks()).toBe(true);
-    });
-
     function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = {}) {
         let status = true;
         let webauth = { status };

@@ -1,27 +1,12 @@
 class EnvStatusDetailController {
     constructor () {
+        // this.name and this.app automatically are on our controller
+        // thanks to the scope declaration in the directive definitive
     }
 
     isSharecare () {
         return this.name === 'SC';
     }
-
-    healthcheckMessage () {
-        let { healthcheckStatus } = this;
-
-        if ( healthcheckStatus ) {
-            this.healthcheckMessage = 'All healthchecks are passing!';
-        }
-        else {
-            let { healthcheck } = this.app;
-            let failures = Object.keys(healthcheck)
-                .filter( key => !healthcheck[key] );
-
-            this.healthcheckMessage = `${failures.length} healthchecks are failing: `;
-        }
-    }
-
-
 };
 
 angular.module('honeydew').directive('envStatusDetail', function () {

@@ -48,7 +48,7 @@ describe('EnvStatus directive', () => {
     it('should have table headers with kabocha for SC', () => {
         let headers = elm.find('table.table th').text();
         expect(headers).toBe([
-            'env',
+            'SC: env',
             'healthcheck',
             'honeydew',
             'kabocha'
@@ -62,16 +62,13 @@ describe('EnvStatus directive', () => {
 
         let headers = elm.find('table.table th').text();
         expect(headers).toBe([
-            'env',
+            'DROZ: env',
             'healthcheck',
             'honeydew'
         ].join(''));
     });
 
     it('should properly split the name and env out', () => {
-        let name = elm.find('td.name').text().trim();
-        expect(name).toBe('SC');
-
         let env = elm.find('td.env').text().trim();
         expect(env).toBe('prod');
     });
@@ -116,8 +113,9 @@ describe('EnvStatus directive', () => {
         $compile(elm2)(scope.$new());
         scope.$digest();
 
-        expect(elm.find('table tbody tr').text()).toMatch(/SC/);
-        expect(elm2.find('table tbody tr').text()).toMatch(/DROZ/);
+        let firstTableHeader = 'th:nth-child(1)';
+        expect(elm.find(firstTableHeader).text()).toMatch(/SC/);
+        expect(elm2.find(firstTableHeader).text()).toMatch(/DROZ/);
     });
 
     it('should display honeydew details on mouseover', () => {

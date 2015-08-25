@@ -56,6 +56,44 @@ describe('EnvStatusDetail directive', () => {
         expect(elm.find('.healthcheck li').length).toBe(3);
     });
 
+    describe('HD section', () => {
+
+        beforeEach( () => {
+            ctrl.app.honeydew = {
+                success: 5,
+                total: 10
+            };
+
+            scope.$digest();
+        });
+
+        it('should be displayed', () => {
+            expect(elm.find('.honeydew').length).toBe(1);
+        });
+
+        it('should calculate the success percentage', () => {
+            expect(ctrl.hdSuccessPercentage()).toBe(50);
+
+            ctrl.app.honeydew = { success: 0, total: 0 };
+            expect(ctrl.hdSuccessPercentage()).toBe(0);
+        });
+
+        it('should truncate the success percentage', () => {
+            ctrl.app.honeydew = { success: 2, total: 3 };
+            expect(ctrl.hdSuccessPercentage()).toBe(67);
+        });
+
+        it('should display the success percentage', () => {
+            expect(elm.find('.honeydew .big-emph').text()).toMatch(/^\s+50\s+$/);
+        });
+
+        it('should display a dashboard link', () => {
+            scope.$apply( () => { ctrl.app.honeydew.url = 'dashboard'; } );
+            expect(elm.find('.honeydew a').attr('href')).toBe('dashboard');
+        });
+
+    });
+
     function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = { summary: true }) {
         let status = true;
         let webauth = { status };

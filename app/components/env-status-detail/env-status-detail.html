@@ -6,20 +6,17 @@
       <h4 ng-class="{ green: EnvStatusDetail.app.healthcheck.summary }">
         healthchecks
       </h4>
-      <span ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
+      <ul>
+        <li ng-repeat="(name, box) in EnvStatusDetail.app.healthcheck"
             ng-if="name !== 'summary'"
             ng-if="!box.status">
-        <ul>
-          <li>
-            <a target="_blank" ng-href="{{ box.url }}">
-              {{ name }}
-              <status-button class="fa-small" status="box.status">
-              </status-button>
-            </a>
-          </li>
-        </ul>
-      </span>
-
+          <a target="_blank" ng-href="{{ box.url }}">
+            {{ name }}
+            <status-button class="fa-small" status="box.status">
+            </status-button>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <div class="detail honeydew">
@@ -27,17 +24,18 @@
         honeydew
       </h4>
       <div>
-        <a target="_blank"
-           ng-href="{{ app.honeydew.url }}">
-          Open the HD dashboard for this build
-        </a>
-      </div>
-      <div>
-        {{ app.honeydew }}
-        <span class="honeydew-details">
-          {{ app.honeydew.success }} successes; {{ app.honeydew.total }} total.
+        <span class="big-emph">
+          {{ EnvStatusDetail.hdSuccessPercentage() }}
         </span>
+        % passed. <br />
+
+        (<span class="green">{{ EnvStatusDetail.app.honeydew.success }} </span> of {{ EnvStatusDetail.app.honeydew.total }})
       </div>
+
+      (<a target="_blank"
+           ng-href="{{ EnvStatusDetail.app.honeydew.url }}">
+        dashboard
+      </a>)
     </div>
 
     <div ng-if="EnvStatusDetail.isSharecare()" class="detail kabocha">

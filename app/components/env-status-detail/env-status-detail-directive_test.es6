@@ -94,6 +94,29 @@ describe('EnvStatusDetail directive', () => {
 
     });
 
+    describe('kabocha section', () => {
+
+        beforeEach( () => {
+            scope.$apply(() => { ctrl.name = 'SC'; });
+        });
+
+        it('should be missing when not SC', () => {
+            scope.$apply(() => { ctrl.name = 'name'; });
+            expect(elm.find('.kabocha').length).toBe(0);
+        });
+
+        it('should display for SC properties', () => {
+            expect(elm.find('.kabocha').length).toBe(1);
+        });
+
+        it('should list the failing test suites', () => {
+
+        });
+
+    });
+
+
+
     function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = { summary: true }) {
         let status = true;
         let webauth = { status };

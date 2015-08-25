@@ -68,7 +68,7 @@ describe('EnvStatusDetail directive', () => {
 
         it('should display a dashboard link', () => {
             scope.$apply( () => { ctrl.app.honeydew.url = 'dashboard'; } );
-            expect(elm.find('.honeydew a').attr('href')).toBe('dashboard');
+            expect(elm.find('.honeydew a.dashboard').attr('href')).toBe('dashboard');
         });
 
     });

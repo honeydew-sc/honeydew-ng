@@ -13,6 +13,10 @@
             cursor: pointer;
         }
 
+        tr.env-row:focus {
+            outline: 0
+        }
+
         td.env a {
             width: 88px;
         }

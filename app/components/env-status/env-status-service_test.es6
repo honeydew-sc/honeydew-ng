@@ -1,4 +1,4 @@
-fdescribe('EnvStatus', function () {
+describe('EnvStatus', function () {
     let results,
         httpMock,
         EnvStatus,

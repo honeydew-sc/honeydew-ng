@@ -123,7 +123,28 @@ describe('EnvStatus', function () {
     }
 
     function mockKabochaQuery( ) {
-        let fakeKabocha = '{"result":"SUCCESS","data":{"prod":{"status":"ok"},"stage":{"status":"ok"},"dw2":{"status":"ok"},"al2":{"status":"ok"},"cm2":{"status":"ok"},"kms":{"status":"ok"},"mservices":{"status":"ok"},"jd":{"status":"ok"},"dw":{"status":"ok"},"al":{"status":"ok"},"cm":{"status":"ok"}}}';
+        let status = 'ok';
+        let suites = {
+            pass: { status: 'ok' },
+            fail: { status: 'not ok' }
+        };
+
+        let fakeKabocha = {
+            "data": {
+                "al": { status, suites },
+                "al2": { status, suites },
+                "cm": { status, suites },
+                "cm2": { status, suites },
+                "dw": { status, suites },
+                "dw2": { status, suites },
+                "jd": { status, suites },
+                "kms": { status, suites },
+                "mservices": { status, suites },
+                "prod": { status, suites },
+                "stage": { status, suites }
+            },
+            "result": 'SUCCESS'
+        };
 
         httpMock.expectGET('/kabocha/api.php/logs/kabocha/status')
             .respond(fakeKabocha);

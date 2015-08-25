@@ -69,7 +69,6 @@ describe('EnvStatus', function () {
 
     it('should not have a summary for an invalid honeydew db lookup', () => {
         let query = mockedCheck( 'SC', 'al' );
-        mockKabochaQuery();
         httpMock.expectGET(`/rest.php/envstatus/app/SC/env/al?check=${query}`)
             .respond( mockStatus( { details: [] } ) );
         let results = EnvStatus.query( app => app === 'SC', env => env === 'al' );
@@ -84,7 +83,7 @@ describe('EnvStatus', function () {
         expect(status.honeydew.url).toMatch(/dashboard\/index\.html\?.*build.*hostname/);
     });
 
-    it('should make kabocha with dashboard url for sharecare', () => {
+    it('should add kabocha dashboard url for sharecare', () => {
         expect(results['SC, prod'].hasOwnProperty('kabocha')).toBe(true);
         expect(results['SC, prod'].kabocha.url).toBe(
             '/kabocha/dashboard.html'

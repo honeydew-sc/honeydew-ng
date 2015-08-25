@@ -23,7 +23,7 @@ class EnvStatus {
 
         apps.forEach( app => {
             let envs = this.envs[app].filter( envFilter ),
-                kabochaStatuses = this._getKabochaStatuses( app );
+                kabochaStatuses = this.KabochaStatus.get( app );
 
             envs.forEach( env => {
                 let key = `${app}, ${env}`,
@@ -146,10 +146,9 @@ class EnvStatus {
 
             function addKabochaSummary ( app, env, status ) {
                 if ( this.isSharecare( app ) ) {
-                    kabochaStatuses
-                        .then( statuses => {
-                            status.kabocha = Object.assign( status.kabocha, statuses[env] );
-                        });
+                    kabochaStatuses.then( statuses => {
+                        status.kabocha = Object.assign( status.kabocha, statuses[env] );
+                    });
                 }
 
                 return status;

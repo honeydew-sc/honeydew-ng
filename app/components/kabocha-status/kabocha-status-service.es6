@@ -38,16 +38,17 @@ class KabochaStatus {
             statuses[env].success = [];
             statuses[env].failure = [];
 
-            let suiteData = res.data.data[env].suites;
-            Object.keys( suiteData ).forEach( ( suite ) => {
-                if ( suiteData[suite].status === 'ok' ) {
-                    statuses[env].success.push(suite);
-                }
-                else {
-                    statuses[env].failure.push(suite);
-                }
-            });
-
+            if ( res.data.data[env].hasOwnProperty('suites') ) {
+                let suiteData = res.data.data[env].suites;
+                Object.keys( suiteData ).forEach( ( suite ) => {
+                    if ( suiteData[suite].status === 'ok' ) {
+                        statuses[env].success.push(suite);
+                    }
+                    else {
+                        statuses[env].failure.push(suite);
+                    }
+                });
+            }
         });
 
         return statuses;

@@ -1,5 +1,5 @@
 class EnvStatus {
-    constructor ($resource, $http, $q, Environment) {
+    constructor ($resource, $http, $q, Environment, KabochaStatus) {
         this.backend = $resource( '/rest.php/envstatus/app/:app/env/:env', {
             app: '@app',
             env: '@env'
@@ -10,6 +10,8 @@ class EnvStatus {
         this.q = $q;
 
         this.Environment = Environment;
+        this.KabochaStatus = KabochaStatus;
+        this.isSharecare = this.KabochaStatus.isSharecare;
         this.envs = Environment.envs;
         this.apps = Object.keys(Environment.apps);
     }
@@ -190,10 +192,6 @@ class EnvStatus {
 
         results.$promise = this.q.all(promises);
         return results;
-    }
-
-    isSharecare( app ) {
-        return app === 'SC';
     }
 };
 

@@ -1,7 +1,6 @@
 class KabochaStatus {
-    constructor ( $http, EnvStatus ) {
+    constructor ( $http ) {
         this.http = $http;
-        this.isSharecare = EnvStatus.isSharecare;
 
         this.endpoint = '/kabocha/api.php/logs/kabocha/status';
         this.result = undefined;
@@ -52,6 +51,10 @@ class KabochaStatus {
         });
 
         return statuses;
+    }
+
+    isSharecare( app ) {
+        return app === 'SC';
     }
 }
 

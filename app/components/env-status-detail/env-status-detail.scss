@@ -10,12 +10,12 @@
         align-items: flex-start;
     }
 
-
     .detail {
         flex: 1;
-        flex-basis: 200px;
-        margin: 10px;
-        height: 120px;
+        flex-basis: 250px;
+        align-self: stretch;
+        padding-bottom: 5px;
+        margin: 5px;
 
         background-color: $white;
         border-radius: 4px;
@@ -31,7 +31,9 @@
 
     .build-detail {
         flex: 1;
-        margin: 10px;
+        flex-basis: 250px;
+        padding-bottom: 5px;
+        margin: 5px;
 
         background-color: $white;
         border-radius: 4px;
@@ -40,4 +42,5 @@
             font-weight: bolder;
         }
     }
+
 }

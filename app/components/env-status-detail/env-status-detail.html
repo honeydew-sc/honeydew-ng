@@ -22,20 +22,17 @@
     <div class="detail honeydew">
       <h4 ng-class="{ green: EnvStatusDetail.app.honeydew.summary }">
         honeydew
+        <span class="small">
+          (<a target="_blank"
+              ng-href="{{ EnvStatusDetail.app.honeydew.url }}">dash</a>)
+        </span>
       </h4>
       <div>
         <span class="big-emph">
-          {{ EnvStatusDetail.hdSuccessPercentage() }}
-        </span>
-        % passed. <br />
+          {{ EnvStatusDetail.app.honeydew.percentage }}</span>% passed. <br />
 
         (<span class="green">{{ EnvStatusDetail.app.honeydew.success }} </span> of {{ EnvStatusDetail.app.honeydew.total }})
       </div>
-
-      (<a target="_blank"
-           ng-href="{{ EnvStatusDetail.app.honeydew.url }}">
-        dashboard
-      </a>)
     </div>
 
     <div ng-if="EnvStatusDetail.isSharecare()" class="detail kabocha">

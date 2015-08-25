@@ -76,7 +76,15 @@ describe('EnvStatusDetail directive', () => {
     describe('kabocha section', () => {
 
         beforeEach( () => {
-            scope.$apply(() => { ctrl.name = 'SC'; });
+            scope.$apply(() => {
+                ctrl.name = 'SC';
+
+                ctrl.app.kabocha.summary = false;
+                ctrl.app.kabocha.failure = [
+                    'fail',
+                    'fail2'
+                ];
+            });
         });
 
         it('should be missing when not SC', () => {
@@ -89,12 +97,15 @@ describe('EnvStatusDetail directive', () => {
         });
 
         it('should list the failing test suites', () => {
+            let failing = elm.find('.kabocha li').text();
+            expect(failing).toBe([ 'fail', 'fail2' ].join( '' ));
+        });
 
+        it('should display a kabocha dashboard url', () => {
+            expect(elm.find('.kabocha a.dashboard').length).toBe(1);
         });
 
     });
-
-
 
     function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = { summary: true }) {
         let status = true;

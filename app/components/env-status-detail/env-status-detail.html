@@ -43,6 +43,13 @@
               ng-href="{{ EnvStatusDetail.app.kabocha.url }}">dash</a>)
         </span>
       </h4>
+      <div ng-if="!EnvStatusDetail.app.kabocha.summary">
+        The following suites failed:
+        <ul>
+          <li ng-repeat="suite in EnvStatusDetail.app.kabocha.failure">{{ suite }}</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 

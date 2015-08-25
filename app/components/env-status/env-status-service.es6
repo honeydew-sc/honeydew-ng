@@ -119,7 +119,12 @@ class EnvStatus {
             }
 
             function hdPercentage ({ success, total }) {
-                return Math.round(success / total * 100) ;
+                if ( total === 0 ) {
+                    return 0;
+                }
+                else {
+                    return Math.round(success / total * 100) ;
+                }
             }
 
             function getHoneydewDrozStatus( success, total ) {

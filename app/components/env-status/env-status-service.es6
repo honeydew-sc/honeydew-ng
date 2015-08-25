@@ -145,22 +145,12 @@ class EnvStatus {
             function addKabochaSummary ( app, env, status ) {
                 if ( this.isSharecare( app ) ) {
                     kabochaStatuses
-                        .then( reformatKabochaStatuses )
                         .then( statuses => {
-                            status.kabocha.summary = statuses[env];
+                            status.kabocha = Object.assign( status.kabocha, statuses[env] );
                         });
                 }
 
                 return status;
-
-                function reformatKabochaStatuses ( res ) {
-                    let statuses = {};
-                    Object.keys(res.data.data).forEach( env => {
-                        statuses[env] = res.data.data[env].status !== 'not ok';
-                    });
-
-                    return statuses;
-                }
             }
 
             function addKabochaDashboard ( status ) {
@@ -200,17 +190,6 @@ class EnvStatus {
 
         results.$promise = this.q.all(promises);
         return results;
-    }
-
-    _getKabochaStatuses ( app ) {
-        if ( this.isSharecare( app ) ) {
-            let p = this.http.get('/kabocha/api.php/logs/kabocha/status');
-
-            return p;
-        }
-        else {
-            return {};
-        }
     }
 
     isSharecare( app ) {

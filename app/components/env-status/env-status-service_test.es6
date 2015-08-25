@@ -91,10 +91,6 @@ describe('EnvStatus', function () {
         );
     });
 
-    it('should derive the kabocha summary', () => {
-        expect(results['SC, prod'].kabocha.summary).toBe(true);
-    });
-
     it('should add auth and data links to SC', () => {
         let healthcheck = results['SC, prod'].healthcheck;
         expect(healthcheck.hasOwnProperty('author')).toBe(true);

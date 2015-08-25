@@ -43,6 +43,19 @@ describe('EnvStatusDetail directive', () => {
         expect(elm.find('.build-detail').length).toBe(0);
     });
 
+    it('should have an extra column for sharecare', () => {
+        let notSC = ctrl.colspan();
+        expect(notSC).toBe(4);
+
+        ctrl.name = 'SC';
+        expect(ctrl.colspan()).toBe(5);
+    });
+
+    it('should display healthcheck information', () => {
+        // one healthcheck li for each of author, webpub, and data
+        expect(elm.find('.healthcheck li').length).toBe(3);
+    });
+
     function fakeAppDetails ( healthcheck = {}, honeydew = {}, kabocha = { summary: true }) {
         let status = true;
         let webauth = { status };

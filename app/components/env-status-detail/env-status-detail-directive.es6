@@ -7,6 +7,17 @@ class EnvStatusDetailController {
     isSharecare () {
         return this.name === 'SC';
     }
+
+    colspan () {
+        let STANDARD_COLUMNS = 4;
+        if ( this.isSharecare() ) {
+            return 1 + STANDARD_COLUMNS;
+        }
+        else {
+            return STANDARD_COLUMNS;
+        }
+    }
+
 };
 
 angular.module('honeydew').directive('envStatusDetail', function () {

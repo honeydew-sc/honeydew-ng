@@ -1,7 +1,7 @@
 describe('EnvStatusDetail directive', () => {
     var elm,
         scope,
-        controller;
+        ctrl;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
@@ -15,20 +15,20 @@ describe('EnvStatusDetail directive', () => {
         $compile(elm)(scope);
         scope.$digest();
 
-        controller = elm.isolateScope().EnvStatusDetail;
+        ctrl = elm.isolateScope().EnvStatusDetail;
     }));
 
     it('should pull the app and name down from its parent', () => {
-        expect(controller.name).toBe('name');
-        expect(controller.app).toBeDefined();
+        expect(ctrl.name).toBe('name');
+        expect(ctrl.app).toBeDefined();
     });
 
     it('should know if the current app is Sharecare', () => {
-        controller.name = 'name';
-        expect(controller.isSharecare()).toBe(false);
+        ctrl.name = 'name';
+        expect(ctrl.isSharecare()).toBe(false);
 
-        controller.name = 'SC';
-        expect(controller.isSharecare()).toBe(true);
+        ctrl.name = 'SC';
+        expect(ctrl.isSharecare()).toBe(true);
     });
 
     it('should display build information when available', () => {
@@ -38,7 +38,7 @@ describe('EnvStatusDetail directive', () => {
     });
 
     it('should hide the build information when missing', () => {
-        delete controller.app.build;
+        delete ctrl.app.build;
         scope.$digest();
         expect(elm.find('.build-detail').length).toBe(0);
     });

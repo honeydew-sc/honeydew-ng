@@ -106,15 +106,20 @@ class EnvStatus {
             function addHoneydewSummary ( app, status ) {
                 if ( status.hasOwnProperty('honeydew') && status.honeydew.total != 0 ) {
                     let { success, total } = status.honeydew;
+                    status.honeydew.percentage = hdPercentage({ success, total });
                     if ( app === 'DROZ' ) {
                         status.honeydew.summary = getHoneydewDrozStatus( success, total );
                     }
                     else {
-                        status.honeydew.summary = getHoneydewGenericStatus( success, total );
+                        status.honeydew.summary = getHoneydewGenericStatus( status.honeydew.percentage );
                     }
                 }
 
                 return status;
+            }
+
+            function hdPercentage ({ success, total }) {
+                return Math.round(success / total * 100) ;
             }
 
             function getHoneydewDrozStatus( success, total ) {
@@ -122,9 +127,9 @@ class EnvStatus {
                 return total - success < DROZ_ACCEPTABLE_FAILURE;
             }
 
-            function getHoneydewGenericStatus( success, total ) {
+            function getHoneydewGenericStatus( percentage ) {
                 let SUCCESS_RATIO = 75;
-                return Math.floor(success / total * 100) > SUCCESS_RATIO;
+                return percentage >= SUCCESS_RATIO;
             }
 
             function addHoneydewDashboard ( app, env, res ) {

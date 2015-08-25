@@ -1,4 +1,4 @@
-describe('EnvStatus', function () {
+fdescribe('EnvStatus', function () {
     let results,
         httpMock,
         EnvStatus,
@@ -48,22 +48,25 @@ describe('EnvStatus', function () {
             let status = results['SC, prod'];
             expect(status.hasOwnProperty('honeydew')).toBe(true);
             expect(status.honeydew.summary).toBe(true);
+            expect(status.honeydew.percentage).toBe(100);
         });
 
         it('should calculate the droz passing summary as a flat failure count', () => {
             HD_TOTAL = 20;
             HD_SUCCESS = 6;
             let results = mockQuery( 'DROZ' );
-            let drozSummary = results['DROZ, prod'].honeydew.summary;
-            expect(drozSummary).toBe(true);
+            let droz = results['DROZ, prod'].honeydew;
+            expect(droz.summary).toBe(true);
+            expect(droz.percentage).toBe(39);
         });
 
         it('should calculate the droz failing summary as a flat failure count', () => {
             HD_TOTAL = 20;
             HD_SUCCESS = 5;
             let results = mockQuery( 'DROZ' );
-            let drozSummary = results['DROZ, prod'].honeydew.summary;
-            expect(drozSummary).toBe(false);
+            let droz = results['DROZ, prod'].honeydew;
+            expect(droz.summary).toBe(false);
+            expect(droz.percentage).toBe(35);
         });
     });
 

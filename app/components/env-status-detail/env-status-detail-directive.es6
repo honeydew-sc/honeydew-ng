@@ -17,17 +17,6 @@ class EnvStatusDetailController {
             return STANDARD_COLUMNS;
         }
     }
-
-    hdSuccessPercentage () {
-        let { success, total } = this.app.honeydew;
-
-        if ( total === 0 ) {
-            return 0;
-        }
-        else {
-            return Math.round( success / total * 100 );
-        }
-    }
 };
 
 angular.module('honeydew').directive('envStatusDetail', function () {

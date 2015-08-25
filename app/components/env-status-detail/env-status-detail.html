@@ -38,10 +38,11 @@
     <div ng-if="EnvStatusDetail.isSharecare()" class="detail kabocha">
       <h4 ng-class="{ green: EnvStatusDetail.app.kabocha.summary }">
         kabocha
+        <span class="small">
+          (<a target="_blank"
+              ng-href="{{ EnvStatusDetail.app.kabocha.url }}">dash</a>)
+        </span>
       </h4>
-      <a target="_blank" ng-href="{{ EnvStatusDetail.app.kabocha.url }}">
-        Open the general Kabocha dashboard
-      </a>
     </div>
   </div>
 

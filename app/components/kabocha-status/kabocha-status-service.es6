@@ -41,11 +41,11 @@ class KabochaStatus {
             if ( res.data.data[env].hasOwnProperty('suites') ) {
                 let suiteData = res.data.data[env].suites;
                 Object.keys( suiteData ).forEach( ( suite ) => {
-                    if ( suiteData[suite].status === 'ok' ) {
-                        statuses[env].success.push(suite);
+                    if ( suiteData[suite].status === 'not ok' ) {
+                        statuses[env].failure.push(suite);
                     }
                     else {
-                        statuses[env].failure.push(suite);
+                        statuses[env].success.push(suite);
                     }
                 });
             }

@@ -62,7 +62,10 @@ describe('EnvStatusDetail directive', () => {
         });
 
         it('should display the success percentage', () => {
-            scope.$apply( () => { ctrl.app.honeydew.percentage = 50; } );
+            scope.$apply(() => {
+                ctrl.app.honeydew.total = 1;
+                ctrl.app.honeydew.percentage = 50;
+            });
             expect(elm.find('.honeydew .big-emph').text()).toMatch(/^\s*50\s*$/);
         });
 

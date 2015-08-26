@@ -28,11 +28,13 @@
               ng-href="{{ EnvStatusDetail.app.honeydew.url }}">dash</a>)
         </span>
       </h4>
-      <div>
+      <div ng-if="EnvStatusDetail.app.honeydew.total > 0">
         <span class="big-emph">
-          {{ EnvStatusDetail.app.honeydew.percentage }}</span>% passed. <br />
-
-        (<span class="green">{{ EnvStatusDetail.app.honeydew.success }} </span> of {{ EnvStatusDetail.app.honeydew.total }})
+          {{ EnvStatusDetail.app.honeydew.percentage }}</span>% passed.
+        (<span class="green">{{ EnvStatusDetail.app.honeydew.success }}</span> of {{ EnvStatusDetail.app.honeydew.total }})
+      </div>
+      <div ng-if="EnvStatusDetail.app.honeydew.total === 0">
+        nothing available for this env & build; run&nbsp;some!
       </div>
     </div>
 
@@ -45,13 +47,15 @@
               ng-href="{{ EnvStatusDetail.app.kabocha.url }}">dash</a>)
         </span>
       </h4>
-      <div ng-if="!EnvStatusDetail.app.kabocha.summary">
+      <div ng-if="EnvStatusDetail.app.kabocha.summary === false">
         The following suites failed:
         <ul>
           <li ng-repeat="suite in EnvStatusDetail.app.kabocha.failure">{{ suite }}</li>
         </ul>
       </div>
-
+      <span ng-if="EnvStatusDetail.app.kabocha.summary === true">
+        All of the Kabocha suites are passing!
+      </span>
     </div>
   </div>
 

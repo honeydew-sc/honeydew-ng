@@ -1,11 +1,12 @@
 class EnvStatusDetailController {
-    constructor () {
+    constructor (EnvStatus) {
         // this.name and this.app automatically are on our controller
         // thanks to the scope declaration in the directive definitive
+        this.EnvStatus = EnvStatus;
     }
 
     isSharecare () {
-        return this.name === 'SC';
+        return this.EnvStatus.isSharecare( this.name );
     }
 
     colspan () {

@@ -12,6 +12,7 @@ require_once 'rest-routes/job/HoneydewJob.php';
 require_once 'rest-routes/jobs.php';
 require_once 'rest-routes/monitor.php';
 require_once 'rest-routes/pusher.php';
+require_once 'rest-routes/sets.php';
 require_once 'rest-routes/status.php';
 require_once 'rest-routes/report.php';
 require_once 'rest-routes/tree.php';

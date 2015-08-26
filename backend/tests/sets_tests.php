@@ -8,13 +8,10 @@ class filesTests extends UnitTestCase {
     protected $baseUrl = "http://localhost/rest.php/sets";
     protected $basePath = "/opt/honeydew";
 
-    /* public function __construct() {
-
-    } */
-
     function testGet() {
         $response = \Httpful\Request::get($this->baseUrl)->send();
-        print_r($response->body);
+        $this->assertFalse( in_array( '-.set', $response->body->sets ) );
+        $this->assertFalse( in_array( '.set', $response->body->sets ) );
     }
 
 

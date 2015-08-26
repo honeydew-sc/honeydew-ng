@@ -7,7 +7,7 @@ $app->group('/sets', function () use ($app, $setsDir) {
     $app->get('/', function () use ($setsDir) {
         echo '{ "sets" : ' . json_encode(
             array_values(array_filter(scandir($setsDir), function ($it) {
-                return preg_match("/\.set$/", $it);
+                return preg_match("/\w+\.set$/", $it);
             }))) . '}';
     });
 

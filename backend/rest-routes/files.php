@@ -78,7 +78,9 @@ $app->group('/files', function () use ($app) {
     });
 
     function encodeFilename( $filename ) {
-        return urlencode(str_replace('/opt/honeydew/', '', $filename));
+        $config = get_config();
+        $hdBase = $config['honeydew']['basedir'];
+        return urlencode(str_replace($hdBase, '', $filename));
     }
 
     function saveFile( $filename, $featureData ) {
@@ -104,7 +106,9 @@ $app->group('/files', function () use ($app) {
 
     function commitChanges($filename, $msg) {
         $username = getUser();
-        $filename = str_replace("/opt/honeydew/", "", $filename);
+        $config = get_config();
+        $hdBase = $config['honeydew']['basedir'];
+        $filename = str_replace($hdBase, "", $filename);
 
         $message = '"' . $username  . ' ' . $msg . '"';
         $command = "sh /opt/honeydew-ui/user-push.sh " . $filename . " " . $message;

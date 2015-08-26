@@ -11,8 +11,10 @@ $app->group('/autocomplete', function () use ($app) {
         is defined. */
         $keywords = getKeyWords();
 
-        exec('/usr/bin/perl -w /opt/honeydew/bin/parseRules.pl > /dev/null 2>&1 &');
-        exec('/usr/bin/perl -w /opt/honeydew/bin/parsePhrases.pl > /dev/null 2>&1 &');
+        $config = get_config();
+        $hdBin = $config['honeydew']['basedir'] . 'bin/';
+        exec('/usr/bin/perl -w ' . $hdBin . 'parseRules.pl > /dev/null 2>&1 &');
+        exec('/usr/bin/perl -w ' . $hdBin . 'parsePhrases.pl > /dev/null 2>&1 &');
         echo json_encode(array(
             'suggestRules' => $rules[0],
             'regexRules' => $rules[1],

@@ -14,8 +14,10 @@ $app->group('/monitor', function () use ($app) {
         $query = $pdo->prepare($monitorGetQuery);
         $query->execute();
         $monitors = $query->fetchAll(PDO::FETCH_ASSOC);
-        $monitors = array_map( function ( $it ) use ($pdo) {
-            if (!file_exists("/opt/honeydew/sets/" . $it['set'])) {
+        $config = get_config();
+        $hdSets = $config['honeydew']['basedir'] . 'sets/';
+        $monitors = array_map( function ( $it ) use ($pdo, $hdSets) {
+            if (!file_exists($hdSets . $it['set'])) {
                 deleteFromDB( $it['id'], $pdo );
             }
             else {

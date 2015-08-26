@@ -10,8 +10,10 @@ $app->group('/tree', function () use ($app) {
             $app->pass();
         }
 
+        $config = get_config();
+        $hd_base = $config['honeydew']['basedir'];
         try {
-            exec('grep -hr -P "^Set:" /opt/honeydew/features', $sets);
+            exec('grep -hr -P "^Set:" ' . $hd_base . 'features', $sets);
 
             function isSetNameValid($it) {
                 return substr($it, 0, 1) != '#'
@@ -56,7 +58,8 @@ $app->group('/tree', function () use ($app) {
         try {
             $req = $app->request();
 
-            $basedir = "/opt/honeydew/";
+            $config = get_config();
+            $basedir = $config['honeydew']['basedir'];
             $folder = implode("/", $folder);
 
             $needle = $req->get('needle');

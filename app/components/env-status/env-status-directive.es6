@@ -18,7 +18,7 @@ class EnvStatusController {
     }
 
     isSharecare() {
-        return this.app === 'SC';
+        return this.EnvStatus.isSharecare( this.app );
     }
 }
 

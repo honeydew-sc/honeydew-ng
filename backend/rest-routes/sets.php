@@ -1,6 +1,7 @@
 <?php
 
-$setsDir = "/opt/honeydew/sets";
+$config = get_config();
+$setsDir = $config['honeydew']['basedir'] . 'sets/';
 
 $app->group('/sets', function () use ($app, $setsDir) {
 

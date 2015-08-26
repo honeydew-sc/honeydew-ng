@@ -121,4 +121,33 @@ function get_config($file = "/opt/honeydew/honeydew.ini") {
     return $settings;
 }
 
+function refreshSet( $setName ) {
+    $shortName = escapeshellcmd(substr(array_pop(explode('/', $setName)), 0, -4));
+
+    $escape = false;
+    $features = grepDirectory(
+        'features',
+        'Set:.*?\b' . $shortName . '\b',
+        '-rl -P',
+        $escape
+    );
+    $contents = array_reduce($features, function ($acc, $it) {
+        return $acc . substr($it, 9) . "\n";
+    });
+
+    if ($contents != "") {
+        file_put_contents($setName, $contents);
+        chmod_safely( $setName );
+    }
+}
+
+function chmod_safely( $filename, $mask = 0666 ) {
+    $processOwner = posix_getpwuid(posix_geteuid());
+    $fileOwner = posix_getpwuid(fileowner($filename));
+    if ($fileOwner == $processOwner) {
+        chmod($filename, $mask);
+    }
+
+}
+
 ?>

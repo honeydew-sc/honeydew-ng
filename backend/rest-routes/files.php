@@ -77,19 +77,6 @@ $app->group('/files', function () use ($app) {
         }
     });
 
-    function resolveFilename( $filename) {
-        $base = "/opt/honeydew/";
-        $filename = implode("/", $filename);
-
-        // handle invalid characters
-        $filename = preg_replace('/%2F/', '/', $filename);
-        $filename = preg_replace('/\s+/', '', $filename);
-        $filename = str_replace('&', 'and', $filename);
-        $filename = str_replace('//', '/', $filename);
-
-        return $base . $filename;
-    }
-
     function encodeFilename( $filename ) {
         return urlencode(str_replace('/opt/honeydew/', '', $filename));
     }

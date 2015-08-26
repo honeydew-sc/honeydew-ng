@@ -122,6 +122,19 @@ function get_config($file = "/opt/honeydew/honeydew.ini") {
     return $settings;
 }
 
+function resolveFilename( $filename) {
+    $base = "/opt/honeydew/";
+    $filename = implode("/", $filename);
+
+    // handle invalid characters
+    $filename = preg_replace('/%2F/', '/', $filename);
+    $filename = preg_replace('/\s+/', '', $filename);
+    $filename = str_replace('&', 'and', $filename);
+    $filename = str_replace('//', '/', $filename);
+
+    return $base . $filename;
+}
+
 function refreshSet( $setName ) {
     $shortName = escapeshellcmd(substr(array_pop(explode('/', $setName)), 0, -4));
 
@@ -132,6 +145,7 @@ function refreshSet( $setName ) {
         '-rl -P',
         $escape
     );
+
     $contents = array_reduce($features, function ($acc, $it) {
         return $acc . substr($it, 9) . "\n";
     });
@@ -140,6 +154,8 @@ function refreshSet( $setName ) {
         file_put_contents($setName, $contents);
         chmod_safely( $setName );
     }
+
+    return $contents;
 }
 
 function chmod_safely( $filename, $mask = 0666 ) {

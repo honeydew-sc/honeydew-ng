@@ -45,7 +45,7 @@ $app->group('/sets', function () use ($app, $setsDir) {
             renameSet( $oldShortSetName, $newShortSetName, $features );
 
             unlink( $oldPath );
-            echo successMessage(array( 'newName' => $newShortSetName ) );
+            echo successMessage(array( 'newSetName' => $newShortSetName ) );
         }
         catch ( Exception $e ) {
             $app->halt(418, errorMessage("Set rename error: " . $e->getMessage()));

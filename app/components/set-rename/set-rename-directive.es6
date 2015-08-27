@@ -9,14 +9,18 @@ class SetRenameController {
     }
 };
 
-angular.module('honeydew').directive('setRename', function () {
-    return {
-        templateUrl: 'components/set-rename/set-rename.html',
-        replace: true,
-        restrict: 'E',
-        scope: {},
-        bindToController: true,
-        controller: SetRenameController,
-        controllerAs: 'SetRename'
-    };
-});
+angular.module('honeydew')
+    // register the controller explicitly so it can referenced by name
+    // elsewhere
+    .controller('SetRenameController', SetRenameController)
+    .directive('setRename', function () {
+        return {
+            templateUrl: 'components/set-rename/set-rename.html',
+            replace: true,
+            restrict: 'E',
+            scope: {},
+            bindToController: true,
+            controller: 'SetRenameController',
+            controllerAs: 'SetRename'
+        };
+    });

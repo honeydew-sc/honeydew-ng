@@ -10,6 +10,7 @@ angular.module('honeydew', [
     'treeControl',
     'ui.select',
     'ngAria',
+    'ngMessages',
     'ngMaterial',
 
 

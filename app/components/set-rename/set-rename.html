@@ -1,4 +1,25 @@
-<div class="set-rename">
-  Current Set: <input value="{{ SetRename.currentSet }}">
-  New set: <input>
-</div>
+<md-dialog aria-label="Mango (Fruit)">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Rename Set</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="answer('not applicable')">
+          <i class="fa fa-lg fa-times" aria-label="Close dialog"></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <md-input-container flex>
+        <label>Current Set</label>
+        <input ng-model="SetRename.currentSet">
+      </md-input-container>
+
+      <md-input-container flex>
+        <label>Destination Set Name</label>
+        <input ng-model="SetRename.newSetName">
+      </md-input-container>
+
+    </md-dialog-content>
+  </form>
+</md-dialog>

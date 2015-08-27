@@ -1,3 +1,25 @@
+class EditorNavController {
+    constructor ($scope, $localStorage, $mdDialog) {
+        $scope.settings = $localStorage.settings;
+
+        this.$mdDialog = $mdDialog;
+
+    }
+
+    showRenameSetModal ( $event ) {
+        let { $mdDialog } = this;
+
+        $mdDialog.show({
+            controller: 'SetRenameController',
+            controllerAs: 'SetRename',
+            templateUrl: '/components/set-rename/set-rename.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
+    }
+
+}
+
 angular.module('honeydew')
     .directive('editorNav', function ($modal, $log, $location, $localStorage, $window, Files, alerts, filetree, honeydewConfig) {
         return {
@@ -138,8 +160,6 @@ angular.module('honeydew')
                     return honeydewConfig.vcs_url + $location.path().substring(1);
                 })();
             },
-            controller: ($scope, $localStorage) => {
-                $scope.settings = $localStorage.settings;
-            }
+            controller: EditorNavController
         };
     });

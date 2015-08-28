@@ -20,6 +20,9 @@
           <div ng-message="setname">
             Names may only contain <code>A-Z a-z - . _</code>
           </div>
+          <div ng-message="setExists">
+            The <code>@{{ SetRename.newSetName }}</code> set already exists.
+          </div>
         </div>
 
       </md-input-container>

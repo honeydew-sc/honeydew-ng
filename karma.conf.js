@@ -35,6 +35,7 @@ module.exports = function(config) {
             'app/bower_components/jquery/jquery.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
+            'app/bower_components/angular-messages/angular-messages.js',
             'app/bower_components/angular-resource/angular-resource.js',
             'app/bower_components/angular-sanitize/angular-sanitize.js',
             'app/bower_components/angular-ui-codemirror/ui-codemirror.js',

@@ -5,6 +5,25 @@ class SetRenameController {
         this.Set = Set;
 
         this.currentSet = this.Set.currentSet();
+
+        this.existingSets = [];
+        this.Set.existingSets().then(( sets ) => {
+            this.existingSets = sets;
+        });
+    }
+
+    isExistingSet() {
+        if ( ! this.hasOwnProperty( 'existingSets' ) ) {
+            return false;
+        }
+
+        let shortName = this._shortName( this.newSetName );
+        if ( shortName === this.currentSet ) {
+            return false;
+        }
+        else {
+            return this.existingSets.indexOf( shortName ) !== -1;
+        }
     }
 
     rename () {
@@ -30,6 +49,10 @@ class SetRenameController {
     hideModal () {
         let { $mdDialog } = this;
         $mdDialog.hide();
+    }
+
+    _shortName ( name = '' ) {
+        return name.replace( /.set$/, '' );
     }
 };
 

@@ -16,6 +16,10 @@ describe('SetRename directive', () => {
         $mdDialog = _$mdDialog_;
         $location.path('/sets/original.set');
 
+        let p = $q.defer();
+        p.resolve([ 'other', 'existing', 'sets' ]);
+        spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
+
         elm = angular.element('<set-rename></set-rename>');
         scope = $rootScope;
         $compile(elm)(scope);
@@ -51,6 +55,11 @@ describe('SetRename directive', () => {
         ctrl.newSetName = 'extension.set';
         doSetRename( true, 'extension' );
         expect( Set.rename ).toHaveBeenCalledWith( 'original', 'extension' );
+    });
+
+    it('should warn about merging sets', () => {
+        scope.$apply( () => { ctrl.newSetName = 'other'; } );
+        expect(elm.find('.merge-warning').length).toBe(1);;
     });
 
     function doSetRename ( success = true, newSetName = 'destination') {

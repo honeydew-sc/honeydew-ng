@@ -10,4 +10,5 @@ angular.module("config", [])
     .constant("redisConfig", {})
     .constant("flagsConfig", {})
     .constant("awsConfig", {})
-    .constant("dotmilConfig", {});
+    .constant("dotmilConfig", {})
+    .constant("honeydewConfig", {});

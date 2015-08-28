@@ -3,7 +3,6 @@ class EditorNavController {
         $scope.settings = $localStorage.settings;
 
         this.$mdDialog = $mdDialog;
-
     }
 
     showRenameSetModal ( $event ) {
@@ -160,6 +159,7 @@ angular.module('honeydew')
                     return honeydewConfig.vcs_url + $location.path().substring(1);
                 })();
             },
-            controller: EditorNavController
+            controller: EditorNavController,
+            controllerAs: 'EditorNav'
         };
     });

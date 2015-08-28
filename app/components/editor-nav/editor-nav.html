@@ -50,6 +50,14 @@
                 Move/Rename
               </a>
             </li>
+            <li ng-if="isSet">
+              <a id="rename-set" ng-click="EditorNav.showRenameSetModal( $event )">
+                <i class="fa fa-fw fa-lg fa-cut"></i>
+                Move/Rename Set
+              </a>
+            </li>
+
+
             <li>
               <a id="history" target="_blank" ng-href="{{ historyUrl }}">
                 <i class="fa fa-fw fa-lg fa-clock-o"></i>

@@ -7,7 +7,8 @@
       Please choose a new set name for <code>@{{ SetRename.currentSet }}</code>!
       <md-input-container flex>
         <label>New Set Name</label>
-        <input ng-model="SetRename.newSetName"
+        <input class="rename-input"
+               ng-model="SetRename.newSetName"
                name="newSetName"
                required
                valid-set-name>
@@ -26,7 +27,8 @@
 
     <div class="md-actions" layout="row">
       <span flex>{{ SetRename.statusMessage }}</span>
-      <md-button ng-disabled="! renameForm.$valid"
+      <md-button class="rename-btn"
+                 ng-disabled="! renameForm.$valid"
                  ng-click="SetRename.rename()"
                  style="margin-right:20px;">
         Rename

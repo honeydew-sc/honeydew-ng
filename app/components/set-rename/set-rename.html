@@ -26,8 +26,10 @@
 
     <div class="md-actions" layout="row">
       <span flex></span>
-      <md-button ng-click="SetRename.rename()" style="margin-right:20px;">
-        Rename
+      <md-button ng-disabled="! renameForm.$valid"
+                 ng-click="SetRename.rename()"
+                 style="margin-right:20px;">
+        Rename!
       </md-button>
     </div>
 

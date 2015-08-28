@@ -8,16 +8,28 @@ class SetRenameController {
     }
 
     rename () {
-        let { currentSet, newSetName, Set, $location  } = this;
+        let { currentSet, newSetName, Set  } = this;
         let newName = newSetName.replace( /.set$/, '' );
 
         return Set.rename( currentSet, newName )
             .then( ({ data }) => {
-                $location.path( '/sets/' + data.newSetName + '.set' );
+                this.redirectToNewSet( data.newSetName );
+                return { data };
             })
+            .then( this.hideModal.bind( this ) )
             .catch( ({ data }) => {
                 this.statusMessage = 'Something went wrong :(';
             });
+    }
+
+    redirectToNewSet ( name ) {
+        let { $location } = this;
+        return $location.path( '/sets/' + name + '.set' );
+    }
+
+    hideModal () {
+        let { $mdDialog } = this;
+        $mdDialog.hide();
     }
 };
 

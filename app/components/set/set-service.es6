@@ -2,6 +2,22 @@ class SetService {
     constructor ( $http, $location ) {
         this.$http = $http;
         this.$location = $location;
+        this.endpointBase = '/rest.php/sets/';
+    }
+
+    existingSets () {
+        if ( this.existingSetList ) {
+            return this.existingSetList;
+        }
+        else {
+            let { $http } = this;
+            this.existingSetList = $http.get( this.endpointBase ).
+                then( ({ data: { sets: sets }}) => {
+                    return sets.map( set => set.replace( /\.set$/, '' ) );
+                });
+
+            return this.existingSetList;
+        }
     }
 
     rename ( sourceSet, newSetName ) {
@@ -32,9 +48,7 @@ class SetService {
     }
 
     _getEndpoint( sourceSet ) {
-        let endpointBase = '/rest.php/sets/';
-
-        return endpointBase + this._coerceExtension( sourceSet );
+        return this.endpointBase + this._coerceExtension( sourceSet );
     }
 
     _coerceExtension( setName ) {

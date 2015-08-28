@@ -1,10 +1,24 @@
 class SetService {
-    constructor ( $http ) {
+    constructor ( $http, $location ) {
         this.$http = $http;
-
+        this.$location = $location;
     }
 
-    getEndpoint( sourceSet ) {
+    rename ( sourceSet, newSetName ) {
+        let { $http } = this;
+        if ( ! this.isNameValid( newSetName ) ){
+            return false;
+        }
+        else {
+            let endpoint = this._getEndpoint( sourceSet );
+            return $http.post( endpoint, { newSetName } );
+        }
+    }
+
+    isNameValid ( name ) {
+        return /^[0-9a-zA-Z_\-\.\/]+$/.test( name );
+    }
+
     currentSet () {
         let { $location } = this;
 
@@ -16,6 +30,8 @@ class SetService {
             return '';
         }
     }
+
+    _getEndpoint( sourceSet ) {
         let endpointBase = '/rest.php/sets/';
 
         return endpointBase + this._coerceExtension( sourceSet );
@@ -28,21 +44,6 @@ class SetService {
         else {
             return setName;
         }
-    }
-
-    rename ( sourceSet, newSetName ) {
-        let { $http } = this;
-        if ( ! this.isNameValid( newSetName ) ){
-            return false;
-        }
-        else {
-            let endpoint = this.getEndpoint( sourceSet );
-            return $http.post( endpoint, { newSetName } );
-        }
-    }
-
-    isNameValid ( name ) {
-        return /^[0-9a-zA-Z_\-\.\/]+$/.test( name );
     }
 }
 

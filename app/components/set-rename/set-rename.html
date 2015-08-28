@@ -1,25 +1,35 @@
-<md-dialog aria-label="Mango (Fruit)">
-  <form>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Rename Set</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="answer('not applicable')">
-          <i class="fa fa-lg fa-times" aria-label="Close dialog"></i>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-dialog-content style="max-width:800px;max-height:810px; ">
-      <md-input-container flex>
-        <label>Current Set</label>
-        <input ng-model="SetRename.currentSet">
-      </md-input-container>
+<md-dialog aria-label="Rename Set: @{{ SetRename.currentSet }}"
+           class="set-rename">
 
-      <md-input-container flex>
-        <label>Destination Set Name</label>
-        <input ng-model="SetRename.newSetName">
-      </md-input-container>
+  <form name="renameForm">
 
+    <md-dialog-content>
+      Please choose a new set name for <code>@{{ SetRename.currentSet }}</code>!
+      <md-input-container flex>
+        <label>New Set Name</label>
+        <input ng-model="SetRename.newSetName"
+               name="newSetName"
+               required
+               valid-set-name>
+
+        <div ng-messages="renameForm.newSetName.$error">
+          <div ng-message="required">
+            This is required.
+          </div>
+          <div ng-message="setname">
+            Names may only contain <code>A-Z a-z - . _</code>
+          </div>
+        </div>
+
+      </md-input-container>
     </md-dialog-content>
+
+    <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button ng-click="SetRename.rename()" style="margin-right:20px;">
+        Rename
+      </md-button>
+    </div>
+
   </form>
 </md-dialog>

@@ -3,18 +3,24 @@ angular.module('honeydew').directive('validSetName', function ( Set ) {
         require: 'ngModel',
         restrict: 'A',
         link: ( scope, elem, attrs, ngModel ) => {
-            let validatorName = 'setname';
-
             ngModel.$parsers.push( function (value) {
                 if ( ! value || value.length === 0 ) {
                     return value;
                 }
 
                 if ( Set.isNameValid( value ) ) {
-                    ngModel.$setValidity( validatorName, true );
+                    ngModel.$setValidity( 'setname', true );
                 }
                 else {
-                    ngModel.$setValidity( validatorName, false );
+                    ngModel.$setValidity( 'setname', false );
+                }
+
+                let currentSet = Set.currentSet();
+                if ( currentSet === value || currentSet + '.set' === value ) {
+                    ngModel.$setValidity( 'setExists', false );
+                }
+                else {
+                    ngModel.$setValidity( 'setExists', true );
                 }
 
                 return value;

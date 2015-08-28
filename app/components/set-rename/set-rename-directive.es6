@@ -1,14 +1,10 @@
 class SetRenameController {
-    constructor ( $location, Set ) {
+    constructor ( $location, $mdDialog, Set ) {
         this.$location = $location;
+        this.$mdDialog = $mdDialog;
         this.Set = Set;
 
-        this.currentSet = this._locationToSet( $location.path() );
-    }
-
-    _locationToSet ( path ) {
-        let matches = path.match(/\/sets\/(.*)\.set/);
-        return matches[1];
+        this.currentSet = this.Set.currentSet();
     }
 
     rename () {

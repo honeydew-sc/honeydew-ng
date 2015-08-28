@@ -5,6 +5,17 @@ class SetService {
     }
 
     getEndpoint( sourceSet ) {
+    currentSet () {
+        let { $location } = this;
+
+        let matches = $location.path().match(/\/sets\/(.*)\.set/);
+        if ( matches.length ) {
+            return matches[1];
+        }
+        else {
+            return '';
+        }
+    }
         let endpointBase = '/rest.php/sets/';
 
         return endpointBase + this._coerceExtension( sourceSet );

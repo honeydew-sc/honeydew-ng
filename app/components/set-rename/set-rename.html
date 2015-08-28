@@ -5,6 +5,7 @@
 
     <md-dialog-content>
       Please choose a new set name for <code>@{{ SetRename.currentSet }}</code>!
+
       <md-input-container flex>
         <label>New Set Name</label>
         <input class="rename-input"
@@ -20,11 +21,10 @@
           <div ng-message="setname">
             Names may only contain <code>A-Z a-z - . _</code>
           </div>
-          <div ng-message="setExists">
-            The <code>@{{ SetRename.newSetName }}</code> set already exists.
+          <div ng-message="currentset">
+            This _is_ the <code>@{{ SetRename.newSetName }}</code> set.
           </div>
         </div>
-
       </md-input-container>
     </md-dialog-content>
 

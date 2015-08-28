@@ -17,10 +17,10 @@ angular.module('honeydew').directive('validSetName', function ( Set ) {
 
                 let currentSet = Set.currentSet();
                 if ( currentSet === value || currentSet + '.set' === value ) {
-                    ngModel.$setValidity( 'setExists', false );
+                    ngModel.$setValidity( 'currentset', false );
                 }
                 else {
-                    ngModel.$setValidity( 'setExists', true );
+                    ngModel.$setValidity( 'currentset', true );
                 }
 
                 return value;

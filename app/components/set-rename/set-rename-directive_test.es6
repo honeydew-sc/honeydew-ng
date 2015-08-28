@@ -48,7 +48,9 @@ describe('SetRename directive', () => {
     });
 
     it('should remove the .set extension during renames', () => {
-
+        ctrl.newSetName = 'extension.set';
+        doSetRename( true, 'extension' );
+        expect( Set.rename ).toHaveBeenCalledWith( 'original', 'extension' );
     });
 
     function doSetRename ( success = true, newSetName = 'destination') {

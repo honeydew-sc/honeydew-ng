@@ -1,11 +1,27 @@
 class SetRenameController {
     constructor ( $location, Set ) {
+        this.$location = $location;
+        this.Set = Set;
+
         this.currentSet = this._locationToSet( $location.path() );
     }
 
     _locationToSet ( path ) {
         let matches = path.match(/\/sets\/(.*)\.set/);
         return matches[1];
+    }
+
+    rename () {
+        let { currentSet, newSetName, Set, $location  } = this;
+        let newName = newSetName.replace( /.set$/, '' );
+
+        return Set.rename( currentSet, newName )
+            .then( ({ data }) => {
+                $location.path( '/sets/' + data.newSetName + '.set' );
+            })
+            .catch( ({ data }) => {
+                this.statusMessage = 'Something went wrong :(';
+            });
     }
 };
 

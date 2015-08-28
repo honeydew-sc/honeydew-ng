@@ -1,17 +1,19 @@
-fdescribe('SetRename directive', () => {
+describe('SetRename directive', () => {
     let $q;
     let elm;
     let Set;
     let ctrl;
     let scope;
+    let $mdDialog;
     let $location;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( (_$q_, _Set_, $compile, $rootScope, $location) => {
+    beforeEach(inject( (_$q_, _Set_, $compile, $rootScope, $location, _$mdDialog_) => {
         $q = _$q_;
         Set = _Set_;
+        $mdDialog = _$mdDialog_;
         $location.path('/sets/original.set');
 
         elm = angular.element('<set-rename></set-rename>');
@@ -27,15 +29,37 @@ fdescribe('SetRename directive', () => {
     });
 
     it('should use the set service to rename a set', () => {
-        let success = true;
-        let newSetName = 'destination';
-        let p = $q.defer();
-        p.resolve({ success, newSetName });
-        spyOn( Set, 'rename' ).and.returnValue({ promise: p.$promise });
-
-        let renameBtn = elm.find('.rename.btn');
-        renameBtn.click();
-
+        doSetRename();
         expect(Set.rename).toHaveBeenCalledWith( 'original', 'destination' );
     });
+
+    it('should hide the modal after successfully renaming a set', () => {
+        spyOn( $mdDialog, 'hide' );
+        doSetRename();
+        expect( $mdDialog.hide ).toHaveBeenCalled();
+    });
+
+    it('should disable the rename button while the form is invalid', () => {
+        let renameBtn = elm.find('.rename-btn');
+        expect(renameBtn.attr('disabled')).toBe('disabled');
+
+        scope.$apply( () => { ctrl.newSetName = 'validSetName'; } );
+        expect(renameBtn.attr('disabled')).toBe(undefined);
+    });
+
+    it('should remove the .set extension during renames', () => {
+
+    });
+
+    function doSetRename ( success = true, newSetName = 'destination') {
+        let data = { success, newSetName };
+
+        let p = $q.defer();
+        p.resolve({ data });
+        spyOn( Set, 'rename' ).and.returnValue( p.promise );
+
+        ctrl.newSetName = newSetName;
+        let renameBtn = elm.find('.rename-btn');
+        renameBtn.click();
+    }
 });

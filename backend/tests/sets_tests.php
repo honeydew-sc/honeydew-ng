@@ -175,6 +175,74 @@ class SetsTests extends UnitTestCase {
 
             $this->cleanupFakeSet();
         }
+    }
 
+    function testCopySet() {
+        $tests = array(
+            array(
+                'name' => 'alone, no leading space',
+                'old' => 'Set:@needle',
+                'new' => 'Set:@needle @shiny'
+            ),
+            array(
+                'name' => 'alone, leading space',
+                'old' => 'Set: @needle',
+                'new' => 'Set: @needle @shiny'
+            ),
+            array(
+                'name' => 'first of N, leading space',
+                'old' => 'Set: @needle @haystack',
+                'new' => 'Set: @needle @haystack @shiny'
+            ),
+            array(
+                'name' => 'middle, no leading space',
+                'old' => 'Set:@haystack @needle @haystack2',
+                'new' => 'Set:@haystack @needle @haystack2 @shiny'
+            ),
+            array(
+                'name' => 'middle, leading space',
+                'old' => 'Set: @haystack @needle @haystack2',
+                'new' => 'Set: @haystack @needle @haystack2 @shiny'
+            ),
+            array(
+                'name' => 'last, leading space',
+                'old' => 'Set: @haystack @needle',
+                'new' => 'Set: @haystack @needle @shiny'
+            ),
+            array(
+                'name' => 'skipping substring matches',
+                'old' => 'Set: @needleNeedle',
+                'new' => 'Set: @needleNeedle'
+            )
+        );
+
+        foreach ( $tests as $test ) {
+            $this->setupFakeSet( $test['old'] );
+
+            /* copy @needle to @shiny */
+            $response = \Httpful\Request::put($this->baseUrl . '/shiny.set')
+                 ->body(json_encode(array( 'sourceSetName' => 'needle.set' )))
+                 ->send();
+
+            $files = $this->getSetFilenames();
+            foreach ( $files as $file ) {
+                $this->assertEqual(
+                    file_get_contents( $file ),
+                    $this->featureTemplate( $test['new'] ),
+                    $test['name']
+                );
+            }
+
+            $this->cleanupFakeSet();
+        }
+    }
+
+    function testCopyNonExistentSet() {
+        $response = \Httpful\Request::put($this->baseUrl . '/duplicate.set')
+                      ->body(json_encode(array( 'sourceSetName' => 'notAReal.set' )))
+                      ->send();
+
+        $this->assertPattern( '/Set copy error: /', $response->body->reason,
+                              'non existent sets cannot be the source of a copy' );
     }
 }

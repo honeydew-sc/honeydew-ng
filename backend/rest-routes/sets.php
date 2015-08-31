@@ -52,7 +52,52 @@ $app->group('/sets', function () use ($app, $setsDir) {
         }
     });
 
+    $app->put('/:newSetName', function ( $newSetName ) use ( $app ) {
+        try {
+            $sourceSetName = json_decode( $app->request()->getBody() )->sourceSetName;
+            $oldPath = resolveFilename( array( 'sets', $sourceSetName  ) );
+
+            if ( ! file_exists ($oldPath ) ) {
+                throw new Exception( 'The source set does not exist: ' . $oldPath );
+            }
+            else {
+                $features = array_filter( explode("\n", refreshSet( $oldPath ) ), 'strlen' );
+            }
+
+            $newPath = resolveFilename( array( 'sets', $newSetName ) );
+
+            $oldShortSetName = preg_replace( '/\.set$/', '', $sourceSetName );
+            $newShortSetName = preg_replace( '/\.set$/', '', $newSetName );
+            copySet( $oldShortSetName, $newShortSetName, $features );
+            $contents = refreshSet( $newPath );
+
+            echo successMessage(array(
+                'newSetName' => $newShortSetName,
+                'contents' => $contents
+            ));
         }
+        catch ( Exception $e ) {
+            $app->halt(418, errorMessage("Set copy error: " . $e->getMessage()));
+        }
+    });
+
+    function copySet( $old, $new, $features ) {
+        validateSetName( $new );
+
+        $search = '(Set(?::|: |:.* )\@' . $old . '(?:$| ).*)';
+        $replace = '$1 \@' . $new;
+        $rewrite_command_base = "perl -wpi -e 's/$search/$replace/'";
+
+        $config = get_config();
+        $hd_features_base = $config['honeydew']['basedir'] . 'features/';
+
+        $features_arg = implode( ' ', array_map( function( $it ) use ( $hd_features_base ) {
+            return $hd_features_base . $it;
+        }, $features ) );
+        $rewrite_cmd = $rewrite_command_base . ' ' . $features_arg;
+
+        return exec( $rewrite_cmd );
+    }
 
     function renameSet( $old, $new, $features ) {
         validateSetName( $new );

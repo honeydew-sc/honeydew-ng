@@ -25,18 +25,42 @@ describe('SetService', function () {
         });
     });
 
-    it('should not rename a set to something invalid', () => {
-        let status = Set.rename( 'old', '!@#' );
-        expect( status ).toBe( false );
+    describe('rename', () => {
+
+        it('should not rename a set to something invalid', () => {
+            let status = Set.rename( 'old', '!@#' );
+            expect( status ).toBe( false );
+        });
+
+        it('should hit the rename backend endpoint', () => {
+            let success = true;
+            let newSetName = 'destination';
+            httpMock.expectPOST( '/rest.php/sets/source.set', { newSetName } )
+                .respond({ success, newSetName}) ;
+            let renamePost = Set.rename( 'source', 'destination' );
+            httpMock.flush();
+        });
+
     });
 
-    it('should hit the rename backend endpoint', () => {
-        let success = true;
-        let newSetName = 'destination';
-        httpMock.expectPOST( '/rest.php/sets/source.set', { newSetName } )
-            .respond({ success, newSetName}) ;
-        let renamePost = Set.rename( 'source', 'destination' );
-        httpMock.flush();
+    describe('copy', () => {
+
+        it('should not rename a set to something invalid', () => {
+            let status = Set.copy( 'old', '!@#' );
+            expect( status ).toBe( false );
+        });
+
+        it('should hit the copy backend endpoint', () => {
+            let success = true;
+            let sourceSetName = 'source.set';
+            let newSetName = 'destination';
+
+            httpMock.expectPUT( `/rest.php/sets/${newSetName}.set`, { sourceSetName } )
+                .respond({ success, newSetName });
+            let copyPut = Set.copy( 'source', 'destination' );
+            httpMock.flush();
+
+        });
     });
 
 });

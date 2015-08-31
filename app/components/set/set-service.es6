@@ -21,13 +21,26 @@ class SetService {
     }
 
     rename ( sourceSet, newSetName ) {
-        let { $http } = this;
-        if ( ! this.isNameValid( newSetName ) ){
+        if ( ! this.isNameValid( newSetName ) ) {
             return false;
         }
         else {
+            let { $http } = this;
             let endpoint = this._getEndpoint( sourceSet );
             return $http.post( endpoint, { newSetName } );
+        }
+    }
+
+    copy ( sourceSetName, newSetName ) {
+        if ( ! this.isNameValid( newSetName ) ) {
+            return false;
+        }
+        else {
+            let { $http } = this;
+            let endpoint = this._getEndpoint( newSetName );
+            return $http.put( endpoint, {
+                sourceSetName: this._coerceExtension( sourceSetName )
+            });
         }
     }
 

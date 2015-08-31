@@ -125,7 +125,7 @@ class SetsTests extends UnitTestCase {
                 $this->assertEqual(
                     file_get_contents( $file ),
                     $this->featureTemplate( $test['new'] ),
-                    $test['name']
+                    'rename set case: ' . $test['name']
                 );
             }
 
@@ -229,7 +229,7 @@ class SetsTests extends UnitTestCase {
                 $this->assertEqual(
                     file_get_contents( $file ),
                     $this->featureTemplate( $test['new'] ),
-                    $test['name']
+                    'copy set case: ' . $test['name']
                 );
             }
 

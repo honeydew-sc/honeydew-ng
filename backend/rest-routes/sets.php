@@ -86,17 +86,8 @@ $app->group('/sets', function () use ($app, $setsDir) {
 
         $search = '(Set(?::|: |:.* )\@' . $old . '(?:$| ).*)';
         $replace = '$1 \@' . $new;
-        $rewrite_command_base = "perl -wpi -e 's/$search/$replace/'";
 
-        $config = get_config();
-        $hd_features_base = $config['honeydew']['basedir'] . 'features/';
-
-        $features_arg = implode( ' ', array_map( function( $it ) use ( $hd_features_base ) {
-            return $hd_features_base . $it;
-        }, $features ) );
-        $rewrite_cmd = $rewrite_command_base . ' ' . $features_arg;
-
-        return exec( $rewrite_cmd );
+        return findAndReplaceInFiles( $search, $replace, $features );
     }
 
     function renameSet( $old, $new, $features ) {
@@ -104,16 +95,7 @@ $app->group('/sets', function () use ($app, $setsDir) {
 
         $search = '(Set(?::|: |:.* ))\@' . $old . '($| )';
         $replace = '$1\@' . $new . '$2';
-        $rewrite_command_base = "perl -wpi -e 's/$search/$replace/'";
-
-        $config = get_config();
-        $hd_features_base = $config['honeydew']['basedir'] . 'features/';
-
-        $features_arg = implode( ' ', array_map( function( $it ) use ( $hd_features_base ) {
-            return $hd_features_base . $it;
-        }, $features ) );
-        $rewrite_cmd = $rewrite_command_base . ' ' . $features_arg;
-        return exec($rewrite_cmd);
+        return findAndReplaceInFiles( $search, $replace, $features );
     }
 
     function validateSetName( $name ) {
@@ -121,4 +103,27 @@ $app->group('/sets', function () use ($app, $setsDir) {
             throw new Exception( 'The new filename is funky?: ' . $name );
         }
     }
+
+    function findAndReplaceInFiles( $search, $replace, $files ) {
+        $rewrite_command_base = "perl -wpi -e 's/$search/$replace/'";
+
+        $features_arg = expandFeaturePath( $files );
+
+        $rewrite_cmd = $rewrite_command_base . ' ' . $features_arg;
+        exec( $rewrite_cmd, $output );
+
+        return $output;
+    }
+
+    function expandFeaturePath( $features ) {
+        $config = get_config();
+        $hdFeaturesBase = $config['honeydew']['basedir'] . 'features/';
+
+        $fullpathFeatures = implode( ' ', array_map( function( $it ) use ( $hdFeaturesBase ) {
+            return $hdFeaturesBase . $it;
+        }, $features ) );
+
+        return $fullpathFeatures;
+    }
+
 });

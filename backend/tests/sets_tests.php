@@ -73,6 +73,66 @@ class SetsTests extends UnitTestCase {
         $this->cleanupFakeSet();
     }
 
+    function testRenameSetRegex() {
+        $tests = array(
+            array(
+                'name' => 'alone, no leading space',
+                'old' => 'Set:@needle',
+                'new' => 'Set:@shiny',
+            ),
+            array(
+                'name' => 'alone, leading space',
+                'old' => 'Set: @needle',
+                'new' => 'Set: @shiny',
+            ),
+            array(
+                'name' => 'first of N, leading space',
+                'old' => 'Set: @needle @haystack',
+                'new' => 'Set: @shiny @haystack',
+            ),
+            array(
+                'name' => 'middle, no leading space',
+                'old' => 'Set:@haystack @needle @haystack2',
+                'new' => 'Set:@haystack @shiny @haystack2',
+            ),
+            array(
+                'name' => 'middle, leading space',
+                'old' => 'Set: @haystack @needle @haystack2',
+                'new' => 'Set: @haystack @shiny @haystack2',
+            ),
+            array(
+                'name' => 'last, leading space',
+                'old' => 'Set: @haystack @needle',
+                'new' => 'Set: @haystack @shiny',
+            ),
+            array(
+                'name' => 'skipping substring matches',
+                'old' => 'Set: @needleNeedle',
+                'new' => 'Set: @needleNeedle',
+            )
+        );
+
+        $files = $this->getSetFilenames();
+        foreach ( $tests as $test ) {
+            $this->setupFakeSet( $test['old'] );
+
+            /* rename @needle to @shiny */
+            $response = \Httpful\Request::post($this->baseUrl . '/needle.set')
+                 ->body(json_encode(array( 'newSetName' => 'shiny' )))
+                 ->send();
+
+            foreach ( $files as $file ) {
+                $this->assertEqual(
+                    file_get_contents( $file ),
+                    $this->featureTemplate( $test['new'] ),
+                    $test['name']
+                );
+            }
+
+            $this->cleanupFakeSet();
+        }
+    }
+
     function testInvalidNewRenames() {
         $invalid = array(
             '!@#$%',

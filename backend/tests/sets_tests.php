@@ -4,7 +4,7 @@ ini_set("display_errors", 1);
 require(dirname(__FILE__) . './../vendor/autoload.php');
 require_once(dirname(__FILE__) . './../vendor/simpletest/simpletest/autorun.php');
 
-class filesTests extends UnitTestCase {
+class SetsTests extends UnitTestCase {
     protected $base = 'http://localhost/rest.php';
     protected $baseUrl = "http://localhost/rest.php/sets";
     protected $basePath = "/opt/honeydew";

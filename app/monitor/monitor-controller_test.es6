@@ -31,6 +31,7 @@ describe('MonitorCtrl', function () {
     }));
 
     it('should query the backend and put the monitors on the vm', () => {
+        MonitorCtrl.filterOptions.filterText = 'two';
         httpMock.expectGET('/rest.php/monitor').respond(monitors);
         var promise = MonitorCtrl.query();
         httpMock.flush();
@@ -61,6 +62,7 @@ describe('MonitorCtrl', function () {
         MonitorCtrl.filterOptions.filterText = 'this should trigger it';
         scope.$digest();
         MonitorCtrl.filterOptions.filterText = 'and this should not';
+        scope.$digest();
 
         httpMock.flush();
     });
@@ -77,7 +79,12 @@ describe('MonitorCtrl', function () {
             MonitorCtrl.resetQuery();
             expect(scope.monitors).toEqual([]);
             expect(MonitorCtrl.filterOptions.filterText).toBe('');
+        });
 
+        it('should reset the monitors if the search is empty', () => {
+            MonitorCtrl.filterOptions.filterText = '';
+            scope.$digest();
+            expect(scope.monitors).toEqual([]);
         });
 
         it('should restore monitors after a reset without hitting the backend', () => {

@@ -97,9 +97,14 @@ angular.module('honeydew')
             userInitializesQuery
         );
         function userInitializesQuery (newValue, oldValue) {
-            var QUERY_LENGTH = 1;
-            if (newValue.length > QUERY_LENGTH) {
-                if ( self.hasOwnProperty('queryResults') && self.queryResults ) {
+            let QUERY_LENGTH = 1;
+            let hasCachedQuery = self.hasOwnProperty('queryResults') && self.queryResults;
+
+            if ( hasCachedQuery && newValue === '' ) {
+                self.resetQuery();
+            }
+            else if (newValue.length > QUERY_LENGTH) {
+                if ( hasCachedQuery ) {
                     $scope.monitors = self.queryResults;
                 }
                 else {

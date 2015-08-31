@@ -12,7 +12,7 @@
                  class="form-control"
                  ng-model="Monitor.filterOptions.filterText"
                  placeholder='Enter a search query populate the table, search for "set" to see all monitors'
-                 ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
+                 ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }"
                  id="filter"/>
           <span class="reset-query">
             <i class="fa fa-times" ng-click="Monitor.resetQuery()"></i>

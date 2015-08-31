@@ -10,23 +10,37 @@ class SetsTests extends UnitTestCase {
     protected $basePath = "/opt/honeydew";
 
     private $names = array( 'fake.feature', 'fake2.feature' );
-    function setupFakeSet() {
-        $features_dir = $this->basePath . '/features/';
-        $contents = "Feature: hello\nSet: @haystack @needle @okay\n\nScenario: yes okay";
 
+    function getSetFilenames() {
         $names = $this->names;
-        array_walk( $names, function ( $it ) use ( $features_dir, $contents ) {
+
+        $fullNames = array_map( function ( $it ) {
+            $features_dir = $this->basePath . '/features/';
             $filename = $features_dir . $it;
-            unlink( $filename );
-            file_put_contents( $filename, $contents );
+            return $filename;
+        }, $names);
+
+        return $fullNames;
+    }
+
+    function setupFakeSet( $setLine = 'Set: @haystack @needle @okay' ) {
+        $contents = $this->featureTemplate( $setLine );
+
+        $files = $this->getSetFilenames();
+        array_walk( $files, function ( $file ) use ( $contents ) {
+            unlink( $file );
+            file_put_contents( $file, $contents );
         });
     }
 
+    function featureTemplate( $setLine = 'Set: @haystack @needle @okay') {
+        return "Feature: hello\n$setLine\n\nScenario: yes okay";
+    }
+
     function cleanupFakeSet() {
-        $names = $this->names;
-        array_walk( $names, function ( $it ) use ( $features_dir, $contents ) {
-            $filename = $features_dir . $it;
-            unlink( $filename );
+        $files = $this->getSetFilenames();
+        array_walk( $files, function ( $it )  {
+            unlink( $it );
         });
     }
 
@@ -81,7 +95,6 @@ class SetsTests extends UnitTestCase {
 
             $this->cleanupFakeSet();
         }
-
     }
 
     function testValidNewRenames() {

@@ -52,12 +52,14 @@ $app->group('/sets', function () use ($app, $setsDir) {
         }
     });
 
-    function renameSet( $old, $new, $features ) {
-        if ( preg_match( '/[^A-z0-9-._]/', $new ) ) {
-            throw new Exception( 'The new filename is funky?: ' . $new );
         }
 
-        $rewrite_command_base = 'perl -wpi -e \'s/(Set(?::|: |:.* ))\@' . $old . '($| )/$1\@' . $new . '$2/\'';
+    function renameSet( $old, $new, $features ) {
+        validateSetName( $new );
+
+        $search = '(Set(?::|: |:.* ))\@' . $old . '($| )';
+        $replace = '$1\@' . $new . '$2';
+        $rewrite_command_base = "perl -wpi -e 's/$search/$replace/'";
 
         $config = get_config();
         $hd_features_base = $config['honeydew']['basedir'] . 'features/';
@@ -67,5 +69,11 @@ $app->group('/sets', function () use ($app, $setsDir) {
         }, $features ) );
         $rewrite_cmd = $rewrite_command_base . ' ' . $features_arg;
         return exec($rewrite_cmd);
+    }
+
+    function validateSetName( $name ) {
+        if ( preg_match( '/[^A-z0-9-._]/', $name ) ) {
+            throw new Exception( 'The new filename is funky?: ' . $name );
+        }
     }
 });

@@ -1,15 +1,15 @@
-<md-dialog aria-label="Rename Set: @{{ SetRename.currentSet }}"
-           class="set-rename">
+<md-dialog aria-label="Edit Set: @{{ SetEdit.currentSet }}"
+           class="set-edit">
 
   <form name="renameForm">
 
     <md-dialog-content>
-      Please choose a new set name for <code>@{{ SetRename.currentSet }}</code>!
+      Please choose a new set name for <code>@{{ SetEdit.currentSet }}</code>!
 
       <md-input-container flex>
         <label>New Set Name</label>
         <input class="rename-input"
-               ng-model="SetRename.newSetName"
+               ng-model="SetEdit.newSetName"
                name="newSetName"
                required
                valid-set-name>
@@ -22,13 +22,13 @@
             Names may only contain <code>A-Z a-z - . _</code>
           </div>
           <div ng-message="currentset">
-            This _is_ the <code>@{{ SetRename.newSetName }}</code> set.
+            This _is_ the <code>@{{ SetEdit.newSetName }}</code> set.
           </div>
         </div>
       </md-input-container>
 
-      <div ng-if="SetRename.isExistingSet()" class="merge-warning">
-        The <code>@{{ SetRename.newSetName }}</code> set already
+      <div ng-if="SetEdit.isExistingSet()" class="merge-warning">
+        The <code>@{{ SetEdit.newSetName }}</code> set already
         exists. This will <b>merge</b> these two sets together; are
         you sure?
       </div>
@@ -36,10 +36,10 @@
     </md-dialog-content>
 
     <div class="md-actions" layout="row">
-      <span flex>{{ SetRename.statusMessage }}</span>
+      <span flex>{{ SetEdit.statusMessage }}</span>
       <md-button class="rename-btn"
                  ng-disabled="! renameForm.$valid"
-                 ng-click="SetRename.rename()"
+                 ng-click="SetEdit.rename()"
                  style="margin-right:20px;">
         Rename
         <i class="fa fa-lg fa-arrow-right"></i>

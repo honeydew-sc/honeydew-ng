@@ -1,4 +1,4 @@
-describe('SetRename directive', () => {
+describe('SetEdit directive', () => {
     let $q;
     let elm;
     let Set;
@@ -20,12 +20,12 @@ describe('SetRename directive', () => {
         p.resolve([ 'other', 'existing', 'sets' ]);
         spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
 
-        elm = angular.element('<set-rename></set-rename>');
+        elm = angular.element('<set-edit></set-edit>');
         scope = $rootScope;
         $compile(elm)(scope);
         scope.$digest();
 
-        ctrl = elm.isolateScope().SetRename;
+        ctrl = elm.isolateScope().SetEdit;
     }));
 
     it('should find out the current set on its own', () => {
@@ -33,13 +33,13 @@ describe('SetRename directive', () => {
     });
 
     it('should use the set service to rename a set', () => {
-        doSetRename();
+        doSetEdit();
         expect(Set.rename).toHaveBeenCalledWith( 'original', 'destination' );
     });
 
     it('should hide the modal after successfully renaming a set', () => {
         spyOn( $mdDialog, 'hide' );
-        doSetRename();
+        doSetEdit();
         expect( $mdDialog.hide ).toHaveBeenCalled();
     });
 
@@ -53,7 +53,7 @@ describe('SetRename directive', () => {
 
     it('should remove the .set extension during renames', () => {
         ctrl.newSetName = 'extension.set';
-        doSetRename( true, 'extension' );
+        doSetEdit( true, 'extension' );
         expect( Set.rename ).toHaveBeenCalledWith( 'original', 'extension' );
     });
 
@@ -62,7 +62,7 @@ describe('SetRename directive', () => {
         expect(elm.find('.merge-warning').length).toBe(1);;
     });
 
-    function doSetRename ( success = true, newSetName = 'destination') {
+    function doSetEdit ( success = true, newSetName = 'destination') {
         let data = { success, newSetName };
 
         let p = $q.defer();

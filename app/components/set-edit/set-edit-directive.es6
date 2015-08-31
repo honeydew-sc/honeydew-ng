@@ -1,4 +1,4 @@
-class SetRenameController {
+class SetEditController {
     constructor ( $location, $mdDialog, Set ) {
         this.$location = $location;
         this.$mdDialog = $mdDialog;
@@ -59,15 +59,15 @@ class SetRenameController {
 angular.module('honeydew')
     // register the controller explicitly so it can referenced by name
     // elsewhere
-    .controller('SetRenameController', SetRenameController)
-    .directive('setRename', function () {
+    .controller('SetEditController', SetEditController)
+    .directive('setEdit', function () {
         return {
-            templateUrl: 'components/set-rename/set-rename.html',
+            templateUrl: 'components/set-edit/set-edit.html',
             replace: true,
             restrict: 'E',
             scope: {},
             bindToController: true,
-            controller: 'SetRenameController',
-            controllerAs: 'SetRename'
+            controller: 'SetEditController',
+            controllerAs: 'SetEdit'
         };
     });

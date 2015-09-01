@@ -1,8 +1,10 @@
 class SetEditController {
-    constructor ( $location, $mdDialog, Set ) {
+    constructor ( $location, $mdDialog, Set, $scope ) {
         this.$location = $location;
         this.$mdDialog = $mdDialog;
         this.Set = Set;
+
+        this.action = $scope.action;
 
         this.currentSet = this.Set.currentSet();
 
@@ -80,7 +82,6 @@ angular.module('honeydew')
             templateUrl: 'components/set-edit/set-edit.html',
             replace: true,
             restrict: 'E',
-            scope: {},
             bindToController: true,
             controller: 'SetEditController',
             controllerAs: 'SetEdit'

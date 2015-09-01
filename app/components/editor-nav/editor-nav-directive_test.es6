@@ -4,15 +4,15 @@ describe('EditorNav directive', () => {
     let elm;
     let ctrl;
     let scope;
-    let httpMock;
+    let $templateCache;
 
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
-    beforeEach(inject( ( $compile, $rootScope, $location, $httpBackend, _$q_, _Set_ ) => {
+    beforeEach(inject( ( $compile, $rootScope, $location, _$templateCache_, _$q_, _Set_ ) => {
         $location.path( '/sets/currentSet.set' );
-        httpMock = $httpBackend;
         $q = _$q_;
+        $templateCache = _$templateCache_;
         Set = _Set_;
 
         elm = angular.element('<editor-nav></editor-nav>');
@@ -27,9 +27,8 @@ describe('EditorNav directive', () => {
         expect(elm.find('#rename-set').length).toBe(1);;
     });
 
-    it('should open the proper edit set modal', () => {
-        httpMock.expectGET('/components/set-edit/set-edit.html')
-            .respond('');
+    it('should open the proper set rename modal', () => {
+        cacheLeadingSlashTemplateUrl( 'set-edit' );
 
         let p = $q.defer();
         $q.resolve(['existing', 'sets']);
@@ -38,8 +37,14 @@ describe('EditorNav directive', () => {
         let renameModalBtn = elm.find('#rename-set');
         renameModalBtn.click();
 
-        httpMock.flush();
 
         expect(Set.existingSets).toHaveBeenCalled();
     });
+
+    function cacheLeadingSlashTemplateUrl( name ) {
+        let templateUrl = `components/${name}/${name}.html`;
+        let template = $templateCache.get(templateUrl);
+        expect(template).toBeDefined();
+        $templateCache.put( '/' + templateUrl, template );
+    }
 });

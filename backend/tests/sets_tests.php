@@ -10,6 +10,7 @@ class SetsTests extends UnitTestCase {
     protected $basePath = "/opt/honeydew";
 
     private $names = array( 'fake.feature', 'fake2.feature' );
+    private $runAllTests = true;
 
     function getSetFilenames() {
         $names = $this->names;
@@ -112,8 +113,10 @@ class SetsTests extends UnitTestCase {
             )
         );
 
-        $files = $this->getSetFilenames();
         foreach ( $tests as $test ) {
+            if ( ! $this->runAllTests ) {
+                continue;
+            }
             $this->setupFakeSet( $test['old'] );
 
             /* rename @needle to @shiny */
@@ -121,6 +124,7 @@ class SetsTests extends UnitTestCase {
                  ->body(json_encode(array( 'newSetName' => 'shiny' )))
                  ->send();
 
+            $files = $this->getSetFilenames();
             foreach ( $files as $file ) {
                 $this->assertEqual(
                     file_get_contents( $file ),
@@ -137,7 +141,6 @@ class SetsTests extends UnitTestCase {
         $invalid = array(
             '!@#$%',
             'renamed)',
-
         );
 
         foreach ( $invalid as $newName ) {
@@ -177,7 +180,7 @@ class SetsTests extends UnitTestCase {
         }
     }
 
-    function testCopySet() {
+    function testCopySetRegex() {
         $tests = array(
             array(
                 'name' => 'alone, no leading space',
@@ -217,6 +220,10 @@ class SetsTests extends UnitTestCase {
         );
 
         foreach ( $tests as $test ) {
+            if ( ! $this->runAllTests ) {
+                continue;
+            }
+
             $this->setupFakeSet( $test['old'] );
 
             /* copy @needle to @shiny */

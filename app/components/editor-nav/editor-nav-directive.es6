@@ -3,30 +3,41 @@ class EditorNavController {
         $scope.settings = $localStorage.settings;
 
         this.$mdDialog = $mdDialog;
+        this.$scope = $scope;
     }
 
     showRenameSetModal () {
         let { $mdDialog } = this;
 
-        $mdDialog.show({
-            controller: 'SetEditController',
-            controllerAs: 'SetEdit',
-            templateUrl: '/components/set-edit/set-edit.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        });
+        let action = 'rename';
+        let modalOptions = this.modalOptions({ action } );
+
+        $mdDialog.show( modalOptions );
     }
 
     showCopySetModal () {
         let { $mdDialog } = this;
 
-        $mdDialog.show({
+        let action = 'copy';
+        let modalOptions = this.modalOptions({ action } );
+
+        $mdDialog.show( modalOptions );
+    }
+
+    modalOptions ({ action }) {
+        let { $scope } = this;
+
+        let scope = $scope.$new();
+        scope.action = action;
+
+        return {
+            scope,
             controller: 'SetEditController',
             controllerAs: 'SetEdit',
-            templateUrl: '/components/set-copy/set-copy.html',
+            templateUrl: '/components/set-edit/set-edit.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
-        });
+        };
     }
 
 }

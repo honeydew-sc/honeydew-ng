@@ -24,6 +24,12 @@ describe('EditorNav directive', () => {
         scope.$digest();
 
         ctrl = elm.isolateScope().EditorNav;
+
+        cacheLeadingSlashTemplateUrl( 'set-edit' );
+
+        let p = $q.defer();
+        $q.resolve(['existing', 'sets']);
+        spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
     }));
 
     it('should show the rename set button on set pages', () => {
@@ -31,12 +37,6 @@ describe('EditorNav directive', () => {
     });
 
     it('should open the proper set rename modal', () => {
-        cacheLeadingSlashTemplateUrl( 'set-edit' );
-
-        let p = $q.defer();
-        $q.resolve(['existing', 'sets']);
-        spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
-
         let renameModalBtn = findRenameBtn();
         renameModalBtn.click();
 
@@ -44,12 +44,6 @@ describe('EditorNav directive', () => {
     });
 
     it('should open the proper set copy modal', () => {
-        cacheLeadingSlashTemplateUrl( 'set-copy' );
-
-        let p = $q.defer();
-        $q.resolve(['existing', 'sets']);
-        spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
-
         let copyModalBtn = findCopyBtn();
         copyModalBtn.click();
 

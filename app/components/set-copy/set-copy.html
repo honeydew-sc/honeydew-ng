@@ -1,0 +1,50 @@
+<md-dialog aria-label="Copy Set: @{{ SetEdit.currentSet }}"
+           class="set-edit">
+
+  <form name="copyForm">
+
+    <md-dialog-content>
+      Please choose a new set name to copy <code>@{{ SetEdit.currentSet }}</code>!
+
+      <md-input-container flex>
+        <label>New Set Name</label>
+        <input class="copy-input"
+               ng-model="SetEdit.newSetName"
+               name="newSetName"
+               required
+               valid-set-name>
+
+        <div ng-messages="copyForm.newSetName.$error">
+          <div ng-message="required">
+            This is required.
+          </div>
+          <div ng-message="setname">
+            Names may only contain <code>A-Z a-z - . _</code>
+          </div>
+          <div ng-message="currentset">
+            This _is_ the <code>@{{ SetEdit.newSetName }}</code> set.
+          </div>
+        </div>
+      </md-input-container>
+
+      <div ng-if="SetEdit.isExistingSet()" class="merge-warning">
+        The <code>@{{ SetEdit.newSetName }}</code> set already
+        exists. This will <b>merge</b> these two sets together; are
+        you sure?
+      </div>
+
+    </md-dialog-content>
+
+    <div class="md-actions" layout="row">
+      <span flex>{{ SetEdit.statusMessage }}</span>
+      <md-button class="copy-btn"
+                 ng-disabled="! copyForm.$valid"
+                 ng-click="SetEdit.copy()"
+                 style="margin-right:20px;">
+        Copy
+        <i class="fa fa-lg fa-arrow-right"></i>
+      </md-button>
+    </div>
+
+  </form>
+</md-dialog>

@@ -26,6 +26,21 @@ class SetEditController {
         }
     }
 
+    copy () {
+        let { currentSet, newSetName, Set  } = this;
+         let newName = newSetName.replace( /.set$/, '' );
+
+        return Set.copy( currentSet, newName )
+            .then( ({ data }) => {
+                this.redirectToNewSet( data.newSetName );
+                return { data };
+            })
+            .then( this.hideModal.bind( this ) )
+            .catch( ({ data }) => {
+                this.statusMessage = 'Something went wrong :(';
+            });
+    }
+
     rename () {
         let { currentSet, newSetName, Set  } = this;
         let newName = newSetName.replace( /.set$/, '' );

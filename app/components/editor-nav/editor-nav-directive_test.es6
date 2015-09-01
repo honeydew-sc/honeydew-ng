@@ -40,6 +40,18 @@ describe('EditorNav directive', () => {
         let renameModalBtn = findRenameBtn();
         renameModalBtn.click();
 
+        expect(Set.existingSets).toHaveBeenCalled();
+    });
+
+    it('should open the proper set copy modal', () => {
+        cacheLeadingSlashTemplateUrl( 'set-copy' );
+
+        let p = $q.defer();
+        $q.resolve(['existing', 'sets']);
+        spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
+
+        let copyModalBtn = findCopyBtn();
+        copyModalBtn.click();
 
         expect(Set.existingSets).toHaveBeenCalled();
     });

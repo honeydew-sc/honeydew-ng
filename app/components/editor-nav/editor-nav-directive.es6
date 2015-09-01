@@ -5,7 +5,7 @@ class EditorNavController {
         this.$mdDialog = $mdDialog;
     }
 
-    showRenameSetModal ( $event ) {
+    showRenameSetModal () {
         let { $mdDialog } = this;
 
         $mdDialog.show({
@@ -17,7 +17,7 @@ class EditorNavController {
         });
     }
 
-    showCopySetModal ( $event ) {
+    showCopySetModal () {
         let { $mdDialog } = this;
 
         $mdDialog.show({

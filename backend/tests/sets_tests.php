@@ -110,6 +110,11 @@ class SetsTests extends UnitTestCase {
                 'name' => 'skipping substring matches',
                 'old' => 'Set: @needleNeedle',
                 'new' => 'Set: @needleNeedle',
+            ),
+            array(
+                'name' => 'clean up duplicates on merge',
+                'old' => 'Set: @needle @haystack @shiny',
+                'new' => 'Set: @haystack @shiny',
             )
         );
 
@@ -216,7 +221,18 @@ class SetsTests extends UnitTestCase {
                 'name' => 'skipping substring matches',
                 'old' => 'Set: @needleNeedle',
                 'new' => 'Set: @needleNeedle'
+            ),
+            array(
+                'name' => 'clean up duplicates on merge',
+                'old' => 'Set: @haystack @needle @shiny @haystack2',
+                'new' => 'Set: @haystack @needle @haystack2 @shiny',
+            ),
+            array(
+                'name' => 'clean up isolated duplicates on merge',
+                'old' => 'Set: @needle @shiny',
+                'new' => 'Set: @needle @shiny',
             )
+
         );
 
         foreach ( $tests as $test ) {

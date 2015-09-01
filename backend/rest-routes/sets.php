@@ -87,7 +87,10 @@ $app->group('/sets', function () use ($app, $setsDir) {
         $search = '(Set(?::|: |:.* )\@' . $old . '(?:$| ).*)';
         $replace = '$1 \@' . $new;
 
-        return findAndReplaceInFiles( $search, $replace, $features );
+        $findAndReplace = findAndReplaceInFiles( $search, $replace, $features );
+        $cleanup = removeDuplicateSets( $new, $features );
+
+        return array( 'replaceOp' => $findAndReplace, 'dupeCleanup' => $cleanup );
     }
 
     function renameSet( $old, $new, $features ) {
@@ -95,6 +98,16 @@ $app->group('/sets', function () use ($app, $setsDir) {
 
         $search = '(Set(?::|: |:.* ))\@' . $old . '($| )';
         $replace = '$1\@' . $new . '$2';
+
+        $findAndReplace = findAndReplaceInFiles( $search, $replace, $features );
+        $cleanup = removeDuplicateSets( $new, $features );
+
+        return array( 'replaceOp' => $findAndReplace, 'dupeCleanup' => $cleanup );
+    }
+
+    function removeDuplicateSets( $new, $features ) {
+        $search = '(Set(?::|: |:.* ))(\@' . $new . ') (?=.*\@' . $new . '(?:$| ))';
+        $replace = '$1';
         return findAndReplaceInFiles( $search, $replace, $features );
     }
 

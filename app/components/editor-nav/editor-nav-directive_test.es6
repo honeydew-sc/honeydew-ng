@@ -6,6 +6,9 @@ describe('EditorNav directive', () => {
     let scope;
     let $templateCache;
 
+    let findRenameBtn = () => elm.find('.rename-set');
+    let findCopyBtn = () => elm.find('.copy-set');
+
     beforeEach(module('honeydew'));
     beforeEach(module('tpl'));
 
@@ -24,7 +27,7 @@ describe('EditorNav directive', () => {
     }));
 
     it('should show the rename set button on set pages', () => {
-        expect(elm.find('#rename-set').length).toBe(1);;
+        expect(findRenameBtn().length).toBe(1);;
     });
 
     it('should open the proper set rename modal', () => {
@@ -34,7 +37,7 @@ describe('EditorNav directive', () => {
         $q.resolve(['existing', 'sets']);
         spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
 
-        let renameModalBtn = elm.find('#rename-set');
+        let renameModalBtn = findRenameBtn();
         renameModalBtn.click();
 
 

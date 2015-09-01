@@ -118,6 +118,7 @@ class SetsTests extends UnitTestCase {
             )
         );
 
+        $files = $this->getSetFilenames();
         foreach ( $tests as $test ) {
             if ( ! $this->runAllTests ) {
                 continue;
@@ -129,7 +130,6 @@ class SetsTests extends UnitTestCase {
                  ->body(json_encode(array( 'newSetName' => 'shiny' )))
                  ->send();
 
-            $files = $this->getSetFilenames();
             foreach ( $files as $file ) {
                 $this->assertEqual(
                     file_get_contents( $file ),
@@ -137,9 +137,9 @@ class SetsTests extends UnitTestCase {
                     'rename set case: ' . $test['name']
                 );
             }
-
-            $this->cleanupFakeSet();
         }
+
+        $this->cleanupFakeSet();
     }
 
     function testInvalidNewRenames() {
@@ -232,9 +232,9 @@ class SetsTests extends UnitTestCase {
                 'old' => 'Set: @needle @shiny',
                 'new' => 'Set: @needle @shiny',
             )
-
         );
 
+        $files = $this->getSetFilenames();
         foreach ( $tests as $test ) {
             if ( ! $this->runAllTests ) {
                 continue;
@@ -247,7 +247,6 @@ class SetsTests extends UnitTestCase {
                  ->body(json_encode(array( 'sourceSetName' => 'needle.set' )))
                  ->send();
 
-            $files = $this->getSetFilenames();
             foreach ( $files as $file ) {
                 $this->assertEqual(
                     file_get_contents( $file ),
@@ -255,9 +254,9 @@ class SetsTests extends UnitTestCase {
                     'copy set case: ' . $test['name']
                 );
             }
-
-            $this->cleanupFakeSet();
         }
+
+        $this->cleanupFakeSet();
     }
 
     function testCopyNonExistentSet() {

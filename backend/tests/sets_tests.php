@@ -188,24 +188,9 @@ class SetsTests extends UnitTestCase {
     function testCopySetRegex() {
         $tests = array(
             array(
-                'name' => 'alone, no leading space',
-                'old' => 'Set:@needle',
-                'new' => 'Set:@needle @shiny'
-            ),
-            array(
-                'name' => 'alone, leading space',
-                'old' => 'Set: @needle',
-                'new' => 'Set: @needle @shiny'
-            ),
-            array(
                 'name' => 'first of N, leading space',
                 'old' => 'Set: @needle @haystack',
                 'new' => 'Set: @needle @haystack @shiny'
-            ),
-            array(
-                'name' => 'middle, no leading space',
-                'old' => 'Set:@haystack @needle @haystack2',
-                'new' => 'Set:@haystack @needle @haystack2 @shiny'
             ),
             array(
                 'name' => 'middle, leading space',

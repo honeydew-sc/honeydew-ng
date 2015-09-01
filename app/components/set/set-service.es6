@@ -11,8 +11,8 @@ class SetService {
         }
         else {
             let { $http } = this;
-            this.existingSetList = $http.get( this.endpointBase ).
-                then( ({ data: { sets: sets }}) => {
+            this.existingSetList = $http.get( this.endpointBase )
+                .then( ({ data: { sets: sets }}) => {
                     return sets.map( set => set.replace( /\.set$/, '' ) );
                 });
 

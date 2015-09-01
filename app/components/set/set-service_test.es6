@@ -25,6 +25,13 @@ describe('SetService', function () {
         });
     });
 
+    it('should get a sanitized list of all current sets', () => {
+        httpMock.expectGET('/rest.php/sets/')
+            .respond({ sets: [ 'other', 'sets'] });
+        let sets = Set.existingSets();
+        httpMock.flush();
+    });
+
     describe('rename', () => {
 
         it('should not rename a set to something invalid', () => {

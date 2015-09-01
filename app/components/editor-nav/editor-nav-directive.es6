@@ -9,9 +9,9 @@ class EditorNavController {
         let { $mdDialog } = this;
 
         $mdDialog.show({
-            controller: 'SetRenameController',
-            controllerAs: 'SetRename',
-            templateUrl: '/components/set-rename/set-rename.html',
+            controller: 'SetEditController',
+            controllerAs: 'SetEdit',
+            templateUrl: '/components/set-edit/set-edit.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         });

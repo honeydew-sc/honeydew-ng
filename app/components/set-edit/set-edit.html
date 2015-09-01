@@ -1,20 +1,27 @@
-<md-dialog aria-label="Edit Set: @{{ SetEdit.currentSet }}"
+<md-dialog aria-label="{{ ::SetEdit.action | capitalize }} Set: @{{ SetEdit.currentSet }}"
            class="set-edit">
 
-  <form name="renameForm">
+  <form name="setEditForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h4>
+          {{ ::SetEdit.action | capitalize }} <code>@{{ SetEdit.currentSet }}</code> to...
+        </h4>
+      </div>
+    </md-toolbar>
 
     <md-dialog-content>
-      Please choose a new set name for <code>@{{ SetEdit.currentSet }}</code>!
+      Please choose a new set name!
 
       <md-input-container flex>
         <label>New Set Name</label>
-        <input class="rename-input"
+        <input class="new-set-name-input"
                ng-model="SetEdit.newSetName"
                name="newSetName"
                required
                valid-set-name>
 
-        <div ng-messages="renameForm.newSetName.$error">
+        <div ng-messages="setEditForm.newSetName.$error">
           <div ng-message="required">
             This is required.
           </div>
@@ -37,11 +44,11 @@
 
     <div class="md-actions" layout="row">
       <span flex>{{ SetEdit.statusMessage }}</span>
-      <md-button class="rename-btn"
-                 ng-disabled="! renameForm.$valid"
-                 ng-click="SetEdit.rename()"
+      <md-button class="submit-btn"
+                 ng-disabled="! setEditForm.$valid"
+                 ng-click="SetEdit.doAction()"
                  style="margin-right:20px;">
-        Rename
+        {{ ::SetEdit.action }}
         <i class="fa fa-lg fa-arrow-right"></i>
       </md-button>
     </div>

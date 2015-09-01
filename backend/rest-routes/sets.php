@@ -106,7 +106,11 @@ $app->group('/sets', function () use ($app, $setsDir) {
     }
 
     function removeDuplicateSets( $new, $features ) {
-        $search = '(Set(?::|: |:.* ))(\@' . $new . ') (?=.*\@' . $new . '(?:$| ))';
+        /* match only the Set: preamble line, up to the name of the new set. */
+        $search = '(Set(?::|: |:.* ))(\@' . $new . ') '
+        /* then match the name of the new set in followed by a space
+        or the end of the line */
+                . '(?=.*\@' . $new . '(?:$| ))';
         $replace = '$1';
         return findAndReplaceInFiles( $search, $replace, $features );
     }

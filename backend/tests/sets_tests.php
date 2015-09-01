@@ -252,4 +252,66 @@ class SetsTests extends UnitTestCase {
         $this->assertPattern( '/Set copy error: /', $response->body->reason,
                               'non existent sets cannot be the source of a copy' );
     }
+
+    function testDeleteSetRegex() {
+        $tests = array(
+            array(
+                'name' => 'first of N, leading space',
+                'old' => 'Set: @needle @haystack',
+                'new' => 'Set: @haystack'
+            ),
+            array(
+                'name' => 'middle, leading space',
+                'old' => 'Set: @haystack @needle @haystack2',
+                'new' => 'Set: @haystack @haystack2'
+            ),
+            array(
+                'name' => 'last, leading space',
+                'old' => 'Set: @haystack @needle',
+                'new' => 'Set: @haystack '
+            ),
+            array(
+                'name' => 'skipping substring matches',
+                'old' => 'Set: @needleNeedle',
+                'new' => 'Set: @needleNeedle'
+            ),
+            array(
+                'name' => 'only entry',
+                'old' => 'Set: @needle',
+                'new' => 'Set: ',
+            ),
+        );
+
+        $files = $this->getSetFilenames();
+        foreach ( $tests as $test ) {
+            if ( ! $this->runAllTests ) {
+                continue;
+            }
+
+            $this->setupFakeSet( $test['old'] );
+
+            /* delete @needle */
+            $response = \Httpful\Request::delete($this->baseUrl . '/needle.set')
+                 ->send();
+
+            foreach ( $files as $file ) {
+                $contents = file_get_contents( $file );
+                $this->assertEqual(
+                    file_get_contents( $file ),
+                    $this->featureTemplate( $test['new'] ),
+                    'delete set case: ' . $test['name']
+                );
+            }
+        }
+
+        $this->cleanupFakeSet();
+    }
+
+    function testDeleteNonExistentSet() {
+        $response = \Httpful\Request::delete($this->baseUrl . '/notAReal.set')
+                      ->send();
+
+        $this->assertPattern( '/Set delete error: /', $response->body->reason,
+                              'non existent sets cannot be deleted' );
+    }
 }

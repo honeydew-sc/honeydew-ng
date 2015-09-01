@@ -81,6 +81,37 @@ $app->group('/sets', function () use ($app, $setsDir) {
         }
     });
 
+    $app->delete('/:setName', function ( $setName ) use ( $app ) {
+        try {
+            $setFilename = resolveFilename( array( 'sets', $setName ) );
+            $features = array_filter( explode("\n", refreshSet( $setFilename ) ), 'strlen' );
+
+            if ( ! file_exists( $setFilename ) ) {
+                throw new Exception( 'The set does not exist: ' . $setFilename );
+            }
+
+            $shortSetName = shortSetName( $setName );
+            deleteSet( $shortSetName, $features );
+            echo successMessage();
+        }
+        catch ( Exception $e ) {
+            $app->halt(418, errorMessage("Set delete error: " . $e->getMessage()));
+        }
+
+    });
+
+    function deleteSet( $old, $features ) {
+        $search = '(Set(?::|: |:.* ))\@' . $old . '($| )';
+        $replace = '$1';
+
+        $findAndReplace = findAndReplaceInFiles( $search, $replace, $features );
+        return array( 'replaceOp' => $findAndReplace );
+    }
+
+    function shortSetName( $set ) {
+        return preg_replace( '/\.set$/', '', $set );
+    }
+
     function copySet( $old, $new, $features ) {
         validateSetName( $new );
 

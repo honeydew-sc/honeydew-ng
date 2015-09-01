@@ -17,6 +17,18 @@ class EditorNavController {
         });
     }
 
+    showCopySetModal ( $event ) {
+        let { $mdDialog } = this;
+
+        $mdDialog.show({
+            controller: 'SetEditController',
+            controllerAs: 'SetEdit',
+            templateUrl: '/components/set-copy/set-copy.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
+    }
+
 }
 
 angular.module('honeydew')

@@ -31,12 +31,20 @@
                 New Phrase
               </a>
             </li>
+
             <li ng-if="!isSet">
               <a id="copy" ng-click="open('Copy')">
                 <i class="fa fa-fw fa-lg fa-copy"></i>
                 Copy To...
               </a>
             </li>
+            <li ng-if="isSet">
+              <a class="copy-set" ng-click="EditorNav.showCopySetModal( $event )">
+                <i class="fa fa-fw fa-lg fa-copy"></i>
+                Copy Set
+              </a>
+            </li>
+
             <li ng-if="!isSet">
               <a id="copy-temp" ng-click="open('CopyTemp')">
                 <i class="fa fa-fw fa-lg fa-copy"></i>
@@ -51,7 +59,7 @@
               </a>
             </li>
             <li ng-if="isSet">
-              <a id="rename-set" ng-click="EditorNav.showRenameSetModal( $event )">
+              <a class="rename-set" ng-click="EditorNav.showRenameSetModal( $event )">
                 <i class="fa fa-fw fa-lg fa-cut"></i>
                 Move/Rename Set
               </a>

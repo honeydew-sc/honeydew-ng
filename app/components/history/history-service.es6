@@ -4,6 +4,7 @@ class History {
             $localStorage.history = [];
         }
 
+        this.$localStorage = $localStorage;
         this.history = $localStorage.history;
         this.$location = $location;
     }
@@ -44,6 +45,14 @@ class History {
     addCurrentLocation( ) {
         let { $location } = this;
         this.add( $location.path() );
+    }
+
+    remove ( item ) {
+        let { $localStorage } = this;
+        this.history = $localStorage.history = this.history
+            .filter( ( file, index, ary ) => ary.indexOf( file ) === index )
+            .filter( ( file ) => file !== item )
+            .filter( (_, index ) => index < 10 );
     }
 }
 

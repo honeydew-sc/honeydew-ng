@@ -22,63 +22,66 @@ describe('SetEdit directive', () => {
         spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
     }));
 
-    describe('rename mode', () => {
-        let findRenameBtn = () => elm.find('.rename-btn');
+    let modes = [ 'copy', 'rename' ];
+    modes.forEach( ( mode ) => {
+        describe(`${mode} mode`,  () => {
+            let findSubmitBtn = () => elm.find('.submit-btn');
 
-        beforeEach( inject( ( $compile, $rootScope ) => {
-            elm = angular.element('<set-edit></set-edit>');
-            scope = $rootScope;
-            scope.action = 'rename';
-            $compile(elm)(scope);
-            scope.$digest();
+            beforeEach( inject( ( $compile, $rootScope ) => {
+                elm = angular.element('<set-edit></set-edit>');
+                scope = $rootScope;
+                scope.action = mode;
+                $compile(elm)(scope);
+                scope.$digest();
 
-            ctrl = elm.scope().SetEdit;
-        }));
+                ctrl = elm.scope().SetEdit;
+            }));
 
-        it('should find out the current set on its own', () => {
-            expect(ctrl.currentSet).toBe('original');
+            it('should find out the current set on its own', () => {
+                expect(ctrl.currentSet).toBe('original');
+            });
+
+            it(`should use the set service to ${mode} a set`, () => {
+                doSetAction();
+                expect(Set[mode]).toHaveBeenCalledWith( 'original', 'destination' );
+            });
+
+            it(`should hide the modal after successfully doing a set ${mode}`, () => {
+                spyOn( $mdDialog, 'hide' );
+                doSetAction();
+                expect( $mdDialog.hide ).toHaveBeenCalled();
+            });
+
+            it(`should disable the ${mode} button while the form is invalid`, () => {
+                let submitBtn = findSubmitBtn();
+                expect(submitBtn.attr('disabled')).toBe('disabled');
+
+                scope.$apply( () => { ctrl.newSetName = 'validSetName'; } );
+                expect(submitBtn.attr('disabled')).toBe(undefined);
+            });
+
+            it(`should remove the .set extension during ${mode}`, () => {
+                ctrl.newSetName = 'extension.set';
+                doSetAction( true, 'extension' );
+                expect( Set[mode] ).toHaveBeenCalledWith( 'original', 'extension' );
+            });
+
+            it('should warn about merging sets', () => {
+                scope.$apply( () => { ctrl.newSetName = 'other'; } );
+                expect(elm.find('.merge-warning').length).toBe(1);;
+            });
+
+            function doSetAction ( success = true, newSetName = 'destination') {
+                let data = { success, newSetName };
+
+                let p = $q.defer();
+                p.resolve({ data });
+                spyOn( Set, mode ).and.returnValue( p.promise );
+
+                ctrl.newSetName = newSetName;
+                let submitBtn = findSubmitBtn();
+                submitBtn.click();
+            }
         });
-
-        it('should use the set service to rename a set', () => {
-            doSetRename();
-            expect(Set.rename).toHaveBeenCalledWith( 'original', 'destination' );
-        });
-
-        it('should hide the modal after successfully renaming a set', () => {
-            spyOn( $mdDialog, 'hide' );
-            doSetRename();
-            expect( $mdDialog.hide ).toHaveBeenCalled();
-        });
-
-        it('should disable the rename button while the form is invalid', () => {
-            let renameBtn = findRenameBtn();
-            expect(renameBtn.attr('disabled')).toBe('disabled');
-
-            scope.$apply( () => { ctrl.newSetName = 'validSetName'; } );
-            expect(renameBtn.attr('disabled')).toBe(undefined);
-        });
-
-        it('should remove the .set extension during renames', () => {
-            ctrl.newSetName = 'extension.set';
-            doSetRename( true, 'extension' );
-            expect( Set.rename ).toHaveBeenCalledWith( 'original', 'extension' );
-        });
-
-        it('should warn about merging sets', () => {
-            scope.$apply( () => { ctrl.newSetName = 'other'; } );
-            expect(elm.find('.merge-warning').length).toBe(1);;
-        });
-
-        function doSetRename ( success = true, newSetName = 'destination') {
-            let data = { success, newSetName };
-
-            let p = $q.defer();
-            p.resolve({ data });
-            spyOn( Set, 'rename' ).and.returnValue( p.promise );
-
-            ctrl.newSetName = newSetName;
-            let renameBtn = findRenameBtn();
-            renameBtn.click();
-        }
     });
 });

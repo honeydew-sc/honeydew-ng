@@ -44,6 +44,12 @@ class SetService {
         }
     }
 
+    delete ( sourceSet ) {
+        let { $http } = this;
+        let endpoint = this._getEndpoint( sourceSet );
+        return $http.delete( endpoint );
+    }
+
     isNameValid ( name ) {
         return /^[0-9a-zA-Z_\-\.\/]+$/.test( name );
     }
@@ -52,7 +58,7 @@ class SetService {
         let { $location } = this;
 
         let matches = $location.path().match(/\/sets\/(.*)\.set/);
-        if ( matches.length ) {
+        if ( matches && matches.length ) {
             return matches[1];
         }
         else {

@@ -70,4 +70,15 @@ describe('SetService', function () {
         });
     });
 
+    describe('delete', () => {
+
+        it('should hit the delete backend endpoint sets', () => {
+            let success = true;
+            let sourceSetName = 'source';
+            httpMock.expectDELETE( `/rest.php/sets/${sourceSetName}.set` ).
+                respond({ success });
+            Set.delete( sourceSetName );
+            httpMock.flush();
+        });
+    });
 });

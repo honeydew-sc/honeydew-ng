@@ -2,16 +2,24 @@
 $app->group('/envstatus', function () use ($app) {
     require_once 'rest-routes/envstatus/lockerboxclient.php'; # provides get_build
 
-    $app->get('/app/:appName/env/:env', function ( $appName, $env ) use ( $app ) {
-        $check_url = $app->request()->get('check');
-        $build_data = build_data( $env, $appName );
+    $app->group('/app/:appName/env/:env', function ( ) use ( $app ) {
 
-        echo json_encode(array(
-            'healthcheck' => healthcheck( $appName, $check_url ),
-            'build' => $build_data,
-            'honeydew' => honeydew_status( $build_data['webpub'], url_to_domain( $check_url ) )
-        ));
+        $app->get('/', function ( $appName, $env ) use ( $app ) {
+            $check_url = $app->request()->get('check');
+            $build_data = build_data( $env, $appName );
+
+            echo json_encode(array(
+                'healthcheck' => healthcheck( $appName, $check_url ),
+                'build' => $build_data,
+                'honeydew' => honeydew_status( $build_data['webpub'], url_to_domain( $check_url ) )
+            ));
+        });
+
+        $app->get('/build', function ( $appName, $env ) use ( $app ) {
+            echo successMessage(build_data( $env, $appName ));
+        });
     });
+
 
     function build_data ( $env, $app ) {
         $build_number = get_build( $env, $app );

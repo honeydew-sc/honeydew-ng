@@ -30,4 +30,11 @@ class reportTests extends UnitTestCase {
         $query = $res->body->honeydew->query;
         $this->assertPattern( '/localhost\/doctoroz/', $query );
     }
+
+    function testOnlyBuildData() {
+        $res = \Httpful\Request::get($this->baseUrl . '/app/SC/env/prod/build')
+             ->send();
+        $build = $res->body->webpub;
+        $this->assertTrue( !!$build );
+    }
 }

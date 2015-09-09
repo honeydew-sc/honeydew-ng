@@ -3,12 +3,13 @@
 The Honeydew server is written in PHP via the
 [Slim Framework][]. Although most of the endpoints are undocumented,
 there are a few that are generally useful and they are documented
-here.
+here. Note that all of the endpoints assume a base URL of
+"https://honeydew.be.jamconsultg.com/rest.php/".
 
-### POST /rest.php/jobs
+### POST /jobs
 
-Execute a Honeydew [Job](#Job). This endpoint requires your AD
-authorization in the `Authorization` header as [basic auth][].
+Execute a Honeydew job. This endpoint requires your AD authorization
+in the `Authorization` header as [basic auth][].
 
 The payload expects a JSON object which MUST at a minimum include a
 `file`, `host`, and `browser`.
@@ -132,12 +133,41 @@ mentioned in the [browser](#browser) section. That is,
     // will run the job on 127.0.0.1, but the report will store the browser as GP Chrome Local
     { ... "browser": [ "GP Chrome Local" ], local: "127.0.0.1", ... }
 
-### Dictionary
+### GET /envstatus/app/:app/env/:env/build
 
-#### Job
+Get the build number on the webpub machine for a particular app and
+environment. This endpoint requires your AD credentials as
+[basic auth][].
 
-A job is primarily composed of a host, a browser, and a file. The file
-can either be a `.feature` file or a `.set` file.
+    GET /rest.php/envstatus/app/SC/env/prod/build
+    Authorization: Basic QUQ6YXV0aG9yaXphdGlvbg==
+
+It returns a hash with the build in the (improperly named)
+`webpub` key:
+
+    {"success":"true","webpub":"D7-release-4-17-0_20150902.1353"}
+
+The `:app` and `:env` portions can be found in the following table
+
+| Product           | :app | :env                                                        |
+| -                 | -    | -                                                           |
+| Sharecare.com     | sc   | al, al2, cm, cm2, jd, jd2, sg, sg2..., stage, preview, prod |
+| DoctorOz.com      | droz | qa, stage, prod                                             |
+| HCA               | hca  | qa, stage, prod                                             |
+| DailyStrength.com | ds   | qa, stage, prod                                             |
+| armyfit.army.mil  | army | stage, test, prod                                           |
+| UltimateMe        | tma  | stage, test, prod                                           |
+
+So, to get the build number on Stage Sharecare:
+
+    $ curl https://honeydew.be.jamconsultg.com/rest.php/envstatus/app/sc/env/stage/build -H"Authorization: Basic QUQ6YXV0aG9yaXphdGlvbg=="
+    {"success":"true","webpub":"4.30.0.20150908-1423","branch":null}
+
+For the build number on QA droz:
+
+    $ curl https://honeydew.be.jamconsultg.com/rest.php/envstatus/app/droz/env/qa/build -H"Authorization: Basic QUQ6YXV0aG9yaXphdGlvbg=="
+    {"success":"true","webpub":"D7-release-4-17-0_20150902.1353"}
+
 
 [Slim Framework]: http://www.slimframework.com/
 [system command]: http://php.net/manual/en/function.system.php

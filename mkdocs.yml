@@ -8,6 +8,7 @@ pages:
 - HD Reference:
     - Preamble Options: reference/preamble.md
     - Finding Elements: reference/finding-elements.md
+    - Backend API: reference/api.md
 - HD FAQ:
     - FAQ: faq.md
     - Install Webdriver: faq/install-webdriver.md

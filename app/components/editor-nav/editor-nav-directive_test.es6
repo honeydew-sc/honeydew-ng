@@ -6,6 +6,7 @@ describe('EditorNav directive', () => {
     let scope;
     let $templateCache;
 
+    let findDeleteBtn = () => elm.find('.delete-set');
     let findRenameBtn = () => elm.find('.rename-set');
     let findCopyBtn = () => elm.find('.copy-set');
 
@@ -46,6 +47,13 @@ describe('EditorNav directive', () => {
     it('should open the proper set copy modal', () => {
         let copyModalBtn = findCopyBtn();
         copyModalBtn.click();
+
+        expect(Set.existingSets).toHaveBeenCalled();
+    });
+
+    it('should open the proper set delete modal', () => {
+        let deleteModalBtn = findDeleteBtn();
+        deleteModalBtn.click();
 
         expect(Set.existingSets).toHaveBeenCalled();
     });

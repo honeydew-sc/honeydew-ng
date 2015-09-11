@@ -72,7 +72,17 @@
                 History
               </a>
             </li>
-            <li ng-if="!isSet" class="divider"></li>
+
+            <li class="divider"></li>
+
+            <li ng-if="isSet">
+              <a class="delete-set" ng-click="EditorNav.showDeleteSetModal( $event )">
+                <i class="fa fa-fw fa-lg fa-trash-o"></i>
+                Delete Set
+              </a>
+            </li>
+
+
             <li ng-if="!isSet">
               <a id="delete" ng-click="fileActions.Delete.cb()">
                 <i class="fa fa-fw fa-lg fa-trash-o"></i>

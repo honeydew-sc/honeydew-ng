@@ -24,6 +24,15 @@ class EditorNavController {
         $mdDialog.show( modalOptions );
     }
 
+    showDeleteSetModal () {
+        let { $mdDialog } = this;
+
+        let action = 'delete';
+        let modalOptions = this.modalOptions({ action } );
+
+        $mdDialog.show( modalOptions );
+    }
+
     modalOptions ({ action }) {
         let { $scope } = this;
 

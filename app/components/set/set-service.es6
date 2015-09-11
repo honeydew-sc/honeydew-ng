@@ -1,7 +1,8 @@
 class SetService {
-    constructor ( $http, $location ) {
+    constructor ( $http, $location, History ) {
         this.$http = $http;
         this.$location = $location;
+        this.History = History;
         this.endpointBase = '/rest.php/sets/';
     }
 
@@ -27,7 +28,11 @@ class SetService {
         else {
             let { $http } = this;
             let endpoint = this._getEndpoint( sourceSet );
-            return $http.post( endpoint, { newSetName } );
+            return $http.post( endpoint, { newSetName } )
+                .then( (res) => {
+                    this._cleanupHistory();
+                    return res;
+                });
         }
     }
 
@@ -47,7 +52,11 @@ class SetService {
     delete ( sourceSet ) {
         let { $http } = this;
         let endpoint = this._getEndpoint( sourceSet );
-        return $http.delete( endpoint );
+        return $http.delete( endpoint )
+            .then( (res) => {
+                this._cleanupHistory();
+                return res;
+            });
     }
 
     isNameValid ( name ) {
@@ -77,6 +86,11 @@ class SetService {
         else {
             return setName;
         }
+    }
+
+    _cleanupHistory( ) {
+        let { History, $location } = this;
+        History.remove( $location.path() );
     }
 }
 

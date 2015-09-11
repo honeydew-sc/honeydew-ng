@@ -34,18 +34,28 @@ describe('SetService', function () {
 
     describe('rename', () => {
 
+        let success = true;
+        let newSetName = 'destination';
+
         it('should not rename a set to something invalid', () => {
             let status = Set.rename( 'old', '!@#' );
             expect( status ).toBe( false );
         });
 
         it('should hit the rename backend endpoint', () => {
-            let success = true;
-            let newSetName = 'destination';
             httpMock.expectPOST( '/rest.php/sets/source.set', { newSetName } )
                 .respond({ success, newSetName}) ;
             let renamePost = Set.rename( 'source', 'destination' );
             httpMock.flush();
+        });
+
+        it('should clean up history after itself', () => {
+            spyOn( Set, '_cleanupHistory' );
+            httpMock.expectPOST( '/rest.php/sets/source.set', { newSetName } )
+                .respond({ success, newSetName}) ;
+            let renamePost = Set.rename( 'source', 'destination' );
+            httpMock.flush();
+            expect(Set._cleanupHistory).toHaveBeenCalled();
         });
 
     });
@@ -71,14 +81,24 @@ describe('SetService', function () {
     });
 
     describe('delete', () => {
+        let success = true;
+        let sourceSetName = 'source';
 
         it('should hit the delete backend endpoint sets', () => {
-            let success = true;
-            let sourceSetName = 'source';
             httpMock.expectDELETE( `/rest.php/sets/${sourceSetName}.set` ).
                 respond({ success });
             Set.delete( sourceSetName );
             httpMock.flush();
+        });
+
+        it('should clean up history after itself', () => {
+            spyOn( Set, '_cleanupHistory' );
+            httpMock.expectDELETE( `/rest.php/sets/${sourceSetName}.set` ).
+                respond({ success });
+            Set.delete( sourceSetName );
+            httpMock.flush();
+            expect( Set._cleanupHistory ).toHaveBeenCalled();
+
         });
     });
 });

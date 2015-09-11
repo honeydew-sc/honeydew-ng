@@ -22,8 +22,16 @@ describe('SetEdit directive', () => {
         spyOn( Set, 'existingSets' ).and.returnValue( p.promise );
     }));
 
-    let modes = [ 'copy', 'rename' ];
+    let modes = [ 'copy', 'rename', 'delete' ];
     modes.forEach( ( mode ) => {
+
+        // delete is called with one argument, but copy and rename are
+        // called with two.
+        let args = [ 'original' ];
+        if ( mode !== 'delete' ) {
+            args.push( 'destination' );
+        }
+
         describe(`${mode} mode`,  () => {
             let findSubmitBtn = () => elm.find('.submit-btn');
 
@@ -43,7 +51,7 @@ describe('SetEdit directive', () => {
 
             it(`should use the set service to ${mode} a set`, () => {
                 doSetAction();
-                expect(Set[mode]).toHaveBeenCalledWith( 'original', 'destination' );
+                expect(Set[mode]).toHaveBeenCalledWith( ...args );
             });
 
             it(`should hide the modal after successfully doing a set ${mode}`, () => {
@@ -54,22 +62,26 @@ describe('SetEdit directive', () => {
 
             it(`should disable the ${mode} button while the form is invalid`, () => {
                 let submitBtn = findSubmitBtn();
-                expect(submitBtn.attr('disabled')).toBe('disabled');
+                if ( mode !== 'delete' ) {
+                    expect(submitBtn.attr('disabled')).toBe('disabled');
+                }
 
                 scope.$apply( () => { ctrl.newSetName = 'validSetName'; } );
                 expect(submitBtn.attr('disabled')).toBe(undefined);
             });
 
             it(`should remove the .set extension during ${mode}`, () => {
-                ctrl.newSetName = 'extension.set';
-                doSetAction( true, 'extension' );
-                expect( Set[mode] ).toHaveBeenCalledWith( 'original', 'extension' );
+                ctrl.newSetName = 'destination.set';
+                doSetAction( true, 'destination' );
+                expect( Set[mode] ).toHaveBeenCalledWith( ...args );
             });
 
-            it('should warn about merging sets', () => {
-                scope.$apply( () => { ctrl.newSetName = 'other'; } );
-                expect(elm.find('.merge-warning').length).toBe(1);;
-            });
+            if ( mode !== 'delete' ) {
+                it('should warn about merging sets', () => {
+                    scope.$apply( () => { ctrl.newSetName = 'other'; } );
+                    expect(elm.find('.merge-warning').length).toBe(1);;
+                });
+            }
 
             function doSetAction ( success = true, newSetName = 'destination') {
                 let data = { success, newSetName };

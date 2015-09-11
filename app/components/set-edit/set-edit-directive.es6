@@ -36,6 +36,9 @@ class SetEditController {
         else if ( this.isRename() ) {
             editPromise = this.rename();
         }
+        else if ( this.isDelete() ) {
+            editPromise = this.delete();
+        }
         else {
             this.statusMessage = 'Set Edit Controller: how did you get here?';
             console.error( this.statusMessage );
@@ -54,24 +57,36 @@ class SetEditController {
 
     isCopy () { return this.action === 'copy'; }
     isRename () { return this.action === 'rename'; }
+    isDelete () { return this.action === 'delete'; }
 
     copy () {
-        let { currentSet, newSetName, Set  } = this;
+        let { currentSet, newSetName, Set } = this;
          let newName = newSetName.replace( /.set$/, '' );
 
         return Set.copy( currentSet, newName );
     }
 
     rename () {
-        let { currentSet, newSetName, Set  } = this;
+        let { currentSet, newSetName, Set } = this;
         let newName = newSetName.replace( /.set$/, '' );
 
         return Set.rename( currentSet, newName );
     }
 
+    delete () {
+        let { currentSet, Set } = this;
+
+        return Set.delete( currentSet );
+    }
+
     redirectToNewSet ( name ) {
         let { $location } = this;
-        return $location.path( '/sets/' + name + '.set' );
+        if ( name ) {
+            return $location.path( '/sets/' + name + '.set' );
+        }
+        else {
+            return $location.path( '/' );
+        }
     }
 
     hideModal () {

@@ -34,6 +34,8 @@ describe('History', function () {
 
         it('should limit the history length to 10 at most', () => {
             expect(History.entries.length).toBe(10);
+            History.add( '1' );
+            expect(History.entries.length).toBe(10);
         });
 
         it('should remove items from the history', () => {

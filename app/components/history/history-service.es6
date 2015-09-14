@@ -10,10 +10,14 @@ class History {
     }
 
     get entries () {
-        // this removes the relationship between this.history and
-        // $localStorage.history; thus, any subsequent invocations of
-        // this.add or this.addCurrentLocation will be discareded
-        // after page refresh.
+        // The following line removes the relationship between
+        // this.history and $localStorage.history; thus, any
+        // subsequent invocations of this.add or
+        // this.addCurrentLocation will be discareded after page
+        // refresh. However, we don't want to persist to
+        // $localStorage.history every time we load the homepage,
+        // since the diff'ing algorithm that ngStorage uses makes it
+        // prohibitively slow to do during the initial page load.
         //
         // as a result, the "only" way to persist entries to the
         // $localStorage.history is to not start one's HD session by
@@ -21,10 +25,10 @@ class History {
         // or set page will not call entries, and this.history will be
         // a reference to $localStorage.history.
         //
-        // completely arbitrarily, this.remove will restore the
-        // assocation between $localStorage.history and
-        // this.history. it needs to go somewhere, but I don't want to
-        // do it frequently since interacting with ngStorage can be
+        // completely arbitrarily, `this.remove()` restores the
+        // assocation between `$localStorage.history` and
+        // `this.history`. it needs to go somewhere, but I don't want
+        // to do it frequently since interacting with ngStorage can be
         // slow if the object is large. remove gets called
         // infrequently enough that it should hopefully be ok.
         this.history = this.history

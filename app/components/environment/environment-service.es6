@@ -47,6 +47,9 @@ class Environment {
         else if ( this._isMobile( app ) ) {
             return this.getMobileUrl( app, env );
         }
+        else if ( this._isDs( app ) ) {
+            return this.getDailyStrengthUrl( app, env );
+        }
         else {
             return this.getStandardUrl( app, env );
         }
@@ -77,6 +80,14 @@ class Environment {
                 : 'app.zip';
 
         return base + appEndpoint;
+    }
+
+    getDailyStrengthUrl ( app, env ) {
+        let subdomainSuffix = /^prod$/.test( env ) ? '' : `-${env}`;
+        let subdomain = `www${subdomainSuffix}.`;
+        let protocol = 'https://';
+
+        return protocol + subdomain + this.apps[app];
     }
 
     getHealthcheckUrl ( app, env ) {
@@ -160,6 +171,10 @@ class Environment {
 
     _isDroz ( app ) {
         return app === 'DROZ';
+    }
+
+    _isDs ( app ) {
+        return app === 'DS';
     }
 
     _isAndroid ( env ) {

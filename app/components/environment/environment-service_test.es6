@@ -66,4 +66,14 @@ describe('Environment', function () {
         expect(app).toBe('SC');
         expect(env).toBe('prod');
     });
+
+    it('should construct an appropriate QA DS', () => {
+        let url = Environment.getEnvUrl( 'DS', 'qa' );
+        expect(url).toBe('https://www-qa.dailystrength.org');
+    });
+
+    it('should construct the correct DS prod url', () => {
+        let url = Environment.getEnvUrl( 'DS', 'prod' );
+        expect(url).toBe('https://www.dailystrength.org');
+    });
 });

@@ -24,3 +24,26 @@
         }
     }
 })();
+
+(function () {
+    if ( isRulesPage() ) {
+        var topLink = createTopLink();
+        topLink.insertAfter( 'h3 .headerlink[title="Permanent link"]' );
+        console.log('hi');
+    }
+
+    function isRulesPage () {
+        var path = window.location.pathname;
+        return /reference\/all-rules/.test(path);
+    }
+
+    function createTopLink() {
+        var topLink = document.createElement('a');
+        topLink.classList.add('headerlink');
+        topLink.setAttribute('title', 'Return to top');
+        topLink.setAttribute('href', '#all-honeydew-rules');
+        topLink.innerHTML = '(top)';
+        console.log(topLink);
+        return $( topLink );
+    }
+})();

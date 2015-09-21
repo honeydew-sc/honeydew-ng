@@ -20,7 +20,7 @@ angular.module('honeydew')
                 },
                 {
                     name: 'rules',
-                    classes: 'col-md-6',
+                    classes: 'col-md-3',
                     templateUrl: base + 'rules/rules.html',
                     icon: 'fa-file-text-o',
                     tooltip: 'All Rules',

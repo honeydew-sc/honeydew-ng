@@ -84,6 +84,13 @@ encrypt, along with the rule itself, and it uses the exact same
 Partner Registration jar to do the encryption. It will redirect you to
 the registration pages after encrypting the user data.
 
+### Given I am registering an encrypted user at (.\*)
+
+Additionally, you may add query parameters to the url. For example, if
+you want to use the `obf=acq` registration route, you'd use
+
+     Given I am registering an encrypted user at obf=acq
+
 ### When I refresh the page
 
 This simulates clicking the refresh button on the page. This rule can

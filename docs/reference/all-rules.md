@@ -84,6 +84,19 @@ encrypt, along with the rule itself, and it uses the exact same
 Partner Registration jar to do the encryption. It will redirect you to
 the registration pages after encrypting the user data.
 
+Currently, the user's information that we are encrypting is hardcoded
+in Honeydew as the following:
+
+| field      | value              |
+| -          | -                  |
+| firstName  | Abby               |
+| lastName   | Doo                |
+| email      | thecutest@cute.com |
+| gender     | FEMALE             |
+| birthdate  | 03-15-1998         |
+| postalCode | 30305              |
+| country    | United States      |
+
 ### Given I am registering an encrypted user at (.\*)
 
 Additionally, you may add query parameters to the url. For example, if
@@ -397,10 +410,12 @@ user` rule.
 The text to be posted allows for your own text, or any of the
 following options (these are the same as the other input rules):
 
-     a random e-mail address | honeydewsc+jawei@gmail.com
-     10 characters           | aaaaaaaaaa
-     a timestamp             | 2014-10-10 14:14:14
-     random text             | jawei
+| input                   | output                     |
+| -                       | -                          |
+| a random e-mail address | honeydewsc+jawei@gmail.com |
+| 10 characters           | aaaaaaaaaa                 |
+| a timestamp             | 2014-10-10 14:14:14        |
+| random text             | jawei                      |
 
 ### When I post (.\*) to the activity wall of (.\*)
 

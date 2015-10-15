@@ -29,7 +29,6 @@
     if ( isRulesPage() ) {
         var topLink = createTopLink();
         topLink.insertAfter( 'h3 .headerlink[title="Permanent link"]' );
-        console.log('hi');
     }
 
     function isRulesPage () {

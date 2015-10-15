@@ -79,13 +79,8 @@ locator](http://honeydew.be.jamconsultg.com/docs/reference/finding-elements/).
 
 As per SC-something, we are responsible for providing a way for third
 parties to pass us a user's registration information in an encrypted
-URL. This rule takes as input an examples table of user information to
-encrypt, along with the rule itself, and it uses the exact same
-Partner Registration jar to do the encryption. It will redirect you to
-the registration pages after encrypting the user data.
-
-Currently, the user's information that we are encrypting is hardcoded
-in Honeydew as the following:
+URL. Currently, the user's information that we are encrypting is
+hardcoded in Honeydew as the following:
 
 | field      | value              |
 | -          | -                  |
@@ -96,6 +91,10 @@ in Honeydew as the following:
 | birthdate  | 03-15-1998         |
 | postalCode | 30305              |
 | country    | United States      |
+
+After encoding the data with the same `.jar` that Quality Health will
+be using, Honeydew will redirect you to the proper `/register` page
+with the encrypted user info in the URL.
 
 ### Given I am registering an encrypted user at (.\*)
 

@@ -75,6 +75,15 @@ locator](http://honeydew.be.jamconsultg.com/docs/reference/finding-elements/).
     Given I am on the /search page waiting for the id=search-bar element
     Given I am on the /search page waiting for the css=#search-bar element
 
+### Given I am registering an encrypted user
+
+As per SC-something, we are responsible for providing a way for third
+parties to pass us a user's registration information in an encrypted
+URL. This rule takes as input an examples table of user information to
+encrypt, along with the rule itself, and it uses the exact same
+Partner Registration jar to do the encryption. It will redirect you to
+the registration pages after encrypting the user data.
+
 ### When I refresh the page
 
 This simulates clicking the refresh button on the page. This rule can

@@ -82,19 +82,23 @@ parties to pass us a user's registration information in an encrypted
 URL. Currently, the user's information that we are encrypting is
 hardcoded in Honeydew as the following:
 
-| field      | value              |
-| -          | -                  |
-| firstName  | Abby               |
-| lastName   | Doo                |
-| email      | thecutest@cute.com |
-| gender     | FEMALE             |
-| birthdate  | 03-15-1998         |
-| postalCode | 30305              |
-| country    | United States      |
+| field      | value                      |
+| -          | -                          |
+| firstName  | Abby                       |
+| lastName   | Doo                        |
+| email      | honeydewsc+.....@gmail.com |
+| gender     | FEMALE                     |
+| birthdate  | 03-15-1998                 |
+| postalCode | 30305                      |
+| country    | United States              |
 
 After encoding the data with the same `.jar` that Quality Health will
 be using, Honeydew will redirect you to the proper `/register` page
 with the encrypted user info in the URL.
+
+Note that a new random email address is used every time so that you
+can continue through the entire registration flow with each test if
+desired.
 
 ### Given I am registering an encrypted user at (.\*)
 

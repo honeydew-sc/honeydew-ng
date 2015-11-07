@@ -25,7 +25,8 @@
             ng-model="job.$storage.browser"
             required
             id="browser"
-            ng-options="b for b in job.browsers ">
+            ng-options="b for b in job.browsers"
+            ng-change="job.updateServers()">
     </select>
   </div>
 

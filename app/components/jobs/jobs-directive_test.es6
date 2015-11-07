@@ -205,6 +205,19 @@ describe('HoneydewJob directive', function () {
         expect(storage.browser).toBe('Firefox');
     });
 
+    it('should filter servers for Mobile Safari', () => {
+        // select mobile safari
+        // elm.find('#browser [label="iOS Mobile Safari"]').click();
+        let controller = elm.controller('jobOptions');
+        storage.browser = 'Mobile Safari';
+        controller.updateServers();
+        scope.$apply();
+
+        let servers = elm.find('#server option').text();
+        expect(servers).toBe('Localhost');
+
+    });
+
     it('should not run if the webdriver server is down', () => {
         spyOn( panes, 'openPane' );
 

@@ -8,10 +8,21 @@ angular.module('honeydew')
                 var self = this;
                 self.$scope = $scope;
 
+                var isMobile = () => /Mobile/i.test(self.$storage.browser);
+
+                self.updateServers = () => {
+                    if (isMobile()) {
+                        self.servers = availableBrowsers.getMobileServers();
+                    }
+                    else {
+                        self.servers = availableBrowsers.getServers();
+                    }
+                };
+
                 (function populateBrowsers() {
                     self.$storage = $sessionStorage;
                     self.browsers = availableBrowsers.getBrowsers();
-                    self.servers = availableBrowsers.getServers();
+                    self.updateServers();
                 })();
 
                 // needed in the view to toggle the set list
@@ -77,8 +88,6 @@ angular.module('honeydew')
                 };
 
                 var isSaucelabs = () => self.$storage.server === 'Saucelabs';
-
-                var isMobile = () => self.$storage.browser.match(/Mobile/i);
 
                 var hasWebdriver = (server) => {
                     if ( isSaucelabs() || isMobile() ) {

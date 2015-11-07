@@ -21,6 +21,12 @@ describe('availableBrowsersService', () => {
         expect(servers).toContain('Localhost');
     });
 
+    it('should know which servers have mobile Safari', () => {
+        let mobileServers = availableBrowsers.getMobileServers();
+
+        expect(mobileServers).toContain('Localhost');
+    });
+
     it('should not let monitor users see localhost', () => {
         var pathSpy = spyOn($location, 'path');
         pathSpy.and.returnValue('something/monitor/something');

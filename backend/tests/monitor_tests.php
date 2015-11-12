@@ -10,6 +10,16 @@ class monitorTests extends UnitTestCase {
     public function __construct() {
         $this->monitorUri = $this->base . "/monitor";
         $seed = \Httpful\Request::get($this->monitorUri . "/reload?security=obscurity")->send();
+
+        $this->fakeSet = "/opt/honeydew/sets/fake.set";
+    }
+
+    function setUp() {
+        touch($this->fakeSet);
+    }
+
+    function tearDown() {
+        unlink($this->fakeSet);
     }
 
     function testListOfSets() {
@@ -21,12 +31,25 @@ class monitorTests extends UnitTestCase {
     }
 
     function testQuery() {
-        $response = \Httpful\Request::get($this->monitorUri)->send();
+        $validMonitor = array(
+            "set" => 'fake.set',
+            "browser" => "Chrome",
+            "host" => "https://www.sharecare.com"
+        );
+
+        $response = \Httpful\Request::post($this->monitorUri)
+            ->sendsJson()
+            ->body(json_encode($validMonitor))
+            ->send();
+
+        $response = \Httpful\Request::get($this->monitorUri)
+            ->send();
+
         $monitors = $response->body;
         $this->assertEqual($response->code, 200, "get passes");
         $this->assertPattern("/\.set/", $monitors[0]->{'set'}, "has sets in it");
         $this->assertTrue(isset($monitors[0]->{'browser'}), "has browser in it");
-        $this->assertPattern("/http:\/\//", $monitors[0]->{'host'}, "has host in it");
+        $this->assertPattern("/https?:\/\//", $monitors[0]->{'host'}, "has host in it");
     }
 
     function testNewMonitor() {
@@ -62,7 +85,6 @@ class monitorTests extends UnitTestCase {
         $res = $response->body;
         $this->assertEqual($res->{"success"}, "true", "good post succeeds");
         $this->assertTrue(isset($res->{"id"}), "new post comes back with id");
-        unlink($fakeSet);
     }
 
     function testForceExistNewMonitor() {

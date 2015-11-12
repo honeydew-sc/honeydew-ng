@@ -6,6 +6,12 @@ require_once(dirname(__FILE__) . './../vendor/simpletest/simpletest/autorun.php'
 require_once(dirname(__FILE__) . './../rest-routes/job/HoneydewJob.php');
 
 class TestHoneydewJob extends UnitTestCase {
+    function TestHoneydewJob()
+    {
+        $base = '/opt/honeydew/';
+        $this->exampleSet = $base . 'sets/examples.set';
+    }
+
     protected $jobData = array(
         "feature" => "test/dan.feature",
         "host" => "www.sharecare.com",
@@ -13,6 +19,16 @@ class TestHoneydewJob extends UnitTestCase {
         "username" => "dgempesaw",
         "reportId" => "132",
     );
+
+    function setUp()
+    {
+        touch($this->exampleSet);
+    }
+
+    function tearDown()
+    {
+        unlink($this->exampleSet);
+    }
 
     function testQueueJob()
     {

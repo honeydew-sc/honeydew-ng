@@ -16,6 +16,7 @@ $app->group('/monitor', function () use ($app) {
         $monitors = $query->fetchAll(PDO::FETCH_ASSOC);
         $config = get_config();
         $hdSets = $config['honeydew']['basedir'] . 'sets/';
+
         $monitors = array_map( function ( $it ) use ($pdo, $hdSets) {
             if (!file_exists($hdSets . $it['set'])) {
                 deleteFromDB( $it['id'], $pdo );

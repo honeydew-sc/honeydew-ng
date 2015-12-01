@@ -585,7 +585,7 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true
                 },
-                command: 'ssh honeydew "perl /opt/honeydew/bin/parsePhrases.pl && umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} chmod 0666 {} \;"'
+                command: 'ssh honeydew "perl /opt/honeydew/bin/parsePhrases.pl && umask 0 && find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} chmod 0666 {}"'
             },
 
             showPermissions: {
@@ -593,7 +593,7 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true
                 },
-                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} ls -al {} \;"'
+                command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} ls -al {}"'
             },
 
             deployBack: {
@@ -682,7 +682,7 @@ module.exports = function (grunt) {
                 options: {
                     // in mkdocs.yml, the site_dir is dist/docs
                     src: '<%= yeoman.dist %>/docs',
-                    dest: '/opt/honeydew-ui/htdocs',
+                    dest: '/opt/honeydew-ui/htdocs/',
                     host: 'honeydew@honeydew'
                 }
             }

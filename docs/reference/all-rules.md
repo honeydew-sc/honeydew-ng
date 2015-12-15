@@ -1059,14 +1059,6 @@ provide as much assistance as hoped.
 
      Then I compare to the reference screenshot without (.*)
 
-### Then I wait for the password reset email to arrive for (.\*)
-
-Log in to our catch all email address at SharecareQA@gmail.com and
-wait for a new email to arrive with a password reset link in it. You
-must pass the name of the user that is expecting a password reset email.
-
-         Then I wait for the password reset email to arrive for Amber Jenkins
-
 ## Querying: Strings
 
 ### Then the page should contain (.\*)
@@ -1258,6 +1250,29 @@ once per line. If you don't specify any lines beneath it, this rule
      Then I wait 5 seconds for an entire comscore request to include:
       c1=hello
       c2=goodbye
+
+You can make negative assertions: to say that a property should not be
+present at all, use `!propName` like such:
+
+     Then I wait 5 seconds for an entire comscore request to include:
+      !propNotPresent
+
+To assert that a property should not match a particular string, use
+`!propName:value` like such:
+
+     Then I wait 5 seconds for an entire comscore request to include:
+      !propNotMatch:thisValue
+
+You can also use this rule to assert the omniture RSID - that is, the
+omniture account to which the request is being sent. Use our
+Honeydew-specific rsid key like such:
+
+     Then I wait 5 seconds for an entire omniture request to include:
+      rsid:sharecaredtmdev
+
+Honeydew will take that RSID value and validate it against the account
+to which the omniture request is sent. Note that this only applies to
+omniture requests.
 
 ### Then the url should be (.\*)
 
@@ -1592,6 +1607,48 @@ This will stop your test at this rule and let you interact with the
 browser. Use Ctrl-Alt-Enter/Ctrl-Cmd-Enter for Windows/OS X to evaluate the
 line at point to the browser.
 
+## Emails
+
+### Given I am viewing the new email
+
+After waiting for a specific email, you can open it up for viewing in
+the current browser by using this rule. See the below rule about
+searching and waiting for a new email for more information.
+
+### Then I wait for a new email that matches:
+
+### Then I wait (.\*) seconds for a new email that matches:
+
+Wait for an unread email to match a set of search criteria. You can
+search by `subject`, `from`, `to`, and `body`, etc.
+
+     Then I wait for a new email that matches:
+      subject:Welcome to Sharecare
+      to:Superwoman
+
+You can specify how long you'd like to wait for the email to arrive.
+
+     Then I wait 60 seconds for a new email that matches:
+      subject:Welcome to Sharecare
+      to:Superwoman
+
+If the most recent email that matches the search is already read, it's
+not the new email that we're looking for. So, this rule will continue
+checking the inbox until "the most recent email that matches the
+search" is unread. Note that this will happen when the intended new
+email is received, but you can cause it to happen if you mark it as
+unread in the Gmail interface, in case you need to test it.
+
+If an email is found, you'll probably want to use the `Given` rule
+above:
+
+         Then I wait for a new email that matches:
+         subject:Welcome to Sharecare
+     Given I am viewing the new email
+
+At that point, you can assert things about the email like links,
+layout, and content.
+
 ## Proxy
 
 ### Given I mock my location as (.\*)
@@ -1642,3 +1699,5 @@ keys as param name and values as param value:
         tag => 'value',
         tag2 => 'value2'
     }
+
+It accepts a multiline string and returns a hashref of the params.

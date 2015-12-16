@@ -1,7 +1,7 @@
 describe('Environment', function () {
     var Environment;
 
-    const SC_ENV_COUNT = 15,
+    const SC_ENV_COUNT = 16,
           DEFAULT_ENV_COUNT = 3,
           APP_COUNT = 6;
 

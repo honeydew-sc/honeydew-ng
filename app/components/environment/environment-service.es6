@@ -19,6 +19,7 @@ class Environment {
                 'mservices',
                 'preview',
                 'stage',
+                'stage2',
                 'prod'
             ],
             DROZ: defaultEnvs,

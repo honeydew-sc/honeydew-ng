@@ -6,8 +6,9 @@
 
 ### Given I am on the (.\*) page
 
-Visit a url. This \_must\_ be the first rule of the test. If you use
-a relative URL, the hostname will be automatically prepended.
+Visit a url and verify the page is not an error page. This \_must\_ be
+the first rule of the test. If you use a relative URL, the hostname
+will be automatically prepended.
 
 The input is a string - either a relative url, and Honeydew will
 prefix it with the hostname, or a full url. The following will go
@@ -31,6 +32,14 @@ sharecare.com. The usage is the same as normal SC:
 
 - Startle: Honeydew will add a cookie to get around the interstitial
 popups in Startle, and then it will refresh the page.
+
+### Given I am on the (.\*) error page
+
+The browser will visit a url, but Honeydew will not check for an error
+page.
+
+    Given I am on the /oops error page
+    Given I am on the /non-existent.html error page
 
 ### Given I am new user on the (.\*) page
 

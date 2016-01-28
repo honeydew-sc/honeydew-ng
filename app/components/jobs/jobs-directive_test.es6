@@ -184,18 +184,6 @@ describe('HoneydewJob directive', function () {
         expect(emits).toBe(2);
     });
 
-    it('should update the browser whenever the hostname changes', () => {
-        hostname.env = 'iOS';
-        hostname.app = 'Mobile';
-        hostname.resolve();
-        expect(storage.browser).toMatch('iOS');
-
-        hostname.env = 'Android';
-        hostname.app = 'Mobile';
-        hostname.resolve();
-        expect(storage.browser).toMatch('Android');
-    });
-
     it('should not change the browser when hostname goes from SC to DrOZ', () => {
         storage.browser = 'Firefox';
 

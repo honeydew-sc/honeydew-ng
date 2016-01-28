@@ -43,22 +43,6 @@ angular.module('honeydew')
                     });
                 })();
 
-                (function listenForHostnames() {
-                    $scope.$on('hostname:changed', function (event, hostname) {
-                        if (hostname.match(/app\.zip$/)) {
-                            self.$storage.browser = 'iOS Mobile';
-                        }
-                        else if (hostname.match(/\.apk$/)) {
-                            self.$storage.browser = 'Android Mobile';
-                        }
-                        else {
-                            if (self.$storage.browser.match(/iOS|Android/)) {
-                                self.$storage.browser = 'Chrome';
-                            }
-                        }
-                    });
-                })();
-
                 self.executeJob = () => {
                     (function updateWindowLayout() {
                         // oooh side effects

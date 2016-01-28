@@ -25,6 +25,7 @@ class Environment {
             DROZ: defaultEnvs,
             DS: defaultEnvs,
             HCA: defaultEnvs,
+            QH: defaultEnvs,
             Army: ['dev', 'stage', 'test', 'prod'],
             TMA: ['dev', 'stage', 'test', 'prod']
         };
@@ -35,7 +36,8 @@ class Environment {
             HCA: 'hca.sharecare.com',
             DS: 'dailystrength.org',
             Army: '',
-            TMA: ''
+            TMA: '',
+            QH: 'qualityhealth.com'
         };
 
         this.urlLookup = [];

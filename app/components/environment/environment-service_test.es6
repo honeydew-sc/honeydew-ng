@@ -3,7 +3,7 @@ describe('Environment', function () {
 
     const SC_ENV_COUNT = 16,
           DEFAULT_ENV_COUNT = 3,
-          APP_COUNT = 6;
+          APP_COUNT = 7;
 
     beforeEach(module('honeydew'));
     beforeEach(inject(function (_Environment_) {

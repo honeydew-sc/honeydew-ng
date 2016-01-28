@@ -54,7 +54,8 @@ angular.module('honeydew')
                         if (res.webdriverStatus && $scope.jobOptions.$valid) {
                             var job = new HoneydewJob({
                                 browser: self.$storage.browser,
-                                server: self.$storage.server
+                                server: self.$storage.server,
+                                queue: isQueueJob()
                             });
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');
@@ -72,6 +73,11 @@ angular.module('honeydew')
                 };
 
                 var isSaucelabs = () => self.$storage.server === 'Saucelabs';
+
+                // jobs on a real iphone device need to be queued;
+                // Appium can only run one at a time, so we can't just
+                // run them immediately.
+                var isQueueJob = () => self.$storage.browser === 'iOS Mobile Safari';
 
                 var hasWebdriver = (server) => {
                     if ( isSaucelabs() || isMobile() ) {

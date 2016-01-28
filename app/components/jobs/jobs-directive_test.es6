@@ -75,7 +75,7 @@ describe('HoneydewJob directive', function () {
         expect(selected.text()).toBe(server);
     });
 
-    var setupPostContent = (browserName, serverName) => {
+    var setupPostContent = (browserName, serverName, queue = false) => {
         var file = 'test.feature',
             host = 'https://www.sharecare.com',
             serverPrefix = serverName.split(': ').shift(),
@@ -86,7 +86,7 @@ describe('HoneydewJob directive', function () {
         spyOn(location, 'path').and.returnValue('/' + file);
         spyOn(liveReport, 'switchChannel').and.returnValue(channel);
 
-        var content = {file, host, channel, browser, server, local};
+        var content = {file, host, channel, browser, server, local, queue};
         if (serverName.match(/Saucelabs/)) {
             content.server = 'Saucelabs';
             content.browser = browserName;
@@ -116,7 +116,8 @@ describe('HoneydewJob directive', function () {
     });
 
     it('should use the wdAddress for localhost when present', () => {
-        var local = '1.1.1.1';
+        let local = '1.1.1.1';
+        let queue = false;
         Settings.set('wdAddress', local);
 
         spyOn(location, 'path').and.returnValue('/test.feature');
@@ -130,6 +131,7 @@ describe('HoneydewJob directive', function () {
             channel: "channel",
             server: "Localhost",
             browser: ["Chrome Local"],
+            queue,
             local
         })
             .respond({});
@@ -193,17 +195,29 @@ describe('HoneydewJob directive', function () {
         expect(storage.browser).toBe('Firefox');
     });
 
-    it('should filter servers for Mobile Safari', () => {
-        // select mobile safari
-        // elm.find('#browser [label="iOS Mobile Safari"]').click();
-        let controller = elm.controller('jobOptions');
-        storage.browser = 'Mobile Safari';
-        controller.updateServers();
-        scope.$apply();
+    describe('real iOS', () => {
+        it('should filter servers for Mobile Safari', () => {
+            // select mobile safari
+            // elm.find('#browser [label="iOS Mobile Safari"]').click();
+            let controller = elm.controller('jobOptions');
+            storage.browser = 'Mobile Safari';
+            controller.updateServers();
+            scope.$apply();
 
-        let servers = elm.find('#server option').text();
-        expect(servers).toBe('Localhost');
+            let servers = elm.find('#server option').text();
+            expect(servers).toBe('Localhost');
 
+        });
+
+        it('should be sent to the queue', () => {
+            storage.browser = 'iOS Mobile Safari';
+            storage.server = 'Localhost';
+            let queue = true;
+
+            setupPostContent(storage.browser, storage.server, queue);
+            elm.find('#execute').eq(0).click();
+            httpMock.flush();
+        });
     });
 
     it('should not run if the webdriver server is down', () => {

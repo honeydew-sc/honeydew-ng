@@ -113,3 +113,34 @@ The exact resolution & user agent definitions for these devices can be
 found in the [project's Github repo][sua].
 
 [sua]: https://github.com/gempesaw/Selenium-UserAgent/blob/master/lib/Selenium/devices.json
+
+
+## Ensure User Exists
+
+You can ensure that a user exists on the environment before your test
+runs. This helps take out the guesswork of "Did I create the user on
+this environment? Has it accepted Terms and Conditions?". Use the
+`User:` preamble followed by an email address. Honeydew will check
+with the SSO on your environment, create the user if necessary, and
+accept T&C on DataServer; all of this will happen _prior_ to your test
+running, so by the time you try to log in during the test, the user
+will be ready.
+
+    Feature: create new users
+    User: new_honeydew_user@example.com
+
+     Scenario: log in
+     Given I am logged in on the / page
+
+     Examples:
+     | email_address                 | password  |
+     | new_honeydew_user@example.com | 123123123 |
+
+You can run the above example feature on any environment and it will
+create the user if it doesn't exist and subsequently log in as that
+user.
+
+*N. B.*: The password of the user is hardcoded to 123123123. As a
+result, you'll probably want to use new email addresses for this,
+instead of using an existing account, since there's no guarantee that
+the existing account will have a matching password.

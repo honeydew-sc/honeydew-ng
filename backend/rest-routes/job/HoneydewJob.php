@@ -192,6 +192,9 @@ class HoneydewJob
         if (isset($queue) && $queue) {
             $this->_queue = true;
         }
+        else if (preg_match('/iOS Mobile Safari/i', $this->_browser)) {
+            $this->_queue = true;
+        }
         else {
             $this->_queue = false;
         }

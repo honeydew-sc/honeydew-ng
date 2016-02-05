@@ -37,7 +37,17 @@ class TestHoneydewJob extends UnitTestCase {
         $job = new HoneydewJob($jobData);
 
         $cmd = $job->syncShellCommand();
-        $this->assertPattern('/queue/', $cmd, 'can queue a job');
+        $this->assertPattern('/hd-queue-job/', $cmd, 'can queue a job');
+    }
+
+    function testIosJob()
+    {
+        $jobData = $this->jobData;
+        $jobData['browser'] = '52 iOS Mobile Safari';
+        $job = new HoneydewJob($jobData);
+
+        $cmd = $job->syncShellCommand();
+        $this->assertPattern('/hd-queue-job/', $cmd, 'iOS jobs are forced to the queue');
     }
 
     /* N. B.: The following tests depend entirely upon

@@ -25,7 +25,7 @@ class SiteNav {
             title: 'Olddew',
             image: 'landing/honeydew-old-sm.png'
         }, {
-            url: '/kabocha/dashboard.html',
+            url: '/kabocha/#/dashboard',
             title: 'Kabocha',
             image: 'landing/kabocha-dashboard-sm.png'
         }, {

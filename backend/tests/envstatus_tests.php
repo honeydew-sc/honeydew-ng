@@ -35,6 +35,6 @@ class reportTests extends UnitTestCase {
         $res = \Httpful\Request::get($this->baseUrl . '/app/SC/env/prod/build')
              ->send();
         $build = $res->body->webpub;
-        $this->assertTrue( !!$build );
+        $this->assertPattern('/^[\d\.\-]+$/', $build);
     }
 }

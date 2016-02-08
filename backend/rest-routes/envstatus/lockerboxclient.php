@@ -149,15 +149,11 @@ function get_build( $env, $app ) {
     $url = $hostname . '/lock/' . $config['access'] . '/' . $config['bucket'];
 
     $res = $lb->request($url, $config);
-    $res = $res['response'];
-    $res = json_decode($res);
-    $res = $res->CONTENT;
+    $build = $res['response'];
 
-    if (preg_match('/' . $bucket['regex'] . '/', $res, $matches)) {
-        $res = $matches[1];
+    if (preg_match('/' . $bucket['regex'] . '/', $build, $matches)) {
+        return $matches[1];
     }
-
-    return $res;
 }
 
 function appToBucket ( $app = 'SC' ) {

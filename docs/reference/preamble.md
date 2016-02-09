@@ -5,16 +5,54 @@
 
 If there is already an existing open bug ticket for the feature you
 are working on, and you know that the feature will fail, you can tell
-Honeydew about it by using the <samp>Existing Bug</samp> preamble
-option as follows:
+Honeydew about it by using the `Existing Bug` preamble option as
+follows:
 
     Feature: an existing jira ticket bug
     Existing Bug: SC-10000
 
 If the feature passes, nothing different will happen, but if the
-feature fails, instead of being reported as a <samp>Failure</samp>,
-it's status will be <samp>Bugged</samp>, which will show up black on
-the Dashboard.
+feature fails, instead of being reported as a `Failure`, its status
+will be `Bugged`, which will show up black on the Dashboard.
+
+### Environment Specific
+
+You can indicate that an existing bug applies only to a certain
+environment. For example, if a bug exists on Stage2, but not anywhere
+else, you can indicate that by
+
+    Feature: environment specific existing bug
+    Existing Bug: stage2:SC-10000
+
+Then, when that test is run against stage2, it will get a `bugged`
+status. When it is run against other environments, it will get the
+normal `success` or `failure` statuses.
+
+As usual, you can specify multiple bugs; if one of the bugs is not
+environment specific, it will OVERRIDE the environment specific ones.
+
+    Feature: environment specific existing bug
+    Existing Bug: stage2:SC-10000 SC-10001
+    # this will ALWAYS be bugged because of SC-10001
+
+Specifying multiple tickets is done via spaces or commas, as you
+please:
+
+    Feature: environment specific existing bug
+    Existing Bug: stage2:SC-10000, stage:SC-10001
+
+or
+
+    Feature: environment specific existing bug
+    Existing Bug: stage2:SC-10000 stage:SC-10001
+
+For what it's worth, the host name is turned into a regular expression
+with a literal period at the end, so that we can discern between stage
+and stage2, for example. `stage:SC-10000` becomes `/stage\./` which
+matches `https://www.stage.sharecare.com` but not
+`https://www.stage2.sharecare.com`. Additionally, if the thing after
+the `:` doesn't look like a ticket (aka matches `/\w+-\d+/`), then it
+won't count, either.
 
 ## Email Notifications
 
@@ -24,9 +62,8 @@ the preamble:
     Feature: an email feature
     Email: your@email.com
 
-As long as the <samp>Email</samp> line is after <samp>Feature</samp>
-and before <samp>Scenario</samp>, it will send you an email every time
-the feature fails.
+As long as the `Email` line is after `Feature` and before `Scenario`,
+it will send you an email every time the feature fails.
 
 ## Subtitles
 
@@ -39,8 +76,8 @@ is a good amount.
 
 ## Keep Open
 
-If you put <samp>Keep Open</samp> in the preamble, the browser will
-not close if a rule fails or if the test runs to completion.
+If you put `Keep Open` in the preamble, the browser will not close if
+a rule fails or if the test runs to completion.
 
     Feature: keep the browser open
     Keep Open

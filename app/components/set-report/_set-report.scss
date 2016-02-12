@@ -2,6 +2,11 @@
     height: 100%;
     overflow: auto;
 
+    button.rerun-failures {
+        margin-bottom: 5px;
+    }
+
+    $border: 1px solid $gray;
     table.table {
         width: calc(100% - 40px);
 
@@ -15,7 +20,7 @@
         }
 
         td {
-            $border: 1px solid $gray;
+
             border-right: $border;
             border-bottom: $border;
         }
@@ -55,6 +60,25 @@
 
         td.status.maybe-failure {
             background-color: $bg-yellow;
+        }
+    }
+
+    table.metadata {
+        padding: 2px;
+        width: 90%;
+        margin: auto;
+        border-top: $border;
+
+        tr {
+            border-bottom: $border;
+        }
+
+        td:nth-child(1) {
+            border-right: $border;
+        }
+
+        td {
+            border: 0;
         }
     }
 }

@@ -20,21 +20,30 @@
         {{ run.browser | shortBrowser }}
         <a href="/dashboard/sets/?setId={{ run.setRunId }}" target="_blank">{{ run.startDate | date: 'M&#8209;dd,&nbsp;h:mma' }}</a>
 
-        <span class="dropdown" ng-if="run.hasFailures">
+        <span class="dropdown">
           <a href class="dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
           </a>
           <ul class="title-dropdown dropdown-menu" role="menu">
-            <li>
-              <a href
-                 class="rerun-failures"
+            <li ng-if="run.hasFailures">
+              <button href
+                 class="btn btn-hdew rerun-failures"
                  ng-click="SetReport.rerunFailures( run )">
                 rerun failures?
-              </a>
+              </button>
             </li>
-            <span class="small">
-              User: {{ run.user }}
-            </span>
+            <li class="small">
+              <table class="metadata">
+                <tr>
+                  <td>User</td>
+                  <td>{{ run.user }}</td>
+                </tr>
+                <tr>
+                  <td>Duration</td>
+                  <td>{{ run.duration }}s</td>
+                </tr>
+              </table>
+            </li>
           </ul>
         </span>
 

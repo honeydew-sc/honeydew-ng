@@ -106,6 +106,8 @@ describe('SetReportService', function () {
     it('should combine features with set history data', () => {
         let browser = 'Chrome local',
             startDate = '2015-05-27 11:12:50',
+            endDate = '2015-05-27 11:12:51',
+            duration = 1,
             host = 'host',
             user = 'user',
             hasFailures = true;
@@ -115,19 +117,19 @@ describe('SetReportService', function () {
             'test/test2.feature'
         ],
             reports = [{
-                browser, startDate, host, user,
+                browser, startDate, endDate, host, user,
                 featureFile: "/./test/test.feature",
                 reportId: "3",
                 setRunId: "2",
                 status: "success"
             }, {
-                browser, startDate, host, user,
+                browser, startDate, endDate, host, user,
                 featureFile: "/./test/test.feature",
                 reportId: "1",
                 setRunId: "1",
                 status: "success"
             }, {
-                browser, startDate, host, user,
+                browser, startDate, endDate, host, user,
                 featureFile: "/./test/test2.feature",
                 reportId: "2",
                 setRunId: "1",
@@ -138,8 +140,8 @@ describe('SetReportService', function () {
 
         startDate = new Date(startDate + ' UTC');
         expect(setData).toEqual([
-            { setRunId: 2, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature' } ] },
-            { setRunId: 1, startDate, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature', reportId: 2 } ] }
+            { setRunId: 2, startDate, duration, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature' } ] },
+            { setRunId: 1, startDate, duration, browser, host, user, hasFailures, missing: [ { feature: 'test/test2.feature', reportId: 2 } ] }
         ]);
 
         expect(reportData).toEqual({

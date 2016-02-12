@@ -92,7 +92,7 @@ class SetReportService {
 
         // group the unique set ids to be used as table headers into
         // the `setData` var
-        reports.forEach( ({ setRunId, startDate, browser, host, user }) => {
+        reports.forEach( ({ setRunId, startDate, endDate, browser, host, user }) => {
             setRunId = parseInt(setRunId);
             if ( ! setIds.hasOwnProperty(setRunId) ) {
                 // collect set IDs we've already seen in a hash for
@@ -100,7 +100,10 @@ class SetReportService {
                 setIds[setRunId]++;
                 startDate = new Date(startDate + ' UTC');
 
-                setData.push( { setRunId, startDate, browser, host, user } );
+                let utcEndDate = new Date(endDate + ' UTC');
+                let duration = (utcEndDate - startDate) / 1000;
+
+                setData.push( { setRunId, startDate, duration, browser, host, user } );
             }
         });
 

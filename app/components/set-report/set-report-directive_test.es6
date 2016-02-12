@@ -97,15 +97,15 @@ describe('SetReport directive', () => {
         });
 
         it('should only show one parent directory and no extension', () => {
-            let shortFeature = elm.find('tr td:first a').text();
+            let shortFeature = elm.find('tr.feature-report td:first a').text();
             expect(shortFeature).toBe('test/test');
         });
 
         it('should link to features', () => {
-            let firstLink = elm.find('tr td:first a').attr('href');
+            let firstLink = elm.find('tr.feature-report td:first a').attr('href');
             expect(firstLink).toBe('#/features/test/test.feature');
 
-            let secondLink = elm.find('tr:nth-child(2) td:first a').attr('href');
+            let secondLink = elm.find('tr.feature-report:nth-child(2) td:first a').attr('href');
             expect(secondLink).toBe('#/features/test/test2.feature');
         });
 

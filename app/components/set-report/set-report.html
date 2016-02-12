@@ -49,7 +49,7 @@
       </th>
     </thead>
     <tbody>
-      <tr ng-repeat="(feature, reports) in SetReport.reportData track by $index">
+      <tr class="feature-report" ng-repeat="(feature, reports) in SetReport.reportData track by $index">
         <td>
           {{ $index + 1}}. <a ng-href="#/features/{{ ::feature }}" target="_blank">{{ ::feature | shortFeature }}</a>
         </td>

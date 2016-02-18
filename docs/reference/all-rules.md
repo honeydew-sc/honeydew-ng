@@ -277,6 +277,28 @@ that element to be present.
 In the above case, if there were already 5 `<li>`'s, the rule would wait
 for css=ul li:nth-child(6) to be present.
 
+### When the (.\*) element is visible, click on the (.\*) element
+
+This is an if statement - Honeydew will check for the $1 element,
+If the element is visible, Honeydew will click on the $2 element.
+If it is not visible, nothing will happen.
+
+Both inputs are [CSS
+locators](http://honeydew.be.jamconsultg.com/docs/reference/finding-elements/).
+
+    When the css=a.not-helpful element is visible, click on the css=a.is-helpful element
+
+### When the (.\*) element is not visible, click on the (.\*) element
+
+This is an if statement - Honeydew will check for the $1 element,
+If the element is not visible, Honeydew will click on the $2 element.
+If it is visible, nothing will happen.
+
+Both inputs are [CSS
+locators](http://honeydew.be.jamconsultg.com/docs/reference/finding-elements/).
+
+    When the css=a.not-helpful element is not visible, click on the css=a.is-helpful element
+
 ### When the (.\*) element is present, continue clicking on the (.\*) element
 
 This is a while loop - Honeydew will check for the $1 element. If it's

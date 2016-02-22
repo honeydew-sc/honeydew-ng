@@ -28,6 +28,7 @@ angular.module('honeydew').service('featureMode', function ($rootScope, autocomp
             'BACTES',
             'BLOG',
             'DS',
+            'DSTWO',
             'DATA',
             'DROZ',
             'EMAILMARK',

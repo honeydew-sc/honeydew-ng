@@ -65,7 +65,7 @@ describe('FeatureMode', () => {
     it('should parse clickable links tickets', () => {
         var feature = `
 Feature: jira tickets
-JIRA: MOBILE-12345
+JIRA: MOBILE-12345 DSTWO-12345
 Set: @example
 
 www.sharecare.com
@@ -77,7 +77,8 @@ http://www.sharecare.com
             'http://www.sharecare.com',
             '@example',
             'MOBILE-12345',
-            'MOBILE-54321'
+            'MOBILE-54321',
+            'DSTWO-12345'
         ].forEach( it => {
             expectClass(feature, it, 'clickable-link');
         });

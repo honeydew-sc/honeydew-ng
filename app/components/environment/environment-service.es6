@@ -26,6 +26,7 @@ class Environment {
             DS: defaultEnvs,
             HCA: defaultEnvs,
             QH: defaultEnvs,
+            CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
             TMA: ['dev', 'stage', 'test', 'prod']
         };
@@ -37,7 +38,8 @@ class Environment {
             DS: 'dailystrength.org',
             Army: '',
             TMA: '',
-            QH: 'qualityhealth.com'
+            QH: 'qualityhealth.com',
+            CNN: 'sharecare.com'
         };
 
         this.urlLookup = [];
@@ -60,12 +62,13 @@ class Environment {
 
     getStandardUrl ( app, env ) {
         let isProd = this._isProd( env );
+        let subdomain = this._isCnn( app ) ? 'cnn.' : 'www.';
 
         let q = isProd ? '' : '.',
             literalEnv = isProd ? '' : env,
             protocol = this._isSharecare( app ) ? 'https://' : 'http://';
 
-        return protocol + 'www.' + literalEnv + q + this.apps[app];
+        return protocol + subdomain + literalEnv + q + this.apps[app];
     }
 
     // We want to keep the army URLs in the config.js file so that we
@@ -169,7 +172,7 @@ class Environment {
     }
 
     _isSharecare ( app ) {
-        return app === 'SC';
+        return app === 'SC' || this.apps[app] === 'sharecare.com';
     }
 
     _isDroz ( app ) {
@@ -178,6 +181,10 @@ class Environment {
 
     _isDs ( app ) {
         return app === 'DS';
+    }
+
+    _isCnn ( app ) {
+        return app === 'CNN';
     }
 
     _isAndroid ( env ) {

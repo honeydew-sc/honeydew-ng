@@ -1,6 +1,6 @@
 describe('hostnameService', function () {
     var hostname, scope, ctrl;
-    var ENV_COUNT = 16,
+    var ENV_COUNT = 15,
         APP_COUNT = 8;
 
     beforeEach(module('sc.hostname'));
@@ -38,15 +38,15 @@ describe('hostnameService', function () {
 
     it('should switch the envs according to host', function () {
         ctrl.emit('SC', undefined);
-        expect(hostname.envOptions.length).toBe(ENV_COUNT);
+        expect(hostname.envOptions.length).toBeGreaterThan(ENV_COUNT);
         ctrl.emit('DROZ', undefined);
         expect(hostname.envOptions.length).toBe(3);
     });
 
     it('should have env and app options', function () {
-        expect(Object.keys(hostname.apps).length).toBe(APP_COUNT);
+        expect(Object.keys(hostname.apps).length).toBeGreaterThan(APP_COUNT);
         expect(Object.keys(hostname.envs.DROZ).length).toBe(3);
-        expect(Object.keys(hostname.envs.SC).length).toBe(ENV_COUNT);
+        expect(Object.keys(hostname.envs.SC).length).toBeGreaterThan(ENV_COUNT);
     });
 
     it('should replace "prod" with an empty string', function () {

@@ -3,7 +3,7 @@ describe('Environment', function () {
 
     const SC_ENV_COUNT = 16,
           DEFAULT_ENV_COUNT = 3,
-          APP_COUNT = 7;
+          APP_COUNT = 8;
 
     beforeEach(module('honeydew'));
     beforeEach(inject(function (_Environment_) {
@@ -75,5 +75,10 @@ describe('Environment', function () {
     it('should construct the correct DS prod url', () => {
         let url = Environment.getEnvUrl( 'DS', 'prod' );
         expect(url).toBe('https://www.dailystrength.org');
+    });
+
+    it('should construct CNN urls correctly', () => {
+        let url = Environment.getEnvUrl( 'CNN', 'stage2' );
+        expect(url).toBe('https://cnn.stage2.sharecare.com');
     });
 });

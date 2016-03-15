@@ -9,7 +9,10 @@ angular.module('honeydew')
         CodeMirror.registerHelper('lint', 'honeydew', honeydewLint.linter);
         CodeMirror.registerHelper('hint', 'honeydew', autocomplete.getHints);
 
-        var isMac = /Mac/.test(navigator.platform);
+        let isMac = /Mac/.test(navigator.platform);
+        let saveCurrentFile = () => {
+            return debounce($scope.file.debouncedSave.bind($scope.file), 1234);
+        };
 
         $scope.editorOptions = {
             lineWrapping : true,
@@ -29,7 +32,8 @@ angular.module('honeydew')
                 'Cmd-/': 'toggleComment',
                 'Ctrl-Z': 'undo',
                 'Ctrl-Y': 'redo',
-                'Ctrl-A': isMac ? 'goLineStartSmart' : 'selectAll'
+                'Ctrl-A': isMac ? 'goLineStartSmart' : 'selectAll',
+                'Cmd-S': 'manualSave'
             },
             onLoad: function (cm) {
                 $scope.editorOptions.refresh = function () {
@@ -78,6 +82,12 @@ angular.module('honeydew')
                     $scope.$broadcast('job:execute');
                 };
 
+                CodeMirror.commands.manualSave = () => {
+                    if (isMac) {
+                        (saveCurrentFile(true))();
+                    }
+                };
+
                 CmDomHelpers.focus(cm, $scope);
                 CmDomHelpers.compileRenderedLines(cm, $scope);
             }
@@ -107,7 +117,7 @@ angular.module('honeydew')
         };
 
         $scope.watchCodeMirror = function () {
-            $scope.stopWatching = $scope.$watch('file.contents', debounce($scope.file.debouncedSave.bind($scope.file), 1234));
+            $scope.stopWatching = $scope.$watch('file.contents', saveCurrentFile());
         };
 
         if ($stateParams.path) {

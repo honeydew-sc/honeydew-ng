@@ -102,7 +102,10 @@ class Environment {
         url = url.replace(/https:\/\//, 'http://');
         url += '/healthcheck';
 
-        if (this._isDroz( app ) ) {
+        if (this._isDs( app ) ) {
+            url += '.php';
+        }
+        else if (this._isDroz( app ) ) {
             url = url.replace(/doctoroz\.com/, 'origin.doctoroz.com');
             url += '.php';
         }

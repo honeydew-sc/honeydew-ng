@@ -77,6 +77,11 @@ describe('Environment', function () {
         expect(url).toBe('https://www.dailystrength.org');
     });
 
+    it('should construct a proper DS healthcheck', () => {
+        let hc = Environment.getHealthcheckUrl( 'DS', 'prod' );
+        expect(hc).toMatch('/healthcheck.php');
+    });
+
     it('should construct CNN urls correctly', () => {
         let url = Environment.getEnvUrl( 'CNN', 'stage2' );
         expect(url).toBe('https://cnn.stage2.sharecare.com');

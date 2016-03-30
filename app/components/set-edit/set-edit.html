@@ -6,7 +6,7 @@
       <div class="md-toolbar-tools">
         <h4>
           {{ ::SetEdit.action | capitalize }}
-          <code>@{{ SetEdit.currentSet }}</code>
+          <code>{{ SetEdit.currentSet }}</code>
 
           <span ng-if="::!SetEdit.isDelete()">to...</span>
           <span ng-if="::SetEdit.isDelete()">?</span>
@@ -17,7 +17,12 @@
     <md-dialog-content ng-if="::!SetEdit.isDelete()">
       Please choose a new set name!
 
-      <md-input-container flex>
+      <br />
+      <span class="small">
+        Don't type the leading <code>@</code>
+      </span>
+
+      <md-input-container md-icon-float flex>
         <label>New Set Name</label>
         <input class="new-set-name-input"
                ng-model="SetEdit.newSetName"

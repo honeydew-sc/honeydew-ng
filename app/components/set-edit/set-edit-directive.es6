@@ -68,7 +68,9 @@ class SetEditController {
 
     rename () {
         let { currentSet, newSetName, Set } = this;
-        let newName = newSetName.replace( /.set$/, '' );
+        let newName = newSetName
+            .replace( /^@/, '')
+            .replace( /.set$/, '' );
 
         return Set.rename( currentSet, newName );
     }

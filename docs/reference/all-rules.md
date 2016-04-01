@@ -1648,7 +1648,11 @@ searching and waiting for a new email for more information.
 
 ### Then I wait for a new email that matches:
 
+### Then I wait for a new email to (.\*) that matches:
+
 ### Then I wait (.\*) seconds for a new email that matches:
+
+### Then I wait (.\*) seconds for a new email to (.\*) that matches:
 
 Wait for an unread email to match a set of search criteria. You can
 search by `subject`, `from`, `to`, and `body`, etc.
@@ -1657,18 +1661,25 @@ search by `subject`, `from`, `to`, and `body`, etc.
       subject:Welcome to Sharecare
       to:Superwoman
 
-You can specify how long you'd like to wait for the email to arrive.
+By default, we will log into the SharecareQA gmail account. We can log
+into a different account if you provide the email as such:
+
+     # user wants to check the testdsemail@gmail.com account
+     Then I wait for a new email to testdsemail that matches:
+      subject:DailyStrength Registration
+
+You may specify how long you'd like to wait for the email to arrive.
 
      Then I wait 60 seconds for a new email that matches:
       subject:Welcome to Sharecare
       to:Superwoman
 
 If the most recent email that matches the search is already read, it's
-not the new email that we're looking for. So, this rule will continue
-checking the inbox until "the most recent email that matches the
-search" is unread. Note that this will happen when the intended new
-email is received, but you can cause it to happen if you mark it as
-unread in the Gmail interface, in case you need to test it.
+assumed not to be the new email that we're looking for. So, this rule
+will continue checking the inbox until "the most recent email that
+matches the search" is unread. Note that this will happen when the
+intended new email is received, but you can cause it to happen if you
+mark it as unread in the Gmail interface, in case you need to test it.
 
 If an email is found, you'll probably want to use the `Given` rule
 above:
@@ -1678,7 +1689,8 @@ above:
      Given I am viewing the new email
 
 At that point, you can assert things about the email like links,
-layout, and content.
+layout, and content, and you can also interact with the email with
+normal Honeydew rules, like clicking on links and buttons.
 
 ## Proxy
 

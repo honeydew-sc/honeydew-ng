@@ -56,14 +56,21 @@ won't count, either.
 
 ## Email Notifications
 
-To have a feature email you when it fails, add the following line to
-the preamble:
+To have a feature email you when it fails during a nightly run, add
+the following line to the preamble:
 
     Feature: an email feature
     Email: your@email.com
 
 As long as the `Email` line is after `Feature` and before `Scenario`,
-it will send you an email every time the feature fails.
+it will send you an email every time the feature fails when run by
+monitors or nightlies.
+
+To be clear, this means if you run the test manually (and are
+presumably watching the output to see whether it fails), there will be
+no email sent. In the case that the test is run as a part of monitors
+or nightlies sets, or without an appropriate username, that is when
+email notifications will be sent.
 
 ## Subtitles
 

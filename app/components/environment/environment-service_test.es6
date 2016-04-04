@@ -82,6 +82,16 @@ describe('Environment', function () {
         expect(hc).toMatch('/healthcheck.php');
     });
 
+    it('should construct the correct QH stage url', () => {
+        let url = Environment.getEnvUrl( 'QH', 'stage' );
+        expect(url).toBe('https://stage.qualityhealth.com');
+    });
+
+    it('should construct the correct QH stage url', () => {
+        let url = Environment.getEnvUrl( 'QH', 'prod' );
+        expect(url).toBe('https://www.qualityhealth.com');
+    });
+
     it('should construct CNN urls correctly', () => {
         let url = Environment.getEnvUrl( 'CNN', 'stage2' );
         expect(url).toBe('https://cnn.stage2.sharecare.com');

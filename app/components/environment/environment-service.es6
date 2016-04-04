@@ -55,6 +55,9 @@ class Environment {
         else if ( this._isDs( app ) ) {
             return this.getDailyStrengthUrl( app, env );
         }
+        else if ( this._isQh( app ) ) {
+            return this.getQualityHealthUrl( app, env );
+        }
         else {
             return this.getStandardUrl( app, env );
         }
@@ -115,6 +118,19 @@ class Environment {
         }
         else {
             return url += '?details=true';
+        }
+    }
+
+    getQualityHealthUrl ( app, env ) {
+        let protocol = 'https://';
+        if ( env === 'stage' ) {
+            return protocol + 'stage.' + this.apps[app];
+        }
+        else if ( env === 'qa' ) {
+            return protocol + 'qa-stg.' + this.apps[app];
+        }
+        else {
+            return protocol + 'www.' + this.apps[app];
         }
     }
 
@@ -184,6 +200,10 @@ class Environment {
 
     _isDs ( app ) {
         return app === 'DS';
+    }
+
+    _isQh ( app ) {
+        return app === 'QH';
     }
 
     _isCnn ( app ) {

@@ -54,14 +54,6 @@ describe('hostnameService', function () {
         expect(hostname.host).not.toMatch(/prod/);
     });
 
-    it('should resolve mobile differently', function () {
-        ctrl.emit('Mobile', 'iOS');
-        expect(hostname.host).toMatch(/origin.*app\.zip/);
-
-        ctrl.emit('Mobile', 'Android');
-        expect(hostname.host).toMatch(/origin.*apk$/);
-    });
-
     it('should overwrite what environments need to be higlighted', () => {
         let pair = { app: 'SC', env: 'prod' };
         hostname.highlightEnvs([ pair ]);

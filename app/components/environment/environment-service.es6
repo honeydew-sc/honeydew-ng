@@ -49,9 +49,6 @@ class Environment {
         if ( this._isArmy( app ) ) {
             return this.getArmyUrl( app, env );
         }
-        else if ( this._isMobile( app ) ) {
-            return this.getMobileUrl( app, env );
-        }
         else if ( this._isDs( app ) ) {
             return this.getDailyStrengthUrl( app, env );
         }
@@ -80,15 +77,6 @@ class Environment {
         let project = app.toLowerCase();
 
         return this.dotmilConfig[`${project}_${env}`];
-    }
-
-    getMobileUrl ( app, env ) {
-        let base = 'http://s.qa.origin.sharecare.com/honeydew/',
-            appEndpoint = this._isAndroid( env )
-                ? 'sc-android.apk'
-                : 'app.zip';
-
-        return base + appEndpoint;
     }
 
     getDailyStrengthUrl ( app, env ) {
@@ -163,10 +151,6 @@ class Environment {
         }
 
         return this.urlLookup;
-    }
-
-    _isMobile ( app ) {
-        return app === 'Mobile';
     }
 
     _isArmy ( env ) {

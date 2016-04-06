@@ -4,8 +4,6 @@ angular.module('sc.hostname')
 
         let apps = Environment.apps,
             envs = Environment.envs;
-        envs.Mobile = [ 'iOS', 'Android' ];
-        apps.Mobile = '';
 
         var hostnameService = {
             envs: Environment.envs,

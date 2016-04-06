@@ -73,4 +73,21 @@ describe('Environment', function () {
         let url = Environment.getEnvUrl( 'CNN', 'stage2' );
         expect(url).toBe('https://cnn.stage2.sharecare.com');
     });
+
+    describe('segments', () => {
+        it('should construct HCA global URLs correctly', () => {
+            let url = Environment.getEnvUrl( 'SG', 'hca (global)' );
+            expect(url).toBe('https://hca.sg.sharecare.com');
+        });
+
+        it('should construct HCA segment URLs correctly', () => {
+            let url = Environment.getEnvUrl( 'SG', 'rocktenn' );
+            expect(url).toBe('https://rocktenn.hca.sg.sharecare.com');
+        });
+
+        it('should construct HCA stage2 segment URLs correctly', () => {
+            let url = Environment.getEnvUrl( 'STAGE2', 'rocktenn' );
+            expect(url).toBe('https://rocktenn.hca.stage2.sharecare.com');
+        });
+    });
 });

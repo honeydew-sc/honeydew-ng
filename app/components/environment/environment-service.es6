@@ -3,6 +3,35 @@ class Environment {
         this.dotmilConfig = dotmilConfig;
 
         const defaultEnvs = [ 'qa', 'stage', 'prod' ];
+        const segmentEnvs = [
+            'hca (global)',
+            'alstom',
+            'dms',
+            'elephantauto',
+            'evonik',
+            'fpd',
+            'fred',
+            'genera',
+            'hopewell',
+            'lucycorr',
+            'ov',
+            'pgcounty',
+            'plowhearth',
+            'rbha',
+            'rec',
+            'recreationrichmond',
+            'richmondarc',
+            'rocktenn',
+            'royallcompany',
+            'rrcrosspointe',
+            'scps',
+            'snag',
+            'ups',
+            'upsf',
+            'virginiafarm',
+            'worthhiggins',
+        ];
+
         this.envs = {
             SC: [
                 'al',
@@ -16,6 +45,7 @@ class Environment {
                 'kms',
                 'kms2',
                 'sg',
+                'sg2',
                 'mservices',
                 'preview',
                 'stage',
@@ -24,7 +54,9 @@ class Environment {
             ],
             DROZ: defaultEnvs,
             DS: defaultEnvs,
-            HCA: defaultEnvs,
+            SG: segmentEnvs,
+            SG2: segmentEnvs,
+            STAGE2: segmentEnvs,
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
@@ -34,12 +66,14 @@ class Environment {
         this.apps = {
             SC: 'sharecare.com',
             DROZ: 'doctoroz.com',
-            HCA: 'hca.sharecare.com',
             DS: 'dailystrength.org',
             Army: '',
             TMA: '',
             QH: 'qualityhealth.com',
-            CNN: 'sharecare.com'
+            CNN: 'sharecare.com',
+            SG: 'sharecare.com',
+            SG2: 'sharecare.com',
+            STAGE2: 'sharecare.com'
         };
 
         this.urlLookup = [];
@@ -54,6 +88,9 @@ class Environment {
         }
         else if ( this._isQh( app ) ) {
             return this.getQualityHealthUrl( app, env );
+        }
+        else if ( this._isHca(app) ) {
+            return this.getHcaUrl( app, env );
         }
         else {
             return this.getStandardUrl( app, env );
@@ -120,6 +157,17 @@ class Environment {
         else {
             return protocol + 'www.' + this.apps[app];
         }
+    }
+
+    getHcaUrl ( app, env ) {
+        let protocol = 'https://';
+
+        // in case env has some extraneous stuff in it
+        env = env.split(' ')[0];
+
+        let literalEnv = /hca/.test(env) ? env : env + '.hca';
+        let downcasedApp = app.toLowerCase();
+        return [ protocol + literalEnv, downcasedApp, this.apps[app] ].join('.');
     }
 
     lookup ( url ) {
@@ -192,6 +240,12 @@ class Environment {
 
     _isCnn ( app ) {
         return app === 'CNN';
+    }
+
+    _isHca ( app ) {
+        return app === 'SG' ||
+            app === 'SG2' ||
+            app === 'STAGE2';
     }
 
     _isAndroid ( env ) {

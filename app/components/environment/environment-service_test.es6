@@ -1,28 +1,10 @@
 describe('Environment', function () {
     var Environment;
 
-    const SC_ENV_COUNT = 16,
-          DEFAULT_ENV_COUNT = 3,
-          APP_COUNT = 8;
-
     beforeEach(module('honeydew'));
     beforeEach(inject(function (_Environment_) {
         Environment = _Environment_;
     }));
-
-    it('should have the proper number of sharecare envs', () => {
-        expect(Environment.envs.SC.length).toBe(SC_ENV_COUNT);
-    });
-
-    it('should have the requisite number of apps', () => {
-        expect(Object.keys(Environment.apps).length).toBe(APP_COUNT);
-    });
-
-    it('should have the proper number of default envs', () => {
-        expect(Environment.envs.DROZ.length).toBe(DEFAULT_ENV_COUNT);
-        expect(Environment.envs.DS.length).toBe(DEFAULT_ENV_COUNT);
-        expect(Environment.envs.HCA.length).toBe(DEFAULT_ENV_COUNT);
-    });
 
     it('should construct a normal baby environment', () => {
         let stageUrl = Environment.getEnvUrl( 'SC', 'stage' );

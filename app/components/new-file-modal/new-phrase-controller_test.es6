@@ -71,9 +71,9 @@ describe('NewPhraseCtrl', () => {
         expect(!!scope.phraseChars).toBe(false);
     });
 
-    it('should tell us about a project with invalid characters', () => {
+    fit('should tell us about a project with invalid characters', () => {
         scope.dest = {
-            phrase: 'valid',
+            phrase: 'valid2',
             project: '@#$*@#$'
         };
 

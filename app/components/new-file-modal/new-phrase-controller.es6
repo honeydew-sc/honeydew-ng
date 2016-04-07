@@ -34,7 +34,7 @@ angular.module('honeydew')
             }
             else {
                 $scope.hasProject = project.length > 0;
-                $scope.projectChars = project.match(/^[A-z]*$/);
+                $scope.projectChars = project.match(/^[0-9A-z]*$/);
             }
 
             return $scope.hasPhrase && $scope.phraseChars && $scope.hasProject && $scope.projectChars;

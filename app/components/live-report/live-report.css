@@ -1,5 +1,10 @@
 div.CodeMirror.live-report pre {
-    overflow: visible;
+    overflow-y: hidden;
+    overflow-x: scroll;
     width: 100%;
     word-wrap: break-word;
+}
+
+.full-height {
+    height: 100%;
 }

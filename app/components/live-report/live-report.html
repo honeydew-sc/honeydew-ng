@@ -1,12 +1,12 @@
-<div ng-class="'cm-s-' + ReportPane.theme" copy-style=".CodeMirror">
-  <div class="CodeMirror live-report" copy-style=".CodeMirror">
+<div class="full-height" ng-class="'cm-s-' + ReportPane.theme" copy-style=".CodeMirror">
+  <div class="CodeMirror live-report full-height" copy-style=".CodeMirror">
 
     <!-- Be careful with the whitespace of the markup here inside of
     the pre, as it will be shown on the page. Secondly, make sure the
     ng-repeat uses `track by`, or else we won't get the append
     behavior that we need. Without the track by, it'll just redraw the
     entire thing every time, which is the problem we need to solve -->
-    <pre class="live-report" copy-style=".CodeMirror"><span ng-repeat="item in ReportPane.report.output track by $index"><span ng-bind-html="::item"></span></span>{{ ReportPane.report.current }}</pre>
+    <pre class="live-report full-height" copy-style=".CodeMirror"><span ng-repeat="item in ReportPane.report.output track by $index"><span ng-bind-html="::item"></span></span>{{ ReportPane.report.current }}</pre>
 
   </div>
 </div>

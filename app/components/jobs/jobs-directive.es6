@@ -38,12 +38,12 @@ angular.module('honeydew')
                 })();
 
                 (function listenForExecutes() {
-                    $scope.$on('job:execute', (event, data) => {
-                        self.executeJob();
+                    $scope.$on('job:execute', (event, data = { debug: false }) => {
+                        self.executeJob(data);
                     });
                 })();
 
-                self.executeJob = () => {
+                self.executeJob = ({ debug }) => {
                     (function updateWindowLayout() {
                         // oooh side effects
                         panes.openPane('report');
@@ -55,7 +55,8 @@ angular.module('honeydew')
                             var job = new HoneydewJob({
                                 browser: self.$storage.browser,
                                 server: self.$storage.server,
-                                queue: isQueueJob()
+                                queue: isQueueJob(),
+                                debug
                             });
                             $scope.$emit('file:commit');
                             $scope.$emit('report:reset');

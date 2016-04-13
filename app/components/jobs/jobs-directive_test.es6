@@ -75,7 +75,7 @@ describe('HoneydewJob directive', function () {
         expect(selected.text()).toBe(server);
     });
 
-    var setupPostContent = (browserName, serverName, queue = false) => {
+    var setupPostContent = (browserName, serverName, queue = false, debug = false) => {
         var file = 'test.feature',
             host = 'https://www.sharecare.com',
             serverPrefix = serverName.split(': ').shift(),
@@ -86,7 +86,7 @@ describe('HoneydewJob directive', function () {
         spyOn(location, 'path').and.returnValue('/' + file);
         spyOn(liveReport, 'switchChannel').and.returnValue(channel);
 
-        var content = {file, host, channel, browser, server, local, queue};
+        var content = {file, host, channel, browser, server, debug, local, queue};
         if (serverName.match(/Saucelabs/)) {
             content.server = 'Saucelabs';
             content.browser = browserName;
@@ -118,6 +118,7 @@ describe('HoneydewJob directive', function () {
     it('should use the wdAddress for localhost when present', () => {
         let local = '1.1.1.1';
         let queue = false;
+        let debug = false;
         Settings.set('wdAddress', local);
 
         spyOn(location, 'path').and.returnValue('/test.feature');
@@ -131,6 +132,7 @@ describe('HoneydewJob directive', function () {
             channel: "channel",
             server: "Localhost",
             browser: ["Chrome Local"],
+            debug,
             queue,
             local
         })
@@ -144,6 +146,15 @@ describe('HoneydewJob directive', function () {
 
         setupPostContent(storage.browser, storage.server);
         elm.find('#execute').eq(0).click();
+        httpMock.flush();
+    });
+
+    it('should send debug jobs to keep open', () => {
+        let queue = false;
+        let debug = true;
+
+        setupPostContent(storage.browser, storage.server, queue, debug);
+        elm.find('#keep-open-execute').click();
         httpMock.flush();
     });
 

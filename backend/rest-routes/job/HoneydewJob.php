@@ -41,6 +41,7 @@ class HoneydewJob
 
         $this->setLocal(@$jobData["browser"], @$jobData["local"]);
         $this->setUsername(@$jobData["username"]);
+        $this->setDebug(@$jobData["debug"]);
         $this->setReportId(@$jobData["reportId"]);
         $this->setSize(@$jobData["size"]);
         $this->setChannel(@$jobData["channel"]);
@@ -182,6 +183,11 @@ class HoneydewJob
         }
     }
 
+    protected function setDebug($debug)
+    {
+        $this->_debug = !!$debug;
+    }
+
     protected function setChannel($channel) {
         if (isset($channel)) {
             $this->_channel = $channel;
@@ -239,6 +245,7 @@ class HoneydewJob
         $size = $this->getSizeString();
         $channel = $this->getChannelString();
         $local = $this->getLocalString();
+        $debug = $this->getDebugString();
 
         $job = $feature
              . $hostname
@@ -249,6 +256,7 @@ class HoneydewJob
              . $size
              . $channel
              . $local
+             . $debug
              . $browser;
 
         return $job;
@@ -322,6 +330,17 @@ class HoneydewJob
     {
         $string = "user=" . $this->_user . "^";
         return $string;
+    }
+
+    protected function getDebugString()
+    {
+        if (isset($this->_debug) && $this->_debug) {
+            $string = "debug=" . $this->_debug . "^";
+            return $string;
+        }
+        else {
+            return "";
+        }
     }
 
     public function addToQueue($test = false)

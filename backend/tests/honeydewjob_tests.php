@@ -218,6 +218,13 @@ class TestHoneydewJob extends UnitTestCase {
             $this->assertNoPattern("/\^local=localhost/", $jobString);
             $this->assertNoPattern("/\^sauce/", $jobString);
         }
+
+        {
+            /* no debug by default */
+            $honeydewJob = new HoneydewJob($this->jobData);
+            $jobString = $honeydewJob->getJobString();
+            $this->assertNoPattern("/debug/", $jobString);
+        }
     }
 
     function testHoneydewJobInputs()
@@ -322,5 +329,15 @@ class TestHoneydewJob extends UnitTestCase {
         set to add it to. */
         $this->assertPattern('%setRunId=47\^%', $jobString,
                              'replace jobs have a setRunId');
+    }
+
+    function testHoneydewJobDebugOption()
+    {
+        $args = $this->jobData;
+        $args['debug'] = true;
+
+        $job = new HoneydewJob($args);
+        $jobString = $job->getJobString();
+        $this->assertPattern('/debug=1/', $jobString);
     }
 }

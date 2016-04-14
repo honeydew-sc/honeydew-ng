@@ -42,11 +42,57 @@
   </div>
 
   <div class="form-group" ng-if="!job.isMonitor">
-    <button ng-click="job.$scope.$emit('job:execute')"
+    <button ng-if="!job.isFeature"
+            ng-click="job.$scope.$emit('job:execute')"
             id="execute"
             class="btn btn-hdew">
       <i class="fa fa-play"></i> F5: execute
     </button>
+
+    <div ng-if="job.isFeature"
+         class="btn-group">
+
+      <button ng-if="!job.isKeepOpenMostRecent"
+              ng-click="job.$scope.$emit('job:execute')"
+              id="execute"
+              class="btn btn-hdew">
+        <i class="fa fa-play"></i> F5: execute
+      </button>
+
+      <button ng-if="job.isKeepOpenMostRecent"
+              ng-click="job.$scope.$emit('job:execute', { debug: true })"
+              id="keep-open-execute"
+              class="btn btn-hdew">
+        <i class="fa fa-play"></i> Keep Open
+      </button>
+
+      <button type="button"
+              class="btn btn-hdew dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+
+      <ul class="dropdown-menu">
+        <li>
+          <a ng-if="job.isKeepOpenMostRecent"
+             ng-click="job.$scope.$emit('job:execute')"
+             id="execute"
+             class="dropdown-item">
+            <i class="fa fa-play"></i> F5: execute
+          </a>
+
+          <a ng-if="!job.isKeepOpenMostRecent"
+             ng-click="job.$scope.$emit('job:execute', { debug: true })"
+             id="keep-open-execute"
+             class="dropdown-item">
+            <i class="fa fa-play"></i> Keep Open
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="form-group" ng-if="job.isMonitor">

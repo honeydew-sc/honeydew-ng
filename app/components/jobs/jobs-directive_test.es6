@@ -149,13 +149,41 @@ describe('HoneydewJob directive', function () {
         httpMock.flush();
     });
 
-    it('should send debug jobs to keep open', () => {
-        let queue = false;
-        let debug = true;
+    describe('keep open button', () => {
+        let controller;
+        let queue;
+        let debug;
+        beforeEach( () => {
+            controller = elm.controller('jobOptions');
+            controller.isFeature = true;
+            controller.isKeepOpenMostRecent = false;
 
-        setupPostContent(storage.browser, storage.server, queue, debug);
-        elm.find('#keep-open-execute').click();
-        httpMock.flush();
+            queue = false;
+            debug = true;
+            scope.$digest();
+        });
+
+        it('should send debug jobs to keep open', () => {
+            setupPostContent(storage.browser, storage.server, queue, debug);
+            elm.find('#keep-open-execute').click();
+            httpMock.flush();
+        });
+
+        it('should keep track of "execute" as the most recent action', () => {
+            setupPostContent(storage.browser, storage.server);
+            elm.find('#execute').click();
+            httpMock.flush();
+            expect(elm.find('button#execute').length).toBe(1);
+            expect(elm.find('button#keep-open-execute').length).toBe(0);
+        });
+
+        it('should track "keep open" as the most recent action', () => {
+            setupPostContent(storage.browser, storage.server, queue, debug);
+            elm.find('#keep-open-execute').click();
+            expect(elm.find('button#execute').length).toBe(0);
+            expect(elm.find('button#keep-open-execute').length).toBe(1);
+        });
+
     });
 
     it('should prefix the server shortname to the browser', () => {
@@ -299,6 +327,8 @@ describe('HoneydewJob directive for sets page', () => {
     it('should know it\'s on a monitor page', () => {
         expect(!!controller.isMonitor).toBe(true);
         expect(controller.setList.length).toBe(1);
+        expect(!!controller.isFeature).toBe(false);
+        expect(elm.find('#keep-open-execute').length).toBe(0);
     });
 
     it('should emit a new monitor job properly', () => {

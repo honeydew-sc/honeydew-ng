@@ -27,6 +27,7 @@ angular.module('honeydew')
 
                 // needed in the view to toggle the set list
                 self.isMonitor = $location.path().match(/\/monitor$/);
+                self.isFeature = $location.path().match(/\.feature$/);
 
                 (function populateSets() {
                     if (self.isMonitor) {
@@ -39,6 +40,7 @@ angular.module('honeydew')
 
                 (function listenForExecutes() {
                     $scope.$on('job:execute', (event, data = { debug: false }) => {
+                        self.isKeepOpenMostRecent = data.debug;
                         self.executeJob(data);
                     });
                 })();

@@ -577,7 +577,7 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command: 'find backend/tests -name "*_tests.php"'
+                command: 'find backend/tests -name "*_tests.php" | xargs -I{} php {}'
             },
 
             fixPermissions: {

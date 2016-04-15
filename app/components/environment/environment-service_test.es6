@@ -73,6 +73,16 @@ describe('Environment', function () {
         let url = Environment.getEnvUrl( 'CNN', 'stage2' );
         expect(url).toBe('https://cnn.stage2.sharecare.com');
     });
+    
+    it('should construct PS Admin urls correctly', () => {
+        let url = Environment.getPsUrl( 'PSQa', 'Admin' );
+        expect(url).toBe('https://ui.qa.ps.sharecare.com/admin');
+    });
+    
+    it('should construct PS Call Center urls correctly', () => {
+        let url = Environment.getPsUrl( 'PSQa', 'Call-Center' );
+        expect(url).toBe('https://ui.qa.ps.sharecare.com/call-center');
+    });
 
     describe('segments', () => {
         it('should construct HCA global URLs correctly', () => {

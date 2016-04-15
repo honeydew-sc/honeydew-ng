@@ -31,6 +31,11 @@ class Environment {
             'virginiafarm',
             'worthhiggins',
         ];
+        
+        const psEnvs = [
+            'Call-Center',
+            'Admin'
+        ];
 
         this.envs = {
             SC: [
@@ -57,6 +62,8 @@ class Environment {
             SG: segmentEnvs,
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
+            PSQa: psEnvs,
+            PSStage: psEnvs,
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
@@ -73,7 +80,9 @@ class Environment {
             CNN: 'sharecare.com',
             SG: 'sharecare.com',
             SG2: 'sharecare.com',
-            STAGE2: 'sharecare.com'
+            STAGE2: 'sharecare.com',
+            PSQa: 'ui.qa.ps.sharecare.com',
+            PSStage: 'ui.stage.ps.sharecare.com'
         };
 
         this.urlLookup = [];
@@ -91,6 +100,9 @@ class Environment {
         }
         else if ( this._isHca(app) ) {
             return this.getHcaUrl( app, env );
+        }
+        else if (this._isPs(app) ) {
+            return this.getPsUrl( app, env );
         }
         else {
             return this.getStandardUrl( app, env );
@@ -169,6 +181,11 @@ class Environment {
         let downcasedApp = app.toLowerCase();
         return [ protocol + literalEnv, downcasedApp, this.apps[app] ].join('.');
     }
+    
+    getPsUrl ( app, env ) {
+        let protocol = 'https://';
+        return protocol + this.apps[app] + "/" + env.toLowerCase();
+    }
 
     lookup ( url ) {
         let lookup = this._getUrlLookup();
@@ -246,6 +263,11 @@ class Environment {
         return app === 'SG' ||
             app === 'SG2' ||
             app === 'STAGE2';
+    }
+    
+    _isPs ( app ) {
+        return app === 'PSQa' ||
+            app === 'PSStage';
     }
 
     _isAndroid ( env ) {

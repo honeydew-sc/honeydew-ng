@@ -174,22 +174,27 @@ class Environment {
         let downcasedApp = app.toLowerCase();
         return [ protocol + literalEnv, downcasedApp, this.apps[app] ].join('.');
     }
-    
-    getPsUrl ( app, env ) { 
-        var url = 'https://';
+
+    getPsUrl ( app, env ) {
+        let protocol = 'https://';
+
+        let prefix;
         if ( /QA/.test(env) ) {
-            url = url + 'ui.qa.';
+            prefix = 'ui.qa.';
         }
         else if ( /Stage/.test(env) ) {
-            url = url + 'stage.ui.';
+            prefix = 'stage.ui.';
         }
+
+        let suffix;
         if ( /Call-Center/.test(env) ) {
-            url = url + this.apps[app] + '/call-center';
-        } 
-        else if ( /Admin/.test(env) ) {
-            url = url + this.apps[app] + '/admin';
+            suffix = '/call-center';
         }
-        return url;
+        else if ( /Admin/.test(env) ) {
+            suffix = '/admin';
+        }
+
+        return protocol + prefix + this.apps[app] + suffix;;
     }
 
     lookup ( url ) {
@@ -269,7 +274,7 @@ class Environment {
             app === 'SG2' ||
             app === 'STAGE2';
     }
-    
+
     _isPs ( app ) {
         return app === 'PS';
     }

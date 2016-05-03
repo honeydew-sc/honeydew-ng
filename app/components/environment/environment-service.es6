@@ -31,11 +31,6 @@ class Environment {
             'virginiafarm',
             'worthhiggins',
         ];
-        
-        const psEnvs = [
-            'Call-Center',
-            'Admin'
-        ];
 
         this.envs = {
             SC: [
@@ -62,8 +57,7 @@ class Environment {
             SG: segmentEnvs,
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
-            PSQa: psEnvs,
-            PSStage: psEnvs,
+            PS: ['QA Call-Center', 'QA Admin', 'Stage Call-Center', 'Stage Admin'],
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
@@ -81,8 +75,7 @@ class Environment {
             SG: 'sharecare.com',
             SG2: 'sharecare.com',
             STAGE2: 'sharecare.com',
-            PSQa: 'ui.qa.ps.sharecare.com',
-            PSStage: 'ui.stage.ps.sharecare.com'
+            PS: 'ps.sharecare.com'
         };
 
         this.urlLookup = [];
@@ -181,10 +174,27 @@ class Environment {
         let downcasedApp = app.toLowerCase();
         return [ protocol + literalEnv, downcasedApp, this.apps[app] ].join('.');
     }
-    
+
     getPsUrl ( app, env ) {
         let protocol = 'https://';
-        return protocol + this.apps[app] + "/" + env.toLowerCase();
+
+        let prefix;
+        if ( /QA/.test(env) ) {
+            prefix = 'ui.qa.';
+        }
+        else if ( /Stage/.test(env) ) {
+            prefix = 'stage.ui.';
+        }
+
+        let suffix;
+        if ( /Call-Center/.test(env) ) {
+            suffix = '/call-center';
+        }
+        else if ( /Admin/.test(env) ) {
+            suffix = '/admin';
+        }
+
+        return protocol + prefix + this.apps[app] + suffix;;
     }
 
     lookup ( url ) {
@@ -264,10 +274,9 @@ class Environment {
             app === 'SG2' ||
             app === 'STAGE2';
     }
-    
+
     _isPs ( app ) {
-        return app === 'PSQa' ||
-            app === 'PSStage';
+        return app === 'PS';
     }
 
     _isAndroid ( env ) {

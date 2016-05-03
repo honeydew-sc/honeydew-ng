@@ -74,14 +74,24 @@ describe('Environment', function () {
         expect(url).toBe('https://cnn.stage2.sharecare.com');
     });
     
-    it('should construct PS Admin urls correctly', () => {
-        let url = Environment.getPsUrl( 'PSQa', 'Admin' );
+    it('should construct PS QA Admin urls correctly', () => {
+        let url = Environment.getPsUrl( 'PS', 'QA Admin' );
         expect(url).toBe('https://ui.qa.ps.sharecare.com/admin');
     });
     
-    it('should construct PS Call Center urls correctly', () => {
-        let url = Environment.getPsUrl( 'PSQa', 'Call-Center' );
+    it('should construct PS QA Call Center urls correctly', () => {
+        let url = Environment.getPsUrl( 'PS', 'QA Call-Center' );
         expect(url).toBe('https://ui.qa.ps.sharecare.com/call-center');
+    });
+    
+    it('should construct PS Stage Admin urls correctly', () => {
+        let url = Environment.getPsUrl( 'PS', 'Stage Admin' );
+        expect(url).toBe('https://stage.ui.ps.sharecare.com/admin');
+    });
+    
+    it('should construct PS Stage Call Center urls correctly', () => {
+        let url = Environment.getPsUrl( 'PS', 'Stage Call-Center' );
+        expect(url).toBe('https://stage.ui.ps.sharecare.com/call-center');
     });
 
     describe('segments', () => {

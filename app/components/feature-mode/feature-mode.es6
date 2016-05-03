@@ -40,6 +40,7 @@ angular.module('honeydew').service('featureMode', function ($rootScope, autocomp
             'HDEW',
             'MAINT',
             'MOBILE',
+            'PSCHED',
             'QA',
             'REALAGE',
             'SC',

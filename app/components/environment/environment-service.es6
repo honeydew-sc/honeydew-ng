@@ -57,7 +57,7 @@ class Environment {
             SG: segmentEnvs,
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
-            PS: ['SA QA Call-Center', 'SF QA Call-Center', 'SA Stage Call-Center', 'SF Stage Call-Center', 'SA QA Admin', 'SA Stage Admin'],
+            PS: ['Devco Salesforce', 'SA QA Call-Center', 'SF QA Call-Center', 'SA Stage Call-Center', 'SF Stage Call-Center', 'SA QA Admin', 'SA Stage Admin'],
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
@@ -179,22 +179,33 @@ class Environment {
         let protocol = 'https://';
 
         let prefix;
-        if ( /QA/.test(env) ) {
+        if ( /SA QA/.test(env) ) {
             prefix = 'ui.qa.';
         }
-        else if ( /Stage/.test(env) ) {
+        else if ( /SA Stage/.test(env) ) {
             prefix = 'stage.ui.';
+        }
+        else if ( /SF QA Call-Center/.test(env) ) {
+            return protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA';
+        }
+        else if ( /SF Stage Call-Center/.test(env) ) {
+            return protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage';
+        }
+        else if ( /Devco Salesforce/.test(env) ) {
+            return protocol + 'devco-dev-ed.my.salesforce.com';
         }
 
         let suffix;
         if ( /Call-Center/.test(env) ) {
             suffix = '/call-center';
+            return protocol + prefix + this.apps[app] + suffix;
         }
         else if ( /Admin/.test(env) ) {
             suffix = '/admin';
+            return protocol + prefix + this.apps[app] + suffix;
         }
 
-        return protocol + prefix + this.apps[app] + suffix;;
+        
     }
 
     lookup ( url ) {

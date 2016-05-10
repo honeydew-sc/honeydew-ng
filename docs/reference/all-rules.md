@@ -41,7 +41,7 @@ page.
     Given I am on the /oops error page
     Given I am on the /non-existent.html error page
 
-### Given I am new user on the (.\*) page
+### Given I am a new user on the (.\*) page
 
 Create a new user and navigate to a particular page, courtesy of the
 SSO Kabocha API written by Jay Heinlein. We'll create an account

@@ -74,39 +74,41 @@ describe('Environment', function () {
         expect(url).toBe('https://cnn.stage2.sharecare.com');
     });
 
-    it('should construct PS Standalone QA Admin urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SA QA Admin' );
-        expect(url).toBe('https://ui.qa.ps.sharecare.com/admin');
-    });
+    describe('PS', () => {
+        it('should construct PS Standalone QA Admin urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SA QA Admin' );
+            expect(url).toBe('https://ui.qa.ps.sharecare.com/admin');
+        });
 
-    it('should construct PS Standalone QA Call Center urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SA QA Call-Center' );
-        expect(url).toBe('https://ui.qa.ps.sharecare.com/call-center');
-    });
+        it('should construct PS Standalone QA Call Center urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SA QA Call-Center' );
+            expect(url).toBe('https://ui.qa.ps.sharecare.com/call-center');
+        });
 
-    it('should construct PS Standalone Stage Admin urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SA Stage Admin' );
-        expect(url).toBe('https://stage.ui.ps.sharecare.com/admin');
-    });
+        it('should construct PS Standalone Stage Admin urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SA Stage Admin' );
+            expect(url).toBe('https://stage.ui.ps.sharecare.com/admin');
+        });
 
-    it('should construct PS Standalone Stage Call Center urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SA Stage Call-Center' );
-        expect(url).toBe('https://stage.ui.ps.sharecare.com/call-center');
-    });
-    
-    it('should construct PS Devco Salesforce base url correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'Devco Salesforce' );
-        expect(url).toBe('https://devco-dev-ed.my.salesforce.com');
-    });
-    
-    it('should construct PS Salesforce QA Call Center urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SF QA Call-Center' );
-        expect(url).toBe('https://devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA');
-    });
-    
-    it('should construct PS Salesforce Stage Call Center urls correctly', () => {
-        let url = Environment.getPsUrl( 'PS', 'SF Stage Call-Center' );
-        expect(url).toBe('https://devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage');
+        it('should construct PS Standalone Stage Call Center urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SA Stage Call-Center' );
+            expect(url).toBe('https://stage.ui.ps.sharecare.com/call-center');
+        });
+
+        it('should construct PS Devco Salesforce base url correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'Devco Salesforce' );
+            expect(url).toBe('https://devco-dev-ed.my.salesforce.com');
+        });
+
+        it('should construct PS Salesforce QA Call Center urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SF QA Call-Center' );
+            expect(url).toBe('https://devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA');
+        });
+
+        it('should construct PS Salesforce Stage Call Center urls correctly', () => {
+            let url = Environment.getPsUrl( 'PS', 'SF Stage Call-Center' );
+            expect(url).toBe('https://devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage');
+        });
     });
 
     describe('segments', () => {

@@ -37,7 +37,7 @@ class Environment {
             'SF QA Call-Center',
             'SA Stage Call-Center',
             'SF Stage Call-Center',
-            'SA QA Admin', 
+            'SA QA Admin',
             'SA Stage Admin'
         ];
 
@@ -185,37 +185,47 @@ class Environment {
     }
 
     getPsUrl ( app, env ) {
+        if (/SF|Salesforce/.test(env)) {
+            return this.getPsSalesforceUrl( app, env );
+        }
+        else {
+            return this.getPsStandardUrl( app, env );
+        }
+    }
+
+    getPsSalesforceUrl ( app, env ) {
         let protocol = 'https://';
-        let url, prefix;
-        
-        if ( /SA QA/.test(env) ) {
+
+        let sfBase = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/';
+        let salesforce = {
+            'SF QA Call-Center': sfBase + 'Call_Center_QA',
+            'SF Stage Call-Center': sfBase + 'Call_Center_Stage',
+            'Devco Salesforce': protocol + 'devco-dev-ed.my.salesforce.com'
+        };
+
+        return salesforce[env];
+    }
+
+    getPsStandardUrl ( app, env ) {
+        let protocol = 'https://';
+
+        let prefix;
+        if ( /QA/.test(env) ) {
             prefix = 'ui.qa.';
         }
-        else if ( /SA Stage/.test(env) ) {
+        else if ( /Stage/.test(env) ) {
             prefix = 'stage.ui.';
-        }
-        else if ( /SF QA Call-Center/.test(env) ) {
-            url = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA';
-        }
-        else if ( /SF Stage Call-Center/.test(env) ) {
-            url = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage';
-        }
-        else if ( /Devco Salesforce/.test(env) ) {
-            url = protocol + 'devco-dev-ed.my.salesforce.com';
         }
 
         let suffix;
-        
-        if ( /(SA) .* (Call-Center)/.test(env) ) {
+        if ( /Call-Center/.test(env) ) {
             suffix = '/call-center';
-            url = protocol + prefix + this.apps[app] + suffix;
         }
-        else if ( /(SA) .* (Admin)/.test(env) ) {
+        else if ( /Admin/.test(env) ) {
             suffix = '/admin';
-            url = protocol + prefix + this.apps[app] + suffix;
         }
 
-        return url;
+        return protocol + prefix + this.apps[app] + suffix;
     }
 
     lookup ( url ) {

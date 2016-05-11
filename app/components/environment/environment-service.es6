@@ -31,6 +31,15 @@ class Environment {
             'virginiafarm',
             'worthhiggins',
         ];
+        const psEnvs = [
+            'Devco Salesforce',
+            'SA QA Call-Center',
+            'SF QA Call-Center',
+            'SA Stage Call-Center',
+            'SF Stage Call-Center',
+            'SA QA Admin', 
+            'SA Stage Admin'
+        ];
 
         this.envs = {
             SC: [
@@ -57,7 +66,7 @@ class Environment {
             SG: segmentEnvs,
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
-            PS: ['Devco Salesforce', 'SA QA Call-Center', 'SF QA Call-Center', 'SA Stage Call-Center', 'SF Stage Call-Center', 'SA QA Admin', 'SA Stage Admin'],
+            PS: psEnvs,
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],

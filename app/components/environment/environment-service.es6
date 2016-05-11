@@ -186,8 +186,7 @@ class Environment {
 
     getPsUrl ( app, env ) {
         let protocol = 'https://';
-
-        let prefix;
+        let url, prefix;
         if ( /SA QA/.test(env) ) {
             prefix = 'ui.qa.';
         }
@@ -195,26 +194,26 @@ class Environment {
             prefix = 'stage.ui.';
         }
         else if ( /SF QA Call-Center/.test(env) ) {
-            return protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA';
+            url = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_QA';
         }
         else if ( /SF Stage Call-Center/.test(env) ) {
-            return protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage';
+            url = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/Call_Center_Stage';
         }
         else if ( /Devco Salesforce/.test(env) ) {
-            return protocol + 'devco-dev-ed.my.salesforce.com';
+            url = protocol + 'devco-dev-ed.my.salesforce.com';
         }
 
         let suffix;
-        if ( /Call-Center/.test(env) ) {
+        if ( /(SA) .* (Call-Center)/.test(env) ) {
             suffix = '/call-center';
-            return protocol + prefix + this.apps[app] + suffix;
+            url = protocol + prefix + this.apps[app] + suffix;
         }
-        else if ( /Admin/.test(env) ) {
+        else if ( /(SA) .* (Admin)/.test(env) ) {
             suffix = '/admin';
-            return protocol + prefix + this.apps[app] + suffix;
+            url = protocol + prefix + this.apps[app] + suffix;
         }
 
-        
+        return url;
     }
 
     lookup ( url ) {

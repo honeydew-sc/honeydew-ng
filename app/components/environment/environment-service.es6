@@ -187,6 +187,7 @@ class Environment {
     getPsUrl ( app, env ) {
         let protocol = 'https://';
         let url, prefix;
+        
         if ( /SA QA/.test(env) ) {
             prefix = 'ui.qa.';
         }
@@ -204,6 +205,7 @@ class Environment {
         }
 
         let suffix;
+        
         if ( /(SA) .* (Call-Center)/.test(env) ) {
             suffix = '/call-center';
             url = protocol + prefix + this.apps[app] + suffix;

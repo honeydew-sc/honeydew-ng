@@ -31,6 +31,15 @@ class Environment {
             'virginiafarm',
             'worthhiggins',
         ];
+        const psEnvs = [
+            'Devco Salesforce',
+            'SA QA Call-Center',
+            'SF QA Call-Center',
+            'SA Stage Call-Center',
+            'SF Stage Call-Center',
+            'SA QA Admin',
+            'SA Stage Admin'
+        ];
 
         this.envs = {
             SC: [
@@ -57,7 +66,7 @@ class Environment {
             SG: segmentEnvs,
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
-            PS: ['QA Call-Center', 'QA Admin', 'Stage Call-Center', 'Stage Admin'],
+            PS: psEnvs,
             QH: defaultEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
@@ -176,6 +185,28 @@ class Environment {
     }
 
     getPsUrl ( app, env ) {
+        if (/SF|Salesforce/.test(env)) {
+            return this.getPsSalesforceUrl( app, env );
+        }
+        else {
+            return this.getPsStandardUrl( app, env );
+        }
+    }
+
+    getPsSalesforceUrl ( app, env ) {
+        let protocol = 'https://';
+
+        let sfBase = protocol + 'devco-dev-ed--sharecare.na22.visual.force.com/apex/';
+        let salesforce = {
+            'SF QA Call-Center': sfBase + 'Call_Center_QA',
+            'SF Stage Call-Center': sfBase + 'Call_Center_Stage',
+            'Devco Salesforce': protocol + 'devco-dev-ed.my.salesforce.com'
+        };
+
+        return salesforce[env];
+    }
+
+    getPsStandardUrl ( app, env ) {
         let protocol = 'https://';
 
         let prefix;
@@ -194,7 +225,7 @@ class Environment {
             suffix = '/admin';
         }
 
-        return protocol + prefix + this.apps[app] + suffix;;
+        return protocol + prefix + this.apps[app] + suffix;
     }
 
     lookup ( url ) {

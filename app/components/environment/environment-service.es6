@@ -31,6 +31,7 @@ class Environment {
             'virginiafarm',
             'worthhiggins',
         ];
+
         const psEnvs = [
             'Devco Salesforce',
             'SA QA Call-Center',
@@ -40,6 +41,15 @@ class Environment {
             'SA QA Admin',
             'SA Stage Admin'
         ];
+
+        const qhEnvs = [
+            'qa',
+            'app qa web',
+            'app2 qa web',
+            'stage',
+            'prod'
+        ];
+
 
         this.envs = {
             SC: [
@@ -67,7 +77,7 @@ class Environment {
             SG2: segmentEnvs,
             STAGE2: segmentEnvs,
             PS: psEnvs,
-            QH: defaultEnvs,
+            QH: qhEnvs,
             CNN: ['sg2', 'stage2', 'prod'],
             Army: ['dev', 'stage', 'test', 'prod'],
             TMA: ['dev', 'stage', 'test', 'prod']
@@ -162,11 +172,15 @@ class Environment {
 
     getQualityHealthUrl ( app, env ) {
         let protocol = 'https://';
-        if ( env === 'stage' ) {
-            return protocol + 'stage.' + this.apps[app];
-        }
-        else if ( env === 'qa' ) {
-            return protocol + 'qa-stg.' + this.apps[app];
+        let subdomains = {
+            stage: 'stage.',
+            qa: 'qa-stg.',
+            'app qa web': 'appqa.',
+            'app2 qa web': 'appqa2.'
+        };
+
+        if ( subdomains[env] ) {
+            return protocol + subdomains[env] + this.apps[app];
         }
         else {
             return protocol + 'www.' + this.apps[app];

@@ -59,14 +59,26 @@ describe('Environment', function () {
         expect(hc).toMatch('/healthcheck.php');
     });
 
-    it('should construct the correct QH stage url', () => {
-        let url = Environment.getEnvUrl( 'QH', 'stage' );
-        expect(url).toBe('https://stage.qualityhealth.com');
-    });
+    describe('QH', () => {
+        it('should construct the correct QH QA url', () => {
+            let url = Environment.getEnvUrl( 'QH', 'qa' );
+            expect(url).toBe('https://qa-stg.qualityhealth.com');
+        });
 
-    it('should construct the correct QH stage url', () => {
-        let url = Environment.getEnvUrl( 'QH', 'prod' );
-        expect(url).toBe('https://www.qualityhealth.com');
+        it('should construct the correct QH QA app url', () => {
+            let url = Environment.getEnvUrl( 'QH', 'app2 qa web' );
+            expect(url).toBe('https://appqa2.qualityhealth.com');
+        });
+
+        it('should construct the correct QH stage url', () => {
+            let url = Environment.getEnvUrl( 'QH', 'stage' );
+            expect(url).toBe('https://stage.qualityhealth.com');
+        });
+
+        it('should construct the correct QH prod url', () => {
+            let url = Environment.getEnvUrl( 'QH', 'prod' );
+            expect(url).toBe('https://www.qualityhealth.com');
+        });
     });
 
     it('should construct CNN urls correctly', () => {

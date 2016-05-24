@@ -41,7 +41,7 @@ $app->group('/report', function () use ($app, $setsDir) {
         $sql_args = array( $name );
         $date_filter = get_date_filter();
 
-        $sql = 'SELECT DISTINCT(s.host)
+        $sql = 'SELECT DISTINCT(s.host), s.id
         FROM setRun s
         WHERE s.setName LIKE ?
         ' . $date_filter . '

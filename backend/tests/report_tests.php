@@ -61,7 +61,7 @@ class reportTests extends UnitTestCase {
         $response = \Httpful\Request::get($this->baseUrl . '/set/testing.set/host?debug=1')->send();
         $hostnames = $response->body->hostnames;
         $this->assertEqual( $hostnames[0]->{'host'}, 'test-host' );
-        $this->assertPattern( '/select distinct\(s\.host\) from setRun s/i', $response->body->sql );
+        $this->assertPattern( '/select distinct\(s\.host\).*from setRun s/i', $response->body->sql );
     }
 
     function testCleanUp() {

@@ -14,6 +14,7 @@ start up the app:
 [`bower`]: http://bower.io/
 
 ```bash
+$ gem install compass
 $ composer install
 $ npm install
 $ grunt serve

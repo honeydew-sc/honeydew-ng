@@ -154,6 +154,15 @@ This will probably take a decent amount of trial and error, especially
 if you're trying to use this rule across browsers or with different
 sizes. It may not be worth the effort.
 
+### When I click on the (.\*) link
+
+Click on an element with the specified link text. It is similar to "When I click on the link link\_text='See All Slideshows'," but it is a little more readable.
+
+    When I click on the See All Slideshows link
+    When I click on the "See All Slideshows" link
+    When I click on the link_text=See All Slideshows link
+    When I click on the link_text="See All Slideshows" link
+
 ### When I double click on the link (.\*)
 
 Double click on the specified element. If this triggers a page load, Honeydew will wait until the page finishes loading to proceed.

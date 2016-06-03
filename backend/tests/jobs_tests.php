@@ -86,6 +86,10 @@ class jobsTests extends UnitTestCase {
         $pdo = hdewdb_connect();
         $sth = $pdo->prepare('insert into setRun (setRunUnique, setName, userId, host, browser, status, startDate, endDate) values("setRunUn", "setName", 1, "host", "browser", "success", NOW(), NOW());');
         $sth->execute();
+        $id1 = $pdo->lastInsertId();
+
+        $sth2 = $pdo->prepare('insert into setRun (setRunUnique, setName, userId, host, browser, status, startDate, endDate) values("setRunU2", "setName", 1, "host", "browser", "success", NOW(), NOW());');
+        $sth2->execute();
         $id = $pdo->lastInsertId();
 
         $response = \Httpful\Request::delete($this->baseUrl . '/sets/' . $id)->send();
@@ -95,6 +99,7 @@ class jobsTests extends UnitTestCase {
         $this->assertEqual($res[0]["id"], $id);
 
         $sth = $pdo->prepare('delete from setRun where id = ?');
+        $sth->execute(array($id1));
         $sth->execute(array($id));
     }
 

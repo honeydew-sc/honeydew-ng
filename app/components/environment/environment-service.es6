@@ -5,6 +5,7 @@ class Environment {
         const defaultEnvs = [ 'qa', 'stage', 'prod' ];
         const segmentEnvs = [
             'hca (global)',
+            'hcathrive',
             'alstom',
             'dms',
             'elephantauto',

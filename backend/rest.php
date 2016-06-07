@@ -74,9 +74,11 @@ function grepDirectory($dir, $filter, $args = "-iRl", $escape = true) {
     $basedir = "/opt/honeydew/";
     $grep = "cd $basedir && grep";
     if ($escape) {
-        $filter = escapeshellcmd($filter);
+        $filter = '"' . escapeshellcmd($filter) . '" ';
     }
-    $filter = '""' . $filter . '""';
+    else {
+        $filter = '"' . $filter . '"';
+    }
     $query = "$grep $args $filter $dir";
 
     exec($query, $result);

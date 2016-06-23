@@ -1738,6 +1738,24 @@ Leave a team by its name. Teams are only on mobile, so although there
 is nothing stopping you from using this rule elsewhere, I'm not sure
 why you'd want to.
 
+## Patient Scheduling
+
+Patient Scheduling rules for api and data interaction.
+
+### When I create provider marketing data for practitioner (.\*) with workspace (.\*)
+
+### When I create provider marketing data for practitioner (.\*) with workspace (.\*) and store it as $(.\*):
+
+Create provider marketing data for a provider with the specified
+workspace. If successful, the provider marketing data ID will be
+returned and saved as a variable. Every time this rule is executed,
+all previous provider marketing data for the practitioner is deleted.
+
+### When I create provider marketing data and store it as $(.\*):
+
+Create provider marketing data for Jean Liu. The practitioner
+has an ID set to "425092" and a workspace set to "1032:425092."
+
 When comparing an entire analytics request, we accept a rule like:
 
      Then I wait for an entire comscore request to include:

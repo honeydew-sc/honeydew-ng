@@ -1742,7 +1742,7 @@ why you'd want to.
 
 Patient Scheduling rules for api and data interaction.
 
-### When I create provider marketing data for practitioner (.\*) with workspace (.\*)
+### When I create provider marketing data for practitioner (.\*) with workspace (.\*):
 
 ### When I create provider marketing data for practitioner (.\*) with workspace (.\*) and store it as $(.\*):
 
@@ -1755,3 +1755,9 @@ all previous provider marketing data for the practitioner is deleted.
 
 Create provider marketing data for Jean Liu. The practitioner
 has an ID set to "425092" and a workspace set to "1032:425092."
+
+### When I edit the provider marketing data (.\*) for practitioner (.\*):
+
+### When I edit the provider marketing data (.\*):
+
+Edit provider marketing data for a practitioner.

@@ -1761,3 +1761,10 @@ has an ID set to "425092" and a workspace set to "1032:425092."
 ### When I edit the provider marketing data (.\*):
 
 Edit provider marketing data for a practitioner.
+
+### When I add time slots to the practitioner (.\*) with the workspace (.\*)
+
+Add a default set of time slots to a practitioner's workspace.
+The time slots are setup to occupy five days out of the week.
+The time slots range from 8:00 AM to 5:00 PM.
+There should only be one appointment availability per time slot.

@@ -4,6 +4,7 @@ angular.module('honeydew')
             let localBrowsers = [
                 'Chrome',
                 'Firefox',
+                'Firefox No JS',
                 'iOS Mobile Safari',
                 'Safari',
                 'IE 8',

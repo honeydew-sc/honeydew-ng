@@ -33,7 +33,9 @@ angular.module('honeydew')
                 'Ctrl-Z': 'undo',
                 'Ctrl-Y': 'redo',
                 'Ctrl-A': isMac ? 'goLineStartSmart' : 'selectAll',
-                'Cmd-S': 'manualSave'
+                'Cmd-S': 'manualSave',
+                'F8': 'stepOver',
+                'F9': 'quitRepl'
             },
             onLoad: function (cm) {
                 $scope.editorOptions.refresh = function () {
@@ -74,6 +76,21 @@ angular.module('honeydew')
                 CodeMirror.commands.repl = function (cm) {
                     var rule = cm.getLine(cm.getCursor().line);
                     liveReport.evalRule(rule);
+                };
+
+                CodeMirror.commands.gotoNextLine = cm => {
+                    console.log('hi going to next line');
+                    let current = cm.getCursor();
+                    let nextLine = Object.assign(current, {
+                        line: current.line + 1
+                    });
+
+                    cm.setCursor(nextLine);
+                };
+
+                CodeMirror.commands.stepOver = cm => {
+                    CodeMirror.commands.repl(cm);
+                    CodeMirror.commands.gotoNextLine(cm);
                 };
 
                 CodeMirror.commands.quitRepl = liveReport.close;

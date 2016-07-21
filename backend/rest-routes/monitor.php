@@ -177,6 +177,7 @@ function validate_set( $set, $retry = false ) {
     /* when validating a new monitor, ensure that the set exists, or
     try to create it! */
     $set_filename = abs_set_path( $set );
+
     if ( ! file_exists( $set_filename ) ) {
         if ( $retry ) {
             throw new Exception( 'Error: the set does not exist: ' . $set_filename );

@@ -11,7 +11,9 @@ class monitorTests extends UnitTestCase {
         $this->monitorUri = $this->base . "/monitor";
         $seed = \Httpful\Request::get($this->monitorUri . "/reload?security=obscurity")->send();
 
-        $this->fakeSet = "/opt/honeydew/sets/fake.set";
+        $basedir = '/opt/honeydew';
+        $this->fakeSet = $basedir . "/sets/fake.set";
+        file_put_contents($basedir . '/features/dan.feature', "Feature: hello\nSet: @fake");
     }
 
     function setUp() {
@@ -71,6 +73,7 @@ class monitorTests extends UnitTestCase {
         $this->assertPattern("/Error: invalid host/", $res->{"reason"}, "bad host gets rejected");
 
         $fakeSet = "/tmp/fake.set";
+        touch($fakeSet);
         $validMonitor = array(
             "set" => $fakeSet,
             "browser" => "Chrome",
@@ -85,14 +88,14 @@ class monitorTests extends UnitTestCase {
         $res = $response->body;
         $this->assertEqual($res->{"success"}, "true", "good post succeeds");
         $this->assertTrue(isset($res->{"id"}), "new post comes back with id");
+        unlink($fakeSet);
     }
 
     function testForceExistNewMonitor() {
-        $fakeSet = "/tmp/fake.set";
-        unlink($fakeSet);
+        unlink($this->fakeSet);
 
         $validMonitor = array(
-            "set" => $fakeSet,
+            "set" => $this->fakeSet,
             "browser" => "Chrome",
             "host" => "sharecare"
         );
@@ -103,8 +106,8 @@ class monitorTests extends UnitTestCase {
             ->send();
 
         $res = $response->body;
-        $this->assertTrue( file_exists( $fakeSet ) );
-        unlink($fakeSet);
+        $this->assertTrue( file_exists( $this->fakeSet ) );
+        unlink($this->fakeSet);
     }
 
     function testUpdateExisting() {

@@ -134,6 +134,11 @@ describe('Environment', function () {
             expect(url).toBe('https://rocktenn.hca.sg.sharecare.com');
         });
 
+        it('should construct HCA thrive URLs correctly', () => {
+            let url = Environment.getEnvUrl( 'STAGE2', 'hcathrive' );
+            expect(url).toBe('https://www.hcathrive.stage2.sharecare.com');
+        });
+
         it('should construct HCA stage2 segment URLs correctly', () => {
             let url = Environment.getEnvUrl( 'STAGE2', 'rocktenn' );
             expect(url).toBe('https://rocktenn.hca.stage2.sharecare.com');

@@ -193,6 +193,9 @@ class Environment {
 
         // in case env has some extraneous stuff in it
         env = env.split(' ')[0];
+        if (env === 'hcathrive') {
+            env = 'www.' + env;
+        }
 
         let literalEnv = /hca/.test(env) ? env : env + '.hca';
         let downcasedApp = app.toLowerCase();

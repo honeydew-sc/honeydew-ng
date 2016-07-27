@@ -530,13 +530,19 @@ after typing your password in a form.
 
 The first input is the key you wish to use. Choose from the following:
 Backspace, Tab, Enter, Shift, Control, Pause, Spacebar, Page Up, Page
-Down, End, Home, Left, Up, Right, Down, Insert, Delete.
+Down, End, Home, Left, Up, Right, Down, Insert, Delete, Command.
 
 The second input is a [CSS
 locator](http://honeydew.be.jamconsultg.com/docs/reference/finding-elements/).
 
     When I press the Backspace key on the css=input element
     When I press the Tab key on the css=#tab element
+
+### When I press the (.\*) keys on the (.\*) element
+
+Press two keys at the same time. The rule must have a plus (+) between the two keys to recognize a multi key press.
+
+    When I press the Command + a keys on the id=textarea element
 
 ### When I input (.\*) into the editor (.\*)
 

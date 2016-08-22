@@ -1770,7 +1770,17 @@ Edit provider marketing data for a practitioner.
 
 ### When I add time slots to the practitioner (.\*) with the workspace (.\*)
 
-Add a default set of time slots to a practitioner's workspace.
-The time slots are setup to occupy five days out of the week.
-The time slots range from 8:00 AM to 5:00 PM.
-There should only be one appointment availability per time slot.
+Add a default set of time slots to a practitioner's workspace. The
+time slots are setup to occupy five days out of the week. The time
+slots range from 8:00 AM to 5:00 PM. There should only be one
+appointment availability per time slot.
+
+### When I add primary category IDs (.\*) to the workspace (.\*) for the practitioner (.\*)
+
+Add primary category ids to a workspace. The ids should be a string
+separated by commas. Spaces surrounding the commas will be removed -
+that is, the following are all the same: "Clinic, Web"; "Clinic ,
+Web"; "Clinic,Web". The recommended way is to store the string in a
+honeydew variable.
+
+       When I add primary category IDs "Clinic,Web" to the workspace 1032:425092 for the practitioner 425092

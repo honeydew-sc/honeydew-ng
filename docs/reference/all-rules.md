@@ -790,6 +790,16 @@ button. NB: you must use this rule \_immediately\_ after creating the
 alert; if any other Webdriver command is sent while there is a
 javascript modal present, it will fail.
 
+### Then I wait for the alert to be visible
+
+### Then I wait (.\*) for the alert to be visible
+
+Wait for a javascript alert to be visible. It defaults to 30 seconds.
+Otherwise, you can manually specify a timeframe to wait for the alert.
+The rule does not confirm, dismiss or cancel the alert - you must do
+that yourself afterwards with one of the other alert interaction
+rules.
+
 ### When I page up (.\*) times
 
 The input is just a number.

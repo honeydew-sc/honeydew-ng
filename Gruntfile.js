@@ -594,15 +594,6 @@ module.exports = function (grunt) {
                     stderr: true
                 },
                 command: 'ssh honeydew "find /opt/honeydew-ui/ng/backend/rest-routes/sources/ -type f | xargs -I{} ls -al {}"'
-            },
-
-            deployBack: {
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: true
-                },
-                command: 'git push && ssh honeydew "cd /opt/honeydew-ui/ng/ && git fetch --all && git reset --hard origin/master"'
             }
         },
 
@@ -685,6 +676,13 @@ module.exports = function (grunt) {
                     dest: '/opt/honeydew-ui/htdocs/',
                     host: 'honeydew@honeydew'
                 }
+            },
+            prodBackend: {
+                options: {
+                    src: 'backend',
+                    dest: '/opt/honeydew-ui/htdocs/ng/',
+                    host: 'honeydew@honeydew'
+                }
             }
         },
 
@@ -765,13 +763,14 @@ module.exports = function (grunt) {
         'karma:unit',
         'shell:phpTests',
         'rsync:prod',
-        'shell:deployBack',
+        'rsync:prodBackend',
         'fixPermissions'
     ]);
 
     grunt.registerTask('deployBack', [
         'shell:phpTests',
-        'shell:deployBack'
+        'rsync:prodBackend',
+        'fixPermissions'
     ]);
 
     grunt.registerTask('fixPermissions', [

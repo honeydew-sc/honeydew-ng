@@ -116,6 +116,9 @@ $app->group('/files', function () use ($app) {
 
         if (isProduction()) {
             exec($command, $output);
+            if (is_array($output)) {
+                $output = implode("\n", $output);
+            }
         }
 
         $ret .= "\n" . $output;

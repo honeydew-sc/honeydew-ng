@@ -680,7 +680,7 @@ module.exports = function (grunt) {
             prodBackend: {
                 options: {
                     src: 'backend',
-                    dest: '/opt/honeydew-ui/htdocs/ng/',
+                    dest: '/opt/honeydew-ui/ng/',
                     host: 'honeydew@honeydew'
                 }
             }

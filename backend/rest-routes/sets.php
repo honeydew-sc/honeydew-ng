@@ -37,7 +37,8 @@ $app->group('/sets', function () use ($app, $setsDir) {
 
             $oldPath = resolveFilename( array( 'sets', $setFilename ) );
             $contents = refreshSet( $oldPath );
-            $features = array_filter( explode("\n", $contents), 'strlen' );
+            $parts = explode("\n", $contents);
+            $features = array_filter( $parts, 'strlen' );
 
             $oldShortSetName = preg_replace( '/\.set$/', '', $setFilename );
             $newShortSetName = json_decode( $app->request()->getBody() )->newSetName;
@@ -61,7 +62,8 @@ $app->group('/sets', function () use ($app, $setsDir) {
                 throw new Exception( 'The source set does not exist: ' . $oldPath );
             }
             else {
-                $features = array_filter( explode("\n", refreshSet( $oldPath ) ), 'strlen' );
+                $parts = explode("\n", refreshSet( $oldPath ));
+                $features = array_filter( $parts, 'strlen' );
             }
 
             $newPath = resolveFilename( array( 'sets', $newSetName ) );
@@ -84,7 +86,8 @@ $app->group('/sets', function () use ($app, $setsDir) {
     $app->delete('/:setName', function ( $setName ) use ( $app ) {
         try {
             $setFilename = resolveFilename( array( 'sets', $setName ) );
-            $features = array_filter( explode("\n", refreshSet( $setFilename ) ), 'strlen' );
+            $parts = explode("\n", refreshSet( $setFilename ));
+            $features = array_filter( $parts, 'strlen' );
 
             if ( ! file_exists( $setFilename ) ) {
                 throw new Exception( 'The set does not exist: ' . $setFilename );

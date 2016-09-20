@@ -136,7 +136,8 @@ function resolveFilename( $filename) {
 }
 
 function refreshSet( $setName ) {
-    $shortName = escapeshellcmd(substr(array_pop(explode('/', $setName)), 0, -4));
+    $parts = explode('/', $setName);
+    $shortName = escapeshellcmd(substr(array_pop($parts), 0, -4));
 
     $escape = false;
     $features = grepDirectory(

@@ -7,9 +7,7 @@ $app->group('/jobs', function () use ($app) {
 
         try {
             validateJobData($jobData);
-            // although jobs.php is in /rest-routes, it's required by
-            // rest.php, which a sibling of HoneydewJob.
-
+            refreshSet(resolveFilename(array($jobData['file'])));
             $jobData['filename'] = $jobData['file'];
 
             foreach ($jobData['browser'] as $browser) {

@@ -17,7 +17,7 @@ class SiteNav {
             title: 'Docs',
             image: 'landing/honeydew-docs-sm.png'
         }, {
-            url: 'http://qa-328.terminus2.openstack.internal:9191/overview',
+            url: 'http://qa-330.terminus2.openstack.internal:9191/overview',
             title: 'Queues',
             image: 'landing/honeydew-queue-sm.png'
         }, {

@@ -92,7 +92,7 @@ End Date: 2015-08-18 16:00:46`;
         });
 
         it('should parse dates in YYYY-MM-DD HH:MM:SS', () => {
-            let line = 'End Date 2015-08-18 19:39:10';
+            let line = 'End Date: 2015-08-18 19:39:10';
             expectClass(line, '2015-08-18 19:39:10', cmReportMode.DATE);
 
         });
@@ -144,7 +144,12 @@ End Date: 2015-08-18 16:00:46`;
             it('should should convert dates from database to local TZ', () => {
                 let output = cmReportMode.highlight('End Date: 2015-08-18 19:39:10');
                 expect(output).toMatch(/8.*18, .*:39:10.M/);
+            });
 
+            it('should not convert outside of header lines', () => {
+                let output = cmReportMode.highlight('Not A Date Header: 123123123');
+                // 123123123 as epoch is 11/25/1973, 7:52:03 PM GMT-5:00
+                expect(output).not.toMatch(/11-25/);
             });
         });
     });

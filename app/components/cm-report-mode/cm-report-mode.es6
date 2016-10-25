@@ -154,7 +154,7 @@ function cmReportModeService ($rootScope, $filter, preambleOptions, awsConfig) {
                     state.inDateHeader = true;
                     return style.HEADER;
                 }
-                else if (stream.match(date)) {
+                else if (stream.match(date) && state.inDateHeader) {
                     state.inDateHeader = false;
                     return style.DATE;
                 }

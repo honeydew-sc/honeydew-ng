@@ -10,6 +10,7 @@ pages:
     - All Rules: reference/all-rules.md
     - Finding Elements: reference/finding-elements.md
     - Backend API: reference/api.md
+    - HTTP Requests: reference/http-requests.md
 - HD FAQ:
     - FAQ: faq.md
     - Install Webdriver: faq/install-webdriver.md

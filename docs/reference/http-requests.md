@@ -22,9 +22,10 @@ the /ok page`.
 
 There are some new things here:
 
-- The triple backquote `` ` `` fence surrounding the HTTP request. There
-  must be three backquotes ```` ``` ```` to denote the of the request, and
-  three backquotes ```` ``` ```` to denote the end of the request.
+- The triple backquote `` ` `` fence surrounding the HTTP
+  request. There must be three backquotes ```` ``` ```` to denote the
+  start of the request, and three backquotes ```` ``` ```` to denote
+  the end of the request.
 
 - There's a response variable `$res1` that isn't declared anywhere. It
   comes from the HTTP request itself - the response to each request is
@@ -32,15 +33,15 @@ There are some new things here:
   will indicate what value is stored in the appropriate `$res`
   variable.
 
-- The format of the HTTP request is new. This is the template for a request:
+- The format of the HTTP request is new. This is the template for a
+  request:
 
         <METHOD> <URL>                # MANDATORY
         <HEADER NAME>: <HEADER VALUE> # OPTIONAL, as many as you like
                                       # BLANK LINE if you want a body
         <JSONPAYLOAD>                 # OPTIONAL, whatever JSON body
 
-    and this is an example of a PUT using all the parts: headers and a
-    body:
+    and this is an example of a PUT using all the optional parts:
 
         PUT https://hello.from/the
         Content-Type: other/side
@@ -87,7 +88,7 @@ the appropriately numbered response variable, and you can access its
 parts with normal JSON notation: `arrays[5]` and
 `object.properties`. However, you must reference the variables
 slightly differently. For all the HD variables up until now, we used
-the dollar sign `$` say "this is a variable", like this:
+the dollar sign `$` to say "this is a variable", like this:
 
     $host = 'https://www.sharecare.com'
     Scenario: hello
@@ -100,6 +101,8 @@ must use `${variable.property}` to dereference it.
     // $res1 = { host: "https://www.sharecare.com" }
     Scenario: hello
      Given I am on the ${res1.host}/login page
+
+### Example: Login without UI
 
 For a real example, we can do a quick-login for Sharecare. For this
 example, it helps to know that this SSO request responds with the
@@ -125,8 +128,7 @@ header and SSO credentials:
 
      {"username": "REDACTED","password": "REDACTED"}
      ```
-
-     Given I am on the https://www.sharecare.com/oauth/handleLogin?access_token=${res1.access_token}&refresh_token=${res1.refresh_token}&token_type=bearer&state=/ page
+     Given I am on the https://auth.sharecare.com/session/login?grant_type=bearer&access_token=${res1.access_token}&redirect_uri=https://www.sharecare.com page
 
 ### Automatic Hostname Variables
 
@@ -161,7 +163,7 @@ hostnames to make it environment-agnostic like such:
      {"username": "REDACTED","password": "REDACTED"}
      ```
 
-     Given I am on the ${host.www}/oauth/handleLogin?access_token=${res1.access_token}&refresh_token=${res1.refresh_token}&token_type=bearer&state=/ page
+     Given I am on the ${host.auth}/session/login?grant_type=bearer&access_token=${res1.access_token}&redirect_uri=${host.www} page
 
 (As a bonus, note that this example also indicates that you can use
 variables in HTTP requests).

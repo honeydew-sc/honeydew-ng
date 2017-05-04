@@ -62,12 +62,12 @@ describe('Environment', function () {
     describe('QH', () => {
         it('should construct the correct QH QA url', () => {
             let url = Environment.getEnvUrl( 'QH', 'qa' );
-            expect(url).toBe('https://qa-stg.qualityhealth.com');
+            expect(url).toBe('https://stage.qa.qualityhealth.com');
         });
 
         it('should construct the correct QH QA app url', () => {
             let url = Environment.getEnvUrl( 'QH', 'app2 qa web' );
-            expect(url).toBe('https://appqa2.qualityhealth.com');
+            expect(url).toBe('https://app2-www.qa.qualityhealth.com');
         });
 
         it('should construct the correct QH stage url', () => {

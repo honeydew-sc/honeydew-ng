@@ -175,9 +175,9 @@ class Environment {
         let protocol = 'https://';
         let subdomains = {
             stage: 'stage.',
-            qa: 'qa-stg.',
-            'app qa web': 'appqa.',
-            'app2 qa web': 'appqa2.'
+            qa: 'stage.qa.',
+            'app qa web': 'www.qa.',
+            'app2 qa web': 'app2-www.qa.'
         };
 
         if ( subdomains[env] ) {

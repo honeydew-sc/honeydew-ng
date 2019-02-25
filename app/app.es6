@@ -111,6 +111,7 @@ angular.module('honeydew', [
         PusherServiceProvider
             .setToken(pusherConfig.pusher_auth_key)
             .setOptions({
-                authEndpoint: '/rest.php/pusher/auth'
+                authEndpoint: '/rest.php/pusher/auth',
+                cluster: pusherConfig.pusher_cluster
             });
     });
